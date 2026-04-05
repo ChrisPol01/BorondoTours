@@ -1,0 +1,137 @@
+# ============================================================
+# BorondoTours — .gitignore
+# Monorepo: NestJS 11 (Bun) + React 19 (Vite) + React Native (Expo)
+# ============================================================
+
+# ─── Dependencias ───────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+.yarn/install-state.gz
+bun.lockb
+!bun.lockb  # Commitear el lockfile de Bun
+
+# ─── Build outputs ──────────────────────────────────────────
+dist/
+build/
+out/
+.output/
+.next/
+.nuxt/
+.vite/
+.cache/
+*.tsbuildinfo
+
+# ─── Variables de entorno — NUNCA commitear ─────────────────
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+*.env
+
+# Solo se permite commitear el ejemplo
+!.env.example
+
+# ─── Logs ───────────────────────────────────────────────────
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ─── OS ─────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ─── IDEs y editores ────────────────────────────────────────
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ─── TypeScript ─────────────────────────────────────────────
+*.js.map
+*.d.ts.map
+
+# ─── Testing ────────────────────────────────────────────────
+coverage/
+.nyc_output/
+lcov.info
+test-results/
+playwright-report/
+playwright/.cache/
+
+# ─── NestJS / Backend ───────────────────────────────────────
+packages/api/dist/
+packages/api/.env
+uploads/
+tmp/
+
+# ─── React / Vite (Frontend) ────────────────────────────────
+apps/web-b2c/dist/
+apps/web-erp/dist/
+apps/web-b2b/dist/
+
+# ─── React Native / Expo ────────────────────────────────────
+apps/mobile/.expo/
+apps/mobile/expo-env.d.ts
+apps/mobile/android/
+apps/mobile/ios/
+apps/mobile/*.jks
+apps/mobile/*.p8
+apps/mobile/*.p12
+apps/mobile/*.key
+apps/mobile/*.mobileprovision
+apps/mobile/*.orig.*
+apps/mobile/web-build/
+apps/mobile/.metro-health-check*
+*.hbc
+
+# ─── Docker ─────────────────────────────────────────────────
+docker-compose.override.yml
+
+# ─── AWS / Cloud ────────────────────────────────────────────
+.aws/
+*.pem
+*.crt
+*.key
+credentials
+
+# ─── Base de datos ──────────────────────────────────────────
+*.sqlite
+*.sqlite3
+*.db
+dump.sql
+*.dump
+
+# ─── Drizzle ORM ────────────────────────────────────────────
+# Las migraciones SÍ se commitean
+# drizzle/migrations/  ← NO ignorar
+
+# ─── Turbo / Monorepo tools ─────────────────────────────────
+.turbo/
+.nx/
+
+# ─── Misc ───────────────────────────────────────────────────
+*.zip
+*.tar.gz
+*.tgz
+.temp/
+temp/
