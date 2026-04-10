@@ -1,0 +1,20 @@
+{
+  "promptDelete": true,
+  "trashOption": "system",
+  "userIgnoreFilters": [],
+  "useMarkdownLinks": false,
+  "defaultViewMode": "source",
+  "foldHeading": false,
+  "foldIndent": true,
+  "pdfExportSettings": {
+    "pageSize": "letter",
+    "landscape": false,
+    "margin": "0",
+    "downscaleEmbeds": false
+  },
+  "showInlineTitle": true,
+  "newFileLocation": "folder",
+  "newFileFolderPath": "05-Dev-Log",
+  "attachmentFolderPath": "Assets",
+  "alwaysUpdateLinks": true
+}

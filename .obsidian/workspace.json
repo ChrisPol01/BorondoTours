@@ -1,0 +1,237 @@
+{
+  "main": {
+    "id": "a29a0a28bba113fb",
+    "type": "split",
+    "children": [
+      {
+        "id": "c8e5d7c384c3384d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "61718e4b9dfcd545",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Vista gráfica"
+            }
+          },
+          {
+            "id": "f6ee4b2106bf930d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "03-Knowledge/MCP-Setup-Guide.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "MCP-Setup-Guide"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "018c6f5b9fb2d94d",
+    "type": "split",
+    "children": [
+      {
+        "id": "155d7a886ff5d6c9",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b54da3c87dea03e3",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorador de archivos"
+            }
+          },
+          {
+            "id": "e2b1cac3321cf695",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Buscar"
+            }
+          },
+          {
+            "id": "b1bdefed9f4e0e19",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Marcadores"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 274.5
+  },
+  "right": {
+    "id": "0c7f5f00b8e9fec8",
+    "type": "split",
+    "children": [
+      {
+        "id": "ee8e1d00d393f662",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c660d77ee2acf462",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "02-ADRs/ADR-001-Plantilla.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Enlaces entrantes de ADR-001-Plantilla"
+            }
+          },
+          {
+            "id": "7e3993e01bf4ccfb",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "02-ADRs/ADR-001-Plantilla.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Enlaces salientes de ADR-001-Plantilla"
+            }
+          },
+          {
+            "id": "dac7316d45462cfe",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Etiquetas"
+            }
+          },
+          {
+            "id": "89078b51d0937cb6",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "Todas las propiedades"
+            }
+          },
+          {
+            "id": "0f9759d102b1585a",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "02-ADRs/ADR-001-Plantilla.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Esquema de ADR-001-Plantilla"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Abrir selector rápido": false,
+      "graph:Abrir vista gráfica": false,
+      "canvas:Crear nuevo lienzo": false,
+      "daily-notes:Abrir la nota de hoy": false,
+      "templates:Insertar plantilla": false,
+      "command-palette:Abrir paleta de comandos": false,
+      "bases:Crear nueva base": false,
+      "audio-recorder:Iniciar/Detener la grabación": false,
+      "markdown-importer:Abrir el importador de Markdown": false
+    }
+  },
+  "active": "61718e4b9dfcd545",
+  "lastOpenFiles": [
+    "GITHUB_SETUP_INSTRUCTIONS.md",
+    "5",
+    "docs/Templates/Reunion.md",
+    "docs/Templates/Dev-Log-Diario.md",
+    "docs/Templates/ADR-Nuevo.md",
+    "docs/Templates",
+    "docs/05-Dev-Log/Dev-Log-Index.md",
+    "docs/05-Dev-Log",
+    "docs/03-Knowledge/Politica-Datos-Personales.md",
+    "docs/03-Knowledge/Modelo-Datos-Core.md",
+    "docs/03-Knowledge/Modelo-Comisiones.md",
+    "docs/03-Knowledge/MCP-Setup-Guide.md",
+    "docs/03-Knowledge",
+    "docs/02-ADRs/ADR-Index.md",
+    "docs/02-ADRs/ADR-005-Infra-MVP.md",
+    "docs/02-ADRs/ADR-006-Seguridad-PII.md",
+    "docs/02-ADRs/ADR-004-Siigo-Facturacion.md",
+    "docs/02-ADRs/ADR-002-Meilisearch.md",
+    "docs/02-ADRs/ADR-003-DynamoDB-Chat.md",
+    "docs/02-ADRs/ADR-001-Plantilla.md",
+    "docs/02-ADRs/ADR-001-Bold-Split-Marketplace.md",
+    "docs/02-ADRs",
+    "docs/01-Specs/Spec-Principal.md",
+    "docs/01-Specs/Spec-J-BorondoTours-App-Movil.md",
+    "docs/01-Specs/Spec-I-B2B-Portal-Operadores.md",
+    "docs/01-Specs/Spec-H-ERP-Agencia.md",
+    "docs/01-Specs/Spec-G-ERP-Operativo.md",
+    "docs/01-Specs/Spec-F-Auth.md",
+    "docs/01-Specs/Spec-D-Client-Portal.md",
+    "docs/01-Specs/Spec-E-Loyalty.md",
+    "docs/01-Specs/Spec-C-Checkout.md",
+    "docs/01-Specs",
+    "docs/00-Inicio",
+    "setup-branch-protection-and-secrets.sh",
+    "setup-branch-protection-and-secrets.sh.tmp.8901.1775434059934",
+    "GITHUB_SETUP_INSTRUCTIONS.md.tmp.7579.1775432554089"
+  ]
+}
