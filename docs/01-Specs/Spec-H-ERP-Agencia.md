@@ -558,7 +558,7 @@ Tours.featured_boost: integer          ← 0–50, configurable por SUPER_ADMIN
 - [[Spec-G-ERP-Operativo]]
 - [[Spec-C-Checkout]]
 - [[Spec-E-Loyalty]]
-- [[../02-ADRs/ADR-001-Bold-Split-Marketplace]]
+- [[../02-ADRs/ADR-001-Onepayla-Split-Marketplace]]
 - [[../02-ADRs/ADR-003-DynamoDB-Chat]]
 - [[../03-Knowledge/Modelo-Comisiones]]
 - [[../00-Inicio/Stack-Tecnologico]]

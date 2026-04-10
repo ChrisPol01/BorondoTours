@@ -16,4 +16,4 @@ tags: [dev-log]
 
 ---
 
-_Crea una nota nueva por día usando la plantilla [[../Templates/Dev-Log-Diario]]_
+_Crea una nota nueva en [05-Dev-Log] por día usando la plantilla [[../Templates/Dev-Log-Diario]]_

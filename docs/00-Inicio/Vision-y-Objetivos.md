@@ -37,14 +37,14 @@ BorondoTours es un marketplace gestionado B2C para tours en Colombia que permite
 - [ ] Landing + scrollytelling + Auth Gate funcional
 - [ ] Catálogo de tours con búsqueda básica (PostgreSQL ILIKE)
 - [ ] Detalle de tour + calendario semáforo
-- [ ] Checkout completo con Bold (IVA, pasaporte S3)
+- [ ] Checkout completo con Onepayla (IVA, pasaporte S3)
 - [ ] Confirmación por email + voucher PDF básico
 - [ ] Portal cliente básico (ver reservas, cancelar)
 - [ ] Anuncios en checkout y confirmación (primera fuente de ingreso)
 
 ### Fase 2 — Plataforma operativa (meses 3–4)
 - [ ] Wallet Borondo Coins completo con niveles de lealtad
-- [ ] Split Fare con links individuales Bold
+- [ ] Split Fare con links individuales Onepayla
 - [ ] Portal operador ERP (gestión de tours, guías, buses)
 - [ ] Liquidación de comisiones a operadores (OperatorPayouts)
 - [ ] Facturación electrónica vía Siigo API
@@ -76,7 +76,7 @@ BorondoTours es un marketplace gestionado B2C para tours en Colombia que permite
 
 - [ ] Demo funcional end-to-end: buscar → reservar → pagar → ver en portal
 - [ ] Al menos 1 tour real cargado con fotos, precio y calendario
-- [ ] Pago real procesado con Bold en sandbox
+- [ ] Pago real procesado con Onepayla en sandbox
 - [ ] Primera fuente de ingreso (anuncios) visible en el flujo
 
 ---

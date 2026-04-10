@@ -24,7 +24,7 @@ spec-detallada: "[[../01-Specs/Spec-F-Auth]] · [[../01-Specs/Spec-G-ERP-Operati
 
 ## Flujo B: CRM Pipeline — Kanban del Agente
 
-* **Pipeline de 6 columnas:** `Cotizado` → `Reserva` → `Pagado` → `Ejecución` → `Completado` + `Perdido` (al extremo derecho, en gris/rojo). Las transiciones Reserva/Pagado/Ejecución/Completado son automáticas (webhooks Bold + cron jobs BullMQ). Solo `Perdido` es manual con modal de razón obligatoria (PRECIO / DISPONIBILIDAD / COMPETENCIA / NO_RESPONDE / OTRO).
+* **Pipeline de 6 columnas:** `Cotizado` → `Reserva` → `Pagado` → `Ejecución` → `Completado` + `Perdido` (al extremo derecho, en gris/rojo). Las transiciones Reserva/Pagado/Ejecución/Completado son automáticas (webhooks Onepayla + cron jobs BullMQ). Solo `Perdido` es manual con modal de razón obligatoria (PRECIO / DISPONIBILIDAD / COMPETENCIA / NO_RESPONDE / OTRO).
 * **Tarjeta de Lead:** Muestra nombre del cliente, tour, fecha, pax, monto total, fuente del lead y badge de urgencia si lleva >48h sin respuesta. Al hacer clic: drawer lateral con historial de acciones (timeline inmutable), botón "Reenviar link", comisión estimada del agente y notas internas.
 * **Regla de Propiedad del Lead (90 días):** El agente que genera la cotización es dueño de la comisión. La propiedad se renueva con cada interacción significativa (nota, reenvío de link, apertura del link por el cliente, modificación de precio/pax). A los 90 días sin actividad el lead pasa a `EXPIRED` y queda libre para cualquier agente. Email de aviso 7 días antes (job BullMQ diario a las 2AM).
 * **Venta Colaborativa:** Si el Agente B cierra una cotización del Agente A activo, la comisión principal sigue siendo del Agente A. El Agente B recibe una comisión de "asistencia" configurable por el GERENTE (ej. 10% de la comisión total). Toda transferencia queda registrada en el historial con motivo.
@@ -35,9 +35,9 @@ spec-detallada: "[[../01-Specs/Spec-F-Auth]] · [[../01-Specs/Spec-G-ERP-Operati
 ## Flujo C: Cotizaciones y Links Mágicos de Pago
 
 * **Cotización Manual:** Formulario para armar un paquete personalizado (buscar/crear cliente, seleccionar tour + instancia, configurar pax por regla del operador, add-ons, descuento especial). Si el descuento supera el 10% del total, la cotización queda en `PENDING_APPROVAL` hasta aprobación del GERENTE. Preview de precio y comisión estimada en tiempo real.
-* **Link Mágico Bold:** El agente genera un link de pago Bold pre-configurado con `amount` (con IVA y descuento aplicados), `reference: QUOTE-{id}`, `expiration: 72h` y descripción del tour. El cliente solo abre el link y paga, sin necesidad de navegar por el B2C. 1 solo link activo por cotización (el anterior se invalida automáticamente al regenerar).
+* **Link Mágico Onepayla:** El agente genera un link de pago Onepayla pre-configurado con `amount` (con IVA y descuento aplicados), `reference: QUOTE-{id}`, `expiration: 72h` y descripción del tour. El cliente solo abre el link y paga, sin necesidad de navegar por el B2C. 1 solo link activo por cotización (el anterior se invalida automáticamente al regenerar).
 * **Envío Multicanal:** Botones de acción rápida: `[Copiar link]` · `[Enviar por Email]` (template HTML vía AWS SES con preview antes de enviar) · `[Enviar por WhatsApp]` (wa.me con mensaje pre-llenado: nombre, tour, fecha, monto, link). Cada envío se registra en el historial y reinicia el contador de 90 días de propiedad.
-* **Webhook Bold → Kanban automático:** Al recibir el pago (`QUOTE-{id}`), el sistema crea el `Booking` con `source: AGENT_QUOTE`, mueve la tarjeta en tiempo real (Socket.io), dispara el Ka-ching del agente, acredita Borondo Coins al cliente y genera el `OperatorPayout` y `AgentCommission` correspondientes.
+* **Webhook Onepayla → Kanban automático:** Al recibir el pago (`QUOTE-{id}`), el sistema crea el `Booking` con `source: AGENT_QUOTE`, mueve la tarjeta en tiempo real (Socket.io), dispara el Ka-ching del agente, acredita Borondo Coins al cliente y genera el `OperatorPayout` y `AgentCommission` correspondientes.
 
 ---
 

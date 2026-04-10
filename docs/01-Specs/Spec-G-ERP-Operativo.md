@@ -200,6 +200,6 @@ Vehicles
 
 ## Links relacionados
 - [[Spec-C-Checkout]]
-- [[../02-ADRs/ADR-001-Bold-Split-Marketplace]]
+- [[../02-ADRs/ADR-001-Onepayla-Split-Marketplace]]
 - [[../02-ADRs/ADR-004-Siigo-Facturacion]]
 - [[../03-Knowledge/Modelo-Comisiones]]

@@ -206,4 +206,4 @@ Reviews
 - [[Spec-C-Checkout]]
 - [[Spec-E-Loyalty]]
 - [[Spec-G-ERP-Operativo]]
-- [[../02-ADRs/ADR-001-Bold-Split-Marketplace]]
+- [[../02-ADRs/ADR-001-Onepayla-Split-Marketplace]]

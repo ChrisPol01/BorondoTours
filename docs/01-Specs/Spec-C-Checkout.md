@@ -128,7 +128,7 @@ kiro-spec: .kiro/specs/flujo-c-checkout.md
 ## 8. Split Fare — Responsabilidad individual por cupo
 
 ### RF-C06 — Divide tu cuenta (modelo individual)
-**Modelo decidido:** Cada persona paga su parte de forma independiente. La responsabilidad del cupo es individual. Se usan links de pago de **OnePay.la** (antes Bold).
+**Modelo decidido:** Cada persona paga su parte de forma independiente. La responsabilidad del cupo es individual. Se usan links de pago de **OnePay.la** (antes Onepayla).
 
 **Criterios de aceptación:**
 - [ ] El organizador activa "Dividir cuenta" e ingresa el número de personas (N ≥ 2)
@@ -268,7 +268,7 @@ POST /api/v1/ads/click         ← tracking de clics
 Bookings (extensión — ver schema completo en Modelo-Datos-Core.md)
   - status: enum (HOLD, HOLD_GROUP, PARTIAL_PAID, CONFIRMED, SETTLED, CANCELED, COMPLETED, CHARGEBACK)
   - coins_used: decimal
-  - onepay_reference: string           ← antes bold_reference
+  - onepay_reference: string           ← antes Onepayla_reference
   - passport_s3_key: string | null
   - source: enum (WEB_B2C, AGENT_QUOTE, AGENCY_LINK, QUICK_SALE)
 
@@ -292,8 +292,8 @@ SplitFareParticipants
   - participant_index: integer
   - amount_reservation: decimal        ← % inicial
   - amount_balance: decimal            ← saldo restante
-  - onepay_link_reservation: string    ← antes bold_link_reservation
-  - onepay_link_balance: string | null ← antes bold_link_balance
+  - onepay_link_reservation: string    ← antes Onepayla_link_reservation
+  - onepay_link_balance: string | null ← antes Onepayla_link_balance
   - reservation_paid: boolean
   - reservation_paid_at: timestamp | null
   - balance_paid: boolean
@@ -373,7 +373,7 @@ AdImpressions
 ## Links relacionados
 - [[Spec-B-Tour-Detail]]
 - [[Spec-D-Client-Portal]]
-- [[../02-ADRs/ADR-001-Bold-Split-Marketplace]] *(en migración a OnePay.la)*
+- [[../02-ADRs/ADR-001-Onepayla-Split-Marketplace]] *(en migración a OnePay.la)*
 - [[../02-ADRs/ADR-004-Siigo-Facturacion]]
 - [[../03-Knowledge/Modelo-Comisiones]]
 - [[../03-Knowledge/Politica-Datos-Personales]]

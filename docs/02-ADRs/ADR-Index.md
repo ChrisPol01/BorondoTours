@@ -12,10 +12,10 @@ updated: 2026-04-06
 
 | ID | Título | Estado | Fase | Fecha |
 |---|---|---|---|---|
-| [[ADR-001-Bold-Split-Marketplace]] | Arquitectura de pagos: OnePay.la (antes Bold) + Split interno | Aceptado | 1 | 2025-07-14 |
+| [[ADR-001-Onepayla-Split-Marketplace]] | Arquitectura de pagos: OnePay.la (antes Onepayla) + Split interno | Aceptado | 1 | 2025-07-14 |
 | [[ADR-002-Meilisearch]] | Motor de búsqueda: Meilisearch vs Elasticsearch | Aceptado | 2 | 2025-07-14 |
 | [[ADR-003-DynamoDB-Chat]] | Chat: DynamoDB vs PostgreSQL | Aceptado | 2 | 2025-07-14 |
-| [[ADR-004-Siigo-Facturacion]] | Facturación electrónica: Siigo API vs Bold POS | Aceptado | 2 | 2025-07-14 |
+| [[ADR-004-Siigo-Facturacion]] | Facturación electrónica: Siigo API vs Onepayla POS | Aceptado | 2 | 2025-07-14 |
 | [[ADR-005-Infra-MVP]] | Infra MVP: Railway/Render vs AWS ECS Fargate | Aceptado | 1→3 | 2025-07-14 |
 | [[ADR-006-Seguridad-PII]] | Seguridad PII, WAF, Rate Limiting, Encriptación | Aceptado | 1 | 2026-04-06 |
 
@@ -24,7 +24,7 @@ updated: 2026-04-06
 ## Resumen de decisiones por área
 
 ### Pagos y Fiscal
-- **ADR-001**: OnePay.la (antes Bold) recibe el 100% del pago. BorondoTours gestiona el split al operador internamente vía `OperatorPayouts`. No existe split nativo en la pasarela.
+- **ADR-001**: OnePay.la (antes Onepayla) recibe el 100% del pago. BorondoTours gestiona el split al operador internamente vía `OperatorPayouts`. No existe split nativo en la pasarela.
 - **ADR-004**: Siigo API en Fase 2 para facturación electrónica DIAN. Incluye Notas Crédito automáticas para reembolsos.
 
 ### Búsqueda

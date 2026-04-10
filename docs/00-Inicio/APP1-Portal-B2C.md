@@ -37,8 +37,8 @@ spec-detallada: "[[../01-Specs/Spec-A-Discovery]]  · [[../01-Specs/Spec-B-Tour-
 * **Selector Dinámico de Pax:** Contadores de incremento basados en la regla del proveedor (por edades o estatura mínima). Preview del precio total en tiempo real.
 * **Upselling (Add-ons):** Checkboxes para servicios adicionales (ej. seguro extra, transporte, almuerzo) que suman al subtotal con descripción y precio individual.
 * **Lógica Fiscal (IVA):** Radio button de residencia en Colombia. Si el cliente NO es residente: IVA = 0%, pero el botón de pago se bloquea hasta adjuntar foto del pasaporte (S3 privado con Presigned URL).
-* **Divide tu Cuenta (Split Fare):** Genera múltiples links de pago Bold para grupos. La reserva principal queda en `HOLD_GROUP` hasta alcanzar el 100% del pago entre todos los participantes.
-* **Pasarela Bold:** Integración mediante API/Webhook con referencia única `BOOK-{id}`, impuestos exactos y monto total. El webhook confirma el pago y desencadena toda la lógica de booking.
+* **Divide tu Cuenta (Split Fare):** Genera múltiples links de pago Onepayla para grupos. La reserva principal queda en `HOLD_GROUP` hasta alcanzar el 100% del pago entre todos los participantes.
+* **Pasarela Onepayla:** Integración mediante API/Webhook con referencia única `BOOK-{id}`, impuestos exactos y monto total. El webhook confirma el pago y desencadena toda la lógica de booking.
 
 ---
 
@@ -55,7 +55,7 @@ spec-detallada: "[[../01-Specs/Spec-A-Discovery]]  · [[../01-Specs/Spec-B-Tour-
 
 * **Header Dinámico:** Avatar de "Mi Perfil" (edición de datos personales — la cédula no se puede cambiar una vez registrada) y botón "Mis Reservas".
 * **Tablero Kanban del Cliente (Mis Reservas):**
-  * **Cotizaciones:** Tarjetas con link de pago activo. Clic en "Ir a pagar" abre el link Bold directamente.
+  * **Cotizaciones:** Tarjetas con link de pago activo. Clic en "Ir a pagar" abre el link Onepayla directamente.
   * **Próximos Viajes:** Botones activos si faltan ≥ 5 días: `[Reservar otra fecha]` `[Agregar Personas]` `[Cancelar Viaje]` (reembolso a Borondo Coins). Si faltan < 5 días: botones bloqueados, penalidad del 100%.
   * **Completadas:** Historial de tours realizados. Opción de calificar con modal de 1–5 estrellas + comentario (solo si el booking está en `COMPLETED`).
 * **Gamificación y Wallet:**

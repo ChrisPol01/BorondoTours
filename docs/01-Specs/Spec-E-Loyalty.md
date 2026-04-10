@@ -212,4 +212,4 @@ RestrictedCoinBalances (vista materializada o tabla)
 - [[Spec-C-Checkout]]
 - [[Spec-D-Client-Portal]]
 - [[../03-Knowledge/Modelo-Comisiones]]
-- [[../02-ADRs/ADR-001-Bold-Split-Marketplace]] *(en migración a OnePay.la)*
+- [[../02-ADRs/ADR-001-Onepayla-Split-Marketplace]] *(en migración a OnePay.la)*

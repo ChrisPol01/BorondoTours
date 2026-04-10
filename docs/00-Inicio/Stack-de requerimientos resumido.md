@@ -20,7 +20,7 @@ Diseño escalable y optimizado para desarrollo por un "Solo-Dev" usando Vertical
 * **Base de Datos Secundaria (NoSQL):** Amazon DynamoDB (Chat tripartito con TTL 90 días).
 * **Colas y Jobs:** Redis + BullMQ (cron jobs, OTP, webhooks).
 * **Búsqueda:** ILIKE (Fase 1) → Meilisearch con tolerancia a typos (Fase 2 — ADR-002).
-* **Integraciones:** Bold API (Pagos Colombia), Mapbox GL JS (Mapas), Socket.io (Tiempo Real), Google OAuth 2.0.
+* **Integraciones:** Onepayla API (Pagos Colombia), Mapbox GL JS (Mapas), Socket.io (Tiempo Real), Google OAuth 2.0.
 
 ---
 
@@ -102,7 +102,7 @@ Diseño escalable y optimizado para desarrollo por un "Solo-Dev" usando Vertical
 ### Especificaciones técnicas detalladas (`01-Specs/`)
 - [[../01-Specs/Spec-A-Discovery]] — Búsqueda, Catálogo, Mapa, Cross-Selling
 - [[../01-Specs/Spec-B-Tour-Detail]] — Detalle de tour, Galería, Calendario Semáforo, Reseñas
-- [[../01-Specs/Spec-C-Checkout]] — Checkout, IVA, Split Fare, Pasarela Bold
+- [[../01-Specs/Spec-C-Checkout]] — Checkout, IVA, Split Fare, Pasarela Onepayla
 - [[../01-Specs/Spec-D-Client-Portal]] — Panel del cliente, Kanban reservas, Chat
 - [[../01-Specs/Spec-E-Loyalty]] — Borondo Coins, Niveles, Wallet, Gamificación
 - [[../01-Specs/Spec-F-Auth]] — Auth JWT, RBAC 10 roles, Google OAuth, OTP
@@ -112,7 +112,7 @@ Diseño escalable y optimizado para desarrollo por un "Solo-Dev" usando Vertical
 
 ### Decisiones de arquitectura (`02-ADRs/`)
 - [[../02-ADRs/ADR-Index]] — Índice de todas las ADRs
-- [[../02-ADRs/ADR-001-Bold-Pagos]] — Pasarela Bold, sin split nativo
+- [[../02-ADRs/ADR-001-Onepayla-Pagos]] — Pasarela Onepayla, sin split nativo
 - [[../02-ADRs/ADR-002-Meilisearch]] — Búsqueda ILIKE → Meilisearch
 - [[../02-ADRs/ADR-003-DynamoDB-Chat]] — Chat tripartito en DynamoDB
 

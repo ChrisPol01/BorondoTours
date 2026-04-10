@@ -97,5 +97,5 @@ Día 15: Siigo genera nota de liquidación al operador
 - [[../01-Specs/Spec-C-Checkout]]
 - [[../01-Specs/Spec-G-ERP-Operativo]]
 - [[../01-Specs/Spec-H-ERP-Agencia]]
-- [[../02-ADRs/ADR-001-Bold-Split-Marketplace]] *(en migración a OnePay.la)*
+- [[../02-ADRs/ADR-001-Onepayla-Split-Marketplace]] *(en migración a OnePay.la)*
 - [[Modelo-Datos-Core]]

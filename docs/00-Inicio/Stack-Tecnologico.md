@@ -17,7 +17,7 @@ status: definitivo
 | Base de datos | Neon PostgreSQL (serverless) | Amazon Aurora PostgreSQL |
 | Búsqueda | PostgreSQL ILIKE | Meilisearch (container) |
 | Auth OTP | Solo email (AWS SES) | Email + SMS (AWS SNS) |
-| Facturación | Manual / Bold POS | Siigo API automatizado |
+| Facturación | Manual / Onepayla POS | Siigo API automatizado |
 
 ---
 
@@ -54,7 +54,7 @@ status: definitivo
 
 | Servicio | Uso | Fase |
 |---|---|---|
-| Bold API | Pagos, links individuales Split Fare | 1 |
+| Onepayla API | Pagos, links individuales Split Fare | 1 |
 | AWS S3 | Pasaportes (presigned URL), fotos perfil | 1 |
 | AWS SES | Emails transaccionales, OTP email | 1 |
 | Amazon DynamoDB | Historial de chat (PK: booking_id) | 2 |
@@ -172,7 +172,7 @@ status: definitivo
 
 ## CI/CD — GitHub Actions + AWS (H-60)
 
-### Pipeline Fase 1 (Railway/Render)
+### Pipeline Fase 1
 
 ```yaml
 # .github/workflows/deploy.yml — activado en push a main
@@ -220,7 +220,7 @@ jobs:
 ---
 
 ## ADRs relacionados
-- [[../02-ADRs/ADR-001-Bold-Split-Marketplace]]
+- [[../02-ADRs/ADR-001-Onepayla-Split-Marketplace]]
 - [[../02-ADRs/ADR-002-Meilisearch]]
 - [[../02-ADRs/ADR-003-DynamoDB-Chat]]
 - [[../02-ADRs/ADR-004-Siigo-Facturacion]]
