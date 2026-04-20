@@ -3,18 +3,45 @@ name: CI — Lint, Test & Build
 on:
   push:
     branches: [develop, staging, main]
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+      - '.claude/**'
   pull_request:
     branches: [develop, staging, main]
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+      - '.claude/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  # ─── Check codebase ready ──────────────────────────────────
+  check-ready:
+    name: 🔎 Check codebase
+    runs-on: ubuntu-latest
+    outputs:
+      has-code: ${{ steps.check.outputs.has-code }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: check
+        run: |
+          if [ -f "package.json" ]; then
+            echo "has-code=true" >> $GITHUB_OUTPUT
+          else
+            echo "has-code=false" >> $GITHUB_OUTPUT
+            echo "No package.json found — skipping lint/test/build (docs-only repo state)"
+          fi
+
   # ─── Lint ──────────────────────────────────────────────────
   lint:
     name: 🔍 Lint
     runs-on: ubuntu-latest
+    needs: check-ready
+    if: needs.check-ready.outputs.has-code == 'true'
     steps:
       - uses: actions/checkout@v4
 
@@ -32,7 +59,8 @@ jobs:
   test:
     name: 🧪 Tests
     runs-on: ubuntu-latest
-    needs: lint
+    needs: [check-ready, lint]
+    if: needs.check-ready.outputs.has-code == 'true'
 
     services:
       postgres:
@@ -91,7 +119,8 @@ jobs:
   build:
     name: 🏗️ Build
     runs-on: ubuntu-latest
-    needs: test
+    needs: [check-ready, test]
+    if: needs.check-ready.outputs.has-code == 'true'
 
     steps:
       - uses: actions/checkout@v4
