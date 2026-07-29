@@ -1,0 +1,124 @@
+/**
+ * Design tokens Borondo Tours — Ave Azul.
+ * Brand primitives come only from the approved guideline. Derived values are
+ * traceable in `src/lib/designTokenManifest.ts` and remain reusable aliases.
+ */
+:root {
+  /* Canonical Ave Azul primitives. */
+  --brand-azul-profundo: #103b66;
+  --brand-azul-condor: #2364aa;
+  --brand-turquesa-laguna: #00b7c7;
+  --brand-verde-frailejon: #79c142;
+  --brand-arena: #f3e8d1;
+  --brand-dorado: #fdb813;
+  --brand-blanco-niebla: #f9fbfc;
+  --brand-negro-volcanico: #101010;
+
+  /* Documented accessibility derivatives; never copied into components. */
+  --derived-danger: #b42318;
+  --derived-neutral: #667085;
+  --derived-adventure: #9a3d08;
+
+  /* Semantic colors. */
+  --semantic-surface-page: var(--brand-blanco-niebla);
+  --semantic-surface-warm: var(--brand-arena);
+  --semantic-surface-strong: var(--brand-azul-profundo);
+  --semantic-text-primary: var(--brand-negro-volcanico);
+  --semantic-text-muted: var(--brand-azul-condor);
+  --semantic-text-on-strong: var(--brand-blanco-niebla);
+  --semantic-text-on-action: var(--brand-negro-volcanico);
+  --semantic-action-primary: var(--brand-turquesa-laguna);
+  --semantic-action-primary-hover: var(--brand-verde-frailejon);
+  --semantic-action-cta: var(--brand-dorado);
+  --semantic-focus: var(--brand-azul-profundo);
+  --semantic-border-subtle: color-mix(in srgb, var(--brand-azul-profundo) 18%, transparent);
+
+  /* Availability and difficulty are always paired with text/icon semantics. */
+  --semantic-available: var(--brand-verde-frailejon);
+  --semantic-limited: var(--brand-dorado);
+  --semantic-sold-out: var(--derived-danger);
+  --semantic-unavailable: var(--derived-neutral);
+  --semantic-adventure: var(--derived-adventure);
+
+  /* Approved gradients: every endpoint is an Ave Azul primitive. */
+  --gradient-nature: linear-gradient(135deg, var(--brand-turquesa-laguna), var(--brand-verde-frailejon));
+  --gradient-depth: linear-gradient(135deg, var(--brand-azul-profundo), var(--brand-turquesa-laguna));
+
+  /* Typography: exact guideline ratios at mobile/tablet/desktop. */
+  --type-heading: "Sora", "Sora Fallback", system-ui, sans-serif;
+  --type-body: "Inter", "Inter Fallback", system-ui, sans-serif;
+  --type-scale: 0.85;
+  --type-h1: calc(3.5rem * var(--type-scale));
+  --type-h2: calc(2.5rem * var(--type-scale));
+  --type-h3: calc(1.75rem * var(--type-scale));
+  --type-h4: calc(1.25rem * var(--type-scale));
+  --type-body-1: 1rem;
+  --type-body-2: 0.875rem;
+  --type-button: 1rem;
+  --type-label: 0.75rem;
+  --leading-h1: 1.12;
+  --leading-h2: 1.2;
+  --leading-h3: 1.28;
+  --leading-h4: 1.32;
+  --leading-body: 1.6;
+  --leading-button: 1;
+  --leading-label: 1.5;
+
+  /* Responsive geometry measured from the 375px and 1440px compositions. */
+  --layout-container-public: 80rem;
+  --layout-container-reading: 48rem;
+  --layout-container-account: 90rem;
+  --layout-page-gutter: 1rem;
+  --layout-section-gap: clamp(3rem, 7vw, 7rem);
+  --layout-header-mobile: 4.5rem;
+  --layout-header-desktop: 5.5rem;
+  --layout-map-height: 31.25rem;
+  --layout-tour-rail-card: 17.5rem;
+  --layout-booking-sidebar: 20rem;
+  --layout-hero-mobile: 60vh;
+  --layout-hero-tablet: 70vh;
+  --layout-hero-desktop: 80vh;
+  --layout-drawer-mobile: 85vw;
+  --layout-drawer-max: 24rem;
+  --layout-gallery-overflow: 4rem;
+  --layout-tour-media-aspect: 16 / 9;
+
+  /* Shape, elevation and borders. */
+  --shape-control: 0.75rem;
+  --shape-card: 1.25rem;
+  --shape-panel: 2rem;
+  --shape-pill: 9999px;
+  --border-hairline: 1px;
+  --elevation-card: 0 0.5rem 1.5rem color-mix(in srgb, var(--brand-azul-profundo) 12%, transparent);
+  --elevation-floating: 0 1rem 3rem color-mix(in srgb, var(--brand-azul-profundo) 24%, transparent);
+  --elevation-sticky: 0 -0.125rem 0.5rem color-mix(in srgb, var(--brand-negro-volcanico) 8%, transparent);
+
+  /* Liquid glass and its opaque WCAG fallback. */
+  --glass-background: color-mix(in srgb, var(--brand-azul-profundo) 82%, transparent);
+  --glass-border: color-mix(in srgb, var(--brand-blanco-niebla) 30%, transparent);
+  --glass-highlight: inset 0 1px 0 color-mix(in srgb, var(--brand-blanco-niebla) 24%, transparent);
+  --glass-depth: var(--elevation-floating);
+  --glass-blur: 1rem;
+  --glass-fallback: var(--brand-azul-profundo);
+
+  /* Header glass — estilo iOS: casi invisible, blur prominente, saturación alta. */
+  --glass-header-background: transparent;
+  --glass-header-border: color-mix(in srgb, var(--brand-blanco-niebla) 20%, transparent);
+  --glass-header-blur: 0.5rem;
+
+  /* Logo integrity and motion. */
+  --logo-horizontal-min-width: 10rem;
+  --logo-clear-space: 0.5rem;
+  --icon-stroke: 2px;
+  --motion-duration-standard: 200ms;
+  --motion-duration-reduced: 100ms;
+  --motion-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (min-width: 48rem) {
+  :root { --type-scale: 0.95; --layout-page-gutter: 1.5rem; }
+}
+
+@media (min-width: 64.0625rem) {
+  :root { --type-scale: 1; --layout-page-gutter: 2rem; }
+}

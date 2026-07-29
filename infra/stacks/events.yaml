@@ -1,0 +1,161 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  BorondoTours — Events Stack
+  EventBridge, SQS queues (+ DLQ), Step Functions, scheduled events.
+
+Parameters:
+  Environment:
+    Type: String
+
+Resources:
+  # === EventBridge: Bus principal ===
+  EventBus:
+    Type: AWS::Events::EventBus
+    Properties:
+      Name: !Sub borondo-${Environment}-bus
+      Tags:
+        - Key: Project
+          Value: BorondoTours
+
+  # === SQS: Cola principal de eventos ===
+  EventsQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub borondo-${Environment}-events
+      VisibilityTimeout: 60
+      MessageRetentionPeriod: 1209600  # 14 días
+      RedrivePolicy:
+        deadLetterTargetArn: !GetAtt EventsDLQ.Arn
+        maxReceiveCount: 3
+      Tags:
+        - Key: Project
+          Value: BorondoTours
+
+  EventsDLQ:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub borondo-${Environment}-events-dlq
+      MessageRetentionPeriod: 1209600
+      Tags:
+        - Key: Project
+          Value: BorondoTours
+
+  # === SQS: Cola de notificaciones ===
+  NotificationsQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub borondo-${Environment}-notifications
+      VisibilityTimeout: 30
+      RedrivePolicy:
+        deadLetterTargetArn: !GetAtt NotificationsDLQ.Arn
+        maxReceiveCount: 3
+      Tags:
+        - Key: Project
+          Value: BorondoTours
+
+  NotificationsDLQ:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub borondo-${Environment}-notifications-dlq
+      MessageRetentionPeriod: 1209600
+
+  # === Lambda: SQS Event Processor (service-8-jobs) ===
+  JobsProcessorFn:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub borondo-${Environment}-jobs-processor
+      CodeUri: ../services/8-jobs/dist/
+      Handler: handlers/sqs-handler.handleSqsEvent
+      Runtime: nodejs22.x
+      MemorySize: 256
+      Timeout: 60
+      Events:
+        SQSEvent:
+          Type: SQS
+          Properties:
+            Queue: !GetAtt EventsQueue.Arn
+            BatchSize: 10
+            FunctionResponseTypes:
+              - ReportBatchItemFailures
+      Tags:
+        Service: jobs
+
+  # === Lambda: Notifications Processor (service-6-notifications) ===
+  NotificationsProcessorFn:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub borondo-${Environment}-notifications
+      CodeUri: ../services/6-notifications/dist/
+      Handler: handler.handleNotificationEvent
+      Runtime: nodejs22.x
+      MemorySize: 256
+      Timeout: 30
+      Events:
+        SQSEvent:
+          Type: SQS
+          Properties:
+            Queue: !GetAtt NotificationsQueue.Arn
+            BatchSize: 5
+      Policies:
+        - SESCrudPolicy:
+            IdentityName: borondotours.com
+      Tags:
+        Service: notifications
+
+  # === Lambda: Scheduled Events (cron) ===
+  ScheduledProcessorFn:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub borondo-${Environment}-scheduler
+      CodeUri: ../services/8-jobs/dist/
+      Handler: handlers/scheduled-handler.handleScheduledEvent
+      Runtime: nodejs22.x
+      MemorySize: 256
+      Timeout: 120
+      Events:
+        # Conciliación diaria a las 2AM COT (7AM UTC)
+        DailyReconciliation:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 7 * * ? *)
+            Input: '{"detail-type": "DAILY_RECONCILIATION"}'
+            Enabled: true
+        # Recordatorios de tour (cada hora, filtra 24h)
+        TourReminders:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 hour)
+            Input: '{"detail-type": "TOUR_REMINDER_24H"}'
+            Enabled: true
+        # Liberar cupos premium no usados (cada 6 horas)
+        ReleasePremiumSlots:
+          Type: Schedule
+          Properties:
+            Schedule: rate(6 hours)
+            Input: '{"detail-type": "RELEASE_PREMIUM_SLOTS"}'
+            Enabled: true
+      Tags:
+        Service: scheduler
+
+Outputs:
+  EventBusArn:
+    Value: !GetAtt EventBus.Arn
+    Export:
+      Name: !Sub ${AWS::StackName}-EventBusArn
+
+  EventsQueueUrl:
+    Value: !Ref EventsQueue
+    Export:
+      Name: !Sub ${AWS::StackName}-EventsQueueUrl
+
+  EventsQueueArn:
+    Value: !GetAtt EventsQueue.Arn
+
+  NotificationsQueueUrl:
+    Value: !Ref NotificationsQueue
+    Export:
+      Name: !Sub ${AWS::StackName}-NotificationsQueueUrl
+
+  DLQUrl:
+    Value: !Ref EventsDLQ

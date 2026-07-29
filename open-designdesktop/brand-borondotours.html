@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BorondoTours — Brand Book</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F8F5F0;
+  --surface: #FFFFFF;
+  --fg: #1A1A1A;
+  --fg-muted: #5C5C5C;
+  --fg-subtle: #8A8A8A;
+  --border: #E8E3DC;
+  --border-subtle: #F0EBE4;
+  --primary: #1B6B4A;
+  --primary-hover: #145A3D;
+  --primary-light: #E6F5EE;
+  --secondary: #2E7D9B;
+  --secondary-light: #E8F4F8;
+  --accent: #7B4FA2;
+  --accent-light: #F3EDF8;
+  --gold: #C8922A;
+  --gold-light: #FDF6E8;
+  --success: #198754;
+  --warning: #D4940A;
+  --danger: #CC3D3D;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+}
+[data-theme="dark"] {
+  --bg: #0F1410;
+  --surface: #1A211C;
+  --fg: #F0EDE8;
+  --fg-muted: #A8A29E;
+  --fg-subtle: #6B6B6B;
+  --border: #2D3630;
+  --border-subtle: #232A26;
+  --primary: #4AE89B;
+  --primary-hover: #3CD489;
+  --primary-light: #1A3D2E;
+  --secondary: #5BC5E0;
+  --secondary-light: #1A2E35;
+  --accent: #B088D4;
+  --accent-light: #2A1E38;
+  --gold: #E8B44A;
+  --gold-light: #2E2510;
+}
+</style>
+</head>
+<body>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Instrument Sans', -apple-system, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+</style>
+</head>
+<body>
+<style>
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+section { padding: 80px 0; border-bottom: 1px solid var(--border); }
+h1 { font-family: 'Fraunces', Georgia, serif; font-style: italic; font-weight: 500; font-size: clamp(48px, 8vw, 80px); line-height: 1.1; letter-spacing: -0.02em; color: var(--fg); }
+h2 { font-family: 'Fraunces', Georgia, serif; font-style: italic; font-weight: 500; font-size: clamp(32px, 5vw, 56px); line-height: 1.15; letter-spacing: -0.02em; color: var(--fg); margin-bottom: 24px; }
+h3 { font-size: 32px; font-weight: 600; margin-bottom: 16px; }
+h4 { font-size: 22px; font-weight: 600; margin-bottom: 12px; }
+p { font-size: 16px; color: var(--fg-muted); margin-bottom: 16px; }
+.overline { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-subtle); margin-bottom: 8px; }
+/* Theme Toggle */
+.theme-toggle {
+  position: fixed; top: 20px; right: 20px; z-index: 100;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 10px 16px;
+  cursor: pointer; font-size: 14px; font-weight: 600;
+  color: var(--fg); transition: all 0.25s;
+}
+.theme-toggle:hover { background: var(--primary-light); color: var(--primary); }
+</style>
+
+<button class="theme-toggle" onclick="toggleTheme()">🌓 Cambiar Modo</button>
+
+<!-- ===== HERO ===== -->
+<section style="padding:0; position:relative; min-height:70vh; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+  <div style="position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1598881034666-99a7b0a5a1b7?w=1600&q=80') center/cover;"></div>
+  <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.55));"></div>
+  <div style="position:relative; text-align:center; padding:40px 24px;">
+    <p class="overline" style="color:rgba(255,255,255,0.7);">BRAND BOOK 2026</p>
+    <h1 style="color:#FFFFFF; margin-bottom:16px;">BorondoTours</h1>
+    <p style="color:rgba(255,255,255,0.8); font-size:20px; max-width:600px; margin:0 auto;">Marketplace de tours en Colombia.<br>Elegante · Confiable · Natural · Premium</p>
+  </div>
+</section>
+
+<!-- ===== IDENTIDAD ===== -->
+<section>
+<div class="container">
+  <p class="overline">01 — Identidad</p>
+  <h2>Quiénes somos</h2>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:24px;">
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:24px;">
+      <h4>Misión</h4>
+      <p>Conectar viajeros con experiencias auténticas de Colombia a través de operadores locales curados, con tecnología que respeta la naturaleza y las comunidades.</p>
+    </div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:24px;">
+      <h4>Personalidad</h4>
+      <p>Moderno pero no frío. Premium pero no inaccesible. Natural pero no rústico. Como un lodge boutique en el Cocora: sofisticado y respetuoso con el entorno.</p>
+    </div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:24px;">
+      <h4>Mascota</h4>
+      <p><strong>"Borondo"</strong> — El ave con barbilla morada que guía al viajero. Aparece en onboarding, estados vacíos, confirmaciones y el programa de lealtad.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== PALETA DE COLORES ===== -->
+<section>
+<div class="container">
+  <p class="overline">02 — Color Palette</p>
+  <h2>Colores del Páramo</h2>
+  <p>Inspirados en el ecosistema colombiano: verdes de frailejón, cremas de niebla, azules de laguna glaciar, dorados de atardecer andino, y el morado del ave barbilla morada.</p>
+
+  <h4 style="margin-top:32px;">Brand Colors</h4>
+  <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:16px; margin-top:16px;">
+    <div style="border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border);">
+      <div style="height:80px; background:#1B6B4A;"></div>
+      <div style="padding:12px; background:var(--surface);"><strong>Páramo Green</strong><br><span style="color:var(--fg-muted); font-size:13px;">#1B6B4A — Primary CTA</span></div>
+    </div>
+    <div style="border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border);">
+      <div style="height:80px; background:#145A3D;"></div>
+      <div style="padding:12px; background:var(--surface);"><strong>Primary Hover</strong><br><span style="color:var(--fg-muted); font-size:13px;">#145A3D — Hover state</span></div>
+    </div>
+    <div style="border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border);">
+      <div style="height:80px; background:#2E7D9B;"></div>
+      <div style="padding:12px; background:var(--surface);"><strong>Laguna Blue</strong><br><span style="color:var(--fg-muted); font-size:13px;">#2E7D9B — Secondary</span></div>
+    </div>
+    <div style="border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border);">
+      <div style="height:80px; background:#7B4FA2;"></div>
+      <div style="padding:12px; background:var(--surface);"><strong>Barbilla Purple</strong><br><span style="color:var(--fg-muted); font-size:13px;">#7B4FA2 — Accent/Mascota</span></div>
+    </div>
+    <div style="border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border);">
+      <div style="height:80px; background:#C8922A;"></div>
+      <div style="padding:12px; background:var(--surface);"><strong>Warm Gold</strong><br><span style="color:var(--fg-muted); font-size:13px;">#C8922A — Precios/Premium</span></div>
+    </div>
+  </div>
+
+  <h4 style="margin-top:32px;">Surfaces & Neutrals</h4>
+  <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:16px; margin-top:16px;">
+    <div style="border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border);">
+      <div style="height:80px; background:#F8F5F0;"></div>
+      <div style="padding:12px; background:var(--surface);"><strong>Warm Cream</strong><br><span style="color:var(--fg-muted); font-size:13px;">#F8F5F0 — Background</span></div>
+    </div>
+    <div style="border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border);">
+      <div style="height:80px; background:#FFFFFF; border-bottom:1px solid #E8E3DC;"></div>
+      <div style="padding:12px; background:var(--surface);"><strong>White</strong><br><span style="color:var(--fg-muted); font-size:13px;">#FFFFFF — Surface</span></div>
+    </div>
+    <div style="border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border);">
+      <div style="height:80px; background:#1A1A1A;"></div>
+      <div style="padding:12px; background:var(--surface);"><strong>Near Black</strong><br><span style="color:var(--fg-muted); font-size:13px;">#1A1A1A — Text</span></div>
+    </div>
+    <div style="border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border);">
+      <div style="height:80px; background:#E8E3DC;"></div>
+      <div style="padding:12px; background:var(--surface);"><strong>Warm Gray</strong><br><span style="color:var(--fg-muted); font-size:13px;">#E8E3DC — Borders</span></div>
+    </div>
+    <div style="border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border);">
+      <div style="height:80px; background:#0F1410;"></div>
+      <div style="padding:12px; background:var(--surface);"><strong>Dark BG</strong><br><span style="color:var(--fg-muted); font-size:13px;">#0F1410 — Dark mode</span></div>
+    </div>
+  </div>
+
+  <h4 style="margin-top:32px;">Semantic</h4>
+  <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:16px; margin-top:16px;">
+    <div style="border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border);">
+      <div style="height:60px; background:#198754;"></div>
+      <div style="padding:12px; background:var(--surface);"><strong>Success</strong><br><span style="color:var(--fg-muted); font-size:13px;">#198754</span></div>
+    </div>
+    <div style="border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border);">
+      <div style="height:60px; background:#D4940A;"></div>
+      <div style="padding:12px; background:var(--surface);"><strong>Warning</strong><br><span style="color:var(--fg-muted); font-size:13px;">#D4940A</span></div>
+    </div>
+    <div style="border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border);">
+      <div style="height:60px; background:#CC3D3D;"></div>
+      <div style="padding:12px; background:var(--surface);"><strong>Danger</strong><br><span style="color:var(--fg-muted); font-size:13px;">#CC3D3D</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== TIPOGRAFIA ===== -->
+<section>
+<div class="container">
+  <p class="overline">03 — Tipografía</p>
+  <h2>Escala Tipográfica</h2>
+  <p>Fraunces Semibold Italic para momentos editoriales (H1, H2). Instrument Sans para toda la interfaz funcional.</p>
+
+  <div style="margin-top:32px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-xl); padding:40px; overflow:hidden;">
+    <div style="border-bottom:1px solid var(--border-subtle); padding-bottom:24px; margin-bottom:24px;">
+      <span class="overline">H1 — Fraunces Italic 80px / 500</span>
+      <h1 style="margin-top:8px;">Senderos ocultos</h1>
+    </div>
+    <div style="border-bottom:1px solid var(--border-subtle); padding-bottom:24px; margin-bottom:24px;">
+      <span class="overline">H2 — Fraunces Italic 56px / 500</span>
+      <h2 style="margin-bottom:0; margin-top:8px;">Descubre Colombia</h2>
+    </div>
+    <div style="border-bottom:1px solid var(--border-subtle); padding-bottom:20px; margin-bottom:20px;">
+      <span class="overline">H3 — Instrument Sans 32px / 600</span>
+      <h3 style="margin-top:8px; margin-bottom:0;">Tours curados por locales</h3>
+    </div>
+    <div style="border-bottom:1px solid var(--border-subtle); padding-bottom:16px; margin-bottom:16px;">
+      <span class="overline">H4 — Instrument Sans 22px / 600</span>
+      <h4 style="margin-top:8px; margin-bottom:0;">Páramo de Sumapaz · 2 días</h4>
+    </div>
+    <div style="border-bottom:1px solid var(--border-subtle); padding-bottom:16px; margin-bottom:16px;">
+      <span class="overline">Body — Instrument Sans 16px / 400</span>
+      <p style="margin-top:8px; margin-bottom:0; color:var(--fg);">Un paseo sin rumbo que termina encontrando exactamente lo que buscabas.</p>
+    </div>
+    <div>
+      <span class="overline">Small — Instrument Sans 12px / 500</span>
+      <p style="margin-top:8px; margin-bottom:0; font-size:12px; font-weight:500; color:var(--fg-muted);">BOR-001 · 2.800 MSNM · 4 PAX</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== GLASSMORPHISM ===== -->
+<section style="position:relative; overflow:hidden;">
+  <div style="position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1551632811-561732d1e306?w=1600&q=80') center/cover;"></div>
+  <div style="position:absolute; inset:0; background:rgba(0,0,0,0.2);"></div>
+  <div class="container" style="position:relative;">
+    <p class="overline" style="color:rgba(255,255,255,0.7);">04 — Glassmorphism</p>
+    <h2 style="color:#FFFFFF;">Superficies de Cristal</h2>
+    <p style="color:rgba(255,255,255,0.8);">Glass solo sobre fotografía. Nunca sobre fondos sólidos.</p>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:24px; margin-top:32px;">
+      <!-- Light Glass -->
+      <div style="background:rgba(255,255,255,0.72); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,0.4); border-radius:var(--radius-lg); padding:24px;">
+        <p class="overline" style="color:#1A1A1A;">Light Glass Card</p>
+        <h4 style="color:#1A1A1A;">Páramo de Sumapaz</h4>
+        <p style="color:#5C5C5C; font-size:14px;">2 días · Senderismo · 2.800 msnm</p>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px;">
+          <span style="background:#FDF6E8; color:#C8922A; padding:4px 10px; border-radius:8px; font-size:13px; font-weight:600;">$320.000 /persona</span>
+          <button style="background:#1B6B4A; color:#fff; border:none; padding:10px 20px; border-radius:12px; font-size:14px; font-weight:600; cursor:pointer;">Reservar</button>
+        </div>
+      </div>
+      <!-- Dark Glass -->
+      <div style="background:rgba(26,33,28,0.78); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,0.1); border-radius:var(--radius-lg); padding:24px;">
+        <p class="overline" style="color:#A8A29E;">Dark Glass Card</p>
+        <h4 style="color:#F0EDE8;">Eje Cafetero</h4>
+        <p style="color:#A8A29E; font-size:14px;">3 días · Cultura · 1.400 msnm</p>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px;">
+          <span style="background:rgba(232,180,74,0.15); color:#E8B44A; padding:4px 10px; border-radius:8px; font-size:13px; font-weight:600;">$480.000 /persona</span>
+          <button style="background:#4AE89B; color:#0F1410; border:none; padding:10px 20px; border-radius:12px; font-size:14px; font-weight:600; cursor:pointer;">Reservar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Glass specs -->
+    <div style="background:rgba(255,255,255,0.12); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.15); border-radius:var(--radius-md); padding:20px; margin-top:24px; color:#fff; font-size:13px; line-height:1.8;">
+      <strong>Light:</strong> bg rgba(255,255,255,0.72) · blur(16px) · border rgba(255,255,255,0.4)<br>
+      <strong>Dark:</strong> bg rgba(26,33,28,0.78) · blur(16px) · border rgba(255,255,255,0.1)<br>
+      <strong>Regla:</strong> Solo sobre fotografía. Nunca sobre fondos sólidos.
+    </div>
+  </div>
+</section>
+
+<!-- ===== COMPONENTES ===== -->
+<section>
+<div class="container">
+  <p class="overline">05 — Componentes</p>
+  <h2>UI Components</h2>
+
+  <!-- Buttons -->
+  <h4 style="margin-top:32px;">Botones</h4>
+  <div style="display:flex; flex-wrap:wrap; gap:16px; margin-top:16px; align-items:center;">
+    <button style="background:var(--primary); color:#fff; border:none; padding:12px 24px; border-radius:var(--radius-md); font-size:14px; font-weight:600; cursor:pointer; font-family:inherit; transition:all 0.15s;">Reservar Tour</button>
+    <button style="background:transparent; color:var(--primary); border:1.5px solid var(--primary); padding:12px 24px; border-radius:var(--radius-md); font-size:14px; font-weight:600; cursor:pointer; font-family:inherit;">Ver Detalles</button>
+    <button style="background:transparent; color:var(--fg-muted); border:none; padding:12px 24px; font-size:14px; font-weight:500; cursor:pointer; font-family:inherit; text-decoration:underline;">Compartir</button>
+    <button style="background:var(--accent); color:#fff; border:none; padding:12px 24px; border-radius:var(--radius-md); font-size:14px; font-weight:600; cursor:pointer; font-family:inherit;">Borondo Coins</button>
+  </div>
+
+  <!-- Inputs -->
+  <h4 style="margin-top:40px;">Inputs</h4>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:16px; margin-top:16px;">
+    <div>
+      <label style="font-size:13px; font-weight:500; color:var(--fg-muted); display:block; margin-bottom:6px;">Destino</label>
+      <input type="text" placeholder="Eje Cafetero, Páramo..." style="width:100%; padding:12px 16px; border:1.5px solid var(--border); border-radius:10px; font-size:16px; font-family:inherit; background:var(--surface); color:var(--fg); outline:none;">
+    </div>
+    <div>
+      <label style="font-size:13px; font-weight:500; color:var(--fg-muted); display:block; margin-bottom:6px;">Fecha</label>
+      <input type="date" style="width:100%; padding:12px 16px; border:1.5px solid var(--border); border-radius:10px; font-size:16px; font-family:inherit; background:var(--surface); color:var(--fg); outline:none;">
+    </div>
+    <div>
+      <label style="font-size:13px; font-weight:500; color:var(--fg-muted); display:block; margin-bottom:6px;">Viajeros</label>
+      <select style="width:100%; padding:12px 16px; border:1.5px solid var(--border); border-radius:10px; font-size:16px; font-family:inherit; background:var(--surface); color:var(--fg); outline:none;">
+        <option>1 viajero</option><option>2 viajeros</option><option>3 viajeros</option><option>4+ viajeros</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Badges -->
+  <h4 style="margin-top:40px;">Badges & Chips</h4>
+  <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:16px;">
+    <span style="background:var(--primary-light); color:var(--primary); padding:6px 12px; border-radius:var(--radius-sm); font-size:12px; font-weight:500;">Senderismo</span>
+    <span style="background:var(--secondary-light); color:var(--secondary); padding:6px 12px; border-radius:var(--radius-sm); font-size:12px; font-weight:500;">Cultura</span>
+    <span style="background:var(--gold-light); color:var(--gold); padding:6px 12px; border-radius:var(--radius-sm); font-size:13px; font-weight:600;">$320.000</span>
+    <span style="background:var(--accent-light); color:var(--accent); padding:6px 12px; border-radius:var(--radius-sm); font-size:12px; font-weight:600;">🪙 150 Coins</span>
+    <span style="background:#E6F5EE; color:#198754; padding:6px 12px; border-radius:var(--radius-sm); font-size:12px; font-weight:500;">Confirmado</span>
+    <span style="background:#FDEAEA; color:#CC3D3D; padding:6px 12px; border-radius:var(--radius-sm); font-size:12px; font-weight:500;">Cancelado</span>
+  </div>
+
+  <!-- Border Radius -->
+  <h4 style="margin-top:40px;">Border Radius Scale</h4>
+  <div style="display:flex; flex-wrap:wrap; gap:16px; margin-top:16px; align-items:end;">
+    <div style="text-align:center;">
+      <div style="width:60px; height:60px; background:var(--primary-light); border:2px solid var(--primary); border-radius:8px;"></div>
+      <span style="font-size:11px; color:var(--fg-muted); margin-top:4px; display:block;">8px<br>Badges</span>
+    </div>
+    <div style="text-align:center;">
+      <div style="width:70px; height:70px; background:var(--primary-light); border:2px solid var(--primary); border-radius:10px;"></div>
+      <span style="font-size:11px; color:var(--fg-muted); margin-top:4px; display:block;">10px<br>Inputs</span>
+    </div>
+    <div style="text-align:center;">
+      <div style="width:80px; height:80px; background:var(--primary-light); border:2px solid var(--primary); border-radius:12px;"></div>
+      <span style="font-size:11px; color:var(--fg-muted); margin-top:4px; display:block;">12px<br>Cards</span>
+    </div>
+    <div style="text-align:center;">
+      <div style="width:90px; height:90px; background:var(--primary-light); border:2px solid var(--primary); border-radius:16px;"></div>
+      <span style="font-size:11px; color:var(--fg-muted); margin-top:4px; display:block;">16px<br>Tour Cards</span>
+    </div>
+    <div style="text-align:center;">
+      <div style="width:100px; height:100px; background:var(--primary-light); border:2px solid var(--primary); border-radius:20px;"></div>
+      <span style="font-size:11px; color:var(--fg-muted); margin-top:4px; display:block;">20px<br>Hero/Panel</span>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== VOZ Y TONO ===== -->
+<section>
+<div class="container">
+  <p class="overline">06 — Voz & Tono</p>
+  <h2>Así hablamos</h2>
+  <p>Narrativo, cercano, natural. Contamos historias, no vendemos agresivamente.</p>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:24px;">
+    <div style="background:#E6F5EE; border-radius:var(--radius-md); padding:20px;">
+      <h4 style="color:#1B6B4A; font-size:14px;">✓ Así sí</h4>
+      <ul style="list-style:none; margin-top:12px; font-size:14px; line-height:2; color:#1A1A1A;">
+        <li>"Reservar este tour"</li>
+        <li>"Páramo de Sumapaz · 2 días"</li>
+        <li>"Tu aventura está confirmada"</li>
+        <li>"Borondo no encontró tours aquí"</li>
+      </ul>
+    </div>
+    <div style="background:#FDEAEA; border-radius:var(--radius-md); padding:20px;">
+      <h4 style="color:#CC3D3D; font-size:14px;">✗ Así no</h4>
+      <ul style="list-style:none; margin-top:12px; font-size:14px; line-height:2; color:#1A1A1A;">
+        <li>"¡¡COMPRA AHORA!!"</li>
+        <li>"El mejor tour del mundo"</li>
+        <li>"Compra exitosa"</li>
+        <li>"Error 500"</li>
+      </ul>
+    </div>
+  </div>
+
+  <h4 style="margin-top:32px;">Reglas de Microcopy</h4>
+  <div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:20px; margin-top:12px;">
+    <ul style="font-size:14px; line-height:2.2; color:var(--fg-muted); padding-left:20px;">
+      <li><strong>Botones:</strong> verbos en infinitivo — "Reservar", "Explorar", "Descubrir"</li>
+      <li><strong>Labels:</strong> sustantivos concisos — "Destino", "Fecha", "Viajeros"</li>
+      <li><strong>Errores:</strong> qué pasó + cómo solucionarlo</li>
+      <li><strong>Mascota Borondo:</strong> habla en estados vacíos y onboarding</li>
+      <li><strong>Emojis:</strong> solo en push notifications, nunca en UI core</li>
+      <li><strong>Idioma:</strong> Español (Colombia) default, inglés segundo</li>
+    </ul>
+  </div>
+</div>
+</section>
+
+<!-- ===== SPACING ===== -->
+<section>
+<div class="container">
+  <p class="overline">07 — Spacing & Grid</p>
+  <h2>Ritmo Visual</h2>
+  <p>Escala base de 4px. Whitespace generoso entre secciones.</p>
+
+  <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:24px; align-items:end;">
+    <div style="text-align:center;"><div style="width:4px; height:4px; background:var(--primary); border-radius:1px;"></div><span style="font-size:10px; color:var(--fg-subtle);">4</span></div>
+    <div style="text-align:center;"><div style="width:8px; height:8px; background:var(--primary); border-radius:2px;"></div><span style="font-size:10px; color:var(--fg-subtle);">8</span></div>
+    <div style="text-align:center;"><div style="width:12px; height:12px; background:var(--primary); border-radius:2px;"></div><span style="font-size:10px; color:var(--fg-subtle);">12</span></div>
+    <div style="text-align:center;"><div style="width:16px; height:16px; background:var(--primary); border-radius:3px;"></div><span style="font-size:10px; color:var(--fg-subtle);">16</span></div>
+    <div style="text-align:center;"><div style="width:20px; height:20px; background:var(--primary); border-radius:3px;"></div><span style="font-size:10px; color:var(--fg-subtle);">20</span></div>
+    <div style="text-align:center;"><div style="width:24px; height:24px; background:var(--primary); border-radius:4px;"></div><span style="font-size:10px; color:var(--fg-subtle);">24</span></div>
+    <div style="text-align:center;"><div style="width:32px; height:32px; background:var(--primary); border-radius:4px;"></div><span style="font-size:10px; color:var(--fg-subtle);">32</span></div>
+    <div style="text-align:center;"><div style="width:48px; height:48px; background:var(--primary); border-radius:6px;"></div><span style="font-size:10px; color:var(--fg-subtle);">48</span></div>
+    <div style="text-align:center;"><div style="width:64px; height:64px; background:var(--primary); border-radius:8px;"></div><span style="font-size:10px; color:var(--fg-subtle);">64</span></div>
+    <div style="text-align:center;"><div style="width:80px; height:80px; background:var(--primary); border-radius:10px;"></div><span style="font-size:10px; color:var(--fg-subtle);">80</span></div>
+  </div>
+
+  <div style="margin-top:32px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:20px; font-size:14px; color:var(--fg-muted); line-height:2;">
+    <strong>Grid:</strong> 12 cols desktop (1440px max) · 8 cols tablet · 4 cols mobile<br>
+    <strong>Gutters:</strong> 24px desktop · 20px tablet · 16px mobile<br>
+    <strong>Secciones:</strong> 80px desktop · 48px mobile<br>
+    <strong>Cards:</strong> 24px entre cards · 20px padding interno
+  </div>
+</div>
+</section>
+
+<!-- ===== DO's & DON'Ts ===== -->
+<section>
+<div class="container">
+  <p class="overline">08 — Reglas de Uso</p>
+  <h2>Do's & Don'ts</h2>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:24px;">
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:24px;">
+      <h4 style="color:var(--primary);">✓ Hacer</h4>
+      <ul style="font-size:14px; line-height:2.2; color:var(--fg-muted); padding-left:20px; margin-top:12px;">
+        <li>Dejar que la fotografía hable</li>
+        <li>Whitespace generoso entre secciones</li>
+        <li>Glass solo sobre fotos</li>
+        <li>Fraunces solo en H1 y H2</li>
+        <li>Contraste mín 4.5:1</li>
+        <li>Touch targets ≥ 44px</li>
+        <li>Mobile-first para B2C</li>
+        <li>Fotos 16:9 cards, 3:2 heros</li>
+        <li>Mascota en estados vacíos</li>
+      </ul>
+    </div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:24px;">
+      <h4 style="color:var(--danger);">✗ No hacer</h4>
+      <ul style="font-size:14px; line-height:2.2; color:var(--fg-muted); padding-left:20px; margin-top:12px;">
+        <li>Texto sobre foto sin overlay/glass</li>
+        <li>Colores fuera de la paleta</li>
+        <li>Fraunces para body/UI</li>
+        <li>ALL CAPS (excepto overline 11px)</li>
+        <li>Glassmorphism en áreas admin</li>
+        <li>Gradientes de color como fondo</li>
+        <li>Sombras agresivas</li>
+        <li>Más de 3 brand colors por vista</li>
+        <li>Lenguaje comercial forzado</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<section style="border-bottom:none; padding:48px 0; text-align:center;">
+<div class="container">
+  <h2 style="font-size:32px;">BorondoTours</h2>
+  <p style="font-size:14px; color:var(--fg-subtle);">Brand Book v1.0 — Junio 2026<br>Diseñado con el DESIGN.md System</p>
+  <div style="margin-top:24px; display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+    <span style="background:var(--primary-light); color:var(--primary); padding:6px 12px; border-radius:var(--radius-sm); font-size:12px; font-weight:500;">Páramo Green</span>
+    <span style="background:var(--secondary-light); color:var(--secondary); padding:6px 12px; border-radius:var(--radius-sm); font-size:12px; font-weight:500;">Laguna Blue</span>
+    <span style="background:var(--accent-light); color:var(--accent); padding:6px 12px; border-radius:var(--radius-sm); font-size:12px; font-weight:500;">Barbilla Purple</span>
+    <span style="background:var(--gold-light); color:var(--gold); padding:6px 12px; border-radius:var(--radius-sm); font-size:12px; font-weight:500;">Warm Gold</span>
+  </div>
+</div>
+</section>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+}
+</script>
+</body>
+</html>

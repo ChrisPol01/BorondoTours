@@ -1,0 +1,57 @@
+---
+import Footer from '../components/layout/Footer';
+import { HeaderIsland } from '../components/layout/Navbar';
+import { WhatsAppButton } from '../components/ui/WhatsAppButton';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  lang?: 'es';
+  overlayHeader?: boolean;
+  showFooter?: boolean;
+  mainClass?: string;
+}
+
+const {
+  title,
+  description = 'Marketplace de tours en Colombia',
+  lang = 'es',
+  overlayHeader = false,
+  showFooter = true,
+  mainClass,
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="preload" href="/fonts/sora-extrabold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-regular.woff2" as="font" type="font/woff2" crossorigin />
+    <slot name="head" />
+  </head>
+  <body class="bg-surface-page text-text-primary font-body">
+    <a href="#main" class="skip-link">Ir al contenido principal</a>
+    <HeaderIsland client:idle />
+    <main
+      id="main"
+      tabindex="-1"
+      class:list={[
+        'site-main',
+        { 'site-main--header-overlay': overlayHeader },
+        mainClass,
+      ]}
+    >
+      <slot name="before-content" />
+      <slot />
+      <slot name="after-content" />
+    </main>
+    {showFooter && <Footer />}
+    <WhatsAppButton />
+    <slot name="body-end" />
+  </body>
+</html>

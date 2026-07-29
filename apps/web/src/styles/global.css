@@ -1,0 +1,298 @@
+@import "tailwindcss";
+@import "./tokens.css";
+@import "./fonts.css";
+
+/** Tailwind CSS 4 projection of the Ave Azul source tokens. */
+@theme inline {
+  --color-azul-profundo: var(--brand-azul-profundo);
+  --color-azul-condor: var(--brand-azul-condor);
+  --color-turquesa: var(--brand-turquesa-laguna);
+  --color-verde: var(--brand-verde-frailejon);
+  --color-arena: var(--brand-arena);
+  --color-dorado: var(--brand-dorado);
+  --color-blanco-niebla: var(--brand-blanco-niebla);
+  --color-negro-volcanico: var(--brand-negro-volcanico);
+
+  --color-surface-page: var(--semantic-surface-page);
+  --color-surface-warm: var(--semantic-surface-warm);
+  --color-surface-strong: var(--semantic-surface-strong);
+  --color-text-primary: var(--semantic-text-primary);
+  --color-text-muted: var(--semantic-text-muted);
+  --color-on-strong: var(--semantic-text-on-strong);
+  --color-on-action: var(--semantic-text-on-action);
+  --color-action-primary: var(--semantic-action-primary);
+  --color-action-primary-hover: var(--semantic-action-primary-hover);
+  --color-action-cta: var(--semantic-action-cta);
+  --color-focus: var(--semantic-focus);
+  --color-border-subtle: var(--semantic-border-subtle);
+  --color-available: var(--semantic-available);
+  --color-limited: var(--semantic-limited);
+  --color-sold-out: var(--semantic-sold-out);
+  --color-unavailable: var(--semantic-unavailable);
+  --color-adventure: var(--semantic-adventure);
+
+  /* Backwards-compatible semantic availability names. */
+  --color-avail-green: var(--semantic-available);
+  --color-avail-yellow: var(--semantic-limited);
+  --color-avail-red: var(--semantic-sold-out);
+  --color-avail-gray: var(--semantic-unavailable);
+
+  --font-heading: var(--type-heading);
+  --font-body: var(--type-body);
+
+  --text-h1: var(--type-h1);
+  --text-h1--line-height: var(--leading-h1);
+  --text-h2: var(--type-h2);
+  --text-h2--line-height: var(--leading-h2);
+  --text-h3: var(--type-h3);
+  --text-h3--line-height: var(--leading-h3);
+  --text-h4: var(--type-h4);
+  --text-h4--line-height: var(--leading-h4);
+  --text-body1: var(--type-body-1);
+  --text-body1--line-height: var(--leading-body);
+  --text-body2: var(--type-body-2);
+  --text-body2--line-height: var(--leading-body);
+  --text-button: var(--type-button);
+  --text-button--line-height: var(--leading-button);
+  --text-label: var(--type-label);
+  --text-label--line-height: var(--leading-label);
+
+  --container-public: var(--layout-container-public);
+  --container-reading: var(--layout-container-reading);
+  --container-account: var(--layout-container-account);
+  --spacing-page-gutter: var(--layout-page-gutter);
+  --spacing-section-gap: var(--layout-section-gap);
+  --spacing-header-mobile: var(--layout-header-mobile);
+  --spacing-header-desktop: var(--layout-header-desktop);
+  --spacing-map-canvas: var(--layout-map-height);
+  --spacing-tour-rail-card: var(--layout-tour-rail-card);
+  --spacing-booking-sidebar: var(--layout-booking-sidebar);
+  --spacing-hero-mobile: var(--layout-hero-mobile);
+  --spacing-hero-tablet: var(--layout-hero-tablet);
+  --spacing-hero-desktop: var(--layout-hero-desktop);
+  --spacing-drawer-mobile: var(--layout-drawer-mobile);
+  --spacing-drawer-max: var(--layout-drawer-max);
+  --spacing-gallery-overflow: var(--layout-gallery-overflow);
+  --spacing-logo-horizontal: var(--logo-horizontal-min-width);
+  --aspect-tour-media: var(--layout-tour-media-aspect);
+
+  --radius-control: var(--shape-control);
+  --radius-card: var(--shape-card);
+  --radius-panel: var(--shape-panel);
+  --radius-pill: var(--shape-pill);
+  --shadow-card: var(--elevation-card);
+  --shadow-floating: var(--elevation-floating);
+  --shadow-sticky: var(--elevation-sticky);
+  --blur-glass: var(--glass-blur);
+  --ease-brand: var(--motion-ease-standard);
+  --z-index-skip: 9999;
+}
+
+@utility grid-cols-tour-detail {
+  grid-template-columns: minmax(0, 1fr) var(--layout-booking-sidebar);
+}
+
+@utility duration-brand {
+  transition-duration: var(--motion-duration-standard);
+}
+
+@utility brand-logo-clear-space {
+  padding: var(--logo-clear-space);
+}
+
+@utility brand-logo-horizontal {
+  display: block;
+  inline-size: var(--logo-horizontal-min-width);
+  min-inline-size: var(--logo-horizontal-min-width);
+  block-size: auto;
+  max-inline-size: 100%;
+  object-fit: contain;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--layout-header-desktop);
+}
+
+body {
+  margin: 0;
+  background: var(--semantic-surface-page);
+  color: var(--semantic-text-primary);
+  font-family: var(--type-body);
+}
+
+.skip-link {
+  position: fixed;
+  inset-block-start: 1rem;
+  inset-inline-start: 1rem;
+  z-index: 9999;
+  max-inline-size: calc(100vw - 2rem);
+  transform: translateY(-200%);
+  border-radius: var(--shape-control);
+  background: var(--semantic-surface-strong);
+  color: var(--semantic-text-on-strong);
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.site-main {
+  min-block-size: 60vh;
+  padding-block-start: var(--layout-header-mobile);
+}
+
+.site-main--header-overlay {
+  padding-block-start: 0;
+}
+
+.account-layout__navigation:empty {
+  display: none;
+}
+
+.responsive-image {
+  display: block;
+  overflow: hidden;
+  background: var(--semantic-surface-warm);
+}
+
+.responsive-image > img {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 64.0625rem) {
+  .site-main:not(.site-main--header-overlay) {
+    padding-block-start: var(--layout-header-desktop);
+  }
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--type-heading);
+}
+
+:focus-visible {
+  outline: 2px solid var(--semantic-focus);
+  outline-offset: 2px;
+}
+.glass-surface {
+  background-color: var(--glass-background);
+  border: var(--border-hairline) solid var(--glass-border);
+  box-shadow: var(--glass-highlight), var(--glass-depth);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .glass-surface {
+    background-color: var(--glass-fallback);
+    box-shadow: var(--glass-highlight), var(--elevation-card);
+  }
+}
+
+/* Header glass — estilo iOS: ultra-transparente con blur y saturación. */
+.glass-header {
+  background-color: var(--glass-header-background);
+  border: var(--border-hairline) solid var(--glass-header-border);
+  border-radius: 9999px;
+  backdrop-filter: blur(var(--glass-header-blur)) saturate(1.8);
+  -webkit-backdrop-filter: blur(var(--glass-header-blur)) saturate(1.8);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .glass-header {
+    background-color: color-mix(in srgb, var(--brand-negro-volcanico) 40%, transparent);
+  }
+}
+
+/* Header glass sólido — para cuando sale del hero, glass blanco translúcido. */
+.glass-header-solid {
+  background-color: color-mix(in srgb, var(--brand-blanco-niebla) 75%, transparent);
+  border: var(--border-hairline) solid color-mix(in srgb, var(--brand-blanco-niebla) 50%, transparent);
+  border-radius: 9999px;
+  backdrop-filter: blur(1rem) saturate(1.5);
+  -webkit-backdrop-filter: blur(1rem) saturate(1.5);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--brand-negro-volcanico) 8%, transparent);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .glass-header-solid {
+    background-color: var(--brand-blanco-niebla);
+  }
+}
+
+.mapview-popup {
+  overflow: hidden;
+  border-radius: var(--shape-control);
+  background: var(--semantic-surface-page);
+  color: var(--semantic-text-primary);
+  font-family: var(--type-body);
+  box-shadow: var(--elevation-card);
+}
+
+.mapview-popup__image {
+  display: block;
+  width: 100%;
+  height: 6.25rem;
+  object-fit: cover;
+}
+
+.mapview-popup__content {
+  padding: 0.5rem 0.625rem;
+}
+
+.mapview-popup__title {
+  margin: 0 0 0.25rem;
+  color: var(--semantic-text-primary);
+  font-size: var(--type-body-2);
+  font-weight: 600;
+}
+
+.mapview-popup__price {
+  margin: 0 0 0.5rem;
+  color: var(--semantic-text-muted);
+  font-size: var(--type-label);
+}
+
+.mapview-popup__link {
+  display: inline-block;
+  color: var(--semantic-action-primary);
+  font-size: var(--type-label);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.mapview-popup__link:hover {
+  color: var(--semantic-action-primary-hover);
+  text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html,
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: var(--motion-duration-reduced) !important;
+    transition-property: color, background-color, border-color, opacity !important;
+  }
+
+  [data-parallax],
+  [data-autoplay] {
+    animation: none !important;
+    transform: none !important;
+  }
+}

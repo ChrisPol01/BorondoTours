@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "name": "Frontend A11y & i18n Check",
+  "description": "Cuando se editan componentes React del frontend, verifica accesibilidad (WCAG 2.1 AA), que los textos pasan por i18next, y que las imágenes usan el componente correcto.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/*.tsx",
+      "**/components/**",
+      "**/features/**"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Se editó un componente React. Verifica:\n1. ¿Los textos visibles pasan por t('namespace:key')? (no strings hardcodeados en español/inglés)\n2. ¿Los inputs tienen label o aria-label?\n3. ¿Las imágenes tienen alt text descriptivo (o alt=\"\" si son decorativas)?\n4. ¿Los botones son <button> y los links son <a>? (no <div onClick>)\n5. ¿Si hay un modal, tiene focus trap + Escape para cerrar + role=\"dialog\"?\n6. ¿Si renderiza HTML del backend, usa el componente SafeHtml (DOMPurify)?\n7. ¿El contraste de colores es suficiente (4.5:1 para texto normal)?\nLa accesibilidad no es opcional — es un quality gate del proyecto."
+  }
+}

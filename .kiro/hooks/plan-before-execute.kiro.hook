@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Plan Before Execute",
+  "description": "Al iniciar una nueva conversación o tarea, analiza el contexto del proyecto y recuerda consultar los specs relevantes antes de implementar. Prioriza plan-before-execute.",
+  "version": "1",
+  "when": {
+    "type": "promptSubmit"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Si el usuario pide implementar un feature nuevo o hacer un cambio significativo, ANTES de escribir código:\n1. Identifica qué Spec de docs/01-Specs/ es relevante y léelo\n2. Verifica el Modelo de Datos Core si involucra base de datos\n3. Crea un plan breve (archivos a crear/modificar, orden de implementación)\n4. Confirma el approach con el usuario si hay ambigüedad\nPara tareas simples (fix, ajuste menor), puedes proceder directamente sin plan extenso."
+  }
+}

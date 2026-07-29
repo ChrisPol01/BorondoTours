@@ -1,0 +1,19 @@
+{
+  "enabled": true,
+  "name": "State Machine Guard",
+  "description": "Cuando se editan archivos de estado de booking o máquinas de estado, verifica que las transiciones siguen exactamente el flujo documentado y que no hay transiciones ilegales posibles.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/booking*/**",
+      "**/reserv*/**",
+      "**/state-machine/**",
+      "**/status/**"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Se editó lógica de transiciones de estado (booking, tour instance, etc). Verifica:\n1. ¿Las transiciones permitidas están explícitamente definidas (no cualquier estado → cualquier estado)?\n2. Estados válidos de Booking: HOLD → HOLD_GROUP → PARTIAL_PAID → CONFIRMED → SETTLED → COMPLETED (+ CANCELED, CHARGEBACK, EXPIRED desde ciertos estados)\n3. ¿Un booking CONFIRMED nunca puede volver a HOLD? (irreversible)\n4. ¿Un booking CANCELED o COMPLETED es estado terminal (no puede cambiar)?\n5. ¿La transición actualiza todos los side effects? (Coins, payouts, notificaciones)\n6. ¿Hay log de auditoría de cada transición (quién, cuándo, de qué estado a qué estado)?\nTransiciones de estado incorrectas causan inconsistencias financieras imposibles de revertir."
+  }
+}

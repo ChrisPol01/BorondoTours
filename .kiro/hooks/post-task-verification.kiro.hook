@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Post-Task Verification",
+  "description": "Después de completar una tarea de spec, verifica que todos los criterios de aceptación se cumplieron, que hay tests para la lógica de negocio, y que se respetaron los quality gates del proyecto.",
+  "version": "1",
+  "when": {
+    "type": "postTaskExecution"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "La tarea se marcó como completada. Antes de continuar, haz una verificación final:\n1. ¿Se cumplieron TODOS los criterios de aceptación del spec?\n2. ¿Los cálculos financieros tienen tests unitarios?\n3. ¿Los endpoints nuevos tienen validación de input y RBAC guards?\n4. ¿Se respetó el tenant isolation (operator_id) donde aplica?\n5. ¿Hay algo que debería documentarse (ADR, actualización de spec, modelo de datos)?\nSi detectas algo pendiente, menciónalo antes de avanzar a la siguiente tarea."
+  }
+}

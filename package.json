@@ -1,0 +1,29 @@
+{
+  "name": "borondotours",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "test": "turbo test",
+    "db:generate": "turbo db:generate --filter=@borondo/db",
+    "db:migrate": "turbo db:migrate --filter=@borondo/db",
+    "infra:build": "sam build --template-file infra/template.yaml",
+    "infra:deploy:dev": "sam deploy --config-env default --template-file infra/template.yaml",
+    "infra:deploy:prod": "sam deploy --config-env prod --template-file infra/template.yaml",
+    "infra:local": "sam local start-api --template-file infra/template.yaml",
+    "clean": "turbo clean && rimraf node_modules"
+  },
+  "devDependencies": {
+    "turbo": "^2.3.0",
+    "typescript": "^5.5.0",
+    "rimraf": "^6.0.0"
+  }
+}

@@ -1,0 +1,126 @@
+/**
+ * fonts.css — Fuentes web de la marca "Ave azul" (Task 2.3)
+ *
+ * Requisitos cubiertos:
+ * - R2.1: Sora e Inter como fuentes web, cada una con respaldo del sistema
+ *         explícito (system-ui/sans-serif). El stack de familias vive en los
+ *         tokens de tipografía (styles/tokens.css, Task 2.1):
+ *             --type-heading: "Sora", "Sora Fallback", system-ui, sans-serif;
+ *             --type-body:    "Inter", "Inter Fallback", system-ui, sans-serif;
+ *         Aquí se declaran las familias reales y las familias de respaldo
+ *         ajustadas por métricas ("Sora Fallback" / "Inter Fallback").
+ * - R2.2: font-display: swap → el texto se pinta de inmediato con la fuente de
+ *         respaldo del sistema sin bloquear el render.
+ * - R2.3: SOLO se cargan estos pesos — Sora 800/700/600 e Inter 400/600.
+ *         No se declara ningún otro peso ni estilo (italic).
+ * - R2.4: Con `font-display: swap` el periodo de bloqueo es ~0ms y el periodo
+ *         de intercambio es infinito: si la fuente web no llega dentro de 3s el
+ *         texto permanece con el respaldo y se sustituye cuando la web esté lista.
+ * - R2.5: Las familias de respaldo ajustadas (size-adjust / ascent-override /
+ *         descent-override / line-gap-override) igualan las métricas de la fuente
+ *         web para mantener CLS < 0.1 al producirse el swap.
+ *
+ * Assets: los .woff2 se auto-alojan bajo `apps/web/public/fonts/` y se sirven
+ * desde la raíz del sitio (`/fonts/*.woff2`). Ver public/fonts/README.md para la
+ * lista exacta de archivos requeridos y el comando de subsetting recomendado.
+ *
+ * Preload: las directivas <link rel="preload"> van en el <head> de
+ * `src/layouts/Base.astro` (no se pueden declarar desde CSS). Ver Base.astro.
+ */
+
+/* ==========================================================================
+   Sora — Títulos (H1–H4). Pesos: 800 (ExtraBold), 700 (Bold), 600 (SemiBold)
+   ========================================================================== */
+
+@font-face {
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src:
+    local("Sora ExtraBold"),
+    local("Sora-ExtraBold"),
+    url("/fonts/sora-extrabold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src:
+    local("Sora Bold"),
+    local("Sora-Bold"),
+    url("/fonts/sora-bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src:
+    local("Sora SemiBold"),
+    local("Sora-SemiBold"),
+    url("/fonts/sora-semibold.woff2") format("woff2");
+}
+
+/* ==========================================================================
+   Inter — Body, botones, etiquetas. Pesos: 400 (Regular), 600 (SemiBold)
+   ========================================================================== */
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local("Inter Regular"),
+    local("Inter-Regular"),
+    url("/fonts/inter-regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src:
+    local("Inter SemiBold"),
+    local("Inter-SemiBold"),
+    url("/fonts/inter-semibold.woff2") format("woff2");
+}
+
+/* ==========================================================================
+   Familias de respaldo ajustadas por métricas (R2.5 — CLS < 0.1)
+
+   Estas familias alias del sistema (system-ui / Arial) sobre-escriben las
+   métricas para ocupar prácticamente el mismo espacio que la fuente web
+   mientras dura el `swap`, evitando reflows al cargar Sora/Inter.
+
+   Se referencian en el stack de tipografía (tokens.css) ENTRE la fuente web y
+   `system-ui`:  "Sora", "Sora Fallback", system-ui, sans-serif
+
+   Los valores de Inter provienen de las métricas generadas para su respaldo
+   Arial. Los de Sora son una aproximación inicial: deben recalibrarse con una
+   herramienta de métricas (Fontaine / capsize / next-font-metrics) una vez que
+   los .woff2 reales estén presentes en public/fonts/. Ver README.
+   ========================================================================== */
+
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Arial");
+  ascent-override: 90.44%;
+  descent-override: 22.52%;
+  line-gap-override: 0%;
+  size-adjust: 107.12%;
+}
+
+@font-face {
+  font-family: "Sora Fallback";
+  src: local("Arial");
+  ascent-override: 98.5%;
+  descent-override: 26%;
+  line-gap-override: 0%;
+  size-adjust: 106%;
+}

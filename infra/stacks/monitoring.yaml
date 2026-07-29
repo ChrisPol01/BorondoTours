@@ -1,0 +1,102 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  BorondoTours — Monitoring Stack
+  CloudWatch Alarms, SNS topics, Budgets. Solo se despliega en staging/prod.
+
+Parameters:
+  Environment:
+    Type: String
+
+Resources:
+  # --- SNS Topic para alertas ---
+  AlertsTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Sub borondo-${Environment}-alerts
+      Tags:
+        - Key: Project
+          Value: BorondoTours
+
+  # --- Budget Alert ($60/mes para dev, $300/mes para prod) ---
+  MonthlyBudget:
+    Type: AWS::Budgets::Budget
+    Properties:
+      Budget:
+        BudgetName: !Sub borondo-${Environment}-monthly
+        BudgetType: COST
+        TimeUnit: MONTHLY
+        BudgetLimit:
+          Amount: 100
+          Unit: USD
+      NotificationsWithSubscribers:
+        - Notification:
+            NotificationType: ACTUAL
+            ComparisonOperator: GREATER_THAN
+            Threshold: 80
+            ThresholdType: PERCENTAGE
+          Subscribers:
+            - SubscriptionType: SNS
+              Address: !Ref AlertsTopic
+
+  # --- Alarm: Lambda Errors (cualquier servicio con >5 errores en 5 min) ---
+  LambdaErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub borondo-${Environment}-lambda-errors
+      AlarmDescription: Lambda errors > 5 en 5 minutos
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 5
+      ComparisonOperator: GreaterThanThreshold
+      TreatMissingData: notBreaching
+      AlarmActions:
+        - !Ref AlertsTopic
+      Dimensions: []  # Todas las funciones
+
+  # --- Alarm: DLQ no vacía ---
+  DLQAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub borondo-${Environment}-dlq-messages
+      AlarmDescription: Mensajes en Dead Letter Queue (eventos fallidos)
+      Namespace: AWS/SQS
+      MetricName: ApproximateNumberOfMessagesVisible
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: notBreaching
+      AlarmActions:
+        - !Ref AlertsTopic
+      Dimensions:
+        - Name: QueueName
+          Value: !Sub borondo-${Environment}-events-dlq
+
+  # --- Alarm: RDS CPU > 80% ---
+  RDSCPUAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub borondo-${Environment}-rds-cpu
+      AlarmDescription: RDS CPU utilization > 80%
+      Namespace: AWS/RDS
+      MetricName: CPUUtilization
+      Statistic: Average
+      Period: 300
+      EvaluationPeriods: 3
+      Threshold: 80
+      ComparisonOperator: GreaterThanThreshold
+      AlarmActions:
+        - !Ref AlertsTopic
+      Dimensions:
+        - Name: DBInstanceIdentifier
+          Value: !Sub borondo-${Environment}
+
+Outputs:
+  AlertsTopicArn:
+    Value: !Ref AlertsTopic
+    Export:
+      Name: !Sub ${AWS::StackName}-AlertsTopicArn

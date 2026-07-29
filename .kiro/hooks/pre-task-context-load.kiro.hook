@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Pre-Task Context Load",
+  "description": "Antes de iniciar una tarea de spec, lee los specs relevantes y verifica las dependencias con otros módulos para tener contexto completo antes de implementar.",
+  "version": "1",
+  "when": {
+    "type": "preTaskExecution"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Vas a iniciar una nueva tarea de implementación. ANTES de escribir código:\n1. Identifica qué Spec de docs/01-Specs/ es relevante para esta tarea y LÉELO completo\n2. Revisa docs/03-Knowledge/Modelo-Datos-Core.md si la tarea involucra base de datos\n3. Verifica si hay ADRs relevantes en docs/02-ADRs/ que afecten decisiones técnicas\n4. Identifica dependencias: ¿esta tarea necesita que otra esté terminada primero?\n5. Crea un mini-plan: qué archivos vas a crear/modificar y en qué orden\nNo empieces a codificar sin haber leído la documentación relevante."
+  }
+}

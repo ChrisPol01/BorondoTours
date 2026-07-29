@@ -1,0 +1,17 @@
+{
+  "enabled": true,
+  "name": "Update Data Model Docs",
+  "description": "Cuando se crea un nuevo archivo de migración de base de datos, recuerda actualizar la documentación del Modelo de Datos Core si se agregaron tablas o columnas nuevas.",
+  "version": "1",
+  "when": {
+    "type": "fileCreated",
+    "patterns": [
+      "**/migrations/**",
+      "**/schema/**"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Se ha creado un archivo de migración o schema nuevo. Verifica si esto agrega tablas o columnas nuevas que deban documentarse en docs/03-Knowledge/Modelo-Datos-Core.md. Si es así, propón la actualización del documento. Recuerda: ese documento es la fuente de verdad del esquema de BorondoTours."
+  }
+}

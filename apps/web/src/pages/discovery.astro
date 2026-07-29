@@ -1,0 +1,27 @@
+---
+/**
+ * Discovery Page — Catálogo de tours BorondoTours (R13, R14, R7.6)
+ *
+ * La URL es la fuente de verdad del estado de exploración. Un island
+ * `CatalogController` (`client:load`) lee la URL al montar, hidrata el estado
+ * de filtros (R13.10), dispara `QUERY /tours/search` y refleja cambios en la
+ * URL en ≤500ms (R13.8).
+ *
+ * Composición:
+ *   • Base layout (Navbar + Footer — R7.6)
+ *   • CatalogController island (client:load) que compone internamente:
+ *     - SearchBar (R12)
+ *     - FilterPanel + SortSelect (R13)
+ *     - ViewToggle + CatalogGrid / MapView (R14)
+ *
+ * La directiva `client:load` se usa porque el CatalogController necesita
+ * hidratar desde la URL inmediatamente al cargar (R13.10) — no puede esperar a
+ * ser visible ni a estar idle.
+ */
+import Layout from '../layouts/PublicLayout.astro';
+import { CatalogController } from '../components/discovery/CatalogController';
+---
+
+<Layout title="Descubre tours — BorondoTours" description="Explora nuestro catálogo de tours en Colombia. Filtra por destino, duración, precio y más.">
+  <CatalogController client:load />
+</Layout>

@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ESNext", "DOM"],
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@borondo/contracts": ["./packages/contracts/src"],
+      "@borondo/domain": ["./packages/domain/src"],
+      "@borondo/db": ["./packages/db/src"]
+    }
+  },
+  "references": [
+    { "path": "./packages/contracts" },
+    { "path": "./packages/domain" },
+    { "path": "./packages/db" }
+  ],
+  "include": [],
+  "exclude": ["dist", "node_modules"]
+}

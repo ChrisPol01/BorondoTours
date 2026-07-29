@@ -1,0 +1,42 @@
+# 10. AWS Multi-Account & SSO Profile Management (Borondo Tours)
+
+## 10.1. Contexto de la Organización
+Este proyecto opera bajo una arquitectura multi-cuenta de AWS Organizations. Todas las interacciones con la infraestructura de AWS deben realizarse utilizando AWS IAM Identity Center (SSO). 
+
+Existen tres cuentas principales. Kiro DEBE utilizar estrictamente el nombre del perfil (`profile`) correspondiente al entorno objetivo para cualquier operación.
+
+| Entorno / Cuenta | Account ID | Nombre del Profile a usar (CLI/Terraform) | Función Principal |
+| :--- | :--- | :--- | :--- |
+| **Root (Management)** | `461299757352` | `AdministratorAccess-461299757352` | Solo facturación y SSO. NO desplegar cargas de trabajo aquí. |
+| **Dev (Development)** | `232025404765` | `AdministratorAccess-232025404765` | Entorno principal de trabajo de Kiro. Pruebas y despliegues efímeros. |
+| **Prod (Production)** | `787565887675` | `AdministratorAccess-787565887675` | Entorno vivo de Borondo Tours (Dominio, SES, App real). |
+
+## 10.2. Reglas de Ejecución para Kiro (Paso a Paso)
+
+Antes de interactuar con AWS, Kiro debe seguir estrictamente este flujo de trabajo:
+
+### Paso 1: Determinar el Entorno Objetivo
+Analiza la petición del usuario y determina si la acción debe ocurrir en `dev` (por defecto), `prod` o `root`. Extrae el nombre del perfil correspondiente de la tabla anterior.
+
+### Paso 2: Autenticación de Sesión (SSO Login)
+Las sesiones de SSO son temporales. Antes de iniciar una cadena de comandos para un entorno específico, o si recibes errores como `UnrecognizedClientException` o `ExpiredToken`, debes solicitar la renovación de la sesión ejecutando:
+\`\`\`bash
+aws sso login --profile <NOMBRE_DEL_PROFILE>
+\`\`\`
+*Nota para Kiro: Este comando requiere interacción en el navegador por parte del usuario. Debes notificar al usuario que apruebe el acceso en su navegador antes de continuar con el Paso 3.*
+
+### Paso 3: Ejecución de Comandos AWS CLI
+Para cualquier operación directa con la terminal de AWS CLI, NUNCA uses el comando base de forma aislada. SIEMPRE debes concatenar la bandera `--profile` al final del comando.
+* **Ejemplo Correcto (Dev):** `aws s3 ls --profile AdministratorAccess-232025404765`
+* **Ejemplo Correcto (Prod):** `aws lambda list-functions --region us-east-1 --profile AdministratorAccess-787565887675`
+
+### Paso 4: Ejecución con Terraform o Scripts de Node/Bun
+Si vas a ejecutar comandos de Terraform (`terraform init`, `plan`, `apply`) o scripts automatizados que requieran acceso a AWS, no uses la bandera `--profile`. En su lugar, debes inyectar la variable de entorno `AWS_PROFILE` temporalmente en la terminal antes de la ejecución:
+* **En entornos PowerShell/Windows:** `$env:AWS_PROFILE="<NOMBRE_DEL_PROFILE>"`
+* **En entornos Bash/Linux/Mac:** `export AWS_PROFILE="<NOMBRE_DEL_PROFILE>"`
+* **Ejemplo de cadena:** `export AWS_PROFILE="AdministratorAccess-232025404765" && terraform plan`
+
+## 10.3. Restricciones de Seguridad (Safety Constraints)
+1. **Radio de Acción:** Tu radio de acción autónomo se limita a la cuenta **Dev**. 
+2. **Protección de Prod y Root:** Ejecuta comandos de creación, modificación o destrucción (ej. `terraform apply`, `aws ec2 terminate-instances`) usando los perfiles de `Prod` o `Root` pediendo la confirmación explícita al usuario en el chat y si el usuario en el chat lo confirma, hazlo.
+3. **Manejo de DNS/SES:** Si se te pide configurar Amazon SES o Route 53 (dominios reales), asume que el perfil objetivo es el de **Prod**, pero pide confirmación antes de aplicar cambios.

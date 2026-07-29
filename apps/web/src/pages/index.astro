@@ -1,0 +1,43 @@
+---
+/**
+ * Landing Page — BorondoTours B2C Portal (R8, R9, R10, R7.6)
+ *
+ * Composición de la página de inicio con directivas de cliente mínimas:
+ *   • Hero: `client:load` — usa useState para fallback de imagen (R8.7)
+ *   • SearchWidget: `client:idle` — formulario interactivo (R9.1–R9.7)
+ *   • DestinationsSection: `client:visible` — data fetching below-the-fold (R10.1–R10.6)
+ *   • Navbar y Footer se montan desde Base.astro (R6, R7.6)
+ *
+ * Estructura visual:
+ *   Hero (full-width, contiene data-hero-sentinel para Navbar)
+ *     └─ SearchWidget superpuesto al borde inferior del hero (glass overlay)
+ *   DestinationsSection (destinos + trust badges)
+ *   Footer (trust badges de marca — ya en Base.astro)
+ */
+import Layout from '../layouts/PublicLayout.astro';
+import { Hero } from '../components/landing/Hero';
+import { SearchWidget } from '../components/landing/SearchWidget';
+import { DestinationsSection } from '../components/landing/DestinationsSection';
+---
+
+<Layout title="BorondoTours — Descubre Colombia" overlayHeader>
+  {/* Hero + SearchWidget: wrapper relativo con buscador dentro del hero */}
+  <div class="relative">
+    {/* Hero (R8.1–R8.9): usa useState → requiere hidratación client:load */}
+    <Hero client:load />
+
+    {/*
+      SearchWidget (R9.1–R9.7): glass overlay posicionado en la parte inferior
+      del hero, DENTRO de la imagen de fondo (no debajo).
+    */}
+    <div class="absolute bottom-12 left-1/2 z-20 w-full -translate-x-1/2 px-4 sm:px-6 md:bottom-16 lg:bottom-20">
+      <SearchWidget client:idle />
+    </div>
+  </div>
+
+  {/*
+    DestinationsSection (R10.1–R10.6): destinos destacados (3–8 TourCards glass).
+    Se hidrata cuando es visible (below-the-fold).
+  */}
+  <DestinationsSection client:visible />
+</Layout>

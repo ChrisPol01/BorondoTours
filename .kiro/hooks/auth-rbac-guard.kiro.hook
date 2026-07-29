@@ -1,0 +1,20 @@
+{
+  "enabled": true,
+  "name": "Auth & RBAC Guard",
+  "description": "Cuando se editan archivos de autenticación, autorización o guards RBAC, verifica que los roles están correctamente implementados, que hay tenant isolation, y que no se exponen endpoints sin protección.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/auth/**",
+      "**/guards/**",
+      "**/middleware/**",
+      "**/*.guard.ts",
+      "**/rbac/**"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Se editó un archivo de autenticación o autorización. Verifica:\n1. ¿Los 10 roles del sistema están correctamente manejados? (SUPER_ADMIN, GERENTE, AGENT, COORD, CLIENT + 5 OPERATOR_*)\n2. ¿Hay tenant isolation? Los roles OPERATOR_* solo ven datos de su propio operator_id\n3. ¿El access token se valida en cada request protegida?\n4. ¿Se verifica el role Y el operator_id (no solo el role)?\n5. ¿El endpoint público está intencionalmente público o es un descuido?\n6. ¿El Ghost Login tiene las restricciones correctas (no pagos, no contratos, audit log)?\nUn error de RBAC expone datos de un operador a otro — es un fallo de seguridad crítico."
+  }
+}

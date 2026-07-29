@@ -1,0 +1,50 @@
+---
+interface ImageCandidate {
+  src: string;
+  width: 400 | 800 | 1200;
+}
+
+interface Props {
+  src: string;
+  candidates: readonly [ImageCandidate, ImageCandidate, ImageCandidate];
+  sizes: string;
+  alt: string;
+  width: number;
+  height: number;
+  loading?: 'eager' | 'lazy';
+  priority?: boolean;
+  class?: string;
+}
+
+const {
+  src,
+  candidates,
+  sizes,
+  alt,
+  width,
+  height,
+  loading = 'lazy',
+  priority = false,
+  class: className,
+} = Astro.props;
+const requiredWidths = new Set(candidates.map(({ width: candidateWidth }) => candidateWidth));
+const expectedWidths = [400, 800, 1200] as const;
+if (!expectedWidths.every((candidateWidth) => requiredWidths.has(candidateWidth))) {
+  throw new Error('ResponsiveImage requires 400w, 800w and 1200w candidates.');
+}
+const srcset = candidates.map((candidate) => `${candidate.src} ${candidate.width}w`).join(', ');
+---
+
+<span class:list={['responsive-image', className]} style={`aspect-ratio: ${width} / ${height}`}>
+  <img
+    src={src}
+    srcset={srcset}
+    sizes={sizes}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={loading}
+    decoding="async"
+    fetchpriority={priority ? 'high' : undefined}
+  />
+</span>

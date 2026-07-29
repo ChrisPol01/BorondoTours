@@ -1,0 +1,15 @@
+---
+type SurfaceTag = 'div' | 'section' | 'aside' | 'article' | 'form';
+
+interface Props {
+  as?: SurfaceTag;
+  overImage: true;
+  class?: string;
+}
+
+const { as: Tag = 'div', class: className } = Astro.props as Props;
+---
+
+<Tag class:list={['glass-surface', className]} data-liquid-glass>
+  <slot />
+</Tag>

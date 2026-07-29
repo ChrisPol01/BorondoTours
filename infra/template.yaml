@@ -1,0 +1,150 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  BorondoTours — Template raíz (nested stacks)
+  Marketplace B2C de tours en Colombia. Serverless-first, us-east-1.
+
+Globals:
+  Function:
+    Runtime: nodejs22.x
+    MemorySize: 512
+    Timeout: 30
+    Architectures:
+      - arm64
+    Environment:
+      Variables:
+        NODE_ENV: !Ref Environment
+        AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
+    Tags:
+      Project: BorondoTours
+      Environment: !Ref Environment
+
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues: [dev, staging, prod]
+    Description: Entorno de despliegue
+
+  DBInstanceClass:
+    Type: String
+    Default: db.t4g.micro
+    Description: Clase de instancia RDS
+
+Conditions:
+  IsProd: !Equals [!Ref Environment, prod]
+  IsNotDev: !Not [!Equals [!Ref Environment, dev]]
+
+Resources:
+  # --- Network Stack ---
+  NetworkStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./stacks/network.yaml
+      Parameters:
+        Environment: !Ref Environment
+      Tags:
+        - Key: Project
+          Value: BorondoTours
+
+  # --- Database Stack ---
+  DatabaseStack:
+    Type: AWS::CloudFormation::Stack
+    DependsOn: NetworkStack
+    Properties:
+      TemplateURL: ./stacks/database.yaml
+      Parameters:
+        Environment: !Ref Environment
+        VpcId: !GetAtt NetworkStack.Outputs.VpcId
+        PrivateSubnetIds: !GetAtt NetworkStack.Outputs.PrivateSubnetIds
+        DBSecurityGroupId: !GetAtt NetworkStack.Outputs.DBSecurityGroupId
+        DBInstanceClass: !Ref DBInstanceClass
+      Tags:
+        - Key: Project
+          Value: BorondoTours
+
+  # --- Storage Stack ---
+  StorageStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./stacks/storage.yaml
+      Parameters:
+        Environment: !Ref Environment
+      Tags:
+        - Key: Project
+          Value: BorondoTours
+
+  # --- Services Stack (Lambdas + API Gateway) ---
+  ServicesStack:
+    Type: AWS::CloudFormation::Stack
+    DependsOn:
+      - DatabaseStack
+      - StorageStack
+    Properties:
+      TemplateURL: ./stacks/services.yaml
+      Parameters:
+        Environment: !Ref Environment
+        VpcId: !GetAtt NetworkStack.Outputs.VpcId
+        PrivateSubnetIds: !GetAtt NetworkStack.Outputs.PrivateSubnetIds
+        LambdaSecurityGroupId: !GetAtt NetworkStack.Outputs.LambdaSecurityGroupId
+        DatabaseSecretArn: !GetAtt DatabaseStack.Outputs.DatabaseSecretArn
+        RdsProxyEndpoint: !GetAtt DatabaseStack.Outputs.RdsProxyEndpoint
+        MediaBucketName: !GetAtt StorageStack.Outputs.MediaBucketName
+      Tags:
+        - Key: Project
+          Value: BorondoTours
+
+  # --- Events Stack (SQS, EventBridge, Step Functions) ---
+  EventsStack:
+    Type: AWS::CloudFormation::Stack
+    DependsOn: ServicesStack
+    Properties:
+      TemplateURL: ./stacks/events.yaml
+      Parameters:
+        Environment: !Ref Environment
+      Tags:
+        - Key: Project
+          Value: BorondoTours
+
+  # --- CDN Stack (CloudFront) ---
+  CdnStack:
+    Type: AWS::CloudFormation::Stack
+    DependsOn: StorageStack
+    Properties:
+      TemplateURL: ./stacks/cdn.yaml
+      Parameters:
+        Environment: !Ref Environment
+        FrontendBucketDomainName: !GetAtt StorageStack.Outputs.FrontendBucketDomainName
+        ApiEndpoint: !GetAtt ServicesStack.Outputs.ApiEndpoint
+      Tags:
+        - Key: Project
+          Value: BorondoTours
+
+  # --- Monitoring Stack ---
+  MonitoringStack:
+    Type: AWS::CloudFormation::Stack
+    Condition: IsNotDev
+    Properties:
+      TemplateURL: ./stacks/monitoring.yaml
+      Parameters:
+        Environment: !Ref Environment
+      Tags:
+        - Key: Project
+          Value: BorondoTours
+
+Outputs:
+  ApiUrl:
+    Description: URL de la API (API Gateway HTTP)
+    Value: !GetAtt ServicesStack.Outputs.ApiEndpoint
+
+  WebsocketUrl:
+    Description: URL del WebSocket API (chat)
+    Value: !GetAtt ServicesStack.Outputs.WebSocketEndpoint
+
+  CloudFrontUrl:
+    Description: URL del CDN (frontend)
+    Value: !GetAtt CdnStack.Outputs.DistributionDomainName
+
+  DatabaseEndpoint:
+    Description: Endpoint de RDS Proxy
+    Value: !GetAtt DatabaseStack.Outputs.RdsProxyEndpoint

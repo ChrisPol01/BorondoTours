@@ -1,0 +1,25 @@
+---
+type SkeletonRadius = 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
+interface Props {
+  width?: number | string;
+  height?: number | string;
+  aspectRatio?: string;
+  rounded?: SkeletonRadius;
+  count?: number;
+  class?: string;
+}
+const { width, height, aspectRatio, rounded = 'md', count = 1, class: className } = Astro.props;
+const size = (value: number | string | undefined) => typeof value === 'number' ? `${value}px` : value;
+const radiusClass: Readonly<Record<SkeletonRadius, string>> = {
+  none: 'rounded-none', sm: 'rounded-sm', md: 'rounded-md', lg: 'rounded-lg', xl: 'rounded-xl', full: 'rounded-full',
+};
+const items = Array.from({ length: Math.max(0, count) });
+---
+
+{items.map(() => (
+  <span
+    aria-hidden="true"
+    class:list={['block bg-arena animate-pulse motion-reduce:animate-none', radiusClass[rounded], className]}
+    style={`width:${size(width) ?? 'auto'};height:${size(height) ?? 'auto'};aspect-ratio:${aspectRatio ?? 'auto'}`}
+  />
+))}

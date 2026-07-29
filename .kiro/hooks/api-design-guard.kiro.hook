@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "name": "API Design Guard",
+  "description": "Cuando se editan archivos de API/controllers, verifica que los endpoints tienen validación de input, documentación Swagger, manejo de errores correcto, y respetan el formato de response estándar.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/*.controller.ts",
+      "**/routes/**",
+      "**/api/**"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Se editó un controller/endpoint de API. Verifica:\n1. ¿Tiene DTO con class-validator para validación de inputs?\n2. ¿Tiene decorador @Roles() o @Public() explícito?\n3. ¿El response sigue el formato estándar { data, error, meta }?\n4. ¿Tiene decoradores Swagger (@ApiOperation, @ApiResponse)?\n5. ¿Los errores de negocio usan excepciones tipadas (no throw genérico)?\n6. ¿No expone stack traces ni datos internos en error responses?\n7. ¿Listados paginados usan cursor-based pagination (no offset)?\nSi falta alguno de estos, corrígelo antes de continuar."
+  }
+}

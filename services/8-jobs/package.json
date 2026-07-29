@@ -1,0 +1,26 @@
+{
+  "name": "@borondo/service-jobs",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --hot src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target node",
+    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@borondo/contracts": "workspace:*",
+    "@borondo/domain": "workspace:*",
+    "@borondo/db": "workspace:*",
+    "@aws-sdk/client-sqs": "^3.600.0",
+    "@aws-sdk/client-eventbridge": "^3.600.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  }
+}

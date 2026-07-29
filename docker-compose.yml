@@ -1,0 +1,27 @@
+# Docker Compose para desarrollo local — solo servicios de infraestructura
+# Los servicios de BorondoTours corren con `turbo dev`
+
+services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    container_name: borondo-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: borondo
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  # DynamoDB local para chat y contadores en desarrollo
+  dynamodb-local:
+    image: amazon/dynamodb-local:latest
+    container_name: borondo-dynamodb
+    ports:
+      - "8000:8000"
+    command: ["-jar", "DynamoDBLocal.jar", "-sharedDb"]
+
+volumes:
+  pgdata:

@@ -1,0 +1,19 @@
+{
+  "enabled": true,
+  "name": "Test Completeness Check",
+  "description": "Cuando se crean archivos de test, verifica que cubren tanto el happy path como los edge cases, que incluyen escenarios de acceso denegado para RBAC, y que los mocks son realistas.",
+  "version": "1",
+  "when": {
+    "type": "fileCreated",
+    "patterns": [
+      "**/*.spec.ts",
+      "**/*.test.ts",
+      "**/*.test.tsx",
+      "**/tests/**"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Se creó un archivo de test nuevo. Verifica que sea completo:\n1. ¿Cubre el happy path (flujo normal exitoso)?\n2. ¿Cubre edge cases? (input vacío, null, duplicado, concurrencia)\n3. ¿Si es un endpoint protegido, tiene test de acceso DENEGADO (rol incorrecto, sin token)?\n4. ¿Si es lógica financiera, tiene test con valores límite (0, negativos, montos muy grandes)?\n5. ¿Los mocks son realistas (no retornan siempre éxito)?\n6. ¿Tiene test de error handling (qué pasa si el servicio externo falla)?\nUn test que solo verifica el happy path da falsa confianza."
+  }
+}

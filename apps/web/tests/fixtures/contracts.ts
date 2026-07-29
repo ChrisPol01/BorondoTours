@@ -1,0 +1,98 @@
+import type { ContractReadiness } from "../../src/lib/redesignManifests";
+import {
+  ADR_011_EVIDENCE,
+  REDESIGN_DESIGN_EVIDENCE,
+  SPEC_A_EVIDENCE,
+  SPEC_B_EVIDENCE,
+} from "./evidence";
+
+export const CONTRACT_READINESS: Readonly<Record<string, ContractReadiness>> = {
+  catalogSearch: {
+    capability: "catalog-search",
+    requirementApproved: true,
+    requestSchemaApproved: true,
+    responseSchemaApproved: false,
+    authorizationDefined: true,
+    errorCodesDefined: false,
+    effectOwnerDefined: true,
+    evidence: [SPEC_A_EVIDENCE, ADR_011_EVIDENCE, REDESIGN_DESIGN_EVIDENCE],
+  },
+  catalogNearby: {
+    capability: "catalog-nearby",
+    requirementApproved: true,
+    requestSchemaApproved: false,
+    responseSchemaApproved: false,
+    authorizationDefined: true,
+    errorCodesDefined: false,
+    effectOwnerDefined: false,
+    evidence: [SPEC_A_EVIDENCE, REDESIGN_DESIGN_EVIDENCE],
+  },
+  tourPageData: {
+    capability: "tour-page-data",
+    requirementApproved: true,
+    requestSchemaApproved: false,
+    responseSchemaApproved: false,
+    authorizationDefined: true,
+    errorCodesDefined: false,
+    effectOwnerDefined: true,
+    evidence: [SPEC_B_EVIDENCE, REDESIGN_DESIGN_EVIDENCE],
+  },
+  tourInstancePrice: {
+    capability: "tour-instance-price",
+    requirementApproved: true,
+    requestSchemaApproved: false,
+    responseSchemaApproved: false,
+    authorizationDefined: true,
+    errorCodesDefined: false,
+    effectOwnerDefined: false,
+    evidence: [SPEC_B_EVIDENCE, REDESIGN_DESIGN_EVIDENCE],
+  },
+  authSession: {
+    capability: "auth-session-bootstrap",
+    requirementApproved: true,
+    requestSchemaApproved: false,
+    responseSchemaApproved: false,
+    authorizationDefined: true,
+    errorCodesDefined: false,
+    effectOwnerDefined: true,
+    evidence: [ADR_011_EVIDENCE, REDESIGN_DESIGN_EVIDENCE],
+  },
+  checkout: {
+    capability: "checkout-quote-and-submit",
+    requirementApproved: true,
+    requestSchemaApproved: true,
+    responseSchemaApproved: false,
+    authorizationDefined: true,
+    errorCodesDefined: false,
+    effectOwnerDefined: false,
+    evidence: [ADR_011_EVIDENCE, REDESIGN_DESIGN_EVIDENCE],
+  },
+  bookings: {
+    capability: "booking-list-detail-actions",
+    requirementApproved: true,
+    requestSchemaApproved: false,
+    responseSchemaApproved: false,
+    authorizationDefined: true,
+    errorCodesDefined: false,
+    effectOwnerDefined: false,
+    evidence: [REDESIGN_DESIGN_EVIDENCE],
+  },
+  profile: incomplete("profile-sensitive-controls"),
+  loyalty: incomplete("wallet-and-loyalty"),
+  favorites: incomplete("favorites-mutation-and-collections"),
+  messaging: incomplete("messaging-history-and-events"),
+  blogContact: incomplete("blog-newsletter-and-contact"),
+};
+
+function incomplete(capability: string): ContractReadiness {
+  return {
+    capability,
+    requirementApproved: false,
+    requestSchemaApproved: false,
+    responseSchemaApproved: false,
+    authorizationDefined: false,
+    errorCodesDefined: false,
+    effectOwnerDefined: false,
+    evidence: [REDESIGN_DESIGN_EVIDENCE],
+  };
+}

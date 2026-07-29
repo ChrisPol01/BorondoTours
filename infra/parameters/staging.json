@@ -1,0 +1,11 @@
+{
+  "Parameters": {
+    "Environment": "staging",
+    "DBInstanceClass": "db.t4g.micro"
+  },
+  "Tags": {
+    "Project": "BorondoTours",
+    "Environment": "staging",
+    "ManagedBy": "SAM"
+  }
+}

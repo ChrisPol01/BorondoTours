@@ -8,27 +8,13 @@
         "type": "tabs",
         "children": [
           {
-            "id": "61718e4b9dfcd545",
+            "id": "f6ee4b2106bf930d",
             "type": "leaf",
             "state": {
               "type": "graph",
               "state": {},
               "icon": "lucide-git-fork",
               "title": "Vista gráfica"
-            }
-          },
-          {
-            "id": "f6ee4b2106bf930d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "03-Knowledge/MCP-Setup-Guide.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "MCP-Setup-Guide"
             }
           }
         ]
@@ -195,8 +181,12 @@
       "markdown-importer:Abrir el importador de Markdown": false
     }
   },
-  "active": "61718e4b9dfcd545",
+  "active": "b54da3c87dea03e3",
   "lastOpenFiles": [
+    "Sin nombre",
+    "node_modules/bun-types/docs/README.md",
+    "node_modules/@radix-ui/react-portal/node_modules/@radix-ui/react-primitive/node_modules/@radix-ui/react-slot/README.md",
+    "node_modules/@radix-ui/react-portal/README.md",
     "GITHUB_SETUP_INSTRUCTIONS.md",
     "5",
     "docs/Templates/Reunion.md",
@@ -224,10 +214,6 @@
     "docs/01-Specs/Spec-I-B2B-Portal-Operadores.md",
     "docs/01-Specs/Spec-H-ERP-Agencia.md",
     "docs/01-Specs/Spec-G-ERP-Operativo.md",
-    "docs/01-Specs/Spec-F-Auth.md",
-    "docs/01-Specs/Spec-D-Client-Portal.md",
-    "docs/01-Specs/Spec-E-Loyalty.md",
-    "docs/01-Specs/Spec-C-Checkout.md",
     "docs/01-Specs",
     "docs/00-Inicio",
     "setup-branch-protection-and-secrets.sh",

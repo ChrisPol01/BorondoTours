@@ -1,0 +1,19 @@
+---
+/**
+ * Compatibilidad temporal para consumidores anteriores al rediseño.
+ * Las rutas nuevas deben importar `PublicLayout.astro` directamente.
+ */
+import PublicLayout from './PublicLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  overlayHeader?: boolean;
+}
+
+const { title, description, overlayHeader = false } = Astro.props;
+---
+
+<PublicLayout title={title} description={description} overlayHeader={overlayHeader}>
+  <slot />
+</PublicLayout>

@@ -1,0 +1,19 @@
+{
+  "enabled": true,
+  "name": "BT New Doc Structure Check",
+  "description": "Cuando se CREA un archivo de documentación nuevo, verifica que sigue el template correcto del proyecto, tiene la estructura mínima requerida, y está bien ubicado en la jerarquía de carpetas.",
+  "version": "1",
+  "when": {
+    "type": "fileCreated",
+    "patterns": [
+      "**/docs/**",
+      "**/specs/**",
+      "**/ADRs/**",
+      "**/*.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Se creó un documento nuevo. Verifica que cumple con los estándares del proyecto:\n\n## UBICACIÓN\n1. ¿Está en la carpeta correcta?\n   - Specs técnicos → docs/01-Specs/\n   - ADRs → docs/02-ADRs/\n   - Knowledge base → docs/03-Knowledge/\n   - Tech Design → docs/04-Tech-Design/\n   - Dev Logs → docs/05-Dev-Log/\n\n## TEMPLATE OBLIGATORIO según tipo:\n### Si es un Spec:\n- Frontmatter: tags, created, updated, status\n- Secciones mínimas: Objetivo, Modelo de datos, Endpoints/Flujos, Criterios de aceptación, Links relacionados\n- Nomenclatura: Spec-X-NombreEnMayusculas.md\n\n### Si es un ADR:\n- Nomenclatura: ADR-NNN-Titulo.md\n- Secciones: Contexto, Opciones evaluadas, Decisión, Consecuencias, Status (propuesto/aceptado/deprecado)\n- Actualizar ADR-Index.md con la nueva entrada\n\n### Si es Knowledge:\n- Frontmatter: tags, created\n- Debe ser fuente de verdad sobre un tema (no duplicar info de Specs)\n\n### Si es Dev Log:\n- Fecha en el título o frontmatter\n- Estructura: Qué se hizo, Decisiones tomadas, Pendientes\n\n## CALIDAD MÍNIMA\n3. ¿Tiene al menos un párrafo explicando el propósito del documento?\n4. ¿Los headings están en español consistente?\n5. ¿Tiene links a documentos relacionados?\n6. ¿La ortografía es correcta desde el primer draft?\n\nSi le falta estructura o está mal ubicado, corrígelo o sugiere dónde debería estar."
+  }
+}

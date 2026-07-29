@@ -1,0 +1,123 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  BorondoTours — Storage Stack
+  S3 buckets: frontend (SPA builds), media (imágenes tours), docs legales.
+
+Parameters:
+  Environment:
+    Type: String
+
+Resources:
+  # --- S3: Frontend Builds (Astro SSG output) ---
+  FrontendBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub borondo-${Environment}-frontend
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      VersioningConfiguration:
+        Status: Enabled
+      Tags:
+        - Key: Project
+          Value: BorondoTours
+        - Key: Service
+          Value: frontend
+
+  # --- S3: Media (fotos tours, operadores, avatares) ---
+  MediaBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub borondo-${Environment}-media
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      CorsConfiguration:
+        CorsRules:
+          - AllowedOrigins: ['*']
+            AllowedMethods: [GET, PUT]
+            AllowedHeaders: ['*']
+            MaxAge: 3600
+      LifecycleConfiguration:
+        Rules:
+          - Id: TransitionToIA
+            Status: Enabled
+            Transitions:
+              - StorageClass: STANDARD_IA
+                TransitionInDays: 90
+      Tags:
+        - Key: Project
+          Value: BorondoTours
+        - Key: Service
+          Value: media
+
+  # --- S3: Documentos Legales (pasaportes, contratos, facturas) ---
+  DocsBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    Properties:
+      BucketName: !Sub borondo-${Environment}-docs
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: aws:kms
+      VersioningConfiguration:
+        Status: Enabled
+      LifecycleConfiguration:
+        Rules:
+          # Documentos verificados → Deep Glacier a los 15 días (obligación fiscal 5 años)
+          - Id: ToDeepGlacier
+            Status: Enabled
+            Prefix: verified/
+            Transitions:
+              - StorageClass: DEEP_ARCHIVE
+                TransitionInDays: 15
+      Tags:
+        - Key: Project
+          Value: BorondoTours
+        - Key: Service
+          Value: legal-docs
+
+  # --- S3: Email Incoming (ya existe en prod como borondotours-email-prod) ---
+  # No se recrea aquí porque ya está en producción. Solo documentado.
+
+Outputs:
+  FrontendBucketName:
+    Value: !Ref FrontendBucket
+    Export:
+      Name: !Sub ${AWS::StackName}-FrontendBucket
+
+  FrontendBucketDomainName:
+    Value: !GetAtt FrontendBucket.RegionalDomainName
+    Export:
+      Name: !Sub ${AWS::StackName}-FrontendBucketDomain
+
+  MediaBucketName:
+    Value: !Ref MediaBucket
+    Export:
+      Name: !Sub ${AWS::StackName}-MediaBucket
+
+  MediaBucketArn:
+    Value: !GetAtt MediaBucket.Arn
+
+  DocsBucketName:
+    Value: !Ref DocsBucket
+    Export:
+      Name: !Sub ${AWS::StackName}-DocsBucket

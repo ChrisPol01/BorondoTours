@@ -1,0 +1,72 @@
+---
+import { HeaderIsland } from '../components/layout/Navbar';
+import StaticSkeleton from '../components/ui/StaticSkeleton.astro';
+import '../styles/global.css';
+
+type AccountPage =
+  | 'dashboard'
+  | 'bookings'
+  | 'booking-detail'
+  | 'checkout'
+  | 'profile'
+  | 'coins'
+  | 'favorites'
+  | 'messages';
+
+interface Props {
+  page: AccountPage;
+}
+
+const TITLES: Readonly<Record<AccountPage, string>> = {
+  dashboard: 'Mi cuenta',
+  bookings: 'Mis tours',
+  'booking-detail': 'Detalle de reserva',
+  checkout: 'Proceso de reserva',
+  profile: 'Perfil',
+  coins: 'Borondo Coins',
+  favorites: 'Favoritos',
+  messages: 'Mensajes',
+};
+
+const { page } = Astro.props;
+const title = `${TITLES[page]} — BorondoTours`;
+const hasPrivateShell = Astro.slots.has('default');
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content="Área privada de clientes de BorondoTours" />
+    <title>{title}</title>
+    <link rel="preload" href="/fonts/inter-regular.woff2" as="font" type="font/woff2" crossorigin />
+    <slot name="head" />
+  </head>
+  <body class="bg-surface-page text-text-primary font-body">
+    <a href="#main" class="skip-link">Ir al contenido principal</a>
+    <HeaderIsland client:idle />
+    <main id="main" tabindex="-1" class="site-main account-layout">
+      <div class="mx-auto grid max-w-account gap-6 px-page-gutter py-8 lg:grid-cols-[16rem_minmax(0,1fr)]">
+        <aside aria-label="Navegación de cuenta" class="account-layout__navigation">
+          <slot name="account-navigation" />
+        </aside>
+        <section aria-labelledby="account-page-title" class="min-w-0">
+          <h1 id="account-page-title" class="sr-only">{TITLES[page]}</h1>
+          {hasPrivateShell ? (
+            <slot />
+          ) : (
+            <div role="status" aria-label="Cargando área privada" aria-busy="true" class="space-y-6">
+              <StaticSkeleton height="2.5rem" width="55%" rounded="lg" />
+              <StaticSkeleton aspectRatio="16 / 5" rounded="xl" />
+              <div class="grid gap-4 md:grid-cols-3">
+                <StaticSkeleton height="8rem" count={3} rounded="xl" />
+              </div>
+            </div>
+          )}
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

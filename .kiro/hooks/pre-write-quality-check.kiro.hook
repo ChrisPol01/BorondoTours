@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Quality Gate Pre-Write",
+  "description": "Antes de escribir código, verifica que cumple con los estándares del proyecto: no hay console.log, no hay 'any' en TypeScript, no hay secrets hardcodeados, y se respetan las convenciones de BorondoTours.",
+  "version": "1",
+  "when": {
+    "type": "preToolUse",
+    "toolTypes": [
+      "write"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Antes de escribir este archivo, verifica rápidamente:\n1. No hay console.log (usa logger estructurado en backend)\n2. No hay tipos 'any' en TypeScript\n3. No hay tokens, API keys o secrets hardcodeados\n4. Los nombres de variables están en inglés\n5. Si es un cálculo financiero (comisiones, IVA, pricing), ¿tiene test asociado o lo necesitará?\n6. Si maneja datos PII, ¿se está protegiendo correctamente?\nSi todo está bien, procede. Si hay problemas, corrígelos antes de escribir."
+  }
+}

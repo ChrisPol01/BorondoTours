@@ -1,0 +1,258 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  BorondoTours — Services Stack
+  Lambda functions (Hono + LWA) + API Gateway HTTP + WebSocket API.
+
+Parameters:
+  Environment:
+    Type: String
+  VpcId:
+    Type: String
+  PrivateSubnetIds:
+    Type: CommaDelimitedList
+  LambdaSecurityGroupId:
+    Type: String
+  DatabaseSecretArn:
+    Type: String
+  RdsProxyEndpoint:
+    Type: String
+  MediaBucketName:
+    Type: String
+
+Globals:
+  Function:
+    Runtime: nodejs22.x
+    Architectures: [arm64]
+    MemorySize: 512
+    Timeout: 30
+    VpcConfig:
+      SubnetIds: !Ref PrivateSubnetIds
+      SecurityGroupIds:
+        - !Ref LambdaSecurityGroupId
+    Environment:
+      Variables:
+        NODE_ENV: !Ref Environment
+        DATABASE_URL: !Sub 'postgresql://borondo:{{resolve:secretsmanager:${DatabaseSecretArn}:SecretString:password}}@${RdsProxyEndpoint}:5432/borondo'
+        MEDIA_BUCKET: !Ref MediaBucketName
+    Layers:
+      - !Ref LambdaWebAdapterLayer
+
+Resources:
+  # --- Lambda Web Adapter Layer ---
+  # Proxea HTTP al puerto interno de Hono (PORT=8080)
+  LambdaWebAdapterLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: !Sub borondo-${Environment}-lwa
+      Description: AWS Lambda Web Adapter
+      ContentUri: ../layers/lwa/
+      CompatibleRuntimes:
+        - nodejs22.x
+      CompatibleArchitectures:
+        - arm64
+
+  # === API Gateway HTTP API ===
+  HttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      StageName: !Ref Environment
+      CorsConfiguration:
+        AllowOrigins:
+          - '*'
+        AllowMethods:
+          - GET
+          - POST
+          - PATCH
+          - DELETE
+          - OPTIONS
+          - QUERY
+        AllowHeaders:
+          - '*'
+      Tags:
+        Project: BorondoTours
+
+  # === Service 1: Core (Auth, Users, RBAC) ===
+  ServiceCoreFn:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub borondo-${Environment}-service-core
+      CodeUri: ../services/1-core/dist/
+      Handler: run.sh
+      Environment:
+        Variables:
+          PORT: '8080'
+          AWS_LAMBDA_EXEC_WRAPPER: /opt/bootstrap
+      Events:
+        CoreApi:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /api/v1/auth/{proxy+}
+            Method: ANY
+        UsersApi:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /api/v1/users/{proxy+}
+            Method: ANY
+        HealthApi:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /api/v1/health
+            Method: GET
+      Policies:
+        - SecretsManagerReadWrite
+        - S3ReadPolicy:
+            BucketName: !Ref MediaBucketName
+      Tags:
+        Service: core
+
+  # === Service 2: Tours (Catálogo, búsqueda) ===
+  ServiceToursFn:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub borondo-${Environment}-service-tours
+      CodeUri: ../services/2-tours/dist/
+      Handler: run.sh
+      Environment:
+        Variables:
+          PORT: '8080'
+          AWS_LAMBDA_EXEC_WRAPPER: /opt/bootstrap
+      Events:
+        ToursApi:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /api/v1/tours/{proxy+}
+            Method: ANY
+      Policies:
+        - SecretsManagerReadWrite
+      Tags:
+        Service: tours
+
+  # === Service 3: Bookings (Checkout, estados) ===
+  ServiceBookingsFn:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub borondo-${Environment}-service-bookings
+      CodeUri: ../services/3-bookings/dist/
+      Handler: run.sh
+      Environment:
+        Variables:
+          PORT: '8080'
+          AWS_LAMBDA_EXEC_WRAPPER: /opt/bootstrap
+      Events:
+        BookingsApi:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /api/v1/bookings/{proxy+}
+            Method: ANY
+      Policies:
+        - SecretsManagerReadWrite
+        - SQSSendMessagePolicy:
+            QueueName: !Sub borondo-${Environment}-events
+      Tags:
+        Service: bookings
+
+  # === Service 4: Payments (Webhook Onepayla) ===
+  ServicePaymentsFn:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub borondo-${Environment}-service-payments
+      CodeUri: ../services/4-payments/dist/
+      Handler: run.sh
+      Environment:
+        Variables:
+          PORT: '8080'
+          AWS_LAMBDA_EXEC_WRAPPER: /opt/bootstrap
+      Events:
+        PaymentsApi:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /api/v1/payments/{proxy+}
+            Method: ANY
+        WebhookApi:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /api/v1/webhooks/{proxy+}
+            Method: POST
+      Policies:
+        - SecretsManagerReadWrite
+        - SQSSendMessagePolicy:
+            QueueName: !Sub borondo-${Environment}-events
+      Tags:
+        Service: payments
+
+  # === Service 5: Operators ===
+  ServiceOperatorsFn:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub borondo-${Environment}-service-operators
+      CodeUri: ../services/5-operators/dist/
+      Handler: run.sh
+      Environment:
+        Variables:
+          PORT: '8080'
+          AWS_LAMBDA_EXEC_WRAPPER: /opt/bootstrap
+      Events:
+        OperatorsApi:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /api/v1/operators/{proxy+}
+            Method: ANY
+      Policies:
+        - SecretsManagerReadWrite
+        - S3CrudPolicy:
+            BucketName: !Ref MediaBucketName
+      Tags:
+        Service: operators
+
+  # === Service 9: Ads ===
+  ServiceAdsFn:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub borondo-${Environment}-service-ads
+      CodeUri: ../services/9-ads/dist/
+      Handler: run.sh
+      Environment:
+        Variables:
+          PORT: '8080'
+          AWS_LAMBDA_EXEC_WRAPPER: /opt/bootstrap
+      Events:
+        AdsApi:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /api/v1/ads/{proxy+}
+            Method: ANY
+      Policies:
+        - SecretsManagerReadWrite
+      Tags:
+        Service: ads
+
+  # === WebSocket API (Chat) ===
+  WebSocketApi:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: !Sub borondo-${Environment}-ws
+      ProtocolType: WEBSOCKET
+      RouteSelectionExpression: $request.body.action
+
+  # Chat handlers se definen en events.yaml junto con los DynamoDB triggers
+
+Outputs:
+  ApiEndpoint:
+    Value: !Sub https://${HttpApi}.execute-api.${AWS::Region}.amazonaws.com/${Environment}
+    Export:
+      Name: !Sub ${AWS::StackName}-ApiEndpoint
+
+  WebSocketEndpoint:
+    Value: !Sub wss://${WebSocketApi}.execute-api.${AWS::Region}.amazonaws.com/${Environment}
+    Export:
+      Name: !Sub ${AWS::StackName}-WebSocketEndpoint

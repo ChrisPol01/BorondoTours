@@ -1,0 +1,207 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  BorondoTours — Database Stack
+  RDS PostgreSQL 16 + RDS Proxy + DynamoDB tables (chat, connections, counters).
+
+Parameters:
+  Environment:
+    Type: String
+  VpcId:
+    Type: String
+  PrivateSubnetIds:
+    Type: CommaDelimitedList
+  DBSecurityGroupId:
+    Type: String
+  DBInstanceClass:
+    Type: String
+    Default: db.t4g.micro
+
+Conditions:
+  IsProd: !Equals [!Ref Environment, prod]
+
+Resources:
+  # --- RDS Subnet Group ---
+  DBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: !Sub Subnets para RDS (${Environment})
+      SubnetIds: !Ref PrivateSubnetIds
+      Tags:
+        - Key: Name
+          Value: !Sub borondo-${Environment}-db-subnets
+
+  # --- Secrets Manager (credenciales RDS) ---
+  DatabaseSecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      Name: !Sub borondo-${Environment}/database
+      Description: Credenciales RDS PostgreSQL
+      GenerateSecretString:
+        SecretStringTemplate: '{"username": "borondo"}'
+        GenerateStringKey: password
+        PasswordLength: 32
+        ExcludeCharacters: '"@/\'
+      Tags:
+        - Key: Project
+          Value: BorondoTours
+
+  # --- RDS PostgreSQL 16 ---
+  DatabaseInstance:
+    Type: AWS::RDS::DBInstance
+    DeletionPolicy: Snapshot
+    UpdateReplacePolicy: Snapshot
+    Properties:
+      DBInstanceIdentifier: !Sub borondo-${Environment}
+      Engine: postgres
+      EngineVersion: '16.4'
+      DBInstanceClass: !Ref DBInstanceClass
+      AllocatedStorage: 20
+      MaxAllocatedStorage: 50
+      StorageType: gp3
+      MasterUsername: !Sub '{{resolve:secretsmanager:${DatabaseSecret}:SecretString:username}}'
+      MasterUserPassword: !Sub '{{resolve:secretsmanager:${DatabaseSecret}:SecretString:password}}'
+      DBName: borondo
+      DBSubnetGroupName: !Ref DBSubnetGroup
+      VPCSecurityGroups:
+        - !Ref DBSecurityGroupId
+      MultiAZ: !If [IsProd, true, false]
+      BackupRetentionPeriod: 7
+      DeletionProtection: !If [IsProd, true, false]
+      EnablePerformanceInsights: !If [IsProd, true, false]
+      PubliclyAccessible: false
+      Tags:
+        - Key: Project
+          Value: BorondoTours
+        - Key: Environment
+          Value: !Ref Environment
+
+  # --- RDS Proxy (connection pooling para Lambda) ---
+  RDSProxyRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: rds.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: RDSProxySecretsAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - secretsmanager:GetSecretValue
+                Resource: !Ref DatabaseSecret
+
+  RDSProxy:
+    Type: AWS::RDS::DBProxy
+    Properties:
+      DBProxyName: !Sub borondo-${Environment}-proxy
+      EngineFamily: POSTGRESQL
+      RoleArn: !GetAtt RDSProxyRole.Arn
+      RequireTLS: true
+      VpcSubnetIds: !Ref PrivateSubnetIds
+      VpcSecurityGroupIds:
+        - !Ref DBSecurityGroupId
+      Auth:
+        - AuthScheme: SECRETS
+          SecretArn: !Ref DatabaseSecret
+          IAMAuth: DISABLED
+      Tags:
+        - Key: Project
+          Value: BorondoTours
+
+  RDSProxyTargetGroup:
+    Type: AWS::RDS::DBProxyTargetGroup
+    Properties:
+      DBProxyName: !Ref RDSProxy
+      TargetGroupName: default
+      DBInstanceIdentifiers:
+        - !Ref DatabaseInstance
+      ConnectionPoolConfigurationInfo:
+        MaxConnectionsPercent: 80
+        MaxIdleConnectionsPercent: 50
+
+  # --- DynamoDB: Chat Messages ---
+  ChatMessagesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub borondo-${Environment}-chat-messages
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: pk    # chat_type#entity_id
+          AttributeType: S
+        - AttributeName: sk    # timestamp#msg_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: pk
+          KeyType: HASH
+        - AttributeName: sk
+          KeyType: RANGE
+      TimeToLiveSpecification:
+        AttributeName: ttl
+        Enabled: true
+      Tags:
+        - Key: Project
+          Value: BorondoTours
+
+  # --- DynamoDB: WebSocket Connections ---
+  ConnectionsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub borondo-${Environment}-connections
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: connectionId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: connectionId
+          KeyType: HASH
+      TimeToLiveSpecification:
+        AttributeName: ttl
+        Enabled: true
+      Tags:
+        - Key: Project
+          Value: BorondoTours
+
+  # --- DynamoDB: Counters / Idempotency ---
+  CountersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub borondo-${Environment}-counters
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: pk    # counter_type#id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: pk
+          KeyType: HASH
+      TimeToLiveSpecification:
+        AttributeName: ttl
+        Enabled: true
+      Tags:
+        - Key: Project
+          Value: BorondoTours
+
+Outputs:
+  DatabaseSecretArn:
+    Value: !Ref DatabaseSecret
+    Export:
+      Name: !Sub ${AWS::StackName}-DatabaseSecretArn
+
+  RdsProxyEndpoint:
+    Value: !GetAtt RDSProxy.Endpoint
+    Export:
+      Name: !Sub ${AWS::StackName}-RdsProxyEndpoint
+
+  ChatMessagesTableName:
+    Value: !Ref ChatMessagesTable
+
+  ConnectionsTableName:
+    Value: !Ref ConnectionsTable
+
+  CountersTableName:
+    Value: !Ref CountersTable

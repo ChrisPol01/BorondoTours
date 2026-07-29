@@ -1,0 +1,11 @@
+{
+  "Parameters": {
+    "Environment": "prod",
+    "DBInstanceClass": "db.t4g.small"
+  },
+  "Tags": {
+    "Project": "BorondoTours",
+    "Environment": "prod",
+    "ManagedBy": "SAM"
+  }
+}

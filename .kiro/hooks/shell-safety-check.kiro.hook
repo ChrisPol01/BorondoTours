@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Shell Safety Check",
+  "description": "Antes de ejecutar comandos shell, verifica que no se están ejecutando comandos destructivos contra la base de datos o que expongan secrets en la terminal.",
+  "version": "1",
+  "when": {
+    "type": "preToolUse",
+    "toolTypes": [
+      "shell"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Antes de ejecutar este comando, verifica rápidamente:\n1. No es un comando destructivo de base de datos (DROP, TRUNCATE, DELETE sin WHERE)\n2. No expone tokens o secrets en stdout\n3. No es un force push a main/master\n4. No ejecuta npm install de paquetes no aprobados en el stack\nSi el comando es seguro, procede normalmente."
+  }
+}

@@ -1,0 +1,155 @@
+---
+/**
+ * Tour Detail Page — `/tours/:slug` (R15–R18, R7.6)
+ *
+ * Consume `GET /tours/:slug/page-data` (endpoint compuesto) que devuelve
+ * `TourPageData { tour, instances, nearby }` y compone la vista de detalle
+ * usando el layout Base (que ya incluye Navbar y Footer — R7.6).
+ *
+ * Islands con directivas mínimas:
+ *   • Gallery: `client:visible` — slider interactivo de fotos
+ *   • AvailabilityCalendar: `client:visible` — selección de fechas
+ *   • NearbyTours: `client:visible` — cálculo geográfico en cliente
+ *   • TourInfo: `client:load` — contiene StickyPrice con estado de precio
+ *   • TourDescription: server-rendered (sin interactividad)
+ *   • TourAddOns: server-rendered (sin interactividad)
+ *
+ * SSG: `getStaticPaths` obtiene los slugs disponibles del backend en build time.
+ * En desarrollo sin backend, se provee un fallback vacío o con datos mock.
+ */
+import Layout from '../../layouts/PublicLayout.astro';
+import { Gallery } from '../../components/detail/Gallery';
+import { TourInfo } from '../../components/detail/TourInfo';
+import { StickyPrice } from '../../components/detail/StickyPrice';
+import { TourDescription } from '../../components/detail/TourDescription';
+import { TourAddOns } from '../../components/detail/TourAddOns';
+import { AvailabilityCalendar } from '../../components/detail/AvailabilityCalendar';
+import { NearbyTours } from '../../components/detail/NearbyTours';
+import { apiFetch } from '../../lib/api';
+import type { TourPageData, TourSummary } from '../../lib/types';
+
+// ─────────────────────────────────────────────────────────────────────────
+// SSG: getStaticPaths — genera las rutas estáticas en build time
+// ─────────────────────────────────────────────────────────────────────────
+
+export async function getStaticPaths() {
+  // En build con backend disponible, se obtienen todos los slugs publicados.
+  // En desarrollo sin backend se devuelve un array vacío o con mock slugs
+  // para que `astro dev` no falle — las rutas se resuelven on-demand en dev.
+  try {
+    const tours = await apiFetch<TourSummary[]>('/tours');
+    if (tours && tours.length > 0) {
+      return tours.map((tour) => ({
+        params: { slug: tour.slug },
+      }));
+    }
+  } catch {
+    // Sin backend accesible: devolver paths vacío.
+    // Astro dev mode resuelve rutas dinámicas on-demand igualmente.
+  }
+
+  return [];
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Page data fetch
+// ─────────────────────────────────────────────────────────────────────────
+
+const { slug } = Astro.params;
+
+let pageData: TourPageData | null = null;
+let fetchError = false;
+
+try {
+  pageData = await apiFetch<TourPageData>(`/tours/${slug}/page-data`);
+} catch {
+  fetchError = true;
+}
+
+const tour = pageData?.tour ?? null;
+const instances = pageData?.instances ?? [];
+const nearby = pageData?.nearby ?? [];
+
+// Metadatos de la página
+const pageTitle = tour
+  ? `${tour.name} — BorondoTours`
+  : 'Tour — BorondoTours';
+const pageDescription = tour
+  ? `Descubre ${tour.name} en ${tour.destination}. Tour de ${tour.operatorName}.`
+  : 'Detalle de tour en BorondoTours';
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  {/* Estado de error: el fetch falló o no hay datos */}
+  {fetchError || !tour ? (
+    <section class="mx-auto max-w-4xl px-4 py-16 text-center">
+      <h1 class="font-heading text-2xl font-bold text-azul-profundo mb-4">
+        No pudimos cargar este tour
+      </h1>
+      <p class="text-text-primary/70 mb-6">
+        Intenta de nuevo más tarde o regresa al catálogo.
+      </p>
+      <a
+        href="/"
+        class="inline-block rounded-control bg-action-primary px-6 py-3 font-semibold text-on-action transition-colors duration-brand hover:bg-action-primary-hover"
+      >
+        Volver al inicio
+      </a>
+    </section>
+  ) : (
+    <>
+      {/* Gallery island (R15.1, R15.8–R15.10): slider de fotos */}
+      <section class="w-full">
+        <Gallery client:visible photos={tour.gallery} />
+      </section>
+
+      {/* Contenido principal + sticky price sidebar */}
+      <div class="mx-auto max-w-public px-page-gutter py-8 lg:grid lg:grid-cols-tour-detail lg:gap-8">
+        {/* Columna principal */}
+        <div class="space-y-8">
+          {/* TourInfo (R15.2–R15.4): nombre H1, destino, duración, precio, badges */}
+          <TourInfo client:load tour={tour} />
+
+          {/* Descripción larga + listas (R16.1–R16.4) */}
+          <TourDescription
+            client:load
+            longDescriptionHtml={tour.longDescriptionHtml}
+            includes={tour.includes}
+            notIncludes={tour.notIncludes}
+            whatToBring={tour.whatToBring}
+          />
+
+          {/* Add-ons (R16.5–R16.6) */}
+          <TourAddOns client:load addOns={tour.addOns} />
+
+          {/* Calendario de disponibilidad island (R17) */}
+          <section>
+            <AvailabilityCalendar client:visible instances={instances} />
+          </section>
+
+          {/* Tours cercanos island (R18) */}
+          <section>
+            <NearbyTours
+              client:visible
+              origin={tour.coordinates}
+              currentSlug={tour.slug}
+              nearbySeed={nearby}
+            />
+          </section>
+        </div>
+
+        {/* Columna lateral: precio sticky (≥1024px) — R15.5, R15.7 */}
+        <aside class="hidden lg:block">
+          <div class="sticky top-4">
+            <StickyPrice client:load priceCop={tour.basePriceCop} />
+          </div>
+        </aside>
+      </div>
+
+      {/* Barra inferior fija con precio (<1024px) — R15.6, R15.7 */}
+      <div class="lg:hidden">
+        <StickyPrice client:load priceCop={tour.basePriceCop} />
+      </div>
+    </>
+  )}
+</Layout>
