@@ -609,5 +609,3 @@ Regla práctica: buscadores/filtros → `client:idle`. Mapas/galerías/calendari
 - Copy siempre literal entre comillas. Colores siempre en clase de la BASE 1 (cero hex de paleta).
 - Cada texto con rol `text-h1..text-label`. Cada bloque marcado Astro/isla. Datos clasificados.
 - Español, conciso pero completo. Corre el checklist de la sección 10 antes de entregar.
-
-=== FIN DEL PROMPT ===
