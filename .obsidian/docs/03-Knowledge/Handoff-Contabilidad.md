@@ -8,7 +8,7 @@
 
 ---
 
-## 1. Contexto del negocio
+## 1. Contexto del negocio (natita te amo )
 
 - **Borondo Tours SAS** — agencia/operador turístico en Cali. Marketplace B2C de tours en Colombia
   (los viajeros descubren, reservan y pagan tours de operadores locales).

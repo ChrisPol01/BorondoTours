@@ -9,7 +9,7 @@
         "type": "agent",
         "prompt": "Vas a iniciar una nueva tarea de implementación. ANTES de escribir código:\n1. Identifica qué Spec de docs/01-Specs/ es relevante para esta tarea y LÉELO completo\n2. Revisa docs/03-Knowledge/Modelo-Datos-Core.md si la tarea involucra base de datos\n3. Verifica si hay ADRs relevantes en docs/02-ADRs/ que afecten decisiones técnicas\n4. Identifica dependencias: ¿esta tarea necesita que otra esté terminada primero?\n5. Crea un mini-plan: qué archivos vas a crear/modificar y en qué orden\nNo empieces a codificar sin haber leído la documentación relevante."
       },
-      "enabled": true
+      "enabled": false
     }
   ]
 }
