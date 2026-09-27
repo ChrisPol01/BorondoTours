@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "BT Documentation Excellence Guard",
+      "description": "Cuando se crea o edita documentación (specs, ADRs, knowledge, README, guías), revisa la calidad completa: estructura, redacción, ortografía, coherencia técnica y no técnica, y cumplimiento del formato del proyecto.",
+      "trigger": "PostFileSave",
+      "matcher": "(.*docs/.*$|.*[^/]*\\.md$|.*specs/.*$|.*ADRs/.*$)",
+      "action": {
+        "type": "agent",
+        "prompt": "Se editó un archivo de documentación. Realiza una revisión completa de calidad documental:\n\n## ESTRUCTURA\n1. ¿Tiene frontmatter correcto? (tags, created, updated, status si aplica)\n2. ¿Los headings siguen jerarquía lógica? (H1 solo uno, H2 para secciones, H3 para subsecciones)\n3. ¿Las tablas tienen encabezados claros y datos alineados?\n4. ¿Los links internos [[...]] son correctos y apuntan a documentos existentes?\n5. ¿Tiene sección de \"Links relacionados\" al final si referencia otros docs?\n\n## REDACCIÓN TÉCNICA\n6. ¿Los términos técnicos son consistentes en todo el documento? (no mezclar \"endpoint\" con \"ruta\" sin razón)\n7. ¿Los nombres de tablas, campos, roles y estados coinciden EXACTAMENTE con el Modelo-Datos-Core y Stack-Tecnologico?\n8. ¿Los criterios de aceptación son verificables? (checkbox con condición concreta, no ambigua)\n9. ¿Los ejemplos de código/JSON son correctos sintácticamente?\n10. ¿Los diagramas Mermaid son válidos y legibles?\n\n## REDACCIÓN NO TÉCNICA\n11. ¿La ortografía es correcta en español? (tildes, signos de interrogación/exclamación de apertura ¿¡)\n12. ¿Las oraciones son claras y no ambiguas? (un lector nuevo debería entender sin contexto previo)\n13. ¿Se usa \"usted\" consistente o \"tú\" consistente? (no mezclar)\n14. ¿Los nombres propios están bien escritos? (BorondoTours, Onepayla, ClickUp, Meilisearch — no \"One Payla\" ni \"Click Up\")\n15. ¿No hay frases duplicadas, párrafos redundantes o información contradictoria con otros docs?\n\n## COHERENCIA CON EL PROYECTO\n16. ¿Los roles mencionados coinciden con los 10 del sistema RBAC?\n17. ¿Los estados de booking/tour siguen los enums documentados?\n18. ¿Las fases mencionadas (1, 2, 3) son coherentes con Vision-y-Objetivos?\n19. ¿Si es un ADR, sigue el template? (Contexto, Opciones, Decisión, Consecuencias)\n20. ¿Si es un Spec, tiene: modelo de datos, endpoints, criterios de aceptación, links relacionados?\n\nSi encuentras errores, corrígelos directamente. Si hay ambigüedades o inconsistencias con otros docs, señálalas para revisión."
+      },
+      "enabled": false
+    }
+  ]
+}

@@ -30,7 +30,12 @@ import { DestinationsSection } from '../components/landing/DestinationsSection';
       SearchWidget (R9.1–R9.7): glass overlay posicionado en la parte inferior
       del hero, DENTRO de la imagen de fondo (no debajo).
     */}
-    <div class="absolute bottom-12 left-1/2 z-20 w-full -translate-x-1/2 px-4 sm:px-6 md:bottom-16 lg:bottom-20">
+    {/*
+      SearchWidget — dentro del hero en ambos breakpoints.
+      Mobile: absolute bottom-4 para que quede dentro de la imagen.
+      Desktop: absolute bottom-16/20.
+    */}
+    <div class="absolute bottom-4 left-1/2 z-20 w-full -translate-x-1/2 px-3 sm:px-4 md:bottom-16 lg:bottom-20">
       <SearchWidget client:idle />
     </div>
   </div>

@@ -12,7 +12,7 @@
  * - Pagination controls show/hide appropriately (R11.8).
  */
 import { describe, it, expect, vi, beforeAll } from "vitest";
-import { render, screen, within } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 // Mock IntersectionObserver for jsdom (Image component uses it for lazy loading).
@@ -51,10 +51,11 @@ function renderGrid(overrides: Partial<CatalogGridProps> = {}) {
     tours: [],
     isLoading: false,
     isError: false,
-    pagination: { currentPage: 1, totalPages: 1 },
+    pagination: { hasPrev: false, hasNext: false },
     onClearFilters: vi.fn(),
     onRetry: vi.fn(),
-    onPageChange: vi.fn(),
+    onPrevPage: vi.fn(),
+    onNextPage: vi.fn(),
     ...overrides,
   };
 
@@ -102,7 +103,8 @@ describe("CatalogGrid — loading state (R11.5)", () => {
     renderGrid({ isLoading: true });
 
     const container = screen.getByRole("status");
-    expect(container).toHaveClass("grid-cols-1");
+    // 1 columna es el default implícito de `grid` (sin clase explícita).
+    expect(container).toHaveClass("grid");
     expect(container).toHaveClass("md:grid-cols-2");
     expect(container).toHaveClass("lg:grid-cols-3");
   });
@@ -155,14 +157,18 @@ describe("CatalogGrid — data rendering (R11.4)", () => {
     expect(links[1]).toHaveAttribute("href", "/tours/paramo-ruiz");
   });
 
-  it("displays tour name, duration, price and operator badge", () => {
+  it("displays tour name, duration and price", () => {
     const tours = [makeTour("laguna-otun")];
     renderGrid({ tours });
 
     expect(screen.getByText("Tour laguna-otun")).toBeInTheDocument();
-    expect(screen.getByText("3 días / 2 noches")).toBeInTheDocument();
-    expect(screen.getByText("Operador Test")).toBeInTheDocument();
-    // Price formatted with COP
+    // TourCard renderiza "durationLabel • tipo" en un mismo nodo; matcher parcial.
+    expect(
+      screen.getByText((_content, element) =>
+        element?.textContent === "3 días / 2 noches • Excursión",
+      ),
+    ).toBeInTheDocument();
+    // Precio formateado con separador de miles COP.
     expect(screen.getByText(/1\.250\.000/)).toBeInTheDocument();
   });
 
@@ -172,61 +178,61 @@ describe("CatalogGrid — data rendering (R11.4)", () => {
 
     const section = screen.getByLabelText("Resultados del catálogo");
     const grid = section.querySelector(".grid");
-    expect(grid).toHaveClass("grid-cols-1");
+    // 1 columna es el default implícito de `grid` (sin clase explícita).
+    expect(grid).toHaveClass("grid");
     expect(grid).toHaveClass("md:grid-cols-2");
     expect(grid).toHaveClass("lg:grid-cols-3");
   });
 });
 
-describe("CatalogGrid — pagination (R11.8)", () => {
-  it("does not show pagination controls when totalPages is 1", () => {
+describe("CatalogGrid — pagination cursor-based (R11.8)", () => {
+  it("does not show pagination controls when there is neither prev nor next", () => {
     const tours = [makeTour("tour-1")];
-    renderGrid({ tours, pagination: { currentPage: 1, totalPages: 1 } });
+    renderGrid({ tours, pagination: { hasPrev: false, hasNext: false } });
 
     expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
   });
 
-  it("shows pagination controls when totalPages > 1", () => {
+  it("shows pagination controls when there is a next page", () => {
     const tours = [makeTour("tour-1")];
-    renderGrid({ tours, pagination: { currentPage: 1, totalPages: 3 } });
+    renderGrid({ tours, pagination: { hasPrev: false, hasNext: true } });
 
     expect(screen.getByRole("navigation")).toBeInTheDocument();
-    expect(screen.getByText("1 / 3")).toBeInTheDocument();
   });
 
-  it("disables previous button on first page", () => {
+  it("disables previous button when there is no previous page", () => {
     const tours = [makeTour("tour-1")];
-    renderGrid({ tours, pagination: { currentPage: 1, totalPages: 3 } });
+    renderGrid({ tours, pagination: { hasPrev: false, hasNext: true } });
 
     const prevButton = screen.getByLabelText(/anterior/i);
     expect(prevButton).toBeDisabled();
   });
 
-  it("disables next button on last page", () => {
+  it("disables next button when there is no next page", () => {
     const tours = [makeTour("tour-1")];
-    renderGrid({ tours, pagination: { currentPage: 3, totalPages: 3 } });
+    renderGrid({ tours, pagination: { hasPrev: true, hasNext: false } });
 
     const nextButton = screen.getByLabelText(/siguiente/i);
     expect(nextButton).toBeDisabled();
   });
 
-  it("calls onPageChange with correct page when next is clicked", async () => {
+  it("calls onNextPage when next is clicked", async () => {
     const user = userEvent.setup();
-    const onPageChange = vi.fn();
+    const onNextPage = vi.fn();
     const tours = [makeTour("tour-1")];
-    renderGrid({ tours, pagination: { currentPage: 1, totalPages: 3 }, onPageChange });
+    renderGrid({ tours, pagination: { hasPrev: false, hasNext: true }, onNextPage });
 
     await user.click(screen.getByLabelText(/siguiente/i));
-    expect(onPageChange).toHaveBeenCalledWith(2);
+    expect(onNextPage).toHaveBeenCalledTimes(1);
   });
 
-  it("calls onPageChange with correct page when previous is clicked", async () => {
+  it("calls onPrevPage when previous is clicked", async () => {
     const user = userEvent.setup();
-    const onPageChange = vi.fn();
+    const onPrevPage = vi.fn();
     const tours = [makeTour("tour-1")];
-    renderGrid({ tours, pagination: { currentPage: 2, totalPages: 3 }, onPageChange });
+    renderGrid({ tours, pagination: { hasPrev: true, hasNext: false }, onPrevPage });
 
     await user.click(screen.getByLabelText(/anterior/i));
-    expect(onPageChange).toHaveBeenCalledWith(1);
+    expect(onPrevPage).toHaveBeenCalledTimes(1);
   });
 });

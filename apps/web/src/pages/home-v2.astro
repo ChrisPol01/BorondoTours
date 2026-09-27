@@ -1,0 +1,37 @@
+---
+/**
+ * Home v2 — Página de comparación (`/home-v2`).
+ *
+ * Implementa `otros/design/b2c/specs/01-home.design.md` en una ruta aislada
+ * para comparar contra la Home actual (`/`) sin modificarla. Reutiliza layout,
+ * navbar, footer y TourCard globales; los componentes v2 viven en `landing-v2/`.
+ *
+ * Composición (spec, de arriba a abajo):
+ *   Hero (overlay 40%) + buscador glass superpuesto
+ *   Destinos destacados (grid 4 col)
+ *   Trust badges (grid 4 col, fondo arena)
+ *   Footer (desde PublicLayout)
+ */
+import Layout from '../layouts/PublicLayout.astro';
+import { HeroV2 } from '../components/landing-v2/HeroV2';
+import { SearchWidgetV2 } from '../components/landing-v2/SearchWidgetV2';
+import { DestinationsV2 } from '../components/landing-v2/DestinationsV2';
+import TrustBadgesV2 from '../components/landing-v2/TrustBadgesV2.astro';
+---
+
+<Layout title="BorondoTours — Home v2 (comparación)" overlayHeader>
+  {/* Hero + buscador superpuesto */}
+  <div class="relative">
+    <HeroV2 client:load />
+
+    <div class="absolute bottom-4 left-1/2 z-20 w-full -translate-x-1/2 px-3 sm:px-4 md:bottom-16 lg:bottom-20">
+      <SearchWidgetV2 client:idle />
+    </div>
+  </div>
+
+  {/* Destinos destacados */}
+  <DestinationsV2 client:visible />
+
+  {/* Propuesta de valor (trust badges) */}
+  <TrustBadgesV2 />
+</Layout>

@@ -1,0 +1,134 @@
+---
+/**
+ * `CheckoutStep1` — Paso 1: Datos del viaje (maqueta visual estática).
+ *
+ * Grid 2 columnas (contenido 70% / resumen 30%). Reproduce 04-checkout.design.md
+ * §"Paso 1 - Datos del viaje". Datos de ejemplo del spec; sin cálculo real.
+ * Todo el texto vía translate(); nada de lógica de negocio.
+ */
+import { translate } from '../../lib/i18n/index';
+import { MapPin, Calendar, Users, Shield } from 'lucide-react';
+
+const t = (k: string): string => translate(`checkout:${k}`);
+
+const addons = [
+  { name: t('step1.addon.insurance'), desc: t('step1.addon.insuranceDesc'), price: t('step1.addon.insurancePrice'), checked: true },
+  { name: t('step1.addon.transfer'), desc: '', price: t('step1.addon.transferPrice'), checked: false },
+  { name: t('step1.addon.extraNight'), desc: '', price: t('step1.addon.extraNightPrice'), checked: false },
+  { name: t('step1.addon.dinner'), desc: '', price: t('step1.addon.dinnerPrice'), checked: true },
+];
+---
+
+<section aria-labelledby="checkout-step1-title" class="bg-surface-page py-section-gap">
+  <div class="mx-auto grid max-w-public gap-6 px-page-gutter lg:grid-cols-[1fr_20rem]">
+    {/* Columna de contenido */}
+    <div class="flex flex-col gap-6">
+      {/* Resumen del tour */}
+      <article class="rounded-card bg-surface-page p-6 shadow-card">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h2 id="checkout-step1-title" class="font-heading text-h4 font-semibold text-negro-volcanico">
+              {t('step1.summaryTitle')}
+            </h2>
+            <p class="mt-2 font-heading text-h4 font-semibold text-negro-volcanico">{t('step1.tourName')}</p>
+            <ul class="mt-3 flex flex-col gap-1.5 font-body text-body2 text-azul-condor">
+              <li class="flex items-center gap-2"><MapPin className="h-4 w-4 text-turquesa" aria-hidden="true" />{t('step1.tourLocation')}</li>
+              <li class="flex items-center gap-2"><Calendar className="h-4 w-4 text-turquesa" aria-hidden="true" />{t('step1.tourDates')}</li>
+              <li class="flex items-center gap-2"><Calendar className="h-4 w-4 text-turquesa" aria-hidden="true" />{t('step1.tourDuration')}</li>
+            </ul>
+          </div>
+          <span class="rounded-pill bg-verde/15 px-3 py-1 font-body text-label font-semibold text-verde">
+            {t('step1.badgeConfirmed')}
+          </span>
+        </div>
+      </article>
+
+      {/* Número de viajeros */}
+      <article class="rounded-card bg-surface-page p-6 shadow-card">
+        <h3 class="font-heading text-h4 font-semibold text-negro-volcanico">{t('step1.travelersTitle')}</h3>
+        <p class="mt-1 font-body text-body2 text-azul-condor">{t('step1.travelersHint')}</p>
+        <div class="mt-4 flex items-center gap-3">
+          <Users className="h-5 w-5 text-turquesa" aria-hidden="true" />
+          <span class="font-body text-body1 font-semibold text-negro-volcanico">{t('step1.travelersCount')}</span>
+        </div>
+      </article>
+
+      {/* Add-ons opcionales */}
+      <article class="rounded-card bg-surface-page p-6 shadow-card">
+        <h3 class="font-heading text-h4 font-semibold text-negro-volcanico">{t('step1.addonsTitle')}</h3>
+        <p class="mt-1 font-body text-body2 text-azul-condor">{t('step1.addonsHint')}</p>
+        <ul class="mt-4 flex flex-col gap-3">
+          {addons.map((addon) => (
+            <li class:list={[
+              'flex items-start justify-between gap-4 rounded-control border p-4',
+              addon.checked ? 'border-turquesa bg-turquesa/5' : 'border-border-subtle',
+            ]}>
+              <div class="flex items-start gap-3">
+                <span class:list={[
+                  'mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border',
+                  addon.checked ? 'border-turquesa bg-turquesa text-blanco-niebla' : 'border-border-subtle',
+                ]} aria-hidden="true">
+                  {addon.checked && '✓'}
+                </span>
+                <div>
+                  <p class="font-body text-body1 font-medium text-negro-volcanico">{addon.name}</p>
+                  {addon.desc && <p class="mt-0.5 font-body text-body2 text-azul-condor">{addon.desc}</p>}
+                </div>
+              </div>
+              <span class="flex-shrink-0 font-body text-body2 font-semibold text-negro-volcanico">{addon.price}</span>
+            </li>
+          ))}
+        </ul>
+      </article>
+    </div>
+
+    {/* Columna de resumen parcial (sticky en desktop) */}
+    <aside class="flex flex-col gap-4">
+      <div class="rounded-card bg-surface-page p-6 shadow-card lg:sticky lg:top-24">
+        <h3 class="font-heading text-h4 font-semibold text-negro-volcanico">{t('step1.summaryPartialTitle')}</h3>
+        <p class="mt-1 font-body text-body2 text-azul-condor">{t('step1.summary.travelers')}</p>
+
+        <dl class="mt-4 flex flex-col gap-2 font-body text-body2">
+          <div class="flex items-center justify-between">
+            <dt class="text-azul-condor">{t('step1.summary.basePrice')}</dt>
+            <dd class="font-medium text-negro-volcanico">{t('step1.summary.basePriceValue')}</dd>
+          </div>
+          <div class="flex items-center justify-between text-azul-condor">
+            <dt>{t('step1.summary.insuranceLine')}</dt>
+            <dd>{t('step1.summary.insuranceValue')}</dd>
+          </div>
+          <div class="flex items-center justify-between text-azul-condor">
+            <dt>{t('step1.summary.dinnerLine')}</dt>
+            <dd>{t('step1.summary.dinnerValue')}</dd>
+          </div>
+          <div class="mt-2 flex items-center justify-between border-t border-border-subtle pt-2">
+            <dt class="text-azul-condor">{t('step1.summary.subtotal')}</dt>
+            <dd class="font-medium text-negro-volcanico">{t('step1.summary.subtotalValue')}</dd>
+          </div>
+          <div class="flex items-center justify-between text-azul-condor">
+            <dt>{t('step1.summary.iva')}</dt>
+            <dd>{t('step1.summary.ivaValue')}</dd>
+          </div>
+        </dl>
+
+        <div class="mt-4 flex items-baseline justify-between border-t border-border-subtle pt-4">
+          <span class="font-body text-body1 font-semibold text-negro-volcanico">{t('step1.summary.totalPartial')}</span>
+          <span class="font-heading text-h3 font-semibold text-turquesa">{t('step1.summary.totalPartialValue')}</span>
+        </div>
+
+        <a
+          href="#checkout-step2"
+          class="mt-6 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-control bg-action-primary px-6 py-3 font-body text-button font-semibold text-on-action transition-colors duration-brand hover:bg-action-primary-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-azul-profundo"
+        >
+          {t('step1.continue')}
+          <span aria-hidden="true">→</span>
+        </a>
+
+        <div class="mt-4 flex items-center gap-2 font-body text-label text-azul-condor">
+          <Shield className="h-4 w-4 text-verde" aria-hidden="true" />
+          <span><strong class="font-semibold text-negro-volcanico">{t('step1.trustTitle')}</strong> — {t('step1.trustText')}</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>

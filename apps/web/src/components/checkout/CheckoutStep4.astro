@@ -1,0 +1,129 @@
+---
+/**
+ * `CheckoutStep4` — Paso 4: Confirmación (maqueta visual estática).
+ *
+ * Hero con imagen + overlay, título de éxito, grid de 3 cards (resumen,
+ * próximos pasos con punto de encuentro, documentos) y botones de acción.
+ * 04-checkout.design.md §"Paso 4 - Confirmación". Astro estático.
+ */
+import { translate } from '../../lib/i18n/index';
+import { CheckCircle2, MapPin, FileText, Download, Calendar } from 'lucide-react';
+
+const t = (k: string): string => translate(`checkout:${k}`);
+
+const HERO_IMAGE_SRC = '/images/hero-landscape.png';
+
+const docs = [
+  { name: t('step4.card3.voucher'), meta: t('step4.card3.voucherMeta') },
+  { name: t('step4.card3.invoice'), meta: t('step4.card3.invoiceMeta') },
+  { name: t('step4.card3.insurance'), meta: t('step4.card3.insuranceMeta') },
+];
+
+const nextSteps = [t('step4.card2.step1'), t('step4.card2.step2'), t('step4.card2.step3')];
+---
+
+<section id="checkout-step4" aria-labelledby="checkout-step4-title" class="scroll-mt-24">
+  <div class="relative overflow-hidden">
+    {/* Fondo con overlay */}
+    <img src={HERO_IMAGE_SRC} alt={t('step4.heroImageAlt')} loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover" />
+    <div class="absolute inset-0 bg-negro-volcanico/40" aria-hidden="true"></div>
+
+    <div class="relative z-10 mx-auto max-w-public px-page-gutter py-section-gap">
+      {/* Cabecera de éxito */}
+      <div class="text-center">
+        <span class="inline-flex items-center justify-center rounded-pill bg-verde/20 p-3" aria-hidden="true">
+          <CheckCircle2 className="h-10 w-10 text-verde" />
+        </span>
+        <h2 id="checkout-step4-title" class="mt-4 font-heading text-h1 font-extrabold text-blanco-niebla">
+          {t('step4.title')}
+        </h2>
+        <p class="mx-auto mt-3 max-w-lg font-body text-body1 text-blanco-niebla/90">
+          {t('step4.subtitle')}
+        </p>
+      </div>
+
+      {/* Grid de 3 cards */}
+      <div class="mt-10 grid gap-6 lg:grid-cols-3">
+        {/* Card 1: Resumen */}
+        <article class="rounded-card bg-surface-page p-6 shadow-card">
+          <h3 class="font-heading text-h4 font-semibold text-negro-volcanico">{t('step4.card1.title')}</h3>
+          <p class="mt-3 font-body text-body1 font-medium text-negro-volcanico">{t('step4.card1.tourName')}</p>
+          <ul class="mt-2 flex flex-col gap-1 font-body text-body2 text-azul-condor">
+            <li>{t('step4.card1.dates')}</li>
+            <li>{t('step4.card1.duration')}</li>
+            <li>{t('step4.card1.travelers')}</li>
+          </ul>
+          <span class="mt-3 inline-block rounded-pill bg-verde/15 px-3 py-1 font-body text-label font-semibold text-verde">
+            {t('step4.card1.status')}
+          </span>
+          <div class="mt-4 flex items-baseline justify-between border-t border-border-subtle pt-4">
+            <span class="font-body text-body2 text-azul-condor">{t('step4.card1.totalPaid')}</span>
+            <span class="font-heading text-h4 font-semibold text-turquesa">{t('step4.card1.totalPaidValue')}</span>
+          </div>
+        </article>
+
+        {/* Card 2: Próximos pasos */}
+        <article class="rounded-card bg-surface-page p-6 shadow-card">
+          <h3 class="font-heading text-h4 font-semibold text-negro-volcanico">{t('step4.card2.title')}</h3>
+          <ol class="mt-3 flex flex-col gap-2 font-body text-body2 text-azul-condor">
+            {nextSteps.map((step, i) => (
+              <li class="flex items-start gap-2">
+                <span class="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-pill bg-turquesa/15 font-semibold text-turquesa">{i + 1}</span>
+                {step}
+              </li>
+            ))}
+          </ol>
+          <div class="mt-4 rounded-panel bg-surface-warm p-4">
+            <p class="flex items-center gap-2 font-body text-body2 font-semibold text-negro-volcanico">
+              <MapPin className="h-4 w-4 text-turquesa" aria-hidden="true" />
+              {t('step4.card2.meetingTitle')}
+            </p>
+            <p class="mt-1 font-body text-body2 text-azul-condor">{t('step4.card2.meetingPlace')}</p>
+            <p class="font-body text-body2 text-azul-condor">{t('step4.card2.meetingTime')}</p>
+          </div>
+        </article>
+
+        {/* Card 3: Documentos */}
+        <article class="rounded-card bg-surface-page p-6 shadow-card">
+          <h3 class="font-heading text-h4 font-semibold text-negro-volcanico">{t('step4.card3.title')}</h3>
+          <ul class="mt-3 flex flex-col gap-2">
+            {docs.map((doc) => (
+              <li class="flex items-center gap-3 rounded-control border border-border-subtle p-3">
+                <FileText className="h-5 w-5 flex-shrink-0 text-turquesa" aria-hidden="true" />
+                <div class="flex-1">
+                  <p class="font-body text-body2 font-medium text-negro-volcanico">{doc.name}</p>
+                  <p class="font-body text-label text-azul-condor">{doc.meta}</p>
+                </div>
+                <Download className="h-4 w-4 flex-shrink-0 text-azul-condor" aria-hidden="true" />
+              </li>
+            ))}
+          </ul>
+        </article>
+      </div>
+
+      {/* Botones de acción */}
+      <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <a
+          href="#"
+          class="inline-flex min-h-11 items-center justify-center gap-2 rounded-control bg-action-primary px-6 py-3 font-body text-button font-semibold text-on-action transition-colors duration-brand hover:bg-action-primary-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-azul-profundo"
+        >
+          <Download className="h-4 w-4" aria-hidden="true" />
+          {t('step4.downloadAll')}
+        </a>
+        <a
+          href="#"
+          class="inline-flex min-h-11 items-center justify-center gap-2 rounded-control border border-blanco-niebla/60 bg-blanco-niebla/10 px-6 py-3 font-body text-button font-semibold text-blanco-niebla backdrop-blur-sm transition-colors hover:bg-blanco-niebla/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blanco-niebla"
+        >
+          <Calendar className="h-4 w-4" aria-hidden="true" />
+          {t('step4.addCalendar')}
+        </a>
+        <a
+          href="/mis-reservas"
+          class="inline-flex min-h-11 items-center justify-center rounded-control border border-blanco-niebla/60 bg-blanco-niebla/10 px-6 py-3 font-body text-button font-semibold text-blanco-niebla backdrop-blur-sm transition-colors hover:bg-blanco-niebla/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blanco-niebla"
+        >
+          {t('step4.goToReservations')}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

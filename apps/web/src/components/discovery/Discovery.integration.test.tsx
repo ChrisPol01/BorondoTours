@@ -12,7 +12,7 @@
  * - R13.13: FilterPanel renders mobile drawer trigger at <768px.
  */
 import { describe, it, expect, vi, beforeEach, afterEach, beforeAll } from "vitest";
-import { render, screen, fireEvent, act, within } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 // Mock IntersectionObserver for jsdom
@@ -41,7 +41,7 @@ import { LanguageProvider } from "../../lib/i18n/provider";
 import { SearchBar } from "./SearchBar";
 import { FilterPanel } from "./FilterPanel";
 import type { FilterValues } from "./FilterPanel";
-import { CatalogGrid, type CatalogGridProps } from "./CatalogGrid";
+import { CatalogGrid } from "./CatalogGrid";
 import type { TourSummary } from "../../lib/types";
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -119,17 +119,18 @@ describe("Discovery — SearchBar preserves text on no results (R12.5)", () => {
     // El escenario: el usuario escribió "inexistente", no hay resultados.
     // SearchBar debe conservar el texto en el input (R12.5) y CatalogGrid
     // muestra el estado vacío (R11.6).
-    const { container } = render(
+    render(
       <Wrapper>
         <SearchBar />
         <CatalogGrid
           tours={[]}
           isLoading={false}
           isError={false}
-          pagination={{ currentPage: 1, totalPages: 1 }}
+          pagination={{ hasPrev: false, hasNext: false }}
           onClearFilters={vi.fn()}
           onRetry={vi.fn()}
-          onPageChange={vi.fn()}
+          onPrevPage={vi.fn()}
+          onNextPage={vi.fn()}
         />
       </Wrapper>,
     );
@@ -153,10 +154,11 @@ describe("Discovery — SearchBar preserves text on no results (R12.5)", () => {
           tours={[makeTour("tour-1")]}
           isLoading={false}
           isError={false}
-          pagination={{ currentPage: 1, totalPages: 1 }}
+          pagination={{ hasPrev: false, hasNext: false }}
           onClearFilters={onClearFilters}
           onRetry={vi.fn()}
-          onPageChange={vi.fn()}
+          onPrevPage={vi.fn()}
+          onNextPage={vi.fn()}
         />
       </Wrapper>,
     );
@@ -173,10 +175,11 @@ describe("Discovery — SearchBar preserves text on no results (R12.5)", () => {
           tours={[]}
           isLoading={false}
           isError={false}
-          pagination={{ currentPage: 1, totalPages: 1 }}
+          pagination={{ hasPrev: false, hasNext: false }}
           onClearFilters={onClearFilters}
           onRetry={vi.fn()}
-          onPageChange={vi.fn()}
+          onPrevPage={vi.fn()}
+          onNextPage={vi.fn()}
         />
       </Wrapper>,
     );
@@ -213,10 +216,11 @@ describe("Discovery — Error preserves last catalog (R12.6)", () => {
           tours={[]}
           isLoading={false}
           isError={true}
-          pagination={{ currentPage: 1, totalPages: 1 }}
+          pagination={{ hasPrev: false, hasNext: false }}
           onClearFilters={vi.fn()}
           onRetry={onRetry}
-          onPageChange={vi.fn()}
+          onPrevPage={vi.fn()}
+          onNextPage={vi.fn()}
         />
       </Wrapper>,
     );
@@ -236,10 +240,11 @@ describe("Discovery — Error preserves last catalog (R12.6)", () => {
           tours={[]}
           isLoading={false}
           isError={true}
-          pagination={{ currentPage: 1, totalPages: 1 }}
+          pagination={{ hasPrev: false, hasNext: false }}
           onClearFilters={onClearFilters}
           onRetry={onRetry}
-          onPageChange={vi.fn()}
+          onPrevPage={vi.fn()}
+          onNextPage={vi.fn()}
         />
       </Wrapper>,
     );
@@ -264,10 +269,11 @@ describe("Discovery — Error preserves last catalog (R12.6)", () => {
           tours={tours}
           isLoading={false}
           isError={false}
-          pagination={{ currentPage: 1, totalPages: 1 }}
+          pagination={{ hasPrev: false, hasNext: false }}
           onClearFilters={vi.fn()}
           onRetry={onRetry}
-          onPageChange={vi.fn()}
+          onPrevPage={vi.fn()}
+          onNextPage={vi.fn()}
         />
       </Wrapper>,
     );
@@ -283,10 +289,11 @@ describe("Discovery — Error preserves last catalog (R12.6)", () => {
           tours={[]}
           isLoading={false}
           isError={true}
-          pagination={{ currentPage: 1, totalPages: 1 }}
+          pagination={{ hasPrev: false, hasNext: false }}
           onClearFilters={vi.fn()}
           onRetry={onRetry}
-          onPageChange={vi.fn()}
+          onPrevPage={vi.fn()}
+          onNextPage={vi.fn()}
         />
       </Wrapper>,
     );
@@ -347,14 +354,15 @@ describe("Discovery — FilterPanel hydrates from URL params (R13.10)", () => {
       </Wrapper>,
     );
 
+    // Duración se renderiza como chips (button con aria-pressed), no checkboxes.
     const sidebar = screen.getByLabelText("Filtros del catálogo");
-    const halfDay = within(sidebar).getByLabelText("Medio día");
-    const moreThanThree = within(sidebar).getByLabelText("Más de 3 días");
-    const oneDay = within(sidebar).getByLabelText("1 día");
+    const halfDay = within(sidebar).getByRole("button", { name: "Medio día" });
+    const moreThanThree = within(sidebar).getByRole("button", { name: "Más de 3 días" });
+    const oneDay = within(sidebar).getByRole("button", { name: "1 día" });
 
-    expect(halfDay).toBeChecked();
-    expect(moreThanThree).toBeChecked();
-    expect(oneDay).not.toBeChecked();
+    expect(halfDay).toHaveAttribute("aria-pressed", "true");
+    expect(moreThanThree).toHaveAttribute("aria-pressed", "true");
+    expect(oneDay).toHaveAttribute("aria-pressed", "false");
   });
 
   it("renders with pre-selected difficulties from filters state", () => {

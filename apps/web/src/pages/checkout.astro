@@ -1,0 +1,28 @@
+---
+/**
+ * Checkout — Maqueta visual (`/checkout`).
+ *
+ * Implementa `otros/design/b2c/specs/04-checkout.design.md` como maqueta visual
+ * estática para validar la fidelidad del flujo mockup → design spec → código.
+ * Apila los 4 pasos (Datos, Pasajeros, Pago, Confirmación) en una sola página,
+ * igual que el mockup, para comparar de corrido contra el PNG.
+ *
+ * IMPORTANTE (alcance): es maqueta visual, SIN lógica real. No hay cálculo de
+ * IVA/totales, integración OnePay, Coins ni Split Fare funcionales — todo eso
+ * pertenece a Spec-C y se conectaría después. Los datos son de ejemplo del spec.
+ */
+import Layout from '../layouts/PublicLayout.astro';
+import CheckoutStepper from '../components/checkout/CheckoutStepper.astro';
+import CheckoutStep1 from '../components/checkout/CheckoutStep1.astro';
+import CheckoutStep2 from '../components/checkout/CheckoutStep2.astro';
+import CheckoutStep3 from '../components/checkout/CheckoutStep3.astro';
+import CheckoutStep4 from '../components/checkout/CheckoutStep4.astro';
+---
+
+<Layout title="BorondoTours — Checkout (maqueta)">
+  <CheckoutStepper current={1} />
+  <CheckoutStep1 />
+  <CheckoutStep2 />
+  <CheckoutStep3 />
+  <CheckoutStep4 />
+</Layout>

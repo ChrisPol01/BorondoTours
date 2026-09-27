@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "External Service Integration Guard",
+      "description": "Cuando se editan archivos de integración con servicios externos (Onepayla, S3, SES, Siigo, Meilisearch), verifica manejo de errores, retry, circuit breaker y que no se exponen credenciales.",
+      "trigger": "PostFileSave",
+      "matcher": "(.*integrations/.*$|.*onepayla/.*$|.*s3/.*$|.*ses/.*$|.*siigo/.*$|.*meilisearch/.*$|.*external/.*$)",
+      "action": {
+        "type": "agent",
+        "prompt": "Se editó una integración con servicio externo. Verifica:\n1. ¿Tiene manejo de errores robusto (try/catch con tipos de error específicos)?\n2. ¿Implementa retry con backoff exponencial para errores transitorios?\n3. ¿Tiene timeout configurado (no espera infinitamente)?\n4. ¿Las credenciales/API keys vienen de variables de entorno (no hardcodeadas)?\n5. ¿Los webhooks verifican firma/autenticidad del payload (ej: Onepayla webhook signature)?\n6. ¿Si el servicio falla, el sistema degrada graciosamente (no crash total)?\n7. ¿Se loguean los errores con contexto suficiente para debugging (sin exponer secrets)?\nLos servicios externos SIEMPRE fallan eventualmente — el código debe estar preparado."
+      },
+      "enabled": false
+    }
+  ]
+}

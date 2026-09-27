@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "PII Data Protection Guard",
+      "description": "Cuando se editan archivos que manejan datos personales (PII), verifica cumplimiento de Ley 1581 de 2012, encriptación, retención, y que no se exponen datos sensibles en logs o responses.",
+      "trigger": "PostFileSave",
+      "matcher": "(.*users/.*$|.*passengers/.*$|.*documents/.*$|.*consent/.*$|.*profile/.*$)",
+      "action": {
+        "type": "agent",
+        "prompt": "Se editó un archivo que maneja datos personales (PII). Verifica cumplimiento legal:\n1. ¿Los campos sensibles (document_number, phones, medical_conditions) se encriptan en reposo (AES-256)?\n2. ¿No se exponen datos PII completos en logs o error responses?\n3. ¿Se verifica que existe consentimiento antes de procesar datos sensibles?\n4. ¿Los datos médicos solo son visibles por OPERATOR_GUIDE asignado y OPERATOR_COORD?\n5. ¿Se respeta la política de retención? (médicos: 30 días post-tour, pasaporte: 5 años, GPS: 30 días)\n6. ¿Al mostrar datos de terceros se usa anonimización parcial (iniciales, enmascaramiento)?\n7. ¿Hay endpoint de portabilidad (export JSON) accesible al titular?\nViolaciones de Habeas Data (Ley 1581/2012) tienen sanciones hasta 2000 SMMLV."
+      },
+      "enabled": false
+    }
+  ]
+}

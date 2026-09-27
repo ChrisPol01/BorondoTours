@@ -59,7 +59,7 @@ export function Hero(): JSX.Element {
   return (
     <section
       data-hero-sentinel
-      className="relative flex min-h-screen w-full items-center justify-center overflow-hidden"
+      className="relative flex min-h-[85vh] w-full items-center justify-center overflow-hidden md:min-h-screen"
       aria-labelledby="hero-heading"
     >
       {/* Imagen de fondo decorativa (R8.1, R8.5, R8.6) */}
@@ -96,7 +96,7 @@ export function Hero(): JSX.Element {
           tablet (0.95x): ~3.325rem ≈ text-4xl
           desktop (1x): 3.5rem = text-h1
       */}
-      <div className="relative z-10 mx-auto max-w-4xl px-4 pt-28 pb-28 text-center sm:px-6 md:pt-32 md:pb-32 lg:pt-36 lg:pb-36">
+      <div className="relative z-10 mx-auto max-w-4xl px-4 pt-28 pb-44 text-center sm:px-6 md:pt-32 md:pb-32 lg:pt-36 lg:pb-36">
         {/* Badge "EXPLORA COLOMBIA" — estilo turquesa/cyan */}
         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-turquesa/40 bg-turquesa/10 px-4 py-1.5 backdrop-blur-sm">
           <span className="text-xs font-semibold uppercase tracking-wider text-turquesa">

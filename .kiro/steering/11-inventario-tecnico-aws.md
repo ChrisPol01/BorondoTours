@@ -67,17 +67,36 @@ Registro vivo de todos los recursos AWS creados por funcionalidad. Actualizar ca
 
 ---
 
+### Frontend Hosting Web B2C (S3 privado + CloudFront + OAC + HTTPS) — ADR-011 INF8/INF13
+
+Montado el 2026-09-06. Dos entornos: Prod (`borondotours.com` + `www`) y Dev (`dev.borondotours.com`). S3 privado (sin acceso público), servido solo vía CloudFront con OAC. Certificado ACM compartido. Flujo de trabajo: **desplegar siempre en Dev antes que Prod**.
+
+| Recurso | Tipo | Identificador / ARN | Notas |
+|---------|------|---------------------|-------|
+| Certificado TLS | ACM (us-east-1) | `arn:aws:acm:us-east-1:787565887675:certificate/697d2fa5-2a4b-41a9-9af6-dce6f2a0f64a` | `borondotours.com` + `*.borondotours.com`, ISSUED. Compartido Prod/Dev |
+| Origin Access Control | CloudFront OAC | `EQEV94N2G6SSB` (`borondotours-s3-oac`) | SigV4 always, tipo s3. Compartido por ambas distribuciones |
+| **Distribución Prod** | CloudFront | `E1DRI1BOOOHRAX` → `d3bxj5gwfrepj2.cloudfront.net` | Aliases `borondotours.com`, `www.borondotours.com`. HTTP→HTTPS, http2and3, TLS1.2_2021, PriceClass_100. SPA: 403/404 → `/index.html` (200) |
+| Bucket Prod | S3 | `borondotours-web-prod` | Privado (PAB completo). Bucket policy solo-CloudFront vía OAC (SourceArn distribución Prod). Website hosting removido |
+| **Distribución Dev** | CloudFront | `E3BJK4DCIP1V66` → `d38z7p78j9ntpn.cloudfront.net` | Alias `dev.borondotours.com`. Misma config que Prod |
+| Bucket Dev | S3 | `borondotours-web-dev` | Privado (PAB completo). Bucket policy solo-CloudFront vía OAC (SourceArn distribución Dev) |
+| Route 53 (A+AAAA alias) | Route 53 | zona `Z01437721IPT4RXSYUUUM` | `borondotours.com` y `www` → dist. Prod; `dev` → dist. Dev. Alias hacia CloudFront (Z2FDTNDATAQYW2) |
+
+**Configs IaC (JSON versionados):** `otros/infra/cf-prod.json`, `cf-dev.json`, `bucket-policy-prod.json`, `bucket-policy-dev.json`, `route53-changes.json`.
+
+**Despliegue de nuevo build:**
+- Dev: `aws s3 sync ./dist s3://borondotours-web-dev/ --profile AdministratorAccess-787565887675` + invalidación `aws cloudfront create-invalidation --distribution-id E3BJK4DCIP1V66 --paths "/*"`
+- Prod (tras validar en Dev): `aws s3 sync ./dist s3://borondotours-web-prod/` + invalidación dist. `E1DRI1BOOOHRAX`
+
+**Pendiente de limpieza:** bucket `borondotours.com` (contenido legacy, aún público) — vaciar/eliminar cuando se confirme que Dev y Prod sirven bien.
+
 ### Infraestructura Core (Fase 1 — Pendiente despliegue)
 
 | Recurso | Tipo | Identificador | Notas |
 |---------|------|---------------|-------|
-| — | ECS Fargate | (por crear) | Backend API + Worker |
-| — | RDS PostgreSQL | (por crear) | t3.micro Single-AZ |
-| — | ElastiCache Redis | (por crear) | t3.micro |
-| — | ALB | (por crear) | HTTPS :443 |
-| — | S3 (frontend) | (por crear) | SPA build |
-| — | CloudFront | (por crear) | CDN + HTTPS |
-| — | ECR | (por crear) | Registry privado Docker |
+| — | Lambda + API Gateway | (por crear) | Backend Hono + LWA (serverless, ADR-011) |
+| — | RDS PostgreSQL | (por crear) | t4g.micro Single-AZ + RDS Proxy |
+| — | DynamoDB | (por crear) | Chat, conexiones WS, contadores TTL |
+| — | ECR | (por crear) | Registry privado Docker (imágenes Lambda) |
 | — | Secrets Manager | (por crear) | Variables sensibles |
 
 ---

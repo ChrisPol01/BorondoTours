@@ -11,7 +11,7 @@ El alcance de Fase 1 cubre cuatro áreas construidas en orden:
 3. **Landing/Home** — hero con paisaje + overlay, buscador glass superpuesto, secciones de destinos con tarjetas glass, trust badges y footer.
 4. **Discovery + Tour Detail** — catálogo con búsqueda, filtros, semáforo de disponibilidad y mapa (Spec-A); detalle de tour con galería, calendario semáforo y add-ons (Spec-B).
 
-La identidad visual canónica es la marca **"Ave azul"** definida en `otros/design/Brand_Guidelines_Borondo_Tours_Completo-v2.md` y sus assets en `otros/design/`. La marca "Chivito" del steering 12 y la paleta azul-noche de Frontend-Architecture §3 quedan **obsoletas** para este proyecto.
+La identidad visual canónica es la marca de BorondoTours (isotipo **colibrí barbudo del páramo**, _Oxypogon guerinii_) definida en `otros/design/Brand_Guidelines_Borondo_Tours_Completo-v2.md` y sus assets en `otros/design/`. La paleta azul-noche de Frontend-Architecture §3 queda **obsoleta** para este proyecto.
 
 El stack técnico es **Astro 5** (output `static`, SSG) con **islands de React 19**, **Tailwind CSS 4**, **nanostores** para estado compartido entre islands, **Mapbox GL JS** para el mapa, **react-day-picker** para el calendario, **i18next** para i18n y **@unpic/react** para imágenes. El scaffold ya existe en `apps/web/`.
 
@@ -20,7 +20,7 @@ Este documento cubre únicamente el **frontend**. Los contratos de datos (endpoi
 ## Glossary
 
 - **Portal_B2C**: La aplicación web pública `apps/web` construida con Astro 5. Sistema raíz del que dependen los demás.
-- **Design_System**: Conjunto de design tokens CSS, configuración de Tailwind CSS 4 y fuentes web que definen paleta, tipografía, radios y superficies glass de la marca "Ave azul".
+- **Design_System**: Conjunto de design tokens CSS, configuración de Tailwind CSS 4 y fuentes web que definen paleta, tipografía, radios y superficies glass de la marca de BorondoTours (isotipo colibrí barbudo del páramo, _Oxypogon guerinii_).
 - **UI_Library**: Biblioteca de componentes UI base reutilizables (botones, cards, glass surfaces) construidos como islands o componentes Astro.
 - **Button_Component**: Componente de botón de la UI_Library con estados default, hover, focus, disabled y variantes (primario, CTA, secundario).
 - **Glass_Surface**: Componente/utilidad de superficie translúcida con `backdrop-filter: blur` usada sobre fotografías (navbar, buscador, tarjetas superpuestas, modales).
@@ -48,7 +48,7 @@ Este documento cubre únicamente el **frontend**. Los contratos de datos (endpoi
 
 ### Requirement 1: Design Tokens de Marca
 
-**User Story:** Como desarrollador frontend, quiero un conjunto único de design tokens CSS derivados de la marca "Ave azul", para que todos los componentes usen colores, tipografía y radios consistentes sin valores hardcodeados.
+**User Story:** Como desarrollador frontend, quiero un conjunto único de design tokens CSS derivados de la marca de BorondoTours (colibrí barbudo del páramo, _Oxypogon guerinii_), para que todos los componentes usen colores, tipografía y radios consistentes sin valores hardcodeados.
 
 #### Acceptance Criteria
 
@@ -135,7 +135,7 @@ Este documento cubre únicamente el **frontend**. Los contratos de datos (endpoi
 5. WHEN el usuario desplaza la página fuera del Hero_Section, THE Navbar SHALL mostrar un fondo sólido que garantice un ratio de contraste de al menos 4.5:1 entre el texto de la Navbar y el fondo.
 6. WHEN el ancho de viewport es mayor o igual a 768px, THE Navbar SHALL mostrar los enlaces de navegación en línea.
 7. WHEN el ancho de viewport es menor a 768px, THE Navbar SHALL colapsar los enlaces de navegación en un menú móvil accionado por un botón con `aria-label` y `aria-expanded`, navegable con la tecla Tab, activable con las teclas Enter y Espacio, con indicador de foco visible, y que se cierre con la tecla Escape devolviendo el foco al botón que lo abrió.
-8. THE Navbar SHALL renderizar el logotipo horizontal de la marca "Ave azul" con un ancho no menor a 160px y con un atributo `alt` descriptivo.
+8. THE Navbar SHALL renderizar el logotipo horizontal de la marca de BorondoTours con un ancho no menor a 160px y con un atributo `alt` descriptivo.
 9. THE Navbar SHALL renderizar todas sus etiquetas de texto mediante el I18n_System.
 
 ### Requirement 7: Footer con Trust Badges

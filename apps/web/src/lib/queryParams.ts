@@ -13,7 +13,7 @@
  *     recortan/intercambian) (R13.3)
  *   - `sort` es un valor válido, con `"popular"` por defecto (R13.9)
  *   - `view` es `"list"` por defecto cuando falta o es inválido (R14.1)
- *   - `page` es un entero positivo, con `1` por defecto (R11.8)
+ *   - `cursor` es un string opaco o `null` cuando falta o está vacío (keyset)
  *   - `regions`/`durations`/`difficulties` contienen solo miembros válidos de
  *     su unión, sin duplicados y en orden canónico (los desconocidos se
  *     descartan) (R13.1, R13.2, R13.4)
@@ -80,8 +80,6 @@ const DEFAULT_SORT: CatalogState["sort"] = "popular";
 const VIEW_VALUES: readonly CatalogState["view"][] = ["list", "map"];
 const DEFAULT_VIEW: CatalogState["view"] = "list";
 
-const DEFAULT_PAGE = 1;
-
 // Nombres de los query params en la URL.
 const PARAM = {
   q: "q",
@@ -92,7 +90,7 @@ const PARAM = {
   difficulties: "difficulties",
   passport: "passport",
   sort: "sort",
-  page: "page",
+  cursor: "cursor",
   view: "view",
 } as const;
 
@@ -189,8 +187,9 @@ export function parseCatalogState(search: URLSearchParams): CatalogState {
       ? (rawSort as CatalogState["sort"])
       : DEFAULT_SORT;
 
-  const parsedPage = parseNonNegativeInt(search.get(PARAM.page));
-  const page = parsedPage !== null && parsedPage >= 1 ? parsedPage : DEFAULT_PAGE;
+  // Cursor opaco de paginación keyset. Se conserva tal cual (trim); vacío → null.
+  const rawCursor = (search.get(PARAM.cursor) ?? "").trim();
+  const cursor = rawCursor.length > 0 ? rawCursor : null;
 
   const rawView = search.get(PARAM.view);
   const view: CatalogState["view"] =
@@ -207,7 +206,7 @@ export function parseCatalogState(search: URLSearchParams): CatalogState {
     difficulties,
     passportOnly,
     sort,
-    page,
+    cursor,
     view,
   };
 }
@@ -253,8 +252,9 @@ export function serializeCatalogState(state: CatalogState): URLSearchParams {
     state.sort !== DEFAULT_SORT)
     params.set(PARAM.sort, state.sort);
 
-  if (Number.isSafeInteger(state.page) && state.page > DEFAULT_PAGE)
-    params.set(PARAM.page, String(state.page));
+  // Cursor keyset: solo se emite si hay un token no vacío (primera página = sin param).
+  if (typeof state.cursor === "string" && state.cursor.trim().length > 0)
+    params.set(PARAM.cursor, state.cursor.trim());
 
   if ((VIEW_VALUES as readonly string[]).includes(state.view) &&
     state.view !== DEFAULT_VIEW)

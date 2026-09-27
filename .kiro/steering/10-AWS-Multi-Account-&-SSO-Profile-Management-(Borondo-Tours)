@@ -30,7 +30,7 @@ Para cualquier operación directa con la terminal de AWS CLI, NUNCA uses el coma
 * **Ejemplo Correcto (Dev):** `aws s3 ls --profile AdministratorAccess-232025404765`
 * **Ejemplo Correcto (Prod):** `aws lambda list-functions --region us-east-1 --profile AdministratorAccess-787565887675`
 
-### Paso 4: Ejecución con Terraform o Scripts de Node/Bun
+### Paso 4: Ejecución con Terraform, agentcore, cloudformation, cdk, gitactions, sam o Scripts de Node/Bun
 Si vas a ejecutar comandos de Terraform (`terraform init`, `plan`, `apply`) o scripts automatizados que requieran acceso a AWS, no uses la bandera `--profile`. En su lugar, debes inyectar la variable de entorno `AWS_PROFILE` temporalmente en la terminal antes de la ejecución:
 * **En entornos PowerShell/Windows:** `$env:AWS_PROFILE="<NOMBRE_DEL_PROFILE>"`
 * **En entornos Bash/Linux/Mac:** `export AWS_PROFILE="<NOMBRE_DEL_PROFILE>"`

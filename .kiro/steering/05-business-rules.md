@@ -62,3 +62,13 @@ inclusion: always
 - 70% restante: relevancia textual + popularidad
 - `featured_boost` (0-50): acuerdos comerciales especiales gestionados por SUPER_ADMIN
 - NUNCA visible para clientes ni operadores en ninguna UI pública
+
+## Reconocimiento de Ingresos — NIIF 15 (Principal vs. Agente)
+- **Borondo Tours actúa como PRINCIPAL**: controla la reserva, asume riesgo de incumplimiento del operador, tiene discreción sobre el precio final al viajero.
+- **Ingreso bruto contable** = 100% del valor facturado al viajero (campo: `tour_price` total).
+- **Costo del tour** = monto liquidado al operador (`operator_amount`). Registrar en cuenta 6105.
+- **`borondo_amount`** = comisión que retiene BorondoTours = ingreso bruto − costo del tour = margen bruto.
+- Fase 1 (sin Split Payment): Borondo Tours recibe el 100% → liquida al operador → ingreso = total; costo = pago al operador.
+- Fase 2 (con Split Payment activo): el operador recibe su parte directamente → ingreso = solo `borondo_amount`.
+- Los Coins otorgados son un **pasivo** (obligación de desempeño futura), no un gasto inmediato al vender. Se registran en cuenta 2805.
+- Ver tratamiento contable completo y PUC en `.obsidian/docs/03-Knowledge/Estructura-Contable.md`.

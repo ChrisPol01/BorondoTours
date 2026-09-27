@@ -11,7 +11,7 @@ La decisión rectora es separar **fidelidad visual** de **compromiso funcional**
 La resolución de conflictos sigue Requirement 1.5 y la introducción de `requirements.md`:
 
 1. `requirements.md`, Specs A–F y reglas de negocio vigentes gobiernan comportamiento, privacidad y seguridad.
-2. La guía Ave Azul y `.kiro/steering/12-brand-identity.md` gobiernan identidad.
+2. La guía de marca BorondoTours (colibrí barbudo del páramo, _Oxypogon guerinii_) y `.kiro/steering/12-brand-identity.md` gobiernan identidad.
 3. Cada PNG gobierna composición, geometría, densidad y jerarquía visual de su etapa.
 4. La implementación existente es fuente de reutilización, no de precedencia.
 
@@ -34,7 +34,7 @@ Specs A–F contienen referencias históricas a SPA, NestJS, Redis y BullMQ. Par
 - [`apps/web/src/pages/index.astro`](../../../apps/web/src/pages/index.astro), [`discovery.astro`](../../../apps/web/src/pages/discovery.astro) y [`tours/[slug].astro`](../../../apps/web/src/pages/tours/[slug].astro) son las únicas rutas B2C existentes comprobadas.
 - [`packages/contracts/src/schemas/tours.ts`](../../../packages/contracts/src/schemas/tours.ts) demuestra el input compartido de búsqueda y también la divergencia con el request actual que debe resolverse antes de declarar integración completa.
 - [Spec A — Discovery](../../../docs/01-Specs/Spec-A-Discovery.md) y [Spec B — Tour Detail](../../../docs/01-Specs/Spec-B-Tour-Detail.md) gobiernan búsqueda, filtros, mapa, detalle, calendario y cross-selling; sus referencias históricas de infraestructura no sustituyen el stack serverless vigente.
-- La guía [Ave Azul](../../../otros/design/marca/Brand_Guidelines_Borondo_Tours_Completo-v2.md) gobierna paleta, tipografía, logotipo, fotografía, iconografía, glass y tono.
+- La [guía de marca BorondoTours](../../../otros/design/marca/Brand_Guidelines_Borondo_Tours_Completo-v2.md) (colibrí barbudo del páramo, _Oxypogon guerinii_) gobierna paleta, tipografía, logotipo, fotografía, iconografía, glass y tono.
 
 ### Objetivos
 
@@ -66,7 +66,7 @@ El límite de seguridad principal está entre el shell estático y los datos pri
 ```mermaid
 graph TD
   M[15 mockups en orden] --> V[Manifest visual de etapa]
-  B[Guía Ave Azul] --> T[Tokens Tailwind 4]
+  B[Guía de marca BorondoTours] --> T[Tokens Tailwind 4]
   F[frontend-b2c-portal + apps/web] --> R[Componentes y lógica reutilizables]
   V --> A[Astro SSG / Static Regions]
   T --> A
@@ -354,11 +354,11 @@ interface CapabilityController<TInput, TResult> {
 
 ### Design system y procedencia de tokens
 
-`tokens.css` sigue siendo la fuente única de verdad y se expone mediante `@theme` de Tailwind 4. Los ocho colores Ave Azul, Sora/Inter y los dos degradados son canónicos. Ningún valor medido del PNG se promueve directamente a token global: primero se registra en el manifiesto visual de etapa y se clasifica.
+`tokens.css` sigue siendo la fuente única de verdad y se expone mediante `@theme` de Tailwind 4. Los ocho colores de marca, Sora/Inter y los dos degradados son canónicos. Ningún valor medido del PNG se promueve directamente a token global: primero se registra en el manifiesto visual de etapa y se clasifica.
 
 | Familia | Ejemplos | Regla de procedencia |
 |---|---|---|
-| Primitivos | color, spacing unit, font family/weight | guía Ave Azul o medición repetida ≥2 contextos |
+| Primitivos | color, spacing unit, font family/weight | guía de marca BorondoTours o medición repetida ≥2 contextos |
 | Semánticos | `surface-page`, `text-muted`, `action-primary` | alias con propósito; nunca hex en componente |
 | Geométricos | containers, gutters, section gaps, radii | medición a 1440 y 375, interpolación documentada |
 | Elevación | border, shadow, opacity, blur | muestreo del PNG + contraste/fallback |
@@ -456,7 +456,7 @@ Carruseles con controles adicionales usan `client:visible`; listas navegables me
 
 | Orden / lámina | Ruta y Requirement | Spec/baseline | Reutilización comprobada | Diseño nuevo o adaptación | Estado de capacidad |
 |---:|---|---|---|---|---|
-| 1 / 1 | `/` — R8 | frontend portal + A-RF01/A-RF03 | `Base`, `Hero`, `SearchWidget`, `DestinationsSection`, `TourCard` | extraer regiones estáticas, identidad Ave Azul, baseline visual | búsqueda validable; planner visual-only; destacados contract-dependent |
+| 1 / 1 | `/` — R8 | frontend portal + A-RF01/A-RF03 | `Base`, `Hero`, `SearchWidget`, `DestinationsSection`, `TourCard` | extraer regiones estáticas, identidad de marca BorondoTours, baseline visual | búsqueda validable; planner visual-only; destacados contract-dependent |
 | 2 / 2 | `/discovery` — R9 | A-RF04–A-RF09 | `CatalogController`, filtros, grid, mapa, `queryParams` | alinear request con contrato, separar mapa `client:visible`, card canónica | contract-dependent hasta convergencia Zod end-to-end |
 | 3 / 2-1 | `/tours/[slug]` — R10 | B-RF01–B-RF09 | galería, info, `SafeHtml`, add-ons, calendario, nearby | static extraction, schema page-data/price, intención protegida | baseline reutilizable; respuestas/efectos contract-dependent |
 | 4 / 3 | `/destinations` — R11 | navegación Spec A | layout/UI/cards | mosaico regional Astro y CTA | enlaces nativos; recomendador visual-only |

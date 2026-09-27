@@ -1,0 +1,60 @@
+---
+/**
+ * `CheckoutStepper` — Barra de progreso del checkout (maqueta visual).
+ *
+ * Muestra los 4 pasos del flujo. En la maqueta el paso 1 aparece como activo.
+ * Astro estático — sin lógica de navegación real (04-checkout.design.md §Stepper).
+ */
+import { translate } from '../../lib/i18n/index';
+import { Check } from 'lucide-react';
+
+interface Props {
+  /** Paso activo (1-4). Default 1. */
+  current?: number;
+}
+const { current = 1 } = Astro.props;
+
+const steps = [
+  { n: 1, label: translate('checkout:stepper.step1') },
+  { n: 2, label: translate('checkout:stepper.step2') },
+  { n: 3, label: translate('checkout:stepper.step3') },
+  { n: 4, label: translate('checkout:stepper.step4') },
+] as const;
+---
+
+<nav aria-label={translate('checkout:stepper.step1')} class="border-b border-border-subtle bg-surface-page">
+  <ol class="mx-auto flex max-w-public items-center justify-center gap-4 px-page-gutter py-5 md:gap-8">
+    {steps.map((step, i) => {
+      const isDone = step.n < current;
+      const isActive = step.n === current;
+      return (
+        <>
+          <li class="flex items-center gap-3">
+            <span
+              class:list={[
+                'flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-pill font-body text-body2 font-semibold',
+                isActive && 'bg-turquesa text-blanco-niebla',
+                isDone && 'bg-verde text-blanco-niebla',
+                !isActive && !isDone && 'bg-arena text-azul-condor',
+              ]}
+              aria-current={isActive ? 'step' : undefined}
+            >
+              {isDone ? <Check className="h-4 w-4" aria-hidden="true" /> : step.n}
+            </span>
+            <span
+              class:list={[
+                'font-body text-body2 md:text-body1',
+                isActive ? 'font-semibold text-turquesa' : 'text-azul-condor',
+              ]}
+            >
+              {step.label}
+            </span>
+          </li>
+          {i < steps.length - 1 && (
+            <li aria-hidden="true" class="hidden h-px w-8 bg-border-subtle md:block"></li>
+          )}
+        </>
+      );
+    })}
+  </ol>
+</nav>

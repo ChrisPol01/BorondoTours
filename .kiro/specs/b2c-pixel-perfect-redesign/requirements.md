@@ -2,9 +2,9 @@
 
 ## Introduction
 
-Este documento especifica el rediseño visual y de experiencia pixel-perfect del portal B2C de BorondoTours (`apps/web`) a partir de las 15 láminas PNG de `otros/design/b2c`. El trabajo se ejecutará mockup por mockup en el orden jerárquico descubierto, sin implementar código durante esta fase. El objetivo es reproducir con fidelidad verificable las composiciones desktop y mobile, consolidar patrones reutilizables y aplicar la identidad Ave Azul sin alterar contratos, cálculos, estados, validaciones, seguridad ni reglas de negocio ya aprobadas.
+Este documento especifica el rediseño visual y de experiencia pixel-perfect del portal B2C de BorondoTours (`apps/web`) a partir de las 15 láminas PNG de `otros/design/b2c`. El trabajo se ejecutará mockup por mockup en el orden jerárquico descubierto, sin implementar código durante esta fase. El objetivo es reproducir con fidelidad verificable las composiciones desktop y mobile, consolidar patrones reutilizables y aplicar la identidad de marca de BorondoTours (isotipo colibrí barbudo del páramo, _Oxypogon guerinii_) sin alterar contratos, cálculos, estados, validaciones, seguridad ni reglas de negocio ya aprobadas.
 
-Las fuentes se reconcilian con esta precedencia: (1) requisitos funcionales vigentes y reglas de negocio aprobadas para comportamiento; (2) manual y steering de marca Ave Azul para identidad; (3) mockup correspondiente para composición visual; (4) este documento para alcance y aceptación del rediseño; (5) implementación existente para reutilización. Una diferencia visual del mockup no autoriza una nueva regla de negocio, endpoint, tratamiento de datos personales ni capacidad de backend. Las capacidades del inventario MVP que todavía no tengan contrato aprobado se representan únicamente como `Visual_Only_State` hasta recibir `Product_Approval`.
+Las fuentes se reconcilian con esta precedencia: (1) requisitos funcionales vigentes y reglas de negocio aprobadas para comportamiento; (2) manual y steering de marca de BorondoTours (colibrí barbudo del páramo, _Oxypogon guerinii_) para identidad; (3) mockup correspondiente para composición visual; (4) este documento para alcance y aceptación del rediseño; (5) implementación existente para reutilización. Una diferencia visual del mockup no autoriza una nueva regla de negocio, endpoint, tratamiento de datos personales ni capacidad de backend. Las capacidades del inventario MVP que todavía no tengan contrato aprobado se representan únicamente como `Visual_Only_State` hasta recibir `Product_Approval`.
 
 El alcance conserva el stack aprobado de Astro SSG, React 19 islands y Tailwind CSS 4, e incluye accesibilidad WCAG 2.1 AA, responsive design, internacionalización preparada para locales aprobados, SEO técnico, datos estructurados, Core Web Vitals y regresión visual automatizada. Este documento crea únicamente requisitos; el diseño técnico y el plan de tareas pertenecen a fases posteriores.
 
@@ -45,8 +45,8 @@ El alcance conserva el stack aprobado de Astro SSG, React 19 islands y Tailwind 
 - **Mockup_Inventory**: Las 15 láminas de la tabla anterior en el orden indicado.
 - **Mockup**: Una lámina PNG individual usada como fuente visual de verdad para una etapa.
 - **Visual_Baseline**: Captura de referencia derivada del Mockup para comparar una ruta en un viewport fijo.
-- **Design_System**: Tokens, tipografía, espaciado, iconografía, radios, sombras, degradados y superficies de Ave Azul.
-- **Ave_Azul_Tokens**: Paleta oficial Azul Profundo `#103B66`, Azul Cóndor `#2364AA`, Turquesa Laguna `#00B7C7`, Verde Frailejón `#79C142`, Arena `#F3E8D1`, Dorado `#FDB813`, Blanco Niebla `#F9FBFC` y Negro Volcánico `#101010`.
+- **Design_System**: Tokens, tipografía, espaciado, iconografía, radios, sombras, degradados y superficies de la marca de BorondoTours (isotipo colibrí barbudo del páramo, _Oxypogon guerinii_).
+- **Ave_Azul_Tokens**: Identificador técnico de la paleta oficial de la marca (isotipo colibrí barbudo del páramo, _Oxypogon guerinii_). Colores: Azul Profundo `#103B66`, Azul Cóndor `#2364AA`, Turquesa Laguna `#00B7C7`, Verde Frailejón `#79C142`, Arena `#F3E8D1`, Dorado `#FDB813`, Blanco Niebla `#F9FBFC` y Negro Volcánico `#101010`. _(El nombre del token se conserva por estabilidad de referencias en criterios y tests; no implica que el ave se llame "ave azul".)_
 - **Liquid_Glass_Surface**: Superficie translúcida del mockup con desenfoque, borde luminoso sutil y separación de capas.
 - **Rendering_Architecture**: Astro SSG con HTML estático y React islands únicamente para estado o interacción.
 - **React_Island**: Componente React hidratado en navegador mediante una directiva Astro.
@@ -98,9 +98,9 @@ El alcance conserva el stack aprobado de Astro SSG, React 19 islands y Tailwind 
 6. WHERE un Mockup muestra Liquid_Glass_Surface, THE Design_System SHALL reproducir transparencia, desenfoque, borde, brillo y profundidad mediante tokens reutilizables.
 7. IF `backdrop-filter` no está disponible, THEN THE Design_System SHALL sustituir Liquid_Glass_Surface por una superficie opaca con contraste WCAG 2.1 AA.
 8. THE Design_System SHALL usar iconografía minimalista de línea redondeada con trazo visual de 2px.
-9. THE Design_System SHALL conservar el área de respeto y las proporciones del logotipo horizontal Ave Azul.
+9. THE Design_System SHALL conservar el área de respeto y las proporciones del logotipo horizontal de la marca BorondoTours.
 10. THE Design_System SHALL exponer los tokens mediante Tailwind CSS 4 sin literales visuales duplicados en componentes.
-11. WHEN los paneles de sistema visual del Mockup 1 difieren de la guía Ave Azul, THE Design_System SHALL usar la guía Ave Azul y registrar la diferencia visual.
+11. WHEN los paneles de sistema visual del Mockup 1 difieren de la guía de marca BorondoTours, THE Design_System SHALL usar la guía de marca BorondoTours y registrar la diferencia visual.
 
 ### Requirement 3: Fidelidad responsive y geometría
 

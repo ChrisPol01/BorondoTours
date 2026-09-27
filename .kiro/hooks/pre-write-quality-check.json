@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Quality Gate Pre-Write",
+      "description": "Antes de escribir código, verifica que cumple con los estándares del proyecto: no hay console.log, no hay 'any' en TypeScript, no hay secrets hardcodeados, y se respetan las convenciones de BorondoTours.\n\nMigration note: Tool categories were converted to the tool-name matcher `^(fs_write|fs_append|str_replace|delete_file|code)$`, reconstructed from the built-in tool list. Confirm it covers the tools you meant, then enable the hook.",
+      "trigger": "PreToolUse",
+      "matcher": "^(fs_write|fs_append|str_replace|delete_file|code)$",
+      "action": {
+        "type": "agent",
+        "prompt": "Antes de escribir este archivo, verifica rápidamente:\n1. No hay console.log (usa logger estructurado en backend)\n2. No hay tipos 'any' en TypeScript\n3. No hay tokens, API keys o secrets hardcodeados\n4. Los nombres de variables están en inglés\n5. Si es un cálculo financiero (comisiones, IVA, pricing), ¿tiene test asociado o lo necesitará?\n6. Si maneja datos PII, ¿se está protegiendo correctamente?\nSi todo está bien, procede. Si hay problemas, corrígelos antes de escribir."
+      },
+      "enabled": false
+    }
+  ]
+}

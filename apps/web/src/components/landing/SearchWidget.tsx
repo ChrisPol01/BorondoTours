@@ -108,9 +108,9 @@ function SearchWidgetInner(): JSX.Element {
     <form
       onSubmit={handleSubmit}
       noValidate
-      className="glass-header mx-auto w-full max-w-5xl px-5 py-4 md:px-6 md:py-5"
+      className="glass-header mx-auto w-full max-w-5xl rounded-2xl px-4 py-3 md:rounded-full md:px-6 md:py-5"
     >
-      <div className="flex flex-col items-stretch gap-4 md:flex-row md:items-center md:gap-0">
+      <div className="flex flex-col items-stretch gap-3 md:flex-row md:items-center md:gap-0">
         {/* Campo Destino — label fijo arriba, input abajo */}
         <div className="flex flex-1 items-center gap-3 px-3 py-2 md:border-r md:border-blanco-niebla/15">
           <MapPin className="h-5 w-5 flex-shrink-0 text-blanco-niebla/70" aria-hidden="true" />

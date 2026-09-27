@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Shell Safety Check",
+      "description": "Antes de ejecutar comandos shell, verifica que no se están ejecutando comandos destructivos contra la base de datos o que expongan secrets en la terminal.\n\nMigration note: Tool categories were converted to the tool-name matcher `^(execute_bash|execute_pwsh|control_bash_process|control_pwsh_process|list_processes|get_process_output)$`, reconstructed from the built-in tool list. Confirm it covers the tools you meant, then enable the hook.",
+      "trigger": "PreToolUse",
+      "matcher": "^(execute_bash|execute_pwsh|control_bash_process|control_pwsh_process|list_processes|get_process_output)$",
+      "action": {
+        "type": "agent",
+        "prompt": "Antes de ejecutar este comando, verifica rápidamente:\n1. No es un comando destructivo de base de datos (DROP, TRUNCATE, DELETE sin WHERE)\n2. No expone tokens o secrets en stdout\n3. No es un force push a main/master\n4. No ejecuta npm install de paquetes no aprobados en el stack\nSi el comando es seguro, procede normalmente."
+      },
+      "enabled": false
+    }
+  ]
+}

@@ -135,3 +135,6 @@ dump.sql
 *.tgz
 .temp/
 temp/
+
+# Archivos temporales de configuracion AWS (trabajo local)
+tmp-*.json

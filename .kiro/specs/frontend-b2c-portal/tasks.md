@@ -4,7 +4,7 @@
 
 Este plan convierte el diseño del Portal B2C (`apps/web`, Astro 5 SSG + islands React 19) en pasos de código incrementales. Se construye de adentro hacia afuera: primero la base de tokens y las **funciones puras de `src/lib/`** (objetivo del property-based testing con fast-check), luego la UI Library, el layout, y finalmente las tres vistas (Landing, Discovery, Tour Detail) que integran todo. Cada tarea se apoya en las anteriores y termina cableando componentes en páginas Astro, sin dejar código huérfano.
 
-Convenciones aplicadas de los steering: TypeScript strict sin `any`, nombres en inglés, textos vía `t('namespace:key')`, HTML del backend solo vía `SafeHtml` (DOMPurify), access token solo en memoria (nanostores), Tailwind CSS 4 con tokens de marca "Ave azul", cobertura ≥ 80% en `src/lib/` y componentes modificados. Las sub-tareas marcadas con `*` son de testing y opcionales para un MVP más rápido.
+Convenciones aplicadas de los steering: TypeScript strict sin `any`, nombres en inglés, textos vía `t('namespace:key')`, HTML del backend solo vía `SafeHtml` (DOMPurify), access token solo en memoria (nanostores), Tailwind CSS 4 con tokens de marca BorondoTours (colibrí barbudo del páramo, _Oxypogon guerinii_), cobertura ≥ 80% en `src/lib/` y componentes modificados. Las sub-tareas marcadas con `*` son de testing y opcionales para un MVP más rápido.
 
 ## Tasks
 

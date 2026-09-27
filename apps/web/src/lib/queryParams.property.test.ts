@@ -111,7 +111,16 @@ const canonicalCatalogState: fc.Arbitrary<CatalogState> = fc
     difficulties: canonicalSubset(DIFFICULTY_ORDER),
     passportOnly: fc.boolean(),
     sort: fc.constantFrom(...SORT_VALUES),
-    page: fc.integer({ min: 1, max: 100_000 }),
+    // Cursor keyset canónico: token opaco no vacío (sin espacios en los
+    // bordes) o `null`. Un string vacío/con espacios no es canónico porque
+    // `parseCatalogState` lo normaliza a `null`.
+    cursor: fc.option(
+      fc
+        .string({ minLength: 1, maxLength: 40 })
+        .map((s) => s.trim())
+        .filter((s) => s.length > 0),
+      { nil: null },
+    ),
     view: fc.constantFrom(...VIEW_VALUES),
   })
   .map((r) => ({
@@ -123,7 +132,7 @@ const canonicalCatalogState: fc.Arbitrary<CatalogState> = fc
     difficulties: r.difficulties,
     passportOnly: r.passportOnly,
     sort: r.sort,
-    page: r.page,
+    cursor: r.cursor,
     view: r.view,
   }));
 

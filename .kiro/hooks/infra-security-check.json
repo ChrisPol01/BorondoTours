@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Infrastructure & CI/CD Guard",
+      "description": "Cuando se editan archivos de Docker, CI/CD, o configuración de infraestructura, verifica que no se exponen secrets, que los builds son reproducibles, y que los ambientes están correctamente separados.",
+      "trigger": "PostFileSave",
+      "matcher": "(.*Dockerfile$|.*\\.github/workflows/.*$|.*docker-compose[^/]*$|.*\\.env[^/]*$|.*infra/.*$)",
+      "action": {
+        "type": "agent",
+        "prompt": "Se editó un archivo de infraestructura o CI/CD. Verifica:\n1. ¿No hay secrets, API keys o passwords en texto plano? (deben estar en GitHub Secrets o env vars)\n2. ¿Los Dockerfiles usan imágenes base con tag específico (no :latest)?\n3. ¿El .env.example NO contiene valores reales (solo placeholders)?\n4. ¿Los workflows de CI/CD separan staging de producción?\n5. ¿El deploy a producción requiere aprobación manual (environment protection)?\n6. ¿Los healthchecks están configurados para el container?\n7. ¿El pipeline completo no supera 8 minutos?\nUn secret expuesto en CI/CD es un breach inmediato. Verificar siempre."
+      },
+      "enabled": false
+    }
+  ]
+}

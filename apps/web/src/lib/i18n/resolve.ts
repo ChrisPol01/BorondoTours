@@ -40,6 +40,7 @@ export type Namespace =
   | "nav"
   | "footer"
   | "home"
+  | "checkout"
   | "discovery"
   | "detail";
 

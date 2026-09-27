@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Session Summary & Handoff",
+      "description": "Al terminar la ejecución del agente, resume lo que se hizo, qué queda pendiente, y si hay deuda técnica que anotar para la siguiente sesión.",
+      "trigger": "Stop",
+      "action": {
+        "type": "agent",
+        "prompt": "La sesión de trabajo está terminando. Genera un resumen breve:\n1. ¿Qué se completó en esta sesión?\n2. ¿Qué quedó pendiente o a medio implementar?\n3. ¿Hay deuda técnica nueva que se debería anotar?\n4. ¿Se descubrió algo que debería actualizarse en los specs o steering?\n5. ¿Cuál sería el siguiente paso lógico para la próxima sesión?\nEsto ayuda a mantener continuidad entre sesiones de trabajo."
+      },
+      "enabled": true
+    }
+  ]
+}

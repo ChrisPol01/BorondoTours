@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Realtime & WebSocket Guard",
+      "description": "Cuando se editan archivos de WebSocket o real-time, verifica autenticación del socket, manejo de reconexión, y que no se envía información sensible por el canal.",
+      "trigger": "PostFileSave",
+      "matcher": "(.*socket[^/]*/.*$|.*websocket/.*$|.*chat/.*$|.*realtime/.*$|.*[^/]*\\.gateway\\.ts$)",
+      "action": {
+        "type": "agent",
+        "prompt": "Se editó código de WebSocket/real-time. Verifica:\n1. ¿El socket autentica al usuario con JWT antes de permitir eventos?\n2. ¿Hay room isolation? (un usuario solo recibe eventos de SUS bookings/chats)\n3. ¿El chat tripartito solo incluye: cliente + guía asignado + agente BorondoTours?\n4. ¿No se envían datos PII completos por el socket (usar IDs, no document_number)?\n5. ¿Hay manejo de reconexión con backoff exponencial en el cliente?\n6. ¿Se desconecta automáticamente al hacer logout?\n7. ¿Los mensajes de chat se persisten en DynamoDB con TTL de 90 días?\nUn socket sin auth es un canal abierto para exfiltrar datos de otros usuarios."
+      },
+      "enabled": false
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+---
+/**
+ * `CheckoutStep2` — Paso 2: Pasajeros (maqueta visual estática).
+ *
+ * Grid 2 columnas: formularios de pasajeros (izq) + resumen (der).
+ * 04-checkout.design.md §"Paso 2 - Pasajeros". Inputs con valores de ejemplo
+ * (readonly, maqueta); alerta de IVA exento para extranjero. Sin lógica real.
+ */
+import { translate } from '../../lib/i18n/index';
+import { Plus, Info, Upload } from 'lucide-react';
+
+const t = (k: string): string => translate(`checkout:${k}`);
+
+const passengers = [
+  {
+    n: 1,
+    firstName: t('step2.p1.firstName'), lastName: t('step2.p1.lastName'),
+    docType: t('step2.p1.docType'), docNumber: t('step2.p1.docNumber'),
+    nationality: t('step2.p1.nationality'), medical: t('step2.p1.medical'),
+    foreign: false,
+  },
+  {
+    n: 2,
+    firstName: t('step2.p2.firstName'), lastName: t('step2.p2.lastName'),
+    docType: t('step2.p2.docType'), docNumber: t('step2.p2.docNumber'),
+    nationality: '', medical: '',
+    foreign: true,
+  },
+];
+
+const fieldClass = 'w-full rounded-control border border-border-subtle bg-surface-page px-3 py-2 font-body text-body2 text-negro-volcanico';
+const labelClass = 'mb-1 block font-body text-label font-medium text-negro-volcanico';
+---
+
+<section id="checkout-step2" aria-labelledby="checkout-step2-title" class="scroll-mt-24 bg-surface-warm py-section-gap">
+  <div class="mx-auto grid max-w-public gap-6 px-page-gutter lg:grid-cols-[1fr_20rem]">
+    {/* Columna de formularios */}
+    <div class="flex flex-col gap-6">
+      <div class="flex items-center justify-between">
+        <h2 id="checkout-step2-title" class="font-heading text-h3 font-semibold text-negro-volcanico">
+          {t('step2.title')}
+        </h2>
+        <span class="inline-flex items-center gap-2 rounded-control border border-focus px-4 py-2 font-body text-body2 font-semibold text-negro-volcanico">
+          <Plus className="h-4 w-4" aria-hidden="true" />
+          {t('step2.addPassenger')}
+        </span>
+      </div>
+
+      {passengers.map((p) => (
+        <article class="rounded-card bg-surface-page p-6 shadow-card">
+          <div class="mb-4 flex items-center gap-3">
+            <span class="flex h-8 w-8 items-center justify-center rounded-pill bg-turquesa font-body text-body2 font-semibold text-blanco-niebla">
+              {p.n}
+            </span>
+            <h3 class="font-heading text-h4 font-semibold text-negro-volcanico">{p.firstName} {p.lastName}</h3>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label class={labelClass}>{t('step2.field.firstName')}</label>
+              <input class={fieldClass} type="text" value={p.firstName} readonly aria-label={t('step2.field.firstName')} />
+            </div>
+            <div>
+              <label class={labelClass}>{t('step2.field.lastName')}</label>
+              <input class={fieldClass} type="text" value={p.lastName} readonly aria-label={t('step2.field.lastName')} />
+            </div>
+            <div>
+              <label class={labelClass}>{t('step2.field.docType')}</label>
+              <input class={fieldClass} type="text" value={p.docType} readonly aria-label={t('step2.field.docType')} />
+            </div>
+            <div>
+              <label class={labelClass}>{t('step2.field.docNumber')}</label>
+              <input class={fieldClass} type="text" value={p.docNumber} readonly aria-label={t('step2.field.docNumber')} />
+            </div>
+            {!p.foreign && (
+              <>
+                <div>
+                  <label class={labelClass}>{t('step2.field.nationality')}</label>
+                  <input class={fieldClass} type="text" value={p.nationality} readonly aria-label={t('step2.field.nationality')} />
+                </div>
+                <div class="sm:col-span-2">
+                  <label class={labelClass}>{t('step2.field.medical')}</label>
+                  <input class={fieldClass} type="text" value={p.medical} readonly aria-label={t('step2.field.medical')} />
+                </div>
+              </>
+            )}
+          </div>
+
+          {p.foreign && (
+            <div class="mt-4 rounded-panel border-l-4 border-turquesa bg-azul-condor/10 p-4">
+              <div class="flex items-start gap-3">
+                <Info className="mt-0.5 h-5 w-5 flex-shrink-0 text-turquesa" aria-hidden="true" />
+                <div class="flex-1">
+                  <p class="font-body text-body2 font-semibold text-negro-volcanico">{t('step2.ivaAlertTitle')}</p>
+                  <p class="mt-1 font-body text-body2 text-azul-condor">{t('step2.ivaAlertText')}</p>
+                  <span class="mt-3 inline-flex items-center gap-2 rounded-control border border-focus px-4 py-2 font-body text-body2 font-semibold text-negro-volcanico">
+                    <Upload className="h-4 w-4" aria-hidden="true" />
+                    {t('step2.uploadPassport')}
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
+        </article>
+      ))}
+
+      {/* Contacto de emergencia */}
+      <article class="rounded-card bg-surface-page p-6 shadow-card">
+        <h3 class="mb-4 font-heading text-h4 font-semibold text-negro-volcanico">{t('step2.emergencyTitle')}</h3>
+        <div class="grid gap-4 sm:grid-cols-3">
+          <div>
+            <label class={labelClass}>{t('step2.emergency.name')}</label>
+            <input class={fieldClass} type="text" value={t('step2.emergency.nameValue')} readonly aria-label={t('step2.emergency.name')} />
+          </div>
+          <div>
+            <label class={labelClass}>{t('step2.emergency.phone')}</label>
+            <input class={fieldClass} type="text" value={t('step2.emergency.phoneValue')} readonly aria-label={t('step2.emergency.phone')} />
+          </div>
+          <div>
+            <label class={labelClass}>{t('step2.emergency.relationship')}</label>
+            <input class={fieldClass} type="text" value={t('step2.emergency.relationshipValue')} readonly aria-label={t('step2.emergency.relationship')} />
+          </div>
+        </div>
+      </article>
+    </div>
+
+    {/* Resumen lateral */}
+    <aside class="flex flex-col gap-4">
+      <div class="rounded-card bg-surface-page p-6 shadow-card lg:sticky lg:top-24">
+        <h3 class="font-heading text-h4 font-semibold text-negro-volcanico">{t('step2.summaryTitle')}</h3>
+        <dl class="mt-4 flex flex-col gap-2 font-body text-body2">
+          <div class="flex items-center justify-between">
+            <dt class="text-azul-condor">{t('step2.summary.tour')}</dt>
+            <dd class="font-medium text-negro-volcanico">{t('step1.summary.basePriceValue')}</dd>
+          </div>
+        </dl>
+        <div class="mt-4 flex items-baseline justify-between border-t border-border-subtle pt-4">
+          <span class="font-body text-body1 font-semibold text-negro-volcanico">{t('step2.summary.totalPartial')}</span>
+          <span class="font-heading text-h3 font-semibold text-turquesa">{t('step2.summary.totalPartialValue')}</span>
+        </div>
+        <div class="mt-6 flex gap-3">
+          <a
+            href="#checkout-step1-title"
+            class="inline-flex min-h-11 flex-1 items-center justify-center rounded-control border border-focus px-4 py-3 font-body text-button font-semibold text-negro-volcanico transition-colors duration-brand hover:bg-surface-warm focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-azul-profundo"
+          >
+            {t('step2.back')}
+          </a>
+          <a
+            href="#checkout-step3"
+            class="inline-flex min-h-11 flex-1 items-center justify-center gap-1 rounded-control bg-action-primary px-4 py-3 font-body text-button font-semibold text-on-action transition-colors duration-brand hover:bg-action-primary-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-azul-profundo"
+          >
+            {t('step2.continue')}
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>

@@ -23,9 +23,11 @@
  * TypeScript strict, sin `any`.
  */
 import { useState, useEffect, useRef, useCallback, type JSX } from "react";
-import { Calendar } from "lucide-react";
+import { useStore } from "@nanostores/react";
+import { Calendar, Search, Ticket } from "lucide-react";
 
 import { useTranslation } from "../../lib/i18n/provider";
+import { sessionStore } from "../../stores/session";
 import { AccessibleDialog } from "../ui/AccessibleDialog";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -64,6 +66,11 @@ const NAV_LINKS: readonly NavLink[] = [
  */
 export function HeaderIsland(): JSX.Element {
   const { t } = useTranslation("nav");
+
+  // Estado de sesión (en memoria, nanostores). Reactivo: el icono de acción
+  // cambia entre "mis reservas" (autenticado) y "buscar" (anónimo).
+  const session = useStore(sessionStore);
+  const isLoggedIn = session.accessToken !== null;
 
   // Estado: la navbar está "sobre el hero" (glass) o no (sólido).
   const [isOverHero, setIsOverHero] = useState(true);
@@ -125,7 +132,7 @@ export function HeaderIsland(): JSX.Element {
 
   return (
     <header
-      className={`fixed top-3 left-4 right-4 z-50 transition-colors duration-brand ${navClasses}`}
+      className={`fixed top-3 left-4 right-4 z-50 rounded-full transition-colors duration-brand ${navClasses}`}
       role="banner"
     >
       <nav
@@ -157,6 +164,31 @@ export function HeaderIsland(): JSX.Element {
               </a>
             </li>
           ))}
+          {/*
+            Icono de acción dinámico según sesión (reemplaza al carrito, que no
+            existe en el B2C): autenticado → acceso a "Mis reservas"; anónimo →
+            volver a buscar tours. El contador de reservas activas no se muestra
+            hasta disponer de contrato aprobado (no se inventan datos).
+          */}
+          <li>
+            <a
+              href={isLoggedIn ? "/mis-reservas" : "/discovery"}
+              aria-label={
+                isLoggedIn ? t("nav:myBookings") : t("nav:searchTours")
+              }
+              className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-full p-2.5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-azul-profundo ${
+                isOverHero
+                  ? "text-blanco-niebla hover:bg-blanco-niebla/10 focus-visible:ring-offset-transparent"
+                  : "text-negro-volcanico hover:bg-arena focus-visible:ring-offset-blanco-niebla"
+              }`}
+            >
+              {isLoggedIn ? (
+                <Ticket className="h-5 w-5" aria-hidden="true" />
+              ) : (
+                <Search className="h-5 w-5" aria-hidden="true" />
+              )}
+            </a>
+          </li>
           {/* CTA Dorado "Planifica tu viaje" con icono calendario (R6.3) */}
           <li>
             <a
@@ -241,6 +273,20 @@ export function HeaderIsland(): JSX.Element {
                 </a>
               </li>
             ))}
+            {/* Acción dinámica según sesión (mobile) */}
+            <li>
+              <a
+                href={isLoggedIn ? "/mis-reservas" : "/discovery"}
+                className="flex min-h-11 items-center gap-2 rounded-control px-3 py-2 font-body text-body1 font-semibold text-negro-volcanico transition-colors hover:bg-arena focus-visible:outline-focus"
+              >
+                {isLoggedIn ? (
+                  <Ticket className="h-5 w-5" aria-hidden="true" />
+                ) : (
+                  <Search className="h-5 w-5" aria-hidden="true" />
+                )}
+                <span>{isLoggedIn ? t("nav:myBookings") : t("nav:searchTours")}</span>
+              </a>
+            </li>
             <li className="mt-2">
               <a
                 href="/planifica"

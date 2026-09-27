@@ -2,7 +2,7 @@
 
 ## Overview
 
-Este documento describe el diseño técnico del **Frontend del Portal B2C público de BorondoTours** (`apps/web`) para la Fase 1, a partir de los 22 requisitos aprobados en `requirements.md`. El portal es una web de descubrimiento construida con **Astro 5** en modo `static` (SSG) que hidrata **islands de React 19** solo donde hay interactividad (buscador, filtros, mapa, galería, calendario). La identidad visual canónica es la marca **"Ave azul"** definida en `otros/design/Brand_Guidelines_Borondo_Tours_Completo-v2.md`.
+Este documento describe el diseño técnico del **Frontend del Portal B2C público de BorondoTours** (`apps/web`) para la Fase 1, a partir de los 22 requisitos aprobados en `requirements.md`. El portal es una web de descubrimiento construida con **Astro 5** en modo `static` (SSG) que hidrata **islands de React 19** solo donde hay interactividad (buscador, filtros, mapa, galería, calendario). La identidad visual canónica es la marca de BorondoTours (isotipo **colibrí barbudo del páramo**, _Oxypogon guerinii_) definida en `otros/design/Brand_Guidelines_Borondo_Tours_Completo-v2.md`.
 
 El diseño se organiza en cuatro capas construidas en orden, coherentes con el alcance de Fase 1:
 
@@ -129,7 +129,7 @@ Los tokens se declaran como CSS custom properties en `tokens.css` y se exponen a
 ```css
 /* tokens.css (extracto) */
 :root {
-  /* Paleta marca "Ave azul" (R1.1) */
+  /* Paleta marca BorondoTours — colibrí barbudo del páramo, Oxypogon guerinii (R1.1) */
   --color-azul-profundo: #103B66;
   --color-azul-condor:   #2364AA;
   --color-turquesa:      #00B7C7;
@@ -249,7 +249,7 @@ Usa `sanitizeHtml()` de `lib/sanitize.ts`. Si la sanitización lanza o produce c
 - Enlaces: Destinos, Experiencias, Nosotros, Blog, Contacto (R6.2); CTA Dorado "Planifica tu viaje" (R6.3). Textos vía i18n (R6.9).
 - Sobre el hero: `GlassSurface` con contraste ≥4.5:1 (R6.4). Al salir del hero (scroll): fondo sólido con contraste ≥4.5:1 (R6.5) — se detecta con `IntersectionObserver` sobre el `Hero`.
 - ≥768px: enlaces en línea (R6.6). <768px: menú móvil con `aria-label`, `aria-expanded`, navegable con Tab, activable Enter/Espacio, foco visible, cierre con Escape devolviendo foco al botón (R6.7).
-- Logo horizontal "Ave azul" ancho ≥160px con `alt` descriptivo (R6.8).
+- Logo horizontal de la marca BorondoTours, ancho ≥160px con `alt` descriptivo (R6.8).
 
 **`Footer`** (componente `.astro`): las 4 promesas en orden fijo Turismo Responsable → Experiencias Únicas → Seguridad Garantizada → Atención Personalizada (R7.1), cada una con título, texto e icono Lucide (Hoja, Cámara, Escudo, Personas) (R7.2, R7.3). Textos vía i18n con fallback `es` sin mostrar clave cruda (R7.4, R7.5). Aparece en Landing, Discovery y Tour Detail (R7.6).
 

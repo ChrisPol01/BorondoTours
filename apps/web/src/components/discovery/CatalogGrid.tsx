@@ -38,12 +38,16 @@ const PAGE_SIZE = 12;
 // Props
 // ─────────────────────────────────────────────────────────────────────────
 
-/** Información de paginación que el componente necesita para renderizar controles. */
+/**
+ * Información de paginación keyset (cursor-based). No hay número de página ni
+ * total: solo si existe una página anterior/siguiente. El cursor lo gestiona
+ * el `CatalogController` (token opaco del backend).
+ */
 export interface PaginationInfo {
-  /** Página actual (1-indexed). */
-  readonly currentPage: number;
-  /** Total de páginas. */
-  readonly totalPages: number;
+  /** Hay una página anterior a la actual (pila de cursores no vacía). */
+  readonly hasPrev: boolean;
+  /** Hay una página siguiente (el backend devolvió `nextCursor`). */
+  readonly hasNext: boolean;
 }
 
 /** Props de `CatalogGrid`. */
@@ -54,14 +58,16 @@ export interface CatalogGridProps {
   readonly isLoading: boolean;
   /** Error de la petición; si es `true` se muestra estado de error. */
   readonly isError: boolean;
-  /** Información de paginación. */
+  /** Información de paginación keyset. */
   readonly pagination: PaginationInfo;
   /** Callback al pulsar "limpiar filtros" en el estado vacío. */
   readonly onClearFilters: () => void;
   /** Callback al pulsar "reintentar" en el estado de error. */
   readonly onRetry: () => void;
-  /** Callback de cambio de página. */
-  readonly onPageChange: (page: number) => void;
+  /** Callback para ir a la página anterior (keyset). */
+  readonly onPrevPage: () => void;
+  /** Callback para ir a la página siguiente (keyset). */
+  readonly onNextPage: () => void;
 }
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -144,21 +150,38 @@ function ErrorState({ onRetry }: { readonly onRetry: () => void }): JSX.Element 
   );
 }
 
-/** Controles de paginación. */
+/**
+ * Controles de paginación keyset: "Anterior / Siguiente".
+ * A diferencia de offset/page-based, no hay número de página ni total (la
+ * paginación cursor-based no los conoce). Se oculta si no hay ni anterior ni
+ * siguiente (una sola página de resultados).
+ */
 function PaginationControls({
   pagination,
-  onPageChange,
+  onPrevPage,
+  onNextPage,
 }: {
   readonly pagination: PaginationInfo;
-  readonly onPageChange: (page: number) => void;
+  readonly onPrevPage: () => void;
+  readonly onNextPage: () => void;
 }): JSX.Element | null {
   const { t } = useTranslation("discovery");
 
-  if (pagination.totalPages <= 1) return null;
+  const { hasPrev, hasNext } = pagination;
+  if (!hasPrev && !hasNext) return null;
 
-  const { currentPage, totalPages } = pagination;
-  const hasPrev = currentPage > 1;
-  const hasNext = currentPage < totalPages;
+  const buttonClasses = (enabled: boolean): string =>
+    [
+      "inline-flex items-center justify-center gap-2",
+      "font-body text-button font-semibold",
+      "min-h-11 rounded-control px-4 py-2",
+      "transition-colors duration-200",
+      "focus:outline-none focus-visible:ring-2 focus-visible:ring-azul-profundo",
+      "focus-visible:ring-offset-2 focus-visible:ring-offset-blanco-niebla",
+      enabled
+        ? "bg-action-primary text-on-action hover:bg-action-primary-hover"
+        : "bg-arena text-negro-volcanico/40 cursor-not-allowed",
+    ].join(" ");
 
   return (
     <nav
@@ -168,43 +191,23 @@ function PaginationControls({
       <button
         type="button"
         disabled={!hasPrev}
-        onClick={() => onPageChange(currentPage - 1)}
-        className={[
-          "inline-flex items-center justify-center",
-          "font-body text-button font-semibold",
-          "rounded-lg px-4 py-2",
-          "transition-colors duration-200",
-          "focus:outline-none focus-visible:ring-2 focus-visible:ring-azul-profundo",
-          hasPrev
-            ? "bg-action-primary text-on-action hover:bg-action-primary-hover"
-            : "bg-arena text-negro-volcanico/40 cursor-not-allowed",
-        ].join(" ")}
+        onClick={onPrevPage}
+        className={buttonClasses(hasPrev)}
         aria-label={t("pagination.prev")}
       >
-        ←
+        <span aria-hidden="true">←</span>
+        {t("pagination.prev")}
       </button>
-
-      <span className="text-body1 font-body text-negro-volcanico" aria-current="page">
-        {currentPage} / {totalPages}
-      </span>
 
       <button
         type="button"
         disabled={!hasNext}
-        onClick={() => onPageChange(currentPage + 1)}
-        className={[
-          "inline-flex items-center justify-center",
-          "font-body text-button font-semibold",
-          "rounded-lg px-4 py-2",
-          "transition-colors duration-200",
-          "focus:outline-none focus-visible:ring-2 focus-visible:ring-azul-profundo",
-          hasNext
-            ? "bg-action-primary text-on-action hover:bg-action-primary-hover"
-            : "bg-arena text-negro-volcanico/40 cursor-not-allowed",
-        ].join(" ")}
+        onClick={onNextPage}
+        className={buttonClasses(hasNext)}
         aria-label={t("pagination.next")}
       >
-        →
+        {t("pagination.next")}
+        <span aria-hidden="true">→</span>
       </button>
     </nav>
   );
@@ -227,7 +230,8 @@ export function CatalogGrid({
   pagination,
   onClearFilters,
   onRetry,
-  onPageChange,
+  onPrevPage,
+  onNextPage,
 }: CatalogGridProps): JSX.Element {
   // Estado de carga (R11.5): 12 skeletons
   if (isLoading) {
@@ -257,7 +261,11 @@ export function CatalogGrid({
         ))}
       </div>
 
-      <PaginationControls pagination={pagination} onPageChange={onPageChange} />
+      <PaginationControls
+        pagination={pagination}
+        onPrevPage={onPrevPage}
+        onNextPage={onNextPage}
+      />
     </section>
   );
 }

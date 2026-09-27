@@ -1,0 +1,128 @@
+/* google fonts  */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --clr-main: #e45826;
+    --clr-title: #1b1a17;
+    --clr-text: #1b1a17;
+    --clr-nav: #fff;
+    --clr-body: #e6d5b8;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    background: var(--clr-body);
+    color: var(--clr-text);
+}
+
+ul{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+.container{
+    max-width: 968px;
+    margin: 0 auto;
+}
+
+.container section{
+    height: 100vh;
+    padding: 2rem 0;
+}
+
+.container h2{
+    text-align: center;
+    color: var(--clr-title);
+}
+
+/* ================== Main Nav ================ */
+.main-nav{
+    position: fixed;
+    bottom: 2rem;
+    left: 0;
+    right: 0;
+    width: 328px;
+    height: 72px;
+    background: var(--clr-nav);
+    box-shadow: 0 8px 32px rgba(150, 0, 0, .2);
+    margin: 0 auto;
+    padding: 1.5rem .5rem;
+    border-radius: .65rem;
+    overflow: hidden;
+    border-bottom: 3px solid var(--clr-main);
+}
+
+.main-nav ul{
+    display: flex;
+    justify-content: center;
+    column-gap: 2rem;
+}
+
+.main-nav ul a{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-nav ul a .icon{
+    font-size: 1.5rem;
+    color: var(--clr-title);
+    z-index: 20;
+    transition: .5s;
+}
+.main-nav ul a.active .icon{
+    color: var(--clr-body);
+}
+
+.main-nav ul a .name{
+    font-size: .625rem;
+    position: absolute;
+    font-weight: 500;
+    transform: translateY(50px);
+    color: var(--clr-body);
+    z-index: 20;
+    transition: .5s;
+    opacity: 0;
+}
+.main-nav ul a.active .name{
+    opacity: 1;
+    transform: translateY(28px);
+}
+
+.main-nav .indicator{
+    position: absolute;
+    left: 5px;
+    bottom: 0;
+    fill: var(--clr-main);
+    transition: .5s;
+}
+
+/* OK, let's move the indicator */
+.main-nav ul a:nth-child(1).active ~ .indicator{
+    transform: translateX(calc(56px * 0));
+}
+.main-nav ul a:nth-child(2).active ~ .indicator{
+    transform: translateX(calc(56px * 1));
+}
+.main-nav ul a:nth-child(3).active ~ .indicator{
+    transform: translateX(calc(56px * 2));
+}
+.main-nav ul a:nth-child(4).active ~ .indicator{
+    transform: translateX(calc(56px * 3));
+}
+.main-nav ul a:nth-child(5).active ~ .indicator{
+    transform: translateX(calc(56px * 4));
+}

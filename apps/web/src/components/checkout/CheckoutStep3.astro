@@ -1,0 +1,135 @@
+---
+/**
+ * `CheckoutStep3` — Paso 3: Pago (maqueta visual estática).
+ *
+ * Grid 3 columnas: resumen+Coins / métodos de pago / opciones adicionales.
+ * 04-checkout.design.md §"Paso 3 - Pago". Sin integración de pago real:
+ * inputs de tarjeta readonly, botón CTA sin acción. Todo texto vía translate().
+ */
+import { translate } from '../../lib/i18n/index';
+import { Lock } from 'lucide-react';
+
+const t = (k: string): string => translate(`checkout:${k}`);
+
+const methods = [
+  { key: 'step3.method.card', selected: true },
+  { key: 'step3.method.pse', selected: false },
+  { key: 'step3.method.nequi', selected: false },
+];
+
+const fieldClass = 'w-full rounded-control border border-border-subtle bg-surface-page px-3 py-2 font-body text-body2 text-negro-volcanico';
+const labelClass = 'mb-1 block font-body text-label font-medium text-negro-volcanico';
+---
+
+<section id="checkout-step3" aria-labelledby="checkout-step3-title" class="scroll-mt-24 bg-surface-page py-section-gap">
+  <div class="mx-auto max-w-public px-page-gutter">
+    <h2 id="checkout-step3-title" class="mb-6 font-heading text-h3 font-semibold text-negro-volcanico">
+      {t('step3.title')}
+    </h2>
+
+    <div class="grid gap-6 lg:grid-cols-3">
+      {/* Columna 1: Resumen + Coins */}
+      <div class="flex flex-col gap-6">
+        <article class="rounded-card bg-surface-page p-6 shadow-card">
+          <dl class="flex flex-col gap-2 font-body text-body2">
+            <div class="flex items-center justify-between">
+              <dt class="text-azul-condor">{t('step3.summary.basePrice')}</dt>
+              <dd class="font-medium text-negro-volcanico">{t('step1.summary.subtotalValue')}</dd>
+            </div>
+            <div class="flex items-center justify-between text-verde">
+              <dt>{t('step3.summary.coinsDiscount')}</dt>
+              <dd>{t('step3.summary.coinsDiscountValue')}</dd>
+            </div>
+          </dl>
+          <div class="mt-4 flex items-baseline justify-between border-t border-border-subtle pt-4">
+            <span class="font-body text-body1 font-semibold text-negro-volcanico">{t('step3.summary.total')}</span>
+            <span class="font-heading text-h3 font-semibold text-turquesa">{t('step3.summary.totalValue')}</span>
+          </div>
+        </article>
+
+        <article class="rounded-card bg-surface-page p-6 shadow-card">
+          <h3 class="font-heading text-h4 font-semibold text-negro-volcanico">{t('step3.coinsTitle')}</h3>
+          <div class="mt-3">
+            <input class={fieldClass} type="text" value={t('step3.coinsAmount')} readonly aria-label={t('step3.coinsTitle')} />
+            <p class="mt-2 font-body text-label text-azul-condor">{t('step3.coinsAvailable')}</p>
+            <p class="mt-1 font-body text-label font-semibold text-verde">{t('step3.coinsApplied')}</p>
+          </div>
+        </article>
+      </div>
+
+      {/* Columna 2: Métodos de pago */}
+      <article class="rounded-card bg-surface-page p-6 shadow-card">
+        <h3 class="font-heading text-h4 font-semibold text-negro-volcanico">{t('step3.methodsTitle')}</h3>
+        <ul class="mt-4 flex flex-col gap-2">
+          {methods.map((m) => (
+            <li class:list={[
+              'flex items-center gap-3 rounded-control border p-3',
+              m.selected ? 'border-turquesa bg-turquesa/5' : 'border-border-subtle',
+            ]}>
+              <span class:list={[
+                'flex h-4 w-4 items-center justify-center rounded-pill border',
+                m.selected ? 'border-turquesa' : 'border-border-subtle',
+              ]} aria-hidden="true">
+                {m.selected && <span class="h-2 w-2 rounded-pill bg-turquesa"></span>}
+              </span>
+              <span class="font-body text-body2 text-negro-volcanico">{t(m.key)}</span>
+            </li>
+          ))}
+        </ul>
+
+        <p class="mt-4 flex items-center gap-2 font-body text-label text-azul-condor">
+          <Lock className="h-3.5 w-3.5 text-verde" aria-hidden="true" />
+          {t('step3.secureNote')}
+        </p>
+
+        <div class="mt-4 flex flex-col gap-4">
+          <div>
+            <label class={labelClass}>{t('step3.card.number')}</label>
+            <input class={fieldClass} type="text" value="" placeholder={t('step3.card.numberPlaceholder')} readonly aria-label={t('step3.card.number')} />
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class={labelClass}>{t('step3.card.expiry')}</label>
+              <input class={fieldClass} type="text" value="" placeholder="MM/AA" readonly aria-label={t('step3.card.expiry')} />
+            </div>
+            <div>
+              <label class={labelClass}>{t('step3.card.cvv')}</label>
+              <input class={fieldClass} type="text" value="" placeholder={t('step3.card.cvvPlaceholder')} readonly aria-label={t('step3.card.cvv')} />
+            </div>
+          </div>
+        </div>
+      </article>
+
+      {/* Columna 3: Opciones adicionales + pagar */}
+      <div class="flex flex-col gap-6">
+        <article class="rounded-card bg-surface-page p-6 shadow-card">
+          <h3 class="font-heading text-h4 font-semibold text-negro-volcanico">{t('step3.optionsTitle')}</h3>
+
+          <div class="mt-4 rounded-control border border-border-subtle p-4">
+            <p class="font-body text-body2 font-medium text-negro-volcanico">{t('step3.split.title')}</p>
+            <p class="mt-1 font-body text-label text-azul-condor">{t('step3.split.desc')}</p>
+            <p class="mt-2 font-body text-label font-semibold text-turquesa">{t('step3.split.result')}</p>
+            <p class="font-body text-label text-azul-condor">{t('step3.split.each')}</p>
+          </div>
+
+          <label class="mt-4 flex items-start gap-2 font-body text-body2 text-negro-volcanico">
+            <span class="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border border-turquesa bg-turquesa text-blanco-niebla" aria-hidden="true">✓</span>
+            {t('step3.acceptCancellation')}
+          </label>
+          <a href="#" class="mt-2 inline-block font-body text-label text-turquesa underline">{t('step3.viewCancellation')}</a>
+        </article>
+
+        <div class="rounded-card bg-surface-page p-6 shadow-card">
+          <a
+            href="#checkout-step4"
+            class="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-control bg-action-cta px-6 py-3 font-body text-button font-semibold text-text-primary transition-colors duration-brand focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-azul-profundo"
+          >
+            <Lock className="h-4 w-4" aria-hidden="true" />
+            {t('step3.pay')}
+          </a>
+          <p class="mt-3 text-center font-body text-label text-azul-condor">{t('step3.termsNote')}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Financial Logic Guard",
+      "description": "Cuando se editan archivos relacionados con cálculos financieros (pricing, comisiones, IVA, Coins, payouts), verifica que la lógica es correcta, pura (sin side effects), y que tiene o necesitará tests unitarios.",
+      "trigger": "PostFileSave",
+      "matcher": "(.*pricing/.*$|.*commission[^/]*/.*$|.*payout[^/]*/.*$|.*wallet/.*$|.*loyalty/.*$|.*checkout/.*$)",
+      "action": {
+        "type": "agent",
+        "prompt": "Se editó un archivo de lógica financiera. Verifica OBLIGATORIAMENTE:\n1. ¿Las funciones de cálculo son puras (sin side effects, sin mutación)?\n2. ¿Se usa decimal/BigNumber para montos (no float)?\n3. ¿El IVA se calcula sobre el subtotal correcto (19% para residentes, 0% para extranjeros con pasaporte)?\n4. ¿Las comisiones se calculan sobre borondo_amount × rate_agente (no sobre PVP)?\n5. ¿Existe test unitario para este cálculo? Si no, CRÉALO antes de continuar.\n6. ¿Los montos se almacenan en COP sin decimales o con 2 máximo?\nLos errores en cálculos financieros son los más costosos del proyecto. No se puede pasar sin verificar."
+      },
+      "enabled": false
+    }
+  ]
+}

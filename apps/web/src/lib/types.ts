@@ -222,8 +222,14 @@ export interface CatalogState {
   passportOnly: boolean;
   /** Orden; default "popular" (R13.9). */
   sort: "popular" | "price_asc" | "price_desc" | "recent";
-  /** Página actual; 12 tours por página (R11.8). */
-  page: number;
+  /**
+   * Cursor de paginación keyset (cursor-based). `null` = primera página.
+   * Es un token opaco devuelto por el backend en `meta.nextCursor`; nunca se
+   * interpreta ni se calcula en el cliente. Sustituye al antiguo `page` numérico
+   * para lograr paginación O(1) en la BD (ADR-011, TourSearchSchema.cursor).
+   * La pila de cursores para navegar "Anterior" vive en memoria, no en la URL.
+   */
+  cursor: string | null;
   /** Vista activa; default "list" (R14.1). */
   view: "list" | "map";
 }

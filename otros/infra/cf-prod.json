@@ -1,0 +1,61 @@
+{
+  "CallerReference": "borondotours-prod-2026-09-06",
+  "Aliases": {
+    "Quantity": 2,
+    "Items": ["borondotours.com", "www.borondotours.com"]
+  },
+  "DefaultRootObject": "index.html",
+  "Origins": {
+    "Quantity": 1,
+    "Items": [
+      {
+        "Id": "s3-borondotours-web-prod",
+        "DomainName": "borondotours-web-prod.s3.us-east-1.amazonaws.com",
+        "OriginAccessControlId": "EQEV94N2G6SSB",
+        "S3OriginConfig": {
+          "OriginAccessIdentity": ""
+        }
+      }
+    ]
+  },
+  "DefaultCacheBehavior": {
+    "TargetOriginId": "s3-borondotours-web-prod",
+    "ViewerProtocolPolicy": "redirect-to-https",
+    "Compress": true,
+    "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+    "AllowedMethods": {
+      "Quantity": 2,
+      "Items": ["GET", "HEAD"],
+      "CachedMethods": {
+        "Quantity": 2,
+        "Items": ["GET", "HEAD"]
+      }
+    }
+  },
+  "CustomErrorResponses": {
+    "Quantity": 2,
+    "Items": [
+      {
+        "ErrorCode": 403,
+        "ResponsePagePath": "/index.html",
+        "ResponseCode": "200",
+        "ErrorCachingMinTTL": 10
+      },
+      {
+        "ErrorCode": 404,
+        "ResponsePagePath": "/index.html",
+        "ResponseCode": "200",
+        "ErrorCachingMinTTL": 10
+      }
+    ]
+  },
+  "Comment": "BorondoTours PROD web (borondotours.com + www)",
+  "ViewerCertificate": {
+    "ACMCertificateArn": "arn:aws:acm:us-east-1:787565887675:certificate/697d2fa5-2a4b-41a9-9af6-dce6f2a0f64a",
+    "SSLSupportMethod": "sni-only",
+    "MinimumProtocolVersion": "TLSv1.2_2021"
+  },
+  "PriceClass": "PriceClass_100",
+  "Enabled": true,
+  "HttpVersion": "http2and3"
+}

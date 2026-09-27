@@ -201,7 +201,6 @@ h4 {
 .glass-header {
   background-color: var(--glass-header-background);
   border: var(--border-hairline) solid var(--glass-header-border);
-  border-radius: 9999px;
   backdrop-filter: blur(var(--glass-header-blur)) saturate(1.8);
   -webkit-backdrop-filter: blur(var(--glass-header-blur)) saturate(1.8);
 }

@@ -167,6 +167,69 @@ function CheckboxGroup<T extends string>({
   );
 }
 
+interface ChipGroupProps<T extends string> {
+  readonly title: string;
+  readonly options: readonly T[];
+  readonly selected: readonly T[];
+  readonly getLabel: (option: T) => string;
+  readonly onChange: (selected: T[]) => void;
+}
+
+/**
+ * Grupo de chips multi-selección (toggle). Cada chip es un `button` con
+ * `aria-pressed` para comunicar su estado a lectores de pantalla. Alto mínimo
+ * táctil 44px (`min-h-11`). Reemplaza a los checkboxes de Duración (mockup).
+ */
+function ChipGroup<T extends string>({
+  title,
+  options,
+  selected,
+  getLabel,
+  onChange,
+}: ChipGroupProps<T>): JSX.Element {
+  const handleToggle = (option: T): void => {
+    if (selected.includes(option)) {
+      onChange(selected.filter((item) => item !== option));
+    } else {
+      onChange([...selected, option]);
+    }
+  };
+
+  return (
+    <fieldset className="space-y-2">
+      <legend className="font-body text-body2 font-semibold text-negro-volcanico mb-1">
+        {title}
+      </legend>
+      <div className="flex flex-wrap gap-2">
+        {options.map((option) => {
+          const isSelected = selected.includes(option);
+          return (
+            <button
+              key={option}
+              type="button"
+              aria-pressed={isSelected}
+              onClick={() => handleToggle(option)}
+              className={[
+                "inline-flex items-center justify-center min-h-11",
+                "rounded-pill px-4 py-2",
+                "font-body text-body2 font-semibold",
+                "border transition-colors duration-200",
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-azul-profundo",
+                "focus-visible:ring-offset-2 focus-visible:ring-offset-blanco-niebla",
+                isSelected
+                  ? "bg-action-primary text-on-action border-transparent hover:bg-action-primary-hover"
+                  : "bg-blanco-niebla text-negro-volcanico border-azul-profundo/30 hover:bg-arena",
+              ].join(" ")}
+            >
+              {getLabel(option)}
+            </button>
+          );
+        })}
+      </div>
+    </fieldset>
+  );
+}
+
 interface PriceRangeProps {
   readonly title: string;
   readonly minLabel: string;
@@ -176,6 +239,29 @@ interface PriceRangeProps {
   readonly onChange: (min: number, max: number) => void;
 }
 
+/** Tope del slider visual en COP; los inputs numéricos permiten valores mayores. */
+const SLIDER_MAX = 2_500_000;
+/** Paso del slider (COP). */
+const SLIDER_STEP = 50_000;
+
+/** Formatea un valor COP para mostrar en las etiquetas del slider. */
+function formatCop(value: number): string {
+  return new Intl.NumberFormat("es-CO", {
+    style: "currency",
+    currency: "COP",
+    maximumFractionDigits: 0,
+  }).format(value);
+}
+
+/**
+ * Filtro de precio con slider dual accesible + inputs numéricos (R13.3, mockup).
+ *
+ * - Dos `input[type=range]` (min y max) con `aria-label` y `aria-valuetext` en COP.
+ * - Inputs numéricos para precisión y accesibilidad de teclado alternativa.
+ * - Garantiza `min <= max` y recorta al rango permitido.
+ * - El slider llega hasta `SLIDER_MAX`; si `priceMax` lo excede, el thumb máximo
+ *   se muestra al tope y el valor exacto se conserva en el input numérico.
+ */
 function PriceRange({
   title,
   minLabel,
@@ -195,42 +281,100 @@ function PriceRange({
     setLocalMax(priceMax === PRICE_MAX ? "" : String(priceMax));
   }, [priceMin, priceMax]);
 
-  const commitChange = (minStr: string, maxStr: string): void => {
-    const parsedMin = minStr === "" ? 0 : Math.max(0, Math.min(PRICE_MAX, Number(minStr) || 0));
-    const parsedMax = maxStr === "" ? PRICE_MAX : Math.max(0, Math.min(PRICE_MAX, Number(maxStr) || PRICE_MAX));
-    // Asegurar min <= max (R13.3)
-    const finalMin = Math.min(parsedMin, parsedMax);
-    const finalMax = Math.max(parsedMin, parsedMax);
+  const commit = (min: number, max: number): void => {
+    const clampedMin = Math.max(0, Math.min(PRICE_MAX, min));
+    const clampedMax = Math.max(0, Math.min(PRICE_MAX, max));
+    const finalMin = Math.min(clampedMin, clampedMax);
+    const finalMax = Math.max(clampedMin, clampedMax);
     onChange(finalMin, finalMax);
   };
 
-  const handleMinChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const value = e.target.value.replace(/[^\d]/g, "");
-    setLocalMin(value);
+  const commitFromText = (minStr: string, maxStr: string): void => {
+    const parsedMin = minStr === "" ? 0 : Number(minStr) || 0;
+    const parsedMax = maxStr === "" ? PRICE_MAX : Number(maxStr) || PRICE_MAX;
+    commit(parsedMin, parsedMax);
   };
 
-  const handleMaxChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const value = e.target.value.replace(/[^\d]/g, "");
-    setLocalMax(value);
+  const handleMinText = (e: ChangeEvent<HTMLInputElement>): void => {
+    setLocalMin(e.target.value.replace(/[^\d]/g, ""));
   };
+  const handleMaxText = (e: ChangeEvent<HTMLInputElement>): void => {
+    setLocalMax(e.target.value.replace(/[^\d]/g, ""));
+  };
+  const handleTextBlur = (): void => commitFromText(localMin, localMax);
 
-  const handleBlur = (): void => {
-    commitChange(localMin, localMax);
+  // Valores actuales para los sliders (recortados al tope visual del slider).
+  const sliderMinValue = Math.min(priceMin, SLIDER_MAX);
+  const sliderMaxValue = Math.min(
+    priceMax === PRICE_MAX ? SLIDER_MAX : priceMax,
+    SLIDER_MAX,
+  );
+
+  const handleSliderMin = (e: ChangeEvent<HTMLInputElement>): void => {
+    const value = Number(e.target.value);
+    // No permitir que el min supere al max actual.
+    const upperBound = priceMax === PRICE_MAX ? SLIDER_MAX : priceMax;
+    commit(Math.min(value, upperBound), priceMax);
+  };
+  const handleSliderMax = (e: ChangeEvent<HTMLInputElement>): void => {
+    const value = Number(e.target.value);
+    // Si el thumb llega al tope del slider, se interpreta como "sin límite".
+    const nextMax = value >= SLIDER_MAX ? PRICE_MAX : value;
+    commit(priceMin, Math.max(nextMax, priceMin));
   };
 
   const inputClasses = [
     "w-full font-body text-body2 text-negro-volcanico",
-    "rounded-lg border border-azul-profundo/30 bg-blanco-niebla",
-    "px-3 py-2",
+    "rounded-control border border-azul-profundo/30 bg-blanco-niebla",
+    "px-3 py-2 min-h-11",
     "focus:outline-none focus-visible:ring-2 focus-visible:ring-azul-profundo",
     "focus-visible:ring-offset-1 focus-visible:ring-offset-blanco-niebla",
   ].join(" ");
 
+  const rangeClasses = "w-full accent-turquesa cursor-pointer";
+
+  const minValueText = formatCop(priceMin);
+  const maxValueText =
+    priceMax === PRICE_MAX ? `${formatCop(SLIDER_MAX)}+` : formatCop(priceMax);
+
   return (
-    <fieldset className="space-y-2">
+    <fieldset className="space-y-3">
       <legend className="font-body text-body2 font-semibold text-negro-volcanico mb-1">
         {title}
       </legend>
+
+      {/* Rango seleccionado (feedback visible, mockup) */}
+      <p className="font-body text-body2 font-semibold text-negro-volcanico">
+        {minValueText} – {maxValueText}
+      </p>
+
+      {/* Sliders duales accesibles */}
+      <div className="space-y-2">
+        <input
+          type="range"
+          min={0}
+          max={SLIDER_MAX}
+          step={SLIDER_STEP}
+          value={sliderMinValue}
+          onChange={handleSliderMin}
+          aria-label={minLabel}
+          aria-valuetext={minValueText}
+          className={rangeClasses}
+        />
+        <input
+          type="range"
+          min={0}
+          max={SLIDER_MAX}
+          step={SLIDER_STEP}
+          value={sliderMaxValue}
+          onChange={handleSliderMax}
+          aria-label={maxLabel}
+          aria-valuetext={maxValueText}
+          className={rangeClasses}
+        />
+      </div>
+
+      {/* Inputs numéricos para precisión (accesibilidad de teclado) */}
       <div className="flex items-center gap-2">
         <div className="flex-1">
           <label htmlFor="filter-price-min" className="sr-only">
@@ -242,8 +386,8 @@ function PriceRange({
             inputMode="numeric"
             placeholder={minLabel}
             value={localMin}
-            onChange={handleMinChange}
-            onBlur={handleBlur}
+            onChange={handleMinText}
+            onBlur={handleTextBlur}
             className={inputClasses}
           />
         </div>
@@ -260,8 +404,8 @@ function PriceRange({
             inputMode="numeric"
             placeholder={maxLabel}
             value={localMax}
-            onChange={handleMaxChange}
-            onBlur={handleBlur}
+            onChange={handleMaxText}
+            onBlur={handleTextBlur}
             className={inputClasses}
           />
         </div>
@@ -325,8 +469,8 @@ function FilterPanelContent({
         onChange={(regions) => updateFilters({ regions })}
       />
 
-      {/* Filtro Duración — 4 opciones (R13.2) */}
-      <CheckboxGroup<DurationBucket>
+      {/* Filtro Duración — 4 opciones como chips (R13.2, mockup) */}
+      <ChipGroup<DurationBucket>
         title={t("filters.duration.title")}
         options={DURATIONS}
         selected={filters.durations}
@@ -523,6 +667,7 @@ export function FilterPanel({
   onFilterChange,
   onClearFilters,
 }: FilterPanelProps): JSX.Element {
+  const { t } = useTranslation("discovery");
   const showClear = hasActiveFilters(filters);
 
   return (
@@ -530,7 +675,7 @@ export function FilterPanel({
       {/* Desktop sidebar (≥768px): visible directamente */}
       <aside
         className="hidden md:block w-64 shrink-0"
-        aria-label="Filtros del catálogo"
+        aria-label={t("filters.sidebarLabel")}
       >
         <FilterPanelContent
           filters={filters}

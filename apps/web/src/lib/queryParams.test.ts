@@ -18,7 +18,7 @@ const DEFAULT_STATE: CatalogState = {
   difficulties: [],
   passportOnly: false,
   sort: "popular",
-  page: 1,
+  cursor: null,
   view: "list",
 };
 
@@ -87,11 +87,12 @@ describe("parseCatalogState", () => {
     expect(parse("view=grid").view).toBe("list");
   });
 
-  it("normaliza `page` a un entero positivo con 1 por defecto (R11.8)", () => {
-    expect(parse("page=3").page).toBe(3);
-    expect(parse("page=0").page).toBe(1);
-    expect(parse("page=-2").page).toBe(1);
-    expect(parse("page=abc").page).toBe(1);
+  it("parsea `cursor` como token opaco, null cuando falta o está vacío", () => {
+    expect(parse("cursor=abc123").cursor).toBe("abc123");
+    expect(parse("").cursor).toBeNull();
+    expect(parse("cursor=").cursor).toBeNull();
+    // No se interpreta ni valida el contenido: cualquier string no vacío vale.
+    expect(parse("cursor=eyJpZCI6NDJ9").cursor).toBe("eyJpZCI6NDJ9");
   });
 });
 
@@ -110,7 +111,7 @@ describe("serializeCatalogState", () => {
       difficulties: ["extremo"],
       passportOnly: true,
       sort: "price_desc",
-      page: 2,
+      cursor: "eyJpZCI6Mn0",
       view: "map",
     };
     const params = serializeCatalogState(state);
@@ -122,7 +123,7 @@ describe("serializeCatalogState", () => {
     expect(params.get("difficulties")).toBe("extremo");
     expect(params.get("passport")).toBe("1");
     expect(params.get("sort")).toBe("price_desc");
-    expect(params.get("page")).toBe("2");
+    expect(params.get("cursor")).toBe("eyJpZCI6Mn0");
     expect(params.get("view")).toBe("map");
   });
 
@@ -148,7 +149,7 @@ describe("round-trip (ejemplos)", () => {
       difficulties: ["moderado", "aventurero"],
       passportOnly: true,
       sort: "recent",
-      page: 4,
+      cursor: "eyJpZCI6NH0",
       view: "map",
     };
     // El estado ya está en forma canónica (arrays en orden de declaración).
@@ -168,7 +169,7 @@ describe("round-trip (ejemplos)", () => {
       priceMin: 900_000,
       priceMax: 100_000,
       sort: "price_asc",
-      page: 5,
+      cursor: "eyJpZCI6NX0",
     };
     const once = serializeCatalogState(state).toString();
     const twice = serializeCatalogState(

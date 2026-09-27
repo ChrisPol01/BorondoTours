@@ -31,8 +31,10 @@ import { apiFetch, createQueryClient } from "../../lib/api";
 import { catalogQueryDefaults } from "../../lib/api/queryClient";
 import { LanguageProvider } from "../../lib/i18n/provider";
 import { parseCatalogState, serializeCatalogState } from "../../lib/queryParams";
+import { buildTourSearchBody } from "../../lib/searchRequest";
 import type { CatalogState, TourSummary } from "../../lib/types";
 
+import { LiquidGlassSurface } from "../ui/GlassSurface";
 import { CatalogGrid } from "./CatalogGrid";
 import { FilterPanel } from "./FilterPanel";
 import type { FilterValues } from "./FilterPanel";
@@ -43,6 +45,16 @@ import { ViewToggle } from "./ViewToggle";
 import type { CatalogView } from "./ViewToggle";
 
 // ─────────────────────────────────────────────────────────────────────────
+// Constantes de presentación
+// ─────────────────────────────────────────────────────────────────────────
+
+/**
+ * Imagen de fondo del hero del catálogo (paisaje). En producción se sirve desde
+ * el CDN (S3 + CloudFront). Placeholder local por ahora.
+ */
+const CATALOG_HERO_IMAGE = "/images/hero-landscape.png";
+
+// ─────────────────────────────────────────────────────────────────────────
 // Constantes
 // ─────────────────────────────────────────────────────────────────────────
 
@@ -51,9 +63,6 @@ const PRICE_MAX = 999_999_999;
 
 /** Debounce para escritura de URL en ms (≤500ms garantizando R13.8). */
 const URL_WRITE_DEBOUNCE_MS = 300;
-
-/** Tamaño de página (R11.8). */
-const PAGE_SIZE = 12;
 
 // ─────────────────────────────────────────────────────────────────────────
 // Helpers
@@ -102,18 +111,23 @@ function defaultCatalogState(): CatalogState {
     difficulties: [],
     passportOnly: false,
     sort: "popular",
-    page: 1,
+    cursor: null,
     view: "list",
   };
 }
 
 // ─────────────────────────────────────────────────────────────────────────
-// Respuesta tipada del endpoint de búsqueda
+// Respuesta tipada del endpoint de búsqueda (cursor-based / keyset)
 // ─────────────────────────────────────────────────────────────────────────
 
+/**
+ * Respuesta de `QUERY /tours/search`. `nextCursor` es el token opaco de la
+ * siguiente página (`null` = no hay más resultados). El backend lo devuelve en
+ * el payload; también se acepta desde `meta.nextCursor` como fallback.
+ */
 interface SearchResponse {
   tours: TourSummary[];
-  total: number;
+  nextCursor: string | null;
 }
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -123,6 +137,15 @@ interface SearchResponse {
 function CatalogControllerInner(): JSX.Element {
   // ── Estado del catálogo (hidratado de la URL al montar, R13.10) ──────
   const [catalogState, setCatalogState] = useState<CatalogState>(readStateFromUrl);
+
+  /**
+   * Pila de cursores de páginas ANTERIORES (paginación keyset). Vive en memoria,
+   * NO en la URL: el cursor es un token opaco de posición y no debe ensuciar el
+   * enlace compartible (que conserva solo filtros + el cursor actual opcional).
+   * `prevCursors[i]` es el cursor con el que se cargó la página i; permite
+   * "Anterior" sin que el backend calcule offset. `[]` = estamos en la 1ª página.
+   */
+  const [prevCursors, setPrevCursors] = useState<Array<string | null>>([]);
 
   // Ref del debounce para escritura de URL
   const urlWriteTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -174,20 +197,10 @@ function CatalogControllerInner(): JSX.Element {
   const { data, isLoading, isError, refetch } = useQuery<SearchResponse | null>({
     queryKey,
     queryFn: async ({ signal }) => {
+      // Body alineado al contrato TourSearchSchema (filters anidados, sort, cursor).
       const result = await apiFetch<SearchResponse>("/tours/search", {
         method: "QUERY",
-        body: {
-          q: catalogState.q,
-          regions: catalogState.regions,
-          durations: catalogState.durations,
-          price_min: catalogState.priceMin,
-          price_max: catalogState.priceMax,
-          difficulties: catalogState.difficulties,
-          passport_only: catalogState.passportOnly,
-          sort: catalogState.sort,
-          page: catalogState.page,
-          page_size: PAGE_SIZE,
-        },
+        body: buildTourSearchBody(catalogState),
         signal,
       });
       return result;
@@ -196,19 +209,27 @@ function CatalogControllerInner(): JSX.Element {
   });
 
   const tours = data?.tours ?? [];
-  const total = data?.total ?? 0;
-  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  // Cursor de la siguiente página (null = no hay más resultados).
+  const nextCursor = data?.nextCursor ?? null;
+  const hasNext = nextCursor !== null;
+  // Hay página anterior si tenemos cursores apilados en memoria.
+  const hasPrev = prevCursors.length > 0;
 
   // ── Callbacks de componentes hijos ─────────────────────────────────
 
-  /** Cambio de filtros desde FilterPanel (R13.6: combinación AND). */
+  /**
+   * Cambio de filtros desde FilterPanel (R13.6: combinación AND).
+   * Cambiar filtros invalida la posición: se resetea el cursor y la pila
+   * (el keyset de una consulta no es válido para otra).
+   */
   const handleFilterChange = useCallback(
     (filters: FilterValues): void => {
       const next: CatalogState = {
         ...catalogState,
         ...filters,
-        page: 1, // reset a página 1 al cambiar filtros
+        cursor: null, // volver a la primera página al cambiar filtros
       };
+      setPrevCursors([]);
       updateState(next);
     },
     [catalogState, updateState],
@@ -219,21 +240,23 @@ function CatalogControllerInner(): JSX.Element {
     const next = defaultCatalogState();
     // Conservar la vista actual al limpiar filtros
     next.view = catalogState.view;
+    setPrevCursors([]);
     updateState(next);
     // Escribir URL inmediatamente (sin debounce para feedback instantáneo)
     writeStateToUrl(next);
   }, [catalogState.view, updateState]);
 
-  /** Cambio de sort desde SortSelect (R13.9). */
+  /** Cambio de sort desde SortSelect (R13.9). Resetea posición (nuevo orden = nuevo keyset). */
   const handleSortChange = useCallback(
     (sort: CatalogState["sort"]): void => {
-      const next: CatalogState = { ...catalogState, sort, page: 1 };
+      const next: CatalogState = { ...catalogState, sort, cursor: null };
+      setPrevCursors([]);
       updateState(next);
     },
     [catalogState, updateState],
   );
 
-  /** Toggle Lista/Mapa conservando filtros (R14.5). */
+  /** Toggle Lista/Mapa conservando filtros y posición (R14.5). */
   const handleViewChange = useCallback(
     (view: CatalogView): void => {
       const next: CatalogState = { ...catalogState, view };
@@ -242,14 +265,30 @@ function CatalogControllerInner(): JSX.Element {
     [catalogState, updateState],
   );
 
-  /** Cambio de página (R11.8). */
-  const handlePageChange = useCallback(
-    (page: number): void => {
-      const next: CatalogState = { ...catalogState, page };
-      updateState(next);
-    },
-    [catalogState, updateState],
-  );
+  /**
+   * Avanzar a la siguiente página (keyset). Apila el cursor actual para poder
+   * volver, y navega con el `nextCursor` devuelto por el backend.
+   */
+  const handleNextPage = useCallback((): void => {
+    if (nextCursor === null) return;
+    setPrevCursors((stack) => [...stack, catalogState.cursor]);
+    const next: CatalogState = { ...catalogState, cursor: nextCursor };
+    updateState(next);
+  }, [catalogState, nextCursor, updateState]);
+
+  /**
+   * Volver a la página anterior (keyset). Desapila el último cursor guardado y
+   * navega a él. Si la pila queda vacía, volvemos a la primera página (null).
+   */
+  const handlePrevPage = useCallback((): void => {
+    setPrevCursors((stack) => {
+      if (stack.length === 0) return stack;
+      const nextStack = stack.slice(0, -1);
+      const targetCursor = stack[stack.length - 1];
+      updateState({ ...catalogState, cursor: targetCursor });
+      return nextStack;
+    });
+  }, [catalogState, updateState]);
 
   /** Reintentar tras error (R11.7). */
   const handleRetry = useCallback((): void => {
@@ -261,20 +300,52 @@ function CatalogControllerInner(): JSX.Element {
 
   // ── Render ──────────────────────────────────────────────────────────
   return (
-    <div className="mx-auto max-w-public px-page-gutter py-8">
-      {/* Barra superior: SearchBar + SortSelect + ViewToggle */}
-      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex-1 max-w-md">
-          <SearchBar />
+    <div>
+      {/*
+        Hero del catálogo: imagen full-width con una superficie Liquid Glass
+        superpuesta que contiene el buscador y los controles de vista/orden
+        (mockup Catálogo). El overlay oscuro garantiza contraste ≥4.5:1 del
+        texto claro sobre la fotografía (R8.4).
+      */}
+      <section className="relative w-full overflow-hidden">
+        {/* Imagen de fondo decorativa */}
+        <img
+          src={CATALOG_HERO_IMAGE}
+          alt=""
+          loading="eager"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        {/* Overlay para legibilidad */}
+        <div className="absolute inset-0 bg-negro-volcanico/40" aria-hidden="true" />
+
+        {/* Contenido del hero */}
+        <div className="relative mx-auto max-w-public px-page-gutter py-8">
+          <LiquidGlassSurface
+            overImage={true}
+            className="rounded-panel p-4 sm:p-5"
+          >
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex-1 sm:max-w-md">
+                <SearchBar />
+              </div>
+              <div className="flex items-center gap-4">
+                <SortSelect
+                  value={catalogState.sort}
+                  onChange={handleSortChange}
+                />
+                <ViewToggle
+                  activeView={catalogState.view}
+                  onViewChange={handleViewChange}
+                />
+              </div>
+            </div>
+          </LiquidGlassSurface>
         </div>
-        <div className="flex items-center gap-4">
-          <SortSelect value={catalogState.sort} onChange={handleSortChange} />
-          <ViewToggle activeView={catalogState.view} onViewChange={handleViewChange} />
-        </div>
-      </div>
+      </section>
 
       {/* Contenido principal: FilterPanel + Grid/Map */}
-      <div className="flex gap-8">
+      <div className="mx-auto flex max-w-public gap-8 px-page-gutter py-8">
         {/* Sidebar de filtros (desktop) / Drawer (mobile) */}
         <FilterPanel
           filters={filters}
@@ -289,13 +360,11 @@ function CatalogControllerInner(): JSX.Element {
               tours={tours}
               isLoading={isLoading}
               isError={isError}
-              pagination={{
-                currentPage: catalogState.page,
-                totalPages,
-              }}
+              pagination={{ hasPrev, hasNext }}
               onClearFilters={handleClearFilters}
               onRetry={handleRetry}
-              onPageChange={handlePageChange}
+              onPrevPage={handlePrevPage}
+              onNextPage={handleNextPage}
             />
           ) : (
             <MapView
