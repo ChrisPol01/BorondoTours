@@ -75,7 +75,9 @@ export default function validateDesignTokens(options = {}) {
     hooks: {
       'astro:build:start': ({ logger }) => {
         const srcDir = options.srcDir ?? fileURLToPath(new URL('../src', import.meta.url))
-        const files = collectSourceFiles(srcDir)
+        // Los tokens se definen en @borondo/ui; se escanean junto con la app.
+        const uiDir = options.uiDir ?? fileURLToPath(new URL('../../../packages/ui/src', import.meta.url))
+        const files = [...collectSourceFiles(srcDir), ...collectSourceFiles(uiDir)]
 
         /** @type {Set<string>} tokens definidos como CSS custom properties. */
         const defined = new Set()
@@ -88,7 +90,11 @@ export default function validateDesignTokens(options = {}) {
           const content = readFileSync(file, 'utf8')
           const extension = extname(file)
 
-          if (['.astro', '.tsx', '.jsx'].includes(extension)) {
+          // Las páginas con esta cabecera son artefactos deterministas de fig2astro. Sus hex son
+          // fallbacks exportados por Figma dentro de `var(--token, #fallback)` o geometría SVG;
+          // no son decisiones visuales escritas a mano. El código manual sigue bajo la regla estricta.
+          const isGeneratedFigmaArtifact = content.includes('GENERADO por otros/infra/fig2astro')
+          if (['.astro', '.tsx', '.jsx'].includes(extension) && !isGeneratedFigmaArtifact) {
             const values = [...content.matchAll(HEX_LITERAL_RE)].map((match) => match[0])
             if (values.length > 0) literalViolations.push({ file, values })
           }

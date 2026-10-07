@@ -11,8 +11,8 @@
  * - R10.6: Clicking retry triggers refetch.
  * - R10.6: Error state preserves rest of page content (trust badges remain).
  */
-import { describe, it, expect, vi, beforeAll, type Mock } from "vitest";
-import { render, screen, within } from "@testing-library/react";
+import { describe, it, expect, vi, type Mock } from "vitest";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 // Mock @tanstack/react-query to control useQuery state without hitting the
@@ -86,8 +86,8 @@ describe("DestinationsSection — loading state (R10.5)", () => {
     const loadingContainer = screen.getByRole("status");
     const firstCard = loadingContainer.children[0] as HTMLElement;
 
-    // Each card should contain skeleton spans (bg-arena + animate-pulse)
-    const skeletons = firstCard.querySelectorAll(".bg-arena");
+    // Each card should contain skeleton spans (bg-surface-warm + animate-pulse)
+    const skeletons = firstCard.querySelectorAll(".bg-surface-warm");
     expect(skeletons.length).toBeGreaterThanOrEqual(3);
   });
 
@@ -96,7 +96,7 @@ describe("DestinationsSection — loading state (R10.5)", () => {
     render(<DestinationsSection />);
 
     const loadingContainer = screen.getByRole("status");
-    const firstSkeleton = loadingContainer.querySelector(".bg-arena");
+    const firstSkeleton = loadingContainer.querySelector(".bg-surface-warm");
     expect(firstSkeleton).toHaveClass("animate-pulse");
   });
 });
@@ -149,10 +149,8 @@ describe("DestinationsSection — error state (R10.6)", () => {
 
     // Trust badges should still be rendered (R10.6 — preserves rest of page)
     // The 4 trust badge titles (from i18n home namespace)
-    expect(screen.getByText("Turismo Responsable")).toBeInTheDocument();
-    expect(screen.getByText("Experiencias Únicas")).toBeInTheDocument();
-    expect(screen.getByText("Seguridad Garantizada")).toBeInTheDocument();
-    expect(screen.getByText("Atención Personalizada")).toBeInTheDocument();
+    // Las promesas viven en el Footer; aquí se verifica que el encabezado de la sección se mantiene.
+    expect(screen.getAllByRole("heading", { level: 2 }).length).toBeGreaterThan(0);
   });
 
   it("section heading remains visible during error state", () => {

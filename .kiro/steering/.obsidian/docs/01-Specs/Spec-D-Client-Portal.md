@@ -149,18 +149,69 @@ kiro-spec: .kiro/specs/flujo-d-client-portal.md
 - [ ] `DB.transaction`: booking → `CANCELED` + `WalletTransactions` CREDIT (monto según franja) + `PenaltyIncome` registro
 - [ ] Fuerza mayor: requiere adjuntar documento EPS → penalidades reducidas (ver Spec-C RF-C11)
 
+### RF-D12 — Mis reservas: pestañas y estados (diseño 2026-09-27)
+**Criterios de aceptación:**
+- [ ] Pestañas con contador: **Próximas** · **Por pagar** · **Completadas** · **Canceladas**.
+- [ ] **Por pagar:** abono pagado y saldo pendiente, con monto y fecha límite resaltados + CTA "Pagar saldo". Aviso de que el abono no es reembolsable si vence.
+- [ ] **Completadas:** CTA "Calificar" si no hay reseña; si ya existe, se muestra la calificación y "Reservar de nuevo".
+- [ ] **Canceladas:** fecha de cancelación, penalidad aplicada y monto a favor.
+- [ ] **Vacío:** mensaje y CTA "Explorar tours".
+- [ ] **Detalle de reserva:** QR del voucher, datos del viaje, pagos ("Impuestos incluidos"), reprogramaciones restantes y acciones (voucher, reprogramar, chat del tour, cancelar). Se abre como **panel lateral** derecho de 480 px (alto = viewport − 32, velo 20 % + blur 8, barra con título y cerrar, acciones fijas abajo). En móvil, pantalla completa.
+- [ ] **Patrón de modales (design.md §8f):** cancelar, reprogramar y calificar son diálogos bloqueantes de 480 px centrados, con velo `#0F1A2B` 30 % + blur 20, sobre Mis reservas. En móvil, hojas inferiores con el mismo velo.
+- [ ] **Modal cancelar:** muestra las 3 franjas de ADR-007 resaltando la que aplica, el resumen (pagado, penalidad, monto a favor), opción de adjuntar soporte de fuerza mayor y confirmación por OTP (RF-F06). Ofrece reprogramar como alternativa cuando es gratis.
+- [ ] **Modal reprogramar:** fechas con semáforo de disponibilidad y la diferencia a pagar. Si la nueva fecha cuesta menos, la diferencia no se reembolsa.
+- [ ] Mientras Spec-E está en pausa, el monto devuelto se muestra como **"Saldo a favor"** sin nombrar Borondo Coins. **Decisión 2026-09-29:** el saldo a favor por cancelación se guarda como **crédito interno** en la cuenta del cliente (usable en cualquier tour, no se reembolsa al medio de pago). El reembolso bancario real solo aplica en los casos de RF-C09 (retracto, fuerza mayor del operador, orden judicial).
+- [ ] Referencia visual: Figma, tablero Colorido, fila Mis reservas → estados.
+
+### RF-D14 — Eventos transaccionales: email por backend, vista y aviso en frontend (decisión 2026-09-29)
+**Regla:** los correos transaccionales los genera y envía el backend (SES, plantillas en código). El frontend **no** replica el correo: tiene la **vista donde vive esa información** y un **aviso** (bandeja + toast) cuando la acción se completa.
+
+| Evento | Email (backend) | Vista en frontend | Aviso in-app |
+|---|---|---|---|
+| Verificación de cuenta / OTP | Sí (código) | Auth Gate: pantalla "Código OTP" y "Cuenta verificada" | Toast "Cuenta verificada" |
+| Reserva confirmada | Sí (voucher + QR) | Confirmación de compra + Detalle de reserva (QR, datos, pagos) | Toast + bandeja "Reserva confirmada" |
+| Pago rechazado / enlace vencido | Sí | Estados de error del checkout (RF-C16) + "Por pagar" | Bandeja + toast |
+| Cancelación confirmada | Sí (penalidad + saldo a favor) | Pestaña "Canceladas" + detalle con penalidad y saldo | Toast + bandeja |
+| Recordatorio 24 h | Sí | Detalle de reserva (punto de encuentro, hora, qué llevar) + chat del tour | Bandeja (+ push en app) |
+| Link para pagar el saldo | Sí (enlace) | Pestaña "Por pagar" con CTA "Pagar saldo" y fecha límite | Bandeja + aviso fijo si vence en < 48 h |
+
+**Criterios de aceptación:**
+- [ ] Todo aviso lleva a la vista correspondiente (deeplink); el correo también enlaza a esa vista.
+- [ ] Bandeja con tope: últimas **50 notificaciones o 90 días**, lo que ocurra primero. Lo que sale de la bandeja **no se pierde**: el soporte vive en Mis reservas, el voucher y los documentos fiscales (retención 5 años).
+- [ ] Los transaccionales no llevan publicidad ni promociones (si la llevan pasan a ser comerciales y requieren consentimiento).
+- [ ] Los transaccionales no se pueden desactivar; los comerciales sí (opt-in explícito, revocable desde Configuración).
+- [ ] Contenido mínimo sin datos sensibles: no se muestran documento completo, datos médicos ni datos de pago en avisos ni correos (solo últimos 4 dígitos si aplica).
+
+**Marco legal (validar con asesoría):** Ley 1581 de 2012 y Decreto 1377 (finalidad y consentimiento; lo transaccional se ampara en la ejecución del contrato), Ley 1480 de 2011 (información clara, constancia de la compra y derecho de retracto visible), Ley 2300 de 2023 (horarios y frecuencia de contactos **comerciales**: lunes a viernes 7 a.m.–7 p.m., sábados 8 a.m.–3 p.m., una vez por semana; no aplica a transaccionales). Los envíos comerciales se programan solo dentro de ese horario.
+
+### RF-D13 — Notificaciones y menú de cuenta con sesión (diseño 2026-09-29)
+**Criterios de aceptación:**
+- [ ] **Bandeja de notificaciones:** popover anclado a la derecha de la campana del sidebar (380 px, `glass-strong`, sin velo ni blur de la pantalla). En móvil, pantalla completa.
+- [ ] **Eventos en tiempo real** (pago confirmado, mensaje del guía, cupo liberado): toast abajo a la derecha, 400 px, por encima del FAB, `role="status"`. En móvil, toast arriba a ancho completo.
+- [ ] **Urgencias** (tour cancelado por el operador, cambio de punto de encuentro a menos de 24 h): aviso fijo en la franja superior. Nunca un diálogo.
+- [ ] **Menú de cuenta:** popover sobre el perfil del sidebar, mismo ancho (280 px), sin velo. En móvil, hoja inferior. Opciones: Editar perfil, Tema, Idioma, Recomendar, Cotiza con un asesor, Configuración, Nosotros, Cerrar sesión.
+- [ ] **Soporte:** panel lateral derecho de 480 px (mismo patrón que el detalle de reserva). En móvil, pantalla completa. El horario publicado es lunes a sábado, 8:00 a.m. – 5:00 p.m.
+- [ ] **Sidebar fijo:** `position: sticky; top: 16px; height: calc(100vh - 32px)`; solo el contenido de la derecha hace scroll (como ChatGPT o Gemini).
+- [ ] Referencia visual: Figma, tablero Colorido, filas con sesión → estados "Notificaciones", "Menú de cuenta", "Soporte".
+
 ---
 
-## 6. Chat tripartito (Fase 2)
+## 6. Chat del tour (Fase 2)
 
-### RF-D08 — Chat 24h pre-tour
+> **Actualizado 2026-09-27 (decisión del usuario):** el chat es **por tour (instancia)**, entre el **guía y el grupo**. Reemplaza el modelo "tripartito cliente + guía + agente".
+
+### RF-D08 — Chat del tour (guía ↔ grupo)
 **Criterios de aceptación:**
-- [ ] Botón "Abrir Chat" visible en reservas `CONFIRMED` con fecha futura
-- [ ] Botón deshabilitado hasta 24h antes del tour con countdown
-- [ ] Al activarse: sala de chat con el cliente, el guía asignado y el **agente de ventas** (no el coordinador)
-- [ ] Permite texto y adjuntar fotos (presigned URL S3)
-- [ ] Historial en DynamoDB (PK: `CHAT#CLIENT#{booking_id}`, SK: timestamp#messageId)
-- [ ] TTL: mensajes se eliminan cuando el tour finaliza (estado `COMPLETED` o `TERMINADO`)
+- [ ] Existe **una sala por instancia de tour** (`tour_instance_id`), no por reserva. Participan el guía asignado y todos los pasajeros con reserva confirmada de esa instancia.
+- [ ] Botón "Abrir chat del tour" visible en reservas confirmadas con fecha futura; deshabilitado con countdown hasta 24h antes del tour.
+- [ ] **Mensajes del guía** → los ve todo el grupo (difusión).
+- [ ] **Mensajes de un turista** → por defecto solo los recibe el guía (el resto del grupo no los ve).
+- [ ] El guía tiene un control **"Mostrar mensajes al grupo"**: al activarlo, los mensajes de los turistas se vuelven visibles para todo el grupo; puede desactivarlo en cualquier momento. El cambio queda registrado.
+- [ ] Permite texto y fotos (presigned URL S3). Sin llamadas ni video. Sin chats privados entre turistas.
+- [ ] Los datos de contacto personales (teléfono/WhatsApp) no se muestran en el chat; toda la comunicación pasa por la sala (marca blanca: no se identifica al operador).
+- [ ] Historial en DynamoDB (PK: `CHAT#TOUR#{tour_instance_id}`, SK: `timestamp#messageId`, atributo `visibility`: `GROUP` | `GUIDE_ONLY`).
+- [ ] **Al finalizar el tour** (estado `TERMINADO`/`COMPLETED`): la sala pasa a solo lectura, se **exporta** el historial completo (mensajes + metadatos + adjuntos) a S3 privado cifrado (SSE-KMS) por seguridad y soporte, y **se eliminan los datos de DynamoDB**. El export no es visible para el cliente; solo SUPER_ADMIN/COORD lo consultan ante una disputa o incidente.
+- [ ] Retención del export en S3: por definir con asesoría legal (propuesta: 1 año y luego eliminación; con Glacier si se requiere más tiempo).
 
 ### RF-D08b — Reprogramar reserva
 **Criterios de aceptación:**

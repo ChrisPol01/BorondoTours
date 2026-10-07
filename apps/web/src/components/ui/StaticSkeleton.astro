@@ -19,7 +19,7 @@ const items = Array.from({ length: Math.max(0, count) });
 {items.map(() => (
   <span
     aria-hidden="true"
-    class:list={['block bg-arena animate-pulse motion-reduce:animate-none', radiusClass[rounded], className]}
+    class:list={['block bg-surface-warm animate-pulse motion-reduce:animate-none', radiusClass[rounded], className]}
     style={`width:${size(width) ?? 'auto'};height:${size(height) ?? 'auto'};aspect-ratio:${aspectRatio ?? 'auto'}`}
   />
 ))}

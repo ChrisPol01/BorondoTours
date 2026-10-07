@@ -106,12 +106,12 @@ export function Hero(): JSX.Element {
 
         <h1
           id="hero-heading"
-          className="font-heading text-4xl font-extrabold leading-tight text-blanco-niebla md:text-5xl lg:text-6xl"
+          className="font-heading text-4xl font-extrabold leading-tight text-on-strong md:text-5xl lg:text-6xl"
         >
           {translate("home:hero.title")}
         </h1>
 
-        <p className="mx-auto mt-4 max-w-lg font-body text-sm leading-relaxed text-blanco-niebla/85 md:text-base">
+        <p className="mx-auto mt-4 max-w-lg font-body text-sm leading-relaxed text-on-strong/85 md:text-base">
           {translate("home:hero.subtitle")}
         </p>
       </div>

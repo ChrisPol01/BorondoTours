@@ -104,8 +104,8 @@ describe("Navbar — glass vs solid class switching (R6.4, R6.5)", () => {
 
     const header = container.querySelector("header");
     // Initial state is glass (isOverHero=true by default)
-    expect(header).toHaveClass("glass-surface");
-    expect(header).toHaveClass("text-blanco-niebla");
+    expect(header).toHaveClass("glass-header");
+    expect(header).toHaveClass("text-on-strong");
 
     document.body.removeChild(sentinel);
   });
@@ -119,8 +119,8 @@ describe("Navbar — glass vs solid class switching (R6.4, R6.5)", () => {
     );
 
     const header = container.querySelector("header");
-    expect(header).toHaveClass("bg-blanco-niebla");
-    expect(header).toHaveClass("text-negro-volcanico");
+    expect(header).toHaveClass("glass-header");
+    expect(header).toHaveClass("text-text-primary");
   });
 
   it("switches to solid when IntersectionObserver reports hero not intersecting", () => {
@@ -143,8 +143,8 @@ describe("Navbar — glass vs solid class switching (R6.4, R6.5)", () => {
     });
 
     const header = container.querySelector("header");
-    expect(header).toHaveClass("bg-blanco-niebla");
-    expect(header).toHaveClass("text-negro-volcanico");
+    expect(header).toHaveClass("glass-header");
+    expect(header).toHaveClass("text-text-primary");
 
     document.body.removeChild(sentinel);
   });

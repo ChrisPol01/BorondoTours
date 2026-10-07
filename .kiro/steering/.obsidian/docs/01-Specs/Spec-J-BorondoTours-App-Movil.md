@@ -177,6 +177,7 @@ La BorondoTours App es un híbrido inteligente. Las pantallas complejas sin hard
 - [ ] El usuario puede silenciar categorías de notificaciones desde su perfil (guardado en backend, no solo en dispositivo).
 - [ ] Notificaciones de urgencia (`URGENCY_ALERT`, `NO_SHOW`, `TOUR_REMINDER`) son **críticas** y NO se pueden silenciar (bypass del modo No Molestar del SO vía `sound: 'default'` con alta prioridad).
 - [ ] Si el token push falla (dispositivo cambiado, token expirado): el backend elimina el token inválido de `UserPushTokens` al recibir el error de Expo.
+- [ ] **Presentación dentro de la app (CLIENT, diseño 2026-09-29, design.md §8f):** la bandeja de notificaciones es una pantalla completa; lo que llega con la app abierta se muestra como toast arriba a ancho completo (`role="status"`); lo urgente, como aviso fijo en la franja superior. Nunca un diálogo. Los diálogos bloqueantes de la web (cancelar, reprogramar, calificar, OTP, lista de espera, Auth) se muestran como hojas inferiores con velo `#0F1A2B` 30 % + blur 20; los paneles laterales (detalle de reserva, Soporte) como pantalla completa; los popovers (menú de cuenta) como hoja inferior.
 
 ---
 

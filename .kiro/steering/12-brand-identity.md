@@ -130,8 +130,20 @@ Elementos alineados a la derecha con fondo tipo glass (desenfoque) o transparent
     *   *Botón de búsqueda:* Botón sólido Dorado (`#FDB813`) con el texto `Buscar aventura`.
 
 ### Botones y Componentes UI (Estados)
-*   **Botón Principal:** Fondo sólido Turquesa Laguna (`#00B7C7`), texto blanco. Copy: `Explorar destinos`.
-*   **Botón Hover (Estado activo):** Cambia el fondo a Verde Frailejón (`#79C142`), texto blanco. Copy: `Explorar destinos`.
+> **Ajuste de accesibilidad (2026-09-27, vinculante):** el texto sobre Turquesa, Verde Frailejón y Dorado es **Negro Volcánico** (token `text/on-action`). El blanco sobre turquesa da 2.3:1 y no cumple WCAG AA. Esta regla prevalece sobre el "texto blanco" del manual original.
+>
+> **Fondo de página por tema:** Colorido (predeterminado) = estilo del Home en **todas** las pantallas: azul marino con degradado (`bg/top #103B66` → `bg/bottom #07121F`, superficie `#0A1A2B`, tarjetas `#12304F`) + luz ambiental suave (turquesa/verde/azul muy desenfocados). Claro = blanco con difuminado azul (`#FFFFFF` → `#E3EEF8`). Oscuro = `#141416` → `#0B0B0C`. En código: `var(--gradient-ambient), var(--gradient-page)` sobre el `body`; nunca hex sueltos, usar tokens semánticos.
+>
+> **Liquid glass (referencia: el "Buscador" del Home):** relleno Blanco Niebla 14 % + borde 1 px Blanco Niebla 40 % + desenfoque 18 px (24 px en navbar/sidebar) + sombra negra 25 % (y 16, blur 40) + brillo superior interno 1 px. Se usa en navbar, sidebar, nav móvil, tarjetas de tour, listas, filtros, chips, pestañas, inputs y botones secundarios (outline). Los botones de marca (turquesa, verde, dorado) siguen sólidos. Modales, hojas inferiores y menús usan `glass-strong` (más denso) para leer sobre el contenido. Por tema: Colorido y Oscuro = vidrio claro translúcido con texto blanco; Claro = vidrio oscuro con texto blanco. Variante `glass-light` (blanco 72 %) = texto **negro**. El QR del voucher siempre sobre blanco.
+>
+> **Nota técnica Figma:** Figma pinta con la opacidad del paint e ignora el alfa de la variable; los módulos `btt`/`btg` copian ese alfa a la opacidad del paint.
+
+> **Patrones de interrupción (2026-09-29, vinculante):** desenfoque (velo `#0F1A2B` 30 % + blur 20) solo en diálogos con pasos propios (pagos, cancelar, reprogramar, calificar, OTP, lista de espera, Auth). Detalle de reserva y Soporte = panel lateral derecho. Menú de cuenta y Notificaciones = popover anclado sin velo. Eventos en tiempo real = toast. En móvil: diálogo → hoja inferior, panel → pantalla completa. Sidebar con sesión fijo al alto del viewport; solo el contenido hace scroll. Detalle en `otros/design/b2c/design.md` §8f.
+
+> **Reglas de acabado (2026-09-29):** nunca negro puro (#000); el texto oscuro es Negro Volcánico (#101010). Las estrellas de calificación van en Dorado (#FDB813). Medidas de controles, radios y grilla en `DESIGN.md` §19.
+
+*   **Botón Principal:** Fondo sólido Turquesa Laguna (`#00B7C7`), texto Negro Volcánico. Copy: `Explorar destinos`.
+*   **Botón Hover (Estado activo):** Cambia el fondo a Verde Frailejón (`#79C142`), texto Negro Volcánico. Copy: `Explorar destinos`.
 *   **Botón Secundario:** Fondo blanco/transparente con contorno sutil (Outline) y texto oscuro. Copy: `Conocer más`.
 *   **Tarjeta Glass (Componente UI):**
     *   *Fondo:* Efecto blur oscuro.
@@ -188,5 +200,5 @@ Estas cuatro promesas son el núcleo del servicio al cliente y deben estar prese
 
 1.  **Turismo Responsable:** Cuidamos los lugares que visitas. *(Acompañado del icono de Hoja)*
 2.  **Experiencias Únicas:** Diseñamos viajes auténticos y memorables. *(Acompañado del icono de Cámara fotográfica)*
-3.  **Seguridad Garantizada:** Tu tranquilidad es nuestra prioridad. *(Acompañado del icono de Escudo/Seguridad)*
+3.  **Seguridad y Confianza:** Tu tranquilidad es nuestra prioridad. *(Acompañado del icono de Escudo/Seguridad)*
 4.  **Atención Personalizada:** Estamos contigo en cada paso del viaje. *(Acompañado del icono de Personas / Comunidad)*

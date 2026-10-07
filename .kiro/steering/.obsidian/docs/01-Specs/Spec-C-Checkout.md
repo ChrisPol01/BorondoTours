@@ -364,6 +364,28 @@ SETTLED         → segundo cobro (saldo) completado
 
 ---
 
+## 9d. Presentación del precio y estados del pago (diseño 2026-09-27)
+
+### RF-C15 — Precio, costo del método y abono en el checkout
+**Criterios de aceptación:**
+- [ ] El precio del tour se muestra como un solo valor con la etiqueta **"Impuestos incluidos"**. No se desglosa una línea de IVA en el resumen (la factura sí lo detalla).
+- [ ] Los métodos de pago se listan del menor al mayor costo: PSE y Nequi/Daviplata ("Costo fijo $2.200") primero, tarjeta de crédito ("2,5 % + $800") después. El costo del método elegido se suma en el resumen antes de confirmar.
+- [ ] El costo del método se muestra en una **etiqueta junto a cada método** con la tarifa vigente de OnePay (ej. "Costo fijo $2.200", "2,5 % + $800"), leída de configuración, no escrita en el código.
+- [ ] ⚠️ Pendiente validar con OnePay (más adelante): si ese costo se suma al total (`SURCHARGE`) o se presenta como descuento (`DISCOUNT`). El diseño usa `SURCHARGE`; ambos se soportan por configuración.
+- [ ] Si el tour admite abono (RF-C12), el cliente ve el **monto mínimo para reservar** y la fecha límite del saldo (ej. Pasadía: abono $100.000, saldo 5 días antes).
+- [ ] Extranjero no residente: el botón de pago queda deshabilitado hasta cargar el pasaporte (RF-C04).
+- [ ] Bold **no** es un método de pago para el cliente: es la cuenta donde BorondoTours recibe el dinero (ver ADR-001). No aparece en el checkout ni en los logos de medios de pago.
+
+### RF-C16 — Estados de error del pago
+**Criterios de aceptación:**
+- [ ] **Pago rechazado** (`PAYMENT_DECLINED`): informa que no hubo cobro, que el cupo sigue apartado 15 minutos y ofrece reintentar o cambiar de método.
+- [ ] **Enlace vencido** (`LINK_EXPIRED`): informa que el cupo se liberó y ofrece generar un nuevo enlace si hay disponibilidad, o elegir otra fecha.
+- [ ] **Cupo agotado al pagar** (`SLOTS_UNAVAILABLE`): informa que no hubo cobro y ofrece otras fechas o lista de espera (RF-B05b).
+- [ ] **Divide tu cuenta activo:** muestra el estado de cada participante (Pagado / Pendiente con horas restantes), permite reenviar su enlace y recuerda que el abono no es reembolsable si el saldo no se paga a tiempo.
+- [ ] Referencia visual: Figma, Section `06 · Checkout — 3 Pago`, bloque Estados.
+
+---
+
 ## 10. API endpoints
 
 ```

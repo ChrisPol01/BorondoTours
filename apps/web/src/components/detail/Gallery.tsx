@@ -63,11 +63,11 @@ function GalleryPlaceholder(): JSX.Element {
 
   return (
     <div
-      className="flex w-full items-center justify-center rounded-lg bg-arena aspect-video"
+      className="flex w-full items-center justify-center rounded-lg bg-surface-warm aspect-video"
       role="img"
       aria-label={t("gallery.placeholder")}
     >
-      <div className="flex flex-col items-center gap-2 text-negro-volcanico/50">
+      <div className="flex flex-col items-center gap-2 text-text-primary/50">
         {/* Icono de imagen (SVG inline, Lucide-style) */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -153,16 +153,18 @@ function GallerySlider({ photos, t }: GallerySliderProps): JSX.Element {
   const hasError = errorIndices.has(currentIndex);
 
   return (
+    // Patrón carrusel WAI-ARIA: la región no es focusable; las flechas llegan por
+    // burbujeo desde los controles internos (botones y miniaturas), que sí lo son.
+    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <div
       className="flex w-full flex-col gap-3"
       onKeyDown={handleKeyDown}
-      tabIndex={0}
       role="region"
       aria-roledescription="carousel"
       aria-label={t("gallery.label")}
     >
       {/* Imagen principal */}
-      <div className="relative w-full overflow-hidden rounded-lg bg-arena aspect-video">
+      <div className="relative w-full overflow-hidden rounded-lg bg-surface-warm aspect-video">
         {hasError ? (
           <GalleryFallback alt={currentPhoto.decorative ? "" : currentPhoto.alt} />
         ) : (
@@ -179,7 +181,7 @@ function GallerySlider({ photos, t }: GallerySliderProps): JSX.Element {
             <button
               type="button"
               onClick={goToPrevious}
-              className="absolute left-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-negro-volcanico/50 text-blanco-niebla transition-colors hover:bg-negro-volcanico/70 focus:outline-none focus:ring-2 focus:ring-turquesa"
+              className="absolute left-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-negro-volcanico/50 text-on-strong transition-colors hover:bg-negro-volcanico/70 focus:outline-none focus:ring-2 focus:ring-turquesa"
               aria-label={t("gallery.previous")}
             >
               <ChevronLeftIcon />
@@ -187,7 +189,7 @@ function GallerySlider({ photos, t }: GallerySliderProps): JSX.Element {
             <button
               type="button"
               onClick={goToNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-negro-volcanico/50 text-blanco-niebla transition-colors hover:bg-negro-volcanico/70 focus:outline-none focus:ring-2 focus:ring-turquesa"
+              className="absolute right-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-negro-volcanico/50 text-on-strong transition-colors hover:bg-negro-volcanico/70 focus:outline-none focus:ring-2 focus:ring-turquesa"
               aria-label={t("gallery.next")}
             >
               <ChevronRightIcon />
@@ -197,7 +199,7 @@ function GallerySlider({ photos, t }: GallerySliderProps): JSX.Element {
 
         {/* Indicador de posición */}
         {totalPhotos > 1 && (
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-negro-volcanico/60 px-3 py-1 text-xs font-body text-blanco-niebla">
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-negro-volcanico/60 px-3 py-1 text-xs font-body text-on-strong">
             {currentIndex + 1} / {totalPhotos}
           </div>
         )}
@@ -259,7 +261,7 @@ function GalleryFallback({ alt }: GalleryFallbackProps): JSX.Element {
 
   return (
     <div
-      className="flex h-full w-full items-center justify-center bg-arena text-negro-volcanico/50"
+      className="flex h-full w-full items-center justify-center bg-surface-warm text-text-primary/50"
       role={alt ? "img" : undefined}
       aria-label={alt || undefined}
       aria-hidden={!alt ? true : undefined}
@@ -330,7 +332,7 @@ function ThumbnailStrip({
         />
       ))}
       {photos.length > MAX_VISIBLE_THUMBNAILS && (
-        <div className="flex min-w-gallery-overflow items-center justify-center rounded-md bg-arena text-body2 font-body text-negro-volcanico/60">
+        <div className="flex min-w-gallery-overflow items-center justify-center rounded-md bg-surface-warm text-body2 font-body text-text-primary/60">
           +{photos.length - MAX_VISIBLE_THUMBNAILS}
         </div>
       )}
@@ -383,7 +385,7 @@ function ThumbnailButton({
       className={`relative h-16 w-20 flex-shrink-0 overflow-hidden rounded-md transition-all focus:outline-none focus:ring-2 focus:ring-turquesa ${ringClass}`}
     >
       {hasError ? (
-        <div className="flex h-full w-full items-center justify-center bg-arena text-negro-volcanico/30">
+        <div className="flex h-full w-full items-center justify-center bg-surface-warm text-text-primary/30">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"

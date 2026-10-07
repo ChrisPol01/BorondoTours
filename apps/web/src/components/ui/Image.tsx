@@ -137,7 +137,7 @@ export function Image({
         ref={containerRef}
         className={[
           "flex items-center justify-center",
-          "bg-arena text-negro-volcanico/60",
+          "bg-surface-warm text-text-primary/60",
           "text-body2 font-body text-center p-4",
           className,
         ]
@@ -168,7 +168,7 @@ export function Image({
       <div
         ref={containerRef}
         className={[
-          "bg-arena",
+          "bg-surface-warm",
           className,
         ]
           .filter(Boolean)

@@ -1,0 +1,17 @@
+{
+  "_comentario": "Pega SOLO este bloque 'figma-bridge' dentro de mcpServers en tu ~/.kiro/settings/mcp.json. Reemplaza <SU_USUARIO> por tu usuario de Windows y <TOKEN...> por el contenido de tu propio ~/.figma-mcp-bridge/bridge_token.txt. No copies tokens de otra persona.",
+  "mcpServers": {
+    "figma-bridge": {
+      "command": "node",
+      "args": [
+        "C:/Users/<SU_USUARIO>/.figma-mcp-bridge/mcp/figma/index.js"
+      ],
+      "env": {
+        "FIGMA_PERSONAL_ACCESS_TOKEN": "",
+        "FIGMA_BRIDGE_TOKEN": "<TOKEN DE TU PROPIO bridge_token.txt>"
+      },
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}

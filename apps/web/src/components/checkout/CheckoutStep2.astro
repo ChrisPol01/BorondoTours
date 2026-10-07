@@ -28,8 +28,8 @@ const passengers = [
   },
 ];
 
-const fieldClass = 'w-full rounded-control border border-border-subtle bg-surface-page px-3 py-2 font-body text-body2 text-negro-volcanico';
-const labelClass = 'mb-1 block font-body text-label font-medium text-negro-volcanico';
+const fieldClass = 'w-full rounded-control border border-border-subtle bg-surface-page px-3 py-2 font-body text-body2 text-text-primary';
+const labelClass = 'mb-1 block font-body text-label font-medium text-text-primary';
 ---
 
 <section id="checkout-step2" aria-labelledby="checkout-step2-title" class="scroll-mt-24 bg-surface-warm py-section-gap">
@@ -37,10 +37,10 @@ const labelClass = 'mb-1 block font-body text-label font-medium text-negro-volca
     {/* Columna de formularios */}
     <div class="flex flex-col gap-6">
       <div class="flex items-center justify-between">
-        <h2 id="checkout-step2-title" class="font-heading text-h3 font-semibold text-negro-volcanico">
+        <h2 id="checkout-step2-title" class="font-heading text-h3 font-semibold text-text-primary">
           {t('step2.title')}
         </h2>
-        <span class="inline-flex items-center gap-2 rounded-control border border-focus px-4 py-2 font-body text-body2 font-semibold text-negro-volcanico">
+        <span class="inline-flex items-center gap-2 rounded-control border border-focus px-4 py-2 font-body text-body2 font-semibold text-text-primary">
           <Plus className="h-4 w-4" aria-hidden="true" />
           {t('step2.addPassenger')}
         </span>
@@ -49,10 +49,10 @@ const labelClass = 'mb-1 block font-body text-label font-medium text-negro-volca
       {passengers.map((p) => (
         <article class="rounded-card bg-surface-page p-6 shadow-card">
           <div class="mb-4 flex items-center gap-3">
-            <span class="flex h-8 w-8 items-center justify-center rounded-pill bg-turquesa font-body text-body2 font-semibold text-blanco-niebla">
+            <span class="flex h-8 w-8 items-center justify-center rounded-pill bg-turquesa font-body text-body2 font-semibold text-on-strong">
               {p.n}
             </span>
-            <h3 class="font-heading text-h4 font-semibold text-negro-volcanico">{p.firstName} {p.lastName}</h3>
+            <h3 class="font-heading text-h4 font-semibold text-text-primary">{p.firstName} {p.lastName}</h3>
           </div>
 
           <div class="grid gap-4 sm:grid-cols-2">
@@ -91,9 +91,9 @@ const labelClass = 'mb-1 block font-body text-label font-medium text-negro-volca
               <div class="flex items-start gap-3">
                 <Info className="mt-0.5 h-5 w-5 flex-shrink-0 text-turquesa" aria-hidden="true" />
                 <div class="flex-1">
-                  <p class="font-body text-body2 font-semibold text-negro-volcanico">{t('step2.ivaAlertTitle')}</p>
-                  <p class="mt-1 font-body text-body2 text-azul-condor">{t('step2.ivaAlertText')}</p>
-                  <span class="mt-3 inline-flex items-center gap-2 rounded-control border border-focus px-4 py-2 font-body text-body2 font-semibold text-negro-volcanico">
+                  <p class="font-body text-body2 font-semibold text-text-primary">{t('step2.ivaAlertTitle')}</p>
+                  <p class="mt-1 font-body text-body2 text-text-muted">{t('step2.ivaAlertText')}</p>
+                  <span class="mt-3 inline-flex items-center gap-2 rounded-control border border-focus px-4 py-2 font-body text-body2 font-semibold text-text-primary">
                     <Upload className="h-4 w-4" aria-hidden="true" />
                     {t('step2.uploadPassport')}
                   </span>
@@ -106,7 +106,7 @@ const labelClass = 'mb-1 block font-body text-label font-medium text-negro-volca
 
       {/* Contacto de emergencia */}
       <article class="rounded-card bg-surface-page p-6 shadow-card">
-        <h3 class="mb-4 font-heading text-h4 font-semibold text-negro-volcanico">{t('step2.emergencyTitle')}</h3>
+        <h3 class="mb-4 font-heading text-h4 font-semibold text-text-primary">{t('step2.emergencyTitle')}</h3>
         <div class="grid gap-4 sm:grid-cols-3">
           <div>
             <label class={labelClass}>{t('step2.emergency.name')}</label>
@@ -127,21 +127,21 @@ const labelClass = 'mb-1 block font-body text-label font-medium text-negro-volca
     {/* Resumen lateral */}
     <aside class="flex flex-col gap-4">
       <div class="rounded-card bg-surface-page p-6 shadow-card lg:sticky lg:top-24">
-        <h3 class="font-heading text-h4 font-semibold text-negro-volcanico">{t('step2.summaryTitle')}</h3>
+        <h3 class="font-heading text-h4 font-semibold text-text-primary">{t('step2.summaryTitle')}</h3>
         <dl class="mt-4 flex flex-col gap-2 font-body text-body2">
           <div class="flex items-center justify-between">
-            <dt class="text-azul-condor">{t('step2.summary.tour')}</dt>
-            <dd class="font-medium text-negro-volcanico">{t('step1.summary.basePriceValue')}</dd>
+            <dt class="text-text-muted">{t('step2.summary.tour')}</dt>
+            <dd class="font-medium text-text-primary">{t('step1.summary.basePriceValue')}</dd>
           </div>
         </dl>
         <div class="mt-4 flex items-baseline justify-between border-t border-border-subtle pt-4">
-          <span class="font-body text-body1 font-semibold text-negro-volcanico">{t('step2.summary.totalPartial')}</span>
+          <span class="font-body text-body1 font-semibold text-text-primary">{t('step2.summary.totalPartial')}</span>
           <span class="font-heading text-h3 font-semibold text-turquesa">{t('step2.summary.totalPartialValue')}</span>
         </div>
         <div class="mt-6 flex gap-3">
           <a
             href="#checkout-step1-title"
-            class="inline-flex min-h-11 flex-1 items-center justify-center rounded-control border border-focus px-4 py-3 font-body text-button font-semibold text-negro-volcanico transition-colors duration-brand hover:bg-surface-warm focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-azul-profundo"
+            class="inline-flex min-h-11 flex-1 items-center justify-center rounded-control border border-focus px-4 py-3 font-body text-button font-semibold text-text-primary transition-colors duration-brand hover:bg-surface-warm focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-azul-profundo"
           >
             {t('step2.back')}
           </a>

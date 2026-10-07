@@ -83,9 +83,12 @@ kiro-spec: .kiro/specs/flujo-b-tour-detail.md
 **Contexto:** Cuando una fecha está llena (rojo), el viajero puede inscribirse en lista de espera.
 **Criterios de aceptación:**
 - [ ] Botón "Avisarme si se abren cupos" aparece cuando se selecciona una fecha llena.
-- [ ] Flujo: se abre modal pidiendo cantidad de cupos deseados y un email (si no está autenticado).
-- [ ] Si se liberan cupos (ej. alguien cancela), BullMQ envía email a todos en lista de espera para esa fecha.
-- [ ] Usuarios nivel Conquistador (4) o superior tienen prioridad en la notificación (se les envía 1 hora antes que al resto).
+- [ ] **Fecha agotada (estado inline):** la tarjeta de reserva muestra la fecha en rojo con texto "Fecha completa", deshabilita "Reservar" y ofrece el botón de lista de espera y las fechas cercanas con cupo.
+- [ ] Flujo: se abre un **diálogo bloqueante** (480 px, centrado, velo `#0F1A2B` 30 % + blur 20, ver design.md §8f) pidiendo cantidad de cupos deseados y un email (si no está autenticado). En móvil, hoja inferior con el mismo velo.
+- [ ] **Confirmación:** al enviar, el diálogo se cierra, aparece un toast "Estás en la lista de espera" (abajo a la derecha, 400 px, `role="status"`) y el botón de la tarjeta pasa a estado activo "Te avisaremos si se abre un cupo" (verde frailejón 18 %, borde verde, icono check, texto `text/primary`).
+- [ ] Si se liberan cupos (ej. alguien cancela), un job (EventBridge + SQS, ADR-011) envía email a todos en lista de espera para esa fecha.
+- [ ] ⏸ Prioridad por nivel de lealtad (Conquistador 4+ recibe el aviso 1 hora antes): en pausa junto con Spec-E. Mientras tanto, el aviso sale a todos a la vez.
+- [ ] Referencia visual: Figma, tablero Colorido, fila Detalle del tour → estados "Fecha agotada", "Lista de espera", "Lista de espera · confirmada".
 
 ### RF-B06 — Instancias de tour (TourInstances)
 **Contexto:** Cada fecha disponible en el calendario corresponde a una `TourInstance`.

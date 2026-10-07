@@ -66,7 +66,7 @@
 - **Fondo:** `arena` (`bg-surface-warm`)
 - **Elementos (x4):**
   - Iconos — Leaf, Camera, Shield, Users (trazo 2px `turquesa`/`verde-frailejon`)
-  - Títulos — texto: "Turismo Responsable", "Experiencias Únicas", "Seguridad Garantizada", "Atención Personalizada" — tipografía: Body1 (`text-body1`) Bold — color: `negro-volcanico`
+  - Títulos — texto: "Turismo Responsable", "Experiencias Únicas", "Seguridad y Confianza", "Atención Personalizada" — tipografía: Body1 (`text-body1`) Bold — color: `negro-volcanico`
   - Subtítulos — texto: "Cuidamos los lugares que visitas.", etc. — tipografía: Body2 (`text-body2`) — color: `azul-condor`
 - **Componente:** HTML estático (Astro)
 - **Isla React:** No (Astro estático)

@@ -11,7 +11,7 @@
  * - R9.6: All fields have accessible labels reachable by keyboard.
  * - Navigation is NOT triggered on invalid submission.
  */
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 

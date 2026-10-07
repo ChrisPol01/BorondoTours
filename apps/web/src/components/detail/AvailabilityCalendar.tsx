@@ -194,6 +194,8 @@ export function AvailabilityCalendar({
   // Custom DayButton que aplica el semáforo con aria-label (R17.8)
   const CustomDayButton = useCallback(
     (props: DayButtonProps): JSX.Element => {
+      // `modifiers` se descarta para no reenviarlo al DOM.
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { day, modifiers: _modifiers, ...buttonProps } = props;
       const date = day.date;
       const iso = toIsoDate(date);
@@ -205,7 +207,7 @@ export function AvailabilityCalendar({
           <button
             {...buttonProps}
             type="button"
-            className="flex h-9 w-9 items-center justify-center rounded-full text-sm font-body text-negro-volcanico/30"
+            className="flex h-9 w-9 items-center justify-center rounded-full text-sm font-body text-text-primary/30"
             disabled
             aria-disabled="true"
           >
@@ -238,7 +240,8 @@ export function AvailabilityCalendar({
               : "cursor-not-allowed opacity-70",
           ].join(" ")}
           aria-label={ariaLabel}
-          aria-selected={isSelected}
+          /* aria-pressed: un <button> no admite aria-selected; la fecha elegida es un toggle. */
+          aria-pressed={isSelected}
           aria-disabled={!isSelectable}
         >
           {date.getDate()}
@@ -258,7 +261,7 @@ export function AvailabilityCalendar({
       aria-label={t("calendar.label")}
     >
       {/* Título del calendario */}
-      <h3 className="font-heading text-h4 font-semibold text-negro-volcanico">
+      <h3 className="font-heading text-h4 font-semibold text-text-primary">
         {t("calendar.select")}
       </h3>
 
@@ -277,16 +280,16 @@ export function AvailabilityCalendar({
             months: "flex flex-col sm:flex-row gap-4",
             month: "flex flex-col gap-2",
             month_caption: "flex justify-center items-center py-2",
-            caption_label: "font-heading text-sm font-semibold text-negro-volcanico",
+            caption_label: "font-heading text-sm font-semibold text-text-primary",
             nav: "flex items-center gap-1",
             button_next:
-              "h-7 w-7 flex items-center justify-center rounded-full bg-transparent hover:bg-arena transition-colors text-negro-volcanico",
+              "h-7 w-7 flex items-center justify-center rounded-full bg-transparent hover:bg-surface-warm transition-colors text-text-primary",
             button_previous:
-              "h-7 w-7 flex items-center justify-center rounded-full bg-transparent hover:bg-arena transition-colors text-negro-volcanico",
+              "h-7 w-7 flex items-center justify-center rounded-full bg-transparent hover:bg-surface-warm transition-colors text-text-primary",
             month_grid: "w-full border-collapse",
             weekdays: "flex",
             weekday:
-              "w-9 text-center text-xs font-body text-negro-volcanico/60 font-medium",
+              "w-9 text-center text-xs font-body text-text-primary/60 font-medium",
             week: "flex w-full mt-1",
             day: "w-9 h-9 flex items-center justify-center p-0",
           }}

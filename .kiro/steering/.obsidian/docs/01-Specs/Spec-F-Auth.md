@@ -162,7 +162,10 @@ Roles de operador:
 **Contexto:** Definido en Spec-A RF-A10. Este spec define la implementación técnica.
 
 **Criterios de aceptación:**
+- [ ] **Momento (decisión 2026-09-29, opción B):** el modal se dispara al pulsar "Pagar" en el checkout (paso 3), sobre la pantalla de pago. El checkout se puede recorrer sin cuenta. Al autenticarse, vuelve al paso de pago con la selección intacta.
 - [ ] Modal overlay con tabs: "Iniciar sesión" / "Registrarse"
+- [ ] Patrón visual: diálogo bloqueante de 480 px centrado en el viewport, radio 24, padding 32, sobre el Checkout paso 3 (Pago) con velo `#0F1A2B` 30 % + `backdrop-filter: blur(20px)`. En móvil: hoja inferior con el mismo velo. Se implementa con `AccessibleDialog` (design.md §8e–8f).
+- [ ] Estados del diálogo en Figma: Iniciar sesión, Registrarse y verificación por OTP (tablero Colorido, fila Detalle del tour).
 - [ ] Cierre del modal sin completar auth → el usuario regresa al catálogo sin interrupciones
 - [ ] La intención de reserva (tour_id, instance_id, pax) persiste en Zustand hasta que el modal se cierre o la sesión expire
 - [ ] Si el usuario cierra el modal: mostrar toast "Inicia sesión para completar tu reserva"

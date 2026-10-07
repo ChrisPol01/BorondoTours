@@ -65,7 +65,7 @@ export function SortSelect({ value, onChange }: SortSelectProps): JSX.Element {
     <div className="flex items-center gap-2">
       <label
         htmlFor="sort-select"
-        className="font-body text-body2 font-semibold text-negro-volcanico whitespace-nowrap"
+        className="font-body text-body2 font-semibold text-text-primary whitespace-nowrap"
       >
         {t("sort.label")}
       </label>
@@ -74,11 +74,11 @@ export function SortSelect({ value, onChange }: SortSelectProps): JSX.Element {
         value={value}
         onChange={(e) => onChange(e.target.value as SortOption)}
         className={[
-          "font-body text-body2 text-negro-volcanico",
-          "rounded-lg border border-azul-profundo/30 bg-blanco-niebla",
+          "font-body text-body2 text-text-primary",
+          "rounded-lg border border-border-subtle bg-surface-card",
           "px-3 py-2",
           "focus:outline-none focus-visible:ring-2 focus-visible:ring-azul-profundo",
-          "focus-visible:ring-offset-2 focus-visible:ring-offset-blanco-niebla",
+          "focus-visible:ring-offset-2 focus-visible:ring-offset-surface-page",
         ].join(" ")}
       >
         {SORT_OPTIONS.map((option) => (

@@ -14,6 +14,7 @@ Cada Spec detalla los requerimientos funcionales (códigos RF) de un dominio del
 | `Spec-H-ERP-Agencia.md` | ERP | CRM Kanban, cotizaciones, comisiones, gamificación, SUPER_ADMIN | AGENT, GERENTE, SUPER_ADMIN |
 | `Spec-I-B2B-Portal-Operadores.md` | B2B | Inventario, manifiesto multicanal, radar, AgencyLinks, finanzas | OPERATOR_ADMIN, OPERATOR_COORD |
 | `Spec-J-BorondoTours-App-Movil.md` | Mobile | Check-in QR, offline, GPS, caja menor, estados de campo | OPERATOR_GUIDE, OPERATOR_DRIVER |
+| `Spec-L-Blog-Contenidos.md` | B2C | Blog: artículos y reseñas aprobadas, flujo editorial | CLIENT, SUPER_ADMIN |
 | `Spec-K-Planificacion-Operativa.md` | B2B | Calendarios de planificación, proveedores, contingencias, alistamiento, cierre, panel del guía | OPERATOR_COORD, OPERATOR_GUIDE, COORD |
 
 > **Convención de códigos RF:** cada Spec usa el prefijo de su letra (ej. `C-RF07`, `K-RF15`).

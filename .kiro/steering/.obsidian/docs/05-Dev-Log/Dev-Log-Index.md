@@ -12,6 +12,8 @@ tags: [dev-log]
 
 | Fecha | Resumen | Link |
 |---|---|---|
+| 2026-09-29 (b) | Cierre del diseño B2C: tema Claro sin negro puro, estados de controles (btcs), componentes en la página Design System, scroll y elementos fijos. Cobertura Figma vs RF Fase 1 ≈ 95 %. Fase 2 del B2C casi toda diseñada salvo Borondo Coins (pausa legal). Siguiente: congelar Figma y programar (packages/ui → páginas en dev.borondotours.com). Pendiente: correr btnorm, comentarios 2 y 5, decisiones Auth Gate / saldo / emails | — |
+| 2026-09-29 | Matriz de temas (sección 16) completada: 72→102 pantallas, 306 copias, 0 faltantes. Fix APPLY+GRAD+FX para gradientes por tema. | — |
 | {{fecha}} | Inicio del proyecto | [[2025-01-01]] |
 
 ---

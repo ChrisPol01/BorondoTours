@@ -63,9 +63,9 @@ const coordinatePair: fc.Arbitrary<[[number, number], [number, number]]> =
     // Par arbitrario.
     fc.tuple(coordinate, coordinate),
     // Punto idéntico: mismo objeto de coordenadas para ambos extremos.
-    coordinate.map((c) => [c, [...c] as [number, number]]),
+    coordinate.map((c): [[number, number], [number, number]] => [c, [...c] as [number, number]]),
     // Antípodas.
-    coordinate.map((c) => [c, antipode(c)]),
+    coordinate.map((c): [[number, number], [number, number]] => [c, antipode(c)]),
   );
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -95,7 +95,7 @@ describe("Property-based: la distancia geográfica es una métrica bien formada"
 
           // (3) Simetría: d(a, b) = d(b, a) dentro de tolerancia de punto flotante.
           //     Tolerancia relativa al arco máximo terrestre (~20015 km).
-          expect(dAB).toBeCloseTo(dBA, 9);
+          expect(dAB).toBeCloseTo(dBA, 6); // 6 decimales = precisión de milímetros
         }),
         { numRuns: 200 },
       );

@@ -70,7 +70,7 @@ export function TourDescription({
         <SafeHtml
           html={longDescriptionHtml}
           fallbackKey="common:content.unavailable"
-          className="prose prose-body1 max-w-none font-body text-negro-volcanico"
+          className="prose prose-body1 max-w-none font-body text-text-primary"
         />
       )}
 
@@ -105,12 +105,14 @@ interface InfoListProps {
 function InfoList({ title, items, variant }: InfoListProps): JSX.Element {
   return (
     <div className="flex flex-col gap-3">
-      <h3 className="font-heading text-h4 font-semibold text-negro-volcanico">
+      <h3 className="font-heading text-h4 font-semibold text-text-primary">
         {title}
       </h3>
+      {/* role="list" es intencional: Safari/VoiceOver quita la semántica de lista con list-style:none (preflight de Tailwind). */}
+      {/* eslint-disable-next-line jsx-a11y/no-redundant-roles */}
       <ul className="flex flex-col gap-2 pl-1" role="list">
         {items.map((item, index) => (
-          <li key={`${variant}-${index}`} className="flex items-start gap-2 font-body text-body1 text-negro-volcanico">
+          <li key={`${variant}-${index}`} className="flex items-start gap-2 font-body text-body1 text-text-primary">
             <ListIcon variant={variant} />
             <span>{item}</span>
           </li>
@@ -164,7 +166,7 @@ function ListIcon({ variant }: ListIconProps): JSX.Element {
     case "bring":
       // Backpack/mochila icon — azul cóndor
       return (
-        <svg {...commonProps} className={`${commonProps.className} text-azul-condor`}>
+        <svg {...commonProps} className={`${commonProps.className} text-text-muted`}>
           <path d="M4 20V10a8 8 0 0 1 16 0v10" />
           <rect x="2" y="20" width="20" height="2" rx="1" />
           <path d="M9 6V4a3 3 0 0 1 6 0v2" />

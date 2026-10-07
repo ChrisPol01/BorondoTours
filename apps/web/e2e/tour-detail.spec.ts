@@ -3,7 +3,7 @@
  *
  * Tests end-to-end de la vista Tour Detail que verifican:
  * 1. R15.1: Galería renderiza slider con fotos, navegación prev/next funciona
- * 2. R17.4: Click en fecha verde → selección cambia (aria-selected actualiza)
+ * 2. R17.4: Click en fecha verde → selección cambia (aria-pressed actualiza)
  * 3. R17.5: Click en fecha roja/gris → selección NO cambia, indicación visual
  * 4. R17.9: Seleccionar fecha → precio del CTA se actualiza
  * 5. R18.1: Sección de tours cercanos aparece con tours dentro de 50km
@@ -145,7 +145,7 @@ const MOCK_NEARBY_FAR = [
 ];
 
 function mockPageData(overrides?: {
-  nearby?: typeof MOCK_NEARBY;
+  nearby?: typeof MOCK_NEARBY | typeof MOCK_NEARBY_FAR;
   instances?: typeof MOCK_INSTANCES;
 }) {
   return {
@@ -224,7 +224,7 @@ test.describe("Tour Detail — flujo E2E", () => {
   // R17.4: Click en fecha verde/amarilla → selección cambia
   // ─────────────────────────────────────────────────────────────────────────
 
-  test("R17.4 — seleccionar fecha verde actualiza aria-selected", async ({
+  test("R17.4 — seleccionar fecha verde actualiza aria-pressed", async ({
     page,
   }) => {
     await interceptPageData(page);
@@ -236,10 +236,10 @@ test.describe("Tour Detail — flujo E2E", () => {
     );
     await expect(calendarGroup).toBeVisible();
 
-    // Encontrar un botón de fecha con aria-selected="false" que sea seleccionable
+    // Encontrar un botón de fecha con aria-pressed="false" que sea seleccionable
     // (fondo verde = bg-[var(--color-avail-green)]) y no aria-disabled
     const selectableDate = calendarGroup.locator(
-      'button[aria-disabled="false"][aria-selected="false"]',
+      'button[aria-disabled="false"][aria-pressed="false"]',
     ).first();
 
     // Verificar que existe al menos una fecha seleccionable
@@ -248,9 +248,9 @@ test.describe("Tour Detail — flujo E2E", () => {
     // Click en la fecha verde/amarilla
     await selectableDate.click();
 
-    // Ahora debe haber exactamente un botón con aria-selected="true" en el calendario
+    // Ahora debe haber exactamente un botón con aria-pressed="true" en el calendario
     const selectedDate = calendarGroup.locator(
-      'button[aria-selected="true"]',
+      'button[aria-pressed="true"]',
     );
     await expect(selectedDate).toHaveCount(1);
   });
@@ -268,19 +268,19 @@ test.describe("Tour Detail — flujo E2E", () => {
 
     // Seleccionar la primera fecha disponible (verde o amarilla)
     const selectableDates = calendarGroup.locator(
-      'button[aria-disabled="false"][aria-selected="false"]',
+      'button[aria-disabled="false"][aria-pressed="false"]',
     );
 
     const firstSelectableDate = selectableDates.first();
     await firstSelectableDate.click();
 
     // Verificar que se seleccionó
-    let selectedDates = calendarGroup.locator('button[aria-selected="true"]');
+    let selectedDates = calendarGroup.locator('button[aria-pressed="true"]');
     await expect(selectedDates).toHaveCount(1);
 
     // Ahora seleccionar otra fecha disponible (la segunda)
     const secondSelectableDate = calendarGroup.locator(
-      'button[aria-disabled="false"][aria-selected="false"]',
+      'button[aria-disabled="false"][aria-pressed="false"]',
     ).first();
 
     // Si hay una segunda fecha seleccionable, hacer click
@@ -289,7 +289,7 @@ test.describe("Tour Detail — flujo E2E", () => {
       await secondSelectableDate.click();
 
       // Siempre debe haber máximo una fecha seleccionada
-      selectedDates = calendarGroup.locator('button[aria-selected="true"]');
+      selectedDates = calendarGroup.locator('button[aria-pressed="true"]');
       await expect(selectedDates).toHaveCount(1);
     }
   });
@@ -311,12 +311,12 @@ test.describe("Tour Detail — flujo E2E", () => {
 
     // Primero seleccionar una fecha válida (verde/amarilla)
     const selectableDate = calendarGroup.locator(
-      'button[aria-disabled="false"][aria-selected="false"]',
+      'button[aria-disabled="false"][aria-pressed="false"]',
     ).first();
     await selectableDate.click();
 
-    // Guardar referencia a la fecha seleccionada (aria-selected="true")
-    const selectedBefore = calendarGroup.locator('button[aria-selected="true"]');
+    // Guardar referencia a la fecha seleccionada (aria-pressed="true")
+    const selectedBefore = calendarGroup.locator('button[aria-pressed="true"]');
     await expect(selectedBefore).toHaveCount(1);
     const selectedLabelBefore = await selectedBefore.getAttribute("aria-label");
 
@@ -331,7 +331,7 @@ test.describe("Tour Detail — flujo E2E", () => {
       await disabledDate.click();
 
       // La selección no debe haber cambiado
-      const selectedAfter = calendarGroup.locator('button[aria-selected="true"]');
+      const selectedAfter = calendarGroup.locator('button[aria-pressed="true"]');
       await expect(selectedAfter).toHaveCount(1);
       const selectedLabelAfter = await selectedAfter.getAttribute("aria-label");
       expect(selectedLabelAfter).toBe(selectedLabelBefore);
@@ -366,7 +366,7 @@ test.describe("Tour Detail — flujo E2E", () => {
     await expect(calendarGroup).toBeVisible();
 
     const selectableDate = calendarGroup.locator(
-      'button[aria-disabled="false"][aria-selected="false"]',
+      'button[aria-disabled="false"][aria-pressed="false"]',
     ).first();
     await selectableDate.click();
 

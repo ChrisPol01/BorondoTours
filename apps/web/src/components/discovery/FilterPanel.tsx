@@ -146,19 +146,19 @@ function CheckboxGroup<T extends string>({
 
   return (
     <fieldset className="space-y-2">
-      <legend className="font-body text-body2 font-semibold text-negro-volcanico mb-1">
+      <legend className="font-body text-body2 font-semibold text-text-primary mb-1">
         {title}
       </legend>
       {options.map((option) => (
         <label
           key={option}
-          className="flex items-center gap-2 cursor-pointer font-body text-body2 text-negro-volcanico"
+          className="flex items-center gap-2 cursor-pointer font-body text-body2 text-text-primary"
         >
           <input
             type="checkbox"
             checked={selected.includes(option)}
             onChange={(e) => handleToggle(option, e.target.checked)}
-            className="h-4 w-4 rounded border-azul-profundo/30 text-turquesa focus:ring-azul-profundo"
+            className="h-4 w-4 rounded border-border-subtle text-turquesa focus:ring-azul-profundo"
           />
           {getLabel(option)}
         </label>
@@ -197,7 +197,7 @@ function ChipGroup<T extends string>({
 
   return (
     <fieldset className="space-y-2">
-      <legend className="font-body text-body2 font-semibold text-negro-volcanico mb-1">
+      <legend className="font-body text-body2 font-semibold text-text-primary mb-1">
         {title}
       </legend>
       <div className="flex flex-wrap gap-2">
@@ -215,10 +215,10 @@ function ChipGroup<T extends string>({
                 "font-body text-body2 font-semibold",
                 "border transition-colors duration-200",
                 "focus:outline-none focus-visible:ring-2 focus-visible:ring-azul-profundo",
-                "focus-visible:ring-offset-2 focus-visible:ring-offset-blanco-niebla",
+                "focus-visible:ring-offset-2 focus-visible:ring-offset-surface-page",
                 isSelected
                   ? "bg-action-primary text-on-action border-transparent hover:bg-action-primary-hover"
-                  : "bg-blanco-niebla text-negro-volcanico border-azul-profundo/30 hover:bg-arena",
+                  : "bg-surface-card text-text-primary border-border-subtle hover:bg-surface-warm",
               ].join(" ")}
             >
               {getLabel(option)}
@@ -324,11 +324,11 @@ function PriceRange({
   };
 
   const inputClasses = [
-    "w-full font-body text-body2 text-negro-volcanico",
-    "rounded-control border border-azul-profundo/30 bg-blanco-niebla",
+    "w-full font-body text-body2 text-text-primary",
+    "rounded-control border border-border-subtle bg-surface-card",
     "px-3 py-2 min-h-11",
     "focus:outline-none focus-visible:ring-2 focus-visible:ring-azul-profundo",
-    "focus-visible:ring-offset-1 focus-visible:ring-offset-blanco-niebla",
+    "focus-visible:ring-offset-1 focus-visible:ring-offset-surface-page",
   ].join(" ");
 
   const rangeClasses = "w-full accent-turquesa cursor-pointer";
@@ -339,12 +339,12 @@ function PriceRange({
 
   return (
     <fieldset className="space-y-3">
-      <legend className="font-body text-body2 font-semibold text-negro-volcanico mb-1">
+      <legend className="font-body text-body2 font-semibold text-text-primary mb-1">
         {title}
       </legend>
 
       {/* Rango seleccionado (feedback visible, mockup) */}
-      <p className="font-body text-body2 font-semibold text-negro-volcanico">
+      <p className="font-body text-body2 font-semibold text-text-primary">
         {minValueText} – {maxValueText}
       </p>
 
@@ -391,7 +391,7 @@ function PriceRange({
             className={inputClasses}
           />
         </div>
-        <span className="text-negro-volcanico/50" aria-hidden="true">
+        <span className="text-text-primary/50" aria-hidden="true">
           –
         </span>
         <div className="flex-1">
@@ -441,7 +441,7 @@ function FilterPanelContent({
     <div className="space-y-6">
       {/* Título + Limpiar filtros (R13.7) */}
       <div className="flex items-center justify-between">
-        <h2 className="font-heading text-h4 font-semibold text-negro-volcanico">
+        <h2 className="font-heading text-h4 font-semibold text-text-primary">
           {t("filters.title")}
         </h2>
         {showClear && (
@@ -452,7 +452,7 @@ function FilterPanelContent({
               "font-body text-body2 text-turquesa underline",
               "hover:text-verde transition-colors duration-200",
               "focus:outline-none focus-visible:ring-2 focus-visible:ring-azul-profundo",
-              "focus-visible:ring-offset-2 focus-visible:ring-offset-blanco-niebla rounded",
+              "focus-visible:ring-offset-2 focus-visible:ring-offset-surface-page rounded",
             ].join(" ")}
           >
             {t("filters.clear")}
@@ -498,12 +498,12 @@ function FilterPanelContent({
       />
 
       {/* Filtro Pasaporte — IVA exento (R13.5) */}
-      <label className="flex items-center gap-2 cursor-pointer font-body text-body2 text-negro-volcanico">
+      <label className="flex items-center gap-2 cursor-pointer font-body text-body2 text-text-primary">
         <input
           type="checkbox"
           checked={filters.passportOnly}
           onChange={(e) => updateFilters({ passportOnly: e.target.checked })}
-          className="h-4 w-4 rounded border-azul-profundo/30 text-turquesa focus:ring-azul-profundo"
+          className="h-4 w-4 rounded border-border-subtle text-turquesa focus:ring-azul-profundo"
         />
         {t("filters.passport")}
       </label>
@@ -561,12 +561,12 @@ function MobileDrawer({
         aria-controls="filter-drawer"
         className={[
           "inline-flex items-center gap-2",
-          "font-body text-body2 font-semibold text-negro-volcanico",
-          "rounded-lg border border-azul-profundo/30 bg-blanco-niebla",
+          "font-body text-body2 font-semibold text-text-primary",
+          "rounded-lg border border-border-subtle bg-surface-card",
           "px-4 py-2",
-          "hover:bg-arena transition-colors duration-200",
+          "hover:bg-surface-warm transition-colors duration-200",
           "focus:outline-none focus-visible:ring-2 focus-visible:ring-azul-profundo",
-          "focus-visible:ring-offset-2 focus-visible:ring-offset-blanco-niebla",
+          "focus-visible:ring-offset-2 focus-visible:ring-offset-surface-page",
         ].join(" ")}
       >
         {/* Icono de filtro simple (SVG inline) */}
@@ -606,7 +606,7 @@ function MobileDrawer({
             aria-label={t("filters.title")}
             className={[
               "relative ml-auto h-full w-drawer-mobile max-w-drawer-max",
-              "bg-blanco-niebla overflow-y-auto",
+              "bg-surface-card overflow-y-auto",
               "p-6 shadow-floating",
             ].join(" ")}
           >
@@ -618,9 +618,9 @@ function MobileDrawer({
                 aria-label={t("common:action.close")}
                 className={[
                   "rounded-lg p-2",
-                  "hover:bg-arena transition-colors duration-200",
+                  "hover:bg-surface-warm transition-colors duration-200",
                   "focus:outline-none focus-visible:ring-2 focus-visible:ring-azul-profundo",
-                  "focus-visible:ring-offset-2 focus-visible:ring-offset-blanco-niebla",
+                  "focus-visible:ring-offset-2 focus-visible:ring-offset-surface-page",
                 ].join(" ")}
               >
                 <svg

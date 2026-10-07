@@ -68,6 +68,18 @@ Onepayla es el estándar colombiano para startups de turismo, tiene PSE, Nequi, 
 
 ---
 
+## Actualización 2026-09-27 — Rol de Bold
+
+- **OnePay.la** sigue siendo la pasarela: arma la experiencia de pago del cliente (links, PSE, Nequi, Daviplata, tarjetas) y envía los webhooks.
+- **Bold** solo cumple el papel de **cuenta receptora** donde BorondoTours recibe el dinero. No es un método de pago para el cliente, no aparece en el checkout ni en el carrusel de medios de pago.
+- El costo de cada método se mostrará como una etiqueta con la tarifa vigente de OnePay. Queda por validar con OnePay si se suma al total o se presenta como descuento (Spec-C RF-C15).
+
+### Acciones derivadas
+- [ ] Confirmar con OnePay y Bold cómo llega la liquidación de OnePay a la cuenta Bold y qué referencia trae para la conciliación diaria (RF-C10).
+- [ ] Registrar la cuenta Bold en la conciliación y en la contabilidad (cuenta 1110 de la Estructura Contable).
+
+---
+
 ## Links relacionados
 - [[ADR-Index]]
 - [[../01-Specs/Spec-C-Checkout]]

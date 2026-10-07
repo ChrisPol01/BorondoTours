@@ -1,0 +1,4 @@
+/* Hoja de entrada: Tailwind + tema compartido de @borondo/ui. */
+@import "tailwindcss";
+@import "@borondo/ui/styles/theme.css";
+@source "../../../../packages/ui/src";

@@ -44,7 +44,7 @@ export function TourAddOns({ addOns }: TourAddOnsProps): JSX.Element | null {
 
   return (
     <section className="flex flex-col gap-4">
-      <h3 className="font-heading text-h4 font-semibold text-negro-volcanico">
+      <h3 className="font-heading text-h4 font-semibold text-text-primary">
         {t("addons.title")}
       </h3>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -66,9 +66,9 @@ interface AddOnCardProps {
 
 function AddOnCard({ addon }: AddOnCardProps): JSX.Element {
   return (
-    <div className="flex flex-col gap-2 rounded-lg border border-negro-volcanico/10 bg-blanco-niebla p-4 transition-shadow hover:shadow-sm">
+    <div className="flex flex-col gap-2 rounded-lg border border-negro-volcanico/10 bg-surface-card p-4 transition-shadow hover:shadow-sm">
       <div className="flex items-start justify-between gap-2">
-        <h4 className="font-body text-body1 font-semibold text-negro-volcanico leading-tight">
+        <h4 className="font-body text-body1 font-semibold text-text-primary leading-tight">
           {addon.name}
         </h4>
         <span className="flex-shrink-0 whitespace-nowrap rounded-md bg-turquesa/10 px-2 py-0.5 font-body text-body2 font-semibold text-turquesa">
@@ -76,7 +76,7 @@ function AddOnCard({ addon }: AddOnCardProps): JSX.Element {
         </span>
       </div>
       {addon.shortDescription.length > 0 && (
-        <p className="font-body text-body2 text-negro-volcanico/70 leading-relaxed">
+        <p className="font-body text-body2 text-text-primary/70 leading-relaxed">
           {addon.shortDescription}
         </p>
       )}

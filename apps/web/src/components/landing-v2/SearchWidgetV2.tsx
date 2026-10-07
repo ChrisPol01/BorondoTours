@@ -132,10 +132,10 @@ function SearchWidgetV2Inner(): JSX.Element {
     >
       <div className="flex flex-col items-stretch gap-3 md:flex-row md:items-center md:gap-0">
         {/* Campo Destino */}
-        <div className="flex flex-1 items-center gap-3 px-3 py-2 md:border-r md:border-blanco-niebla/15">
-          <MapPin className="h-5 w-5 flex-shrink-0 text-blanco-niebla/70" aria-hidden="true" />
+        <div className="flex flex-1 items-center gap-3 px-3 py-2 md:border-r md:border-border-subtle">
+          <MapPin className="h-5 w-5 flex-shrink-0 text-on-strong/70" aria-hidden="true" />
           <div className="flex flex-1 flex-col gap-1">
-            <label htmlFor="search-v2-destination" className="text-sm font-semibold text-blanco-niebla">
+            <label htmlFor="search-v2-destination" className="text-sm font-semibold text-on-strong">
               {t("search.destinationPlaceholder")}
             </label>
             <input
@@ -147,16 +147,16 @@ function SearchWidgetV2Inner(): JSX.Element {
               value={destination}
               onChange={(e) => setDestination(e.target.value)}
               aria-invalid={errors.destination !== null}
-              className="w-full rounded-md bg-blanco-niebla/15 px-2 py-1.5 text-sm text-blanco-niebla placeholder:text-blanco-niebla/30 backdrop-blur-sm focus:bg-blanco-niebla/20 focus:outline-none"
+              className="w-full rounded-md bg-surface-card/15 px-2 py-1.5 text-sm text-on-strong placeholder:text-on-strong/30 backdrop-blur-sm focus:bg-surface-card/20 focus:outline-none"
             />
           </div>
         </div>
 
         {/* Campo Fecha */}
-        <div className="flex flex-1 items-center gap-3 px-3 py-2 md:border-r md:border-blanco-niebla/15">
-          <Calendar className="h-5 w-5 flex-shrink-0 text-blanco-niebla/70" aria-hidden="true" />
+        <div className="flex flex-1 items-center gap-3 px-3 py-2 md:border-r md:border-border-subtle">
+          <Calendar className="h-5 w-5 flex-shrink-0 text-on-strong/70" aria-hidden="true" />
           <div className="flex flex-1 flex-col gap-1">
-            <label htmlFor="search-v2-date" className="text-sm font-semibold text-blanco-niebla">
+            <label htmlFor="search-v2-date" className="text-sm font-semibold text-on-strong">
               {t("search.datesPlaceholder")}
             </label>
             <input
@@ -173,25 +173,25 @@ function SearchWidgetV2Inner(): JSX.Element {
               }}
               onChange={(e) => setDate(e.target.value)}
               aria-invalid={errors.date !== null}
-              className="w-full rounded-md bg-blanco-niebla/15 px-2 py-1.5 text-sm text-blanco-niebla placeholder:text-blanco-niebla/30 backdrop-blur-sm focus:bg-blanco-niebla/20 focus:outline-none"
+              className="w-full rounded-md bg-surface-card/15 px-2 py-1.5 text-sm text-on-strong placeholder:text-on-strong/30 backdrop-blur-sm focus:bg-surface-card/20 focus:outline-none"
             />
           </div>
         </div>
 
         {/* Campo Viajeros con +/- */}
         <div className="flex flex-1 items-center gap-3 px-3 py-2">
-          <Users className="h-5 w-5 flex-shrink-0 text-blanco-niebla/70" aria-hidden="true" />
+          <Users className="h-5 w-5 flex-shrink-0 text-on-strong/70" aria-hidden="true" />
           <div className="flex flex-col">
-            <span className="text-sm font-semibold text-blanco-niebla">
+            <span className="text-sm font-semibold text-on-strong">
               {t("search.travelersLabel")}
             </span>
-            <span className="text-xs text-blanco-niebla/40">{travelers}</span>
+            <span className="text-xs text-on-strong/40">{travelers}</span>
           </div>
           <div className="ml-auto flex items-center gap-1">
             <button
               type="button"
               onClick={decrementTravelers}
-              className="flex h-7 w-7 items-center justify-center rounded-full bg-dorado text-negro-volcanico transition-colors hover:bg-verde hover:text-blanco-niebla"
+              className="flex h-7 w-7 items-center justify-center rounded-full bg-dorado text-on-action transition-colors hover:bg-verde hover:text-on-strong"
               aria-label={t("search.travelersInvalid")}
             >
               <Minus className="h-3.5 w-3.5" strokeWidth={3} />
@@ -199,7 +199,7 @@ function SearchWidgetV2Inner(): JSX.Element {
             <button
               type="button"
               onClick={incrementTravelers}
-              className="flex h-7 w-7 items-center justify-center rounded-full bg-dorado text-negro-volcanico transition-colors hover:bg-verde hover:text-blanco-niebla"
+              className="flex h-7 w-7 items-center justify-center rounded-full bg-dorado text-on-action transition-colors hover:bg-verde hover:text-on-strong"
               aria-label={t("search.travelersLabel")}
             >
               <Plus className="h-3.5 w-3.5" strokeWidth={3} />
@@ -211,7 +211,7 @@ function SearchWidgetV2Inner(): JSX.Element {
         <div className="flex-shrink-0 pl-3">
           <button
             type="submit"
-            className="inline-flex items-center gap-2 rounded-full bg-dorado px-7 py-3.5 font-body text-sm font-semibold text-negro-volcanico shadow-[0_0_15px_rgba(253,184,19,0.4)] transition-all hover:bg-verde hover:text-blanco-niebla hover:shadow-[0_0_15px_rgba(121,193,66,0.5)] focus:outline-none focus-visible:ring-2 focus-visible:ring-dorado focus-visible:ring-offset-2"
+            className="inline-flex items-center gap-2 rounded-full bg-dorado px-7 py-3.5 font-body text-sm font-semibold text-on-action shadow-[0_0_15px_rgba(253,184,19,0.4)] transition-all hover:bg-verde hover:text-on-strong hover:shadow-[0_0_15px_rgba(121,193,66,0.5)] focus:outline-none focus-visible:ring-2 focus-visible:ring-dorado focus-visible:ring-offset-2"
           >
             <Search className="h-4 w-4" aria-hidden="true" />
             <span>{t("search.submit")}</span>

@@ -13,7 +13,7 @@
  * NOTE: Mapbox GL JS requires WebGL and cannot be fully integration-tested
  * in jsdom. We test the component states and toggle behavior.
  */
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 

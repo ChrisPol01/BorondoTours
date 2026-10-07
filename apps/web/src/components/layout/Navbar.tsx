@@ -8,7 +8,7 @@
  * ─────────────────────────────────────────────────────────────────────────
  * Comportamiento
  * ─────────────────────────────────────────────────────────────────────────
- *   • Sobre el hero (estado glass): aplica la clase `.glass-surface` con
+ *   • Sobre el hero (estado glass): aplica la clase `.glass-header` (vidrio estilo iOS) con
  *     contraste ≥4.5:1 entre texto claro y fondo (R6.4).
  *   • Fuera del hero (sólido): fondo sólido Blanco Niebla con texto Negro
  *     Volcánico, contraste ≥4.5:1 (R6.5). La transición se detecta con
@@ -127,8 +127,8 @@ export function HeaderIsland(): JSX.Element {
   // Sobre hero (imagen oscura): texto blanco.
   // Fuera del hero (contenido claro): texto negro volcánico.
   const navClasses = isOverHero
-    ? "glass-header text-blanco-niebla"
-    : "glass-header text-negro-volcanico";
+    ? "glass-header text-on-strong"
+    : "glass-header text-text-primary";
 
   return (
     <header
@@ -156,8 +156,8 @@ export function HeaderIsland(): JSX.Element {
                 href={link.href}
                 className={`font-body text-body1 font-semibold transition-colors duration-200 hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-azul-profundo ${
                   isOverHero
-                    ? "text-blanco-niebla focus-visible:ring-offset-transparent"
-                    : "text-negro-volcanico focus-visible:ring-offset-blanco-niebla"
+                    ? "text-on-strong focus-visible:ring-offset-transparent"
+                    : "text-text-primary focus-visible:ring-offset-surface-page"
                 }`}
               >
                 {t(link.labelKey)}
@@ -178,8 +178,8 @@ export function HeaderIsland(): JSX.Element {
               }
               className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-full p-2.5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-azul-profundo ${
                 isOverHero
-                  ? "text-blanco-niebla hover:bg-blanco-niebla/10 focus-visible:ring-offset-transparent"
-                  : "text-negro-volcanico hover:bg-arena focus-visible:ring-offset-blanco-niebla"
+                  ? "text-on-strong hover:bg-surface-card/10 focus-visible:ring-offset-transparent"
+                  : "text-text-primary hover:bg-surface-warm focus-visible:ring-offset-surface-page"
               }`}
             >
               {isLoggedIn ? (
@@ -193,7 +193,7 @@ export function HeaderIsland(): JSX.Element {
           <li>
             <a
               href="/planifica"
-              className="inline-flex items-center gap-2 rounded-full bg-dorado px-5 py-2.5 font-body text-sm font-semibold text-negro-volcanico transition-colors hover:bg-verde hover:text-blanco-niebla focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-azul-profundo"
+              className="inline-flex items-center gap-2 rounded-full bg-dorado px-5 py-2.5 font-body text-sm font-semibold text-on-action transition-colors hover:bg-verde hover:text-on-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-azul-profundo"
             >
               <Calendar className="h-4 w-4" aria-hidden="true" />
               <span>{t("nav:planTrip")}</span>
@@ -207,8 +207,8 @@ export function HeaderIsland(): JSX.Element {
           type="button"
           className={`md:hidden inline-flex min-h-11 min-w-11 items-center justify-center rounded-control p-2 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-azul-profundo ${
             isOverHero
-              ? "text-blanco-niebla hover:bg-blanco-niebla/10 focus-visible:ring-offset-transparent"
-              : "text-negro-volcanico hover:bg-arena focus-visible:ring-offset-blanco-niebla"
+              ? "text-on-strong hover:bg-surface-card/10 focus-visible:ring-offset-transparent"
+              : "text-text-primary hover:bg-surface-warm focus-visible:ring-offset-surface-page"
           }`}
           aria-label={
             isMobileMenuOpen ? t("nav:closeMenu") : t("nav:openMenu")
@@ -267,7 +267,7 @@ export function HeaderIsland(): JSX.Element {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="flex min-h-11 items-center rounded-control px-3 py-2 font-body text-body1 font-semibold text-negro-volcanico transition-colors hover:bg-arena focus-visible:outline-focus"
+                  className="flex min-h-11 items-center rounded-control px-3 py-2 font-body text-body1 font-semibold text-text-primary transition-colors hover:bg-surface-warm focus-visible:outline-focus"
                 >
                   {t(link.labelKey)}
                 </a>
@@ -277,7 +277,7 @@ export function HeaderIsland(): JSX.Element {
             <li>
               <a
                 href={isLoggedIn ? "/mis-reservas" : "/discovery"}
-                className="flex min-h-11 items-center gap-2 rounded-control px-3 py-2 font-body text-body1 font-semibold text-negro-volcanico transition-colors hover:bg-arena focus-visible:outline-focus"
+                className="flex min-h-11 items-center gap-2 rounded-control px-3 py-2 font-body text-body1 font-semibold text-text-primary transition-colors hover:bg-surface-warm focus-visible:outline-focus"
               >
                 {isLoggedIn ? (
                   <Ticket className="h-5 w-5" aria-hidden="true" />
@@ -290,7 +290,7 @@ export function HeaderIsland(): JSX.Element {
             <li className="mt-2">
               <a
                 href="/planifica"
-                className="inline-flex items-center gap-2 rounded-full bg-dorado px-5 py-2.5 font-body text-sm font-semibold text-negro-volcanico transition-colors hover:bg-verde hover:text-blanco-niebla"
+                className="inline-flex items-center gap-2 rounded-full bg-dorado px-5 py-2.5 font-body text-sm font-semibold text-on-action transition-colors hover:bg-verde hover:text-on-strong"
               >
                 <Calendar className="h-4 w-4" aria-hidden="true" />
                 <span>{t("nav:planTrip")}</span>

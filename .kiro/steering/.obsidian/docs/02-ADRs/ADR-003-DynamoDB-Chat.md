@@ -15,6 +15,8 @@ autores: [BorondoTours CTO]
 
 > **⚠️ ACTUALIZACIÓN 2026-07-10 (ADR-011):** La decisión de **DynamoDB para el historial se mantiene**. Lo que **cambia** es la capa de tiempo real: al migrar de ECS a **AWS Lambda (serverless-first)**, **Socket.io queda descartado** (Lambda no mantiene conexiones WebSocket persistentes). El tiempo real ahora usa **API Gateway WebSocket API** + Lambdas de ruta (`$connect`, `$disconnect`, `sendMessage`) + una tabla DynamoDB **`Connections`** (`connectionId` ↔ `user_id` ↔ `room`). El mismo mecanismo aplica al ka-ching/leaderboard del ERP y al radar en vivo. La activación/cierre del room (antes BullMQ) ahora se dispara con **EventBridge Scheduler + Lambda**. Donde el texto abajo diga "Socket.io (NestJS ChatGateway)", léase "API Gateway WebSocket API + Lambda"; donde diga "BullMQ job activa/cierra el room", léase "EventBridge Scheduler + Lambda".
 
+> **⚠️ ACTUALIZACIÓN 2026-09-27 (decisión de producto):** el chat pasa a ser **por instancia de tour** (guía ↔ grupo), no por reserva ni tripartito con agente. PK = `CHAT#TOUR#{tour_instance_id}`; cada mensaje lleva `visibility` (`GROUP` | `GUIDE_ONLY`). **Se elimina el TTL de 90 días**: al finalizar el tour se exporta el historial a S3 privado (SSE-KMS) y se borran los ítems de DynamoDB (Lambda disparada por el evento de fin de tour). Detalle en Spec-D RF-D08.
+
 ### Modelo de datos adicional (ADR-011) — tabla `Connections`
 
 ```

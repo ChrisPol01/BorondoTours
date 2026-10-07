@@ -179,7 +179,14 @@ fondo grande. La firma interactiva de la marca es **turquesa → verde en hover*
 | `--shadow-floating` | `0 1rem 3rem` azul-profundo 24% | Elementos flotantes, hover de tarjeta, glass |
 | `--shadow-sticky` | `0 -0.125rem 0.5rem` negro 8% | Barras sticky inferiores |
 
-### Glass (glassmorphism) — dos superficies canónicas
+### Liquid glass iOS 26 (vigente, 2026-09-27)
+Receta única para navbar, sidebar, tarjetas, listas, filtros, botones secundarios y pestañas (los botones de marca siguen sólidos):
+fondo blanco 10 % + `backdrop-filter: blur(2.5rem)`, borde 1 px degradado blanco 60 % → 0 % (135°, `.glass-*::after` con mask),
+inner shadow `0 2px 10px` blanco 20 %, sombra `0 0.625rem 1.875rem` negro 10 %. Modales/menús: `.glass-strong`.
+En Figma es la capa "Cristal" detrás del contenido (`btlg`). Claro usa vidrio oscuro (#1C1C1E 70 %). Texto: vidrio oscuro/neutro → blanco; `.glass-light` → Negro Volcánico.
+Las secciones siguientes describen la versión anterior y quedan como histórico.
+
+### Glass (glassmorphism) — dos superficies canónicas (histórico)
 
 **Card / Panel Glass** (`.glass-surface`)
 ```css
@@ -324,7 +331,7 @@ Transición estándar: `--motion-duration-standard` (200ms) con `--motion-ease-s
 Cada promesa con su icono lineal:
 1. **Turismo Responsable** (hoja) — Cuidamos los lugares que visitas.
 2. **Experiencias Únicas** (cámara) — Diseñamos viajes auténticos y memorables.
-3. **Seguridad Garantizada** (escudo) — Tu tranquilidad es nuestra prioridad.
+3. **Seguridad y Confianza** (escudo) — Tu tranquilidad es nuestra prioridad.
 4. **Atención Personalizada** (personas) — Estamos contigo en cada paso.
 
 ---
@@ -350,6 +357,64 @@ Cada promesa con su icono lineal:
 
 ---
 
+## 13. Navegación, temas y colofón (decisiones 2026-09-27)
+
+- **Sin sesión:** navbar liquid glass en 3 cápsulas (logo · Explorar / Blog / Nosotros · idioma, tema e "Iniciar sesión"). Variante de tono según la foto (`tone: dark | light`).
+- **Con sesión (escritorio):** no hay barra superior. Riel lateral izquierdo colapsable a iconos con 3 zonas: logo; Explorar, Mis reservas, Mis tours, Favoritos, Mensajes, Soporte; perfil (foto + nombre) con menú Editar perfil, Tema, Idioma, Recomendar, Cotiza con un asesor, Configuración, Nosotros, Cerrar sesión.
+- **Con sesión (móvil):** barra superior (logo, buscar, avisos) y barra inferior Explorar · Reservas · Mis tours · Mensajes · Perfil. Favoritos y Soporte viven dentro de Perfil.
+- **Checkout:** cabecera limpia ("Pago seguro con OnePay"), sin riel lateral, para no distraer del pago.
+- **Temas (4):** Colorido (por defecto), Claro, Oscuro y Sistema (sigue al SO). Se resuelven con los tokens semánticos; ningún componente fija hex.
+- **Sin footer grande:** al final de cada página queda un colofón estático de una línea (© BorondoTours S.A.S. · NIT · RNT · redes). Nunca en movimiento (WCAG 2.2.2).
+- **Borondo Coins oculto** mientras Spec-E esté en pausa: sin saldo, niveles ni promos de Coins en el B2C.
+
+## 14. Catálogo de estados (Figma)
+
+Cada pantalla tiene en Figma un bloque **Estados** debajo de su Section. Los estados globales están en la Section `15 · Estados globales`. Toda implementación debe cubrir, como mínimo:
+- **Carga:** skeleton con la forma real del contenido (`aria-busy="true"`), nunca spinner genérico.
+- **Vacío:** icono lineal en círculo Arena, título Sora, una frase de ayuda y un CTA primario.
+- **Error recuperable** (pago rechazado, enlace vencido, cupo agotado): modal con icono de estado, qué pasó, si hubo cobro y una acción primaria para seguir.
+- **Bloqueado / solo lectura** (chat antes de 24 h, tour finalizado): contenido visible, compositor atenuado con candado y la fecha en que cambia.
+- **Páginas 404 y 500:** fondo Azul Profundo, código en Dorado, copy en voz de marca y, en 500, código de referencia para soporte.
+- **Avisos en línea** (`NOTE`): info (turquesa), advertencia (dorado), error (danger) y éxito (verde), siempre con icono además del color.
+
+El detalle por pantalla y las decisiones de copy están en `otros/design/b2c/tramos/MAPEO-COMPONENTES.md` §P.
+
+## 15. Temas de color (decisión 2026-09-27)
+
+Colores en Figma como variables (colecciones `Tema · Colorido / Claro / Oscuro`, mismos 20 nombres). En código, `tokens.css` sobrescribe los tokens semánticos con `data-theme`.
+
+| Tema | Carácter | Fondo · tarjeta · sección | Texto |
+|---|---|---|---|
+| **Colorido** (defecto) | Marca completa | Blanco Niebla · Blanco Niebla · Arena, franjas Azul Profundo | Negro Volcánico / Azul Cóndor |
+| **Claro** | iOS: blanco y vidrio | `#F2F2F7` · blanco 72 % + blur 24 · `#E9E9EE` | `#1C1C1E` / `#6E6E73` |
+| **Oscuro** | Negro y gris neutro, sin azul | `#0B0B0C` · `#161618` · `#1F1F22` | `#EDEDED` / `#A1A1AA` |
+| **Sistema** | Condición, no tema | Claro u Oscuro según `prefers-color-scheme` | — |
+
+- Los acentos (Turquesa, Verde, Dorado) no cambian entre temas. En Oscuro, disponible `#8BD152` y error `#F97066` para leerse sobre negro.
+- Texto sobre Dorado, Verde o Turquesa sólidos siempre es `text/on-action` (Negro Volcánico).
+- El plan Starter de Figma no permite modos: el tema de una copia se cambia con `btt.APPLY`, y la sección `16 · Temas` se regenera con `btt.REFRESH`.
+
+## 16. Flujo del frontend (Figma)
+
+La página **Flujo del frontend** tiene dos tableros, **Desktop / Web** y **Móvil**, con 6 carriles: Descubrir, Cuenta, Reserva y pago, Portal del viajero, Contenido, Sistema. Cada tarjeta es una miniatura real con enlace al frame y su estado: Diseñada, Estado, Adaptar a móvil o Pendiente. Los estados cuelgan debajo de su pantalla con el disparador.
+
+El inventario vive en `DATA` del módulo `btflow` (`otros/infra/figma-bridge-plugin/modules/btflow.js`); al diseñar una pantalla nueva, se añade su id ahí y se vuelve a correr `BUILD`. El prototipo navegable arranca en los flujos **Reserva · Desktop** y **Reserva · Móvil** (Page 1).
+
+## 17. Crédito del mapa de Colombia
+
+El mapa usa `@svg-maps/colombia` (MapSVG) con licencia CC BY 4.0. El crédito va en vertical, pequeño, en el borde derecho del mapa, con enlace a la fuente. Texto: constante `COLOMBIA_MAP_ATTRIBUTION`.
+
+## 18. Control de calidad visual (decisión 2026-09-27)
+
+- **Texto sobre Turquesa, Verde o Dorado: Negro Volcánico** (`text/on-action`). El blanco sobre Turquesa da 2,3:1 y sobre Verde 2,1:1, por debajo de WCAG AA. Turquesa y Dorado no se usan como color de texto sobre fondo claro; los enlaces usan `text/muted` (Azul Cóndor, 5,9:1).
+- **Chrome de sistema:** sidebar y barra inferior son instancias de sus componentes (cápsulas Azul Profundo 92 % + blur, texto claro). El ítem activo lleva pill Blanco Niebla 16 % e icono Turquesa. La navbar pública usa la variante "Sobre foto oscura" solo encima del hero; en el resto, "Sobre foto clara".
+- **Fondo de página por tema (decisión 2026-09-27):** todas las pantallas llevan `surface/page` + degradado vertical `bg/top → bg/bottom`. Colorido (predeterminado): azul de marca `#103B66 → #07121F` en todo el sitio, con texto claro (`text/primary` = Blanco Niebla, `text/muted` = `#BAE6FD`) y tarjetas `#12304F`. Claro: blanco `#FFFFFF → #E3EEF8` (azules leves). Oscuro: `#141416 → #0B0B0C`. En código: `--gradient-page` en `body`.
+- **Código:** las clases de primitivas de marca (`bg-blanco-niebla`, `text-negro-volcanico`, …) se migraron a tokens semánticos con `otros/infra/scripts/migrate-brand-classes.ps1` para que respeten el tema. No usar primitivas para superficies ni texto.
+- **Bordes:** `border` al 18 %. Tarjetas: `surface/card` sólida + sombra `card`.
+- **Matriz de temas:** sección `16` de Page 1. Filas = pantalla; columnas = Colorido · Claro · Oscuro, cada una con Desktop y Móvil. Criterio de salida: `btq.contrast` = 0 en las tres columnas.
+
+---
+
 ## Fuentes y trazabilidad
 
 ### Código (fuente de verdad de valores)
@@ -363,3 +428,13 @@ Cada promesa con su icono lineal:
 - Design System B2C: `otros/design/b2c/design.md`
 - Steering de marca: `.kiro/steering/12-brand-identity.md`
 - Brand board: `otros/design/marca/borondo tours brand v1.png`
+
+## 19. Medidas de controles y grilla (decisión 2026-09-29)
+
+- **Alturas:** botones 32 / 40 / 48 (en móvil mínimo 48, área táctil ≥44). Chips y pestañas 32 en escritorio y 40 en móvil. Inputs 48 con radio 12. Badges 16 o 24. Botones, chips, pestañas y badges con radio 999.
+- **Espaciado:** padding horizontal y gap en múltiplos de 4. Mínimo 16 entre una fila de chips y el texto siguiente.
+- **Tarjetas:** radio 20 (24 si mide ≥400×400) con recorte de contenido. Nunca esquinas cuadradas en superficies visibles, salvo imágenes a sangre, hero, fondos y barras de ancho completo.
+- **Grilla con sesión (escritorio):** sidebar de 280 + separación 24 → el contenido arranca en x=328. Margen lateral en móvil: 16.
+- **Tipografía:** usar los estilos de texto (`Heading/H1–H4`, `Body/Body 1–2`, `UI/Button`, `UI/Label`), no valores sueltos.
+- **Calificaciones:** estrellas en Dorado. No usar negro puro (#000); el texto oscuro es Negro Volcánico (#101010).
+- Normalización automática en Figma: módulo `btnorm` (`otros/infra/figma-bridge-plugin/modules/btnorm.js`).

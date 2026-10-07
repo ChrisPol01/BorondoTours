@@ -1,0 +1,138 @@
+---
+/**
+ * `FigmaPage` — layout de las páginas generadas desde Figma (otros/infra/fig2astro).
+ *
+ * El diseño de escritorio mide `width` px (1440). El escenario se escala al ancho de la ventana
+ * con `zoom` (misma proporción que Figma en cualquier pantalla ≥ 1024 px). El factor se calcula
+ * en <head> antes del primer pintado para evitar saltos.
+ *
+ * La versión móvil (frames de 375 px) se agrega en la fase móvil con un segundo escenario.
+ */
+import ThemeScript from '../components/ui/ThemeScript.astro';
+import FigmaRuntime from '../components/fig/FigmaRuntime.astro';
+import '../styles/global.css';
+import '../styles/fig-runtime.css';
+// Las reglas de fig-home.css solo usan clases p0_* (exclusivas del Home) y bt-*.
+import '../styles/fig-home.css';
+
+interface Props {
+  readonly title: string;
+  readonly description?: string;
+  readonly width: number;
+  readonly height: number;
+  readonly noindex?: boolean;
+  readonly figmaId?: string;
+}
+
+const {
+  title,
+  description = 'Tours y experiencias en Colombia con operadores locales. Explora donde nace la naturaleza.',
+  width,
+  noindex = false,
+  figmaId,
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <ThemeScript />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <title>{title}</title>
+    <link rel="preload" href="/fonts/sora-extrabold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-regular.woff2" as="font" type="font/woff2" crossorigin />
+    <script is:inline>
+      // Guard de DEMOSTRACIÓN (solo cliente): rutas privadas sin sesión de prueba → acceso.
+      (function () {
+        const p = location.pathname.replace(/\/$/, '');
+        if (!/^\/(mis-reservas|mis-tours|favoritos|mensajes|notificaciones|perfil|soporte|bienvenida|checkout\/(procesando|confirmacion)|estados\/(favoritos-vacio|mensajes-|mis-reservas-vacio|perfil-menu))/.test(p)) return;
+        try {
+          const raw = sessionStorage.getItem('borondo.demo.session') || localStorage.getItem('borondo.demo.session');
+          const s = raw ? JSON.parse(raw) : null;
+          if (s && s.email && (!s.expiresAt || Date.parse(s.expiresAt) > Date.now())) return;
+        } catch { /* sin storage */ }
+        location.replace('/iniciar-sesion?next=' + encodeURIComponent(p + location.search));
+      })();
+    </script>
+    <script is:inline define:vars={{ width }}>
+      (function () {
+        const root = document.documentElement;
+        function fit() { root.style.setProperty('--fig-scale', String(root.clientWidth / width)); }
+        fit();
+        window.addEventListener('resize', fit, { passive: true });
+      })();
+    </script>
+    <script is:inline>
+      // Anti-parpadeo (FOUC): el runtime reorganiza los nodos crudos de Figma (navbar, pestañas,
+      // rail) despues de parsear el DOM. Sin esto, al recargar se ve por un instante ese estado
+      // intermedio a medio armar. Marcamos <html> como "arrancando" de forma SINCRONA (antes del
+      // primer pintado) para ocultar solo el escenario; el runtime quita la marca al terminar su
+      // primera pasada. Red de seguridad: si el JS falla o tarda, se revela igual (load + timeout).
+      (function () {
+        const root = document.documentElement;
+        root.classList.add('fig-booting');
+        const reveal = function () { root.classList.remove('fig-booting'); };
+        // El runtime llama window.__figReady() al terminar; aqui dejamos el fallback.
+        window.__figReady = reveal;
+        window.addEventListener('load', function () { setTimeout(reveal, 0); });
+        setTimeout(reveal, 1500); // tope duro: nunca dejar la pagina oculta.
+      })();
+    </script>
+  </head>
+  <body class="fig-body">
+    <a href="#main" class="skip-link">Ir al contenido principal</a>
+    <main id="main" tabindex="-1" class="fig-stage" style={`--fig-width:${width}px`} data-figma-id={figmaId}>
+      <slot />
+    </main>
+    <FigmaRuntime />
+  </body>
+</html>
+
+<style is:global>
+  .fig-body {
+    margin: 0;
+    overflow-x: hidden;
+  }
+  .fig-stage {
+    display: block;
+    width: var(--fig-width);
+    zoom: var(--fig-scale, 1);
+  }
+  /* Reset con especificidad 0 (:where) para no pisar las clases generadas. */
+  :where(.fig-stage) :where(a, button) {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    font: inherit;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    appearance: none;
+    text-align: inherit;
+  }
+  :where(.fig-stage) :where(div, span) {
+    box-sizing: border-box;
+  }
+  :where(.fig-stage) :where(a, button) {
+    box-sizing: border-box;
+  }
+  .fig-stage a:focus-visible,
+  .fig-stage button:focus-visible {
+    outline: 2px solid var(--semantic-focus);
+    outline-offset: 2px;
+  }
+  .fig-stage h1,
+  .fig-stage h2,
+  .fig-stage h3 {
+    margin: 0;
+  }
+  .fig-stage svg {
+    overflow: visible;
+    display: block;
+  }
+</style>

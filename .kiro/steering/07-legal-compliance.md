@@ -22,7 +22,8 @@ inclusion: always
 | Condiciones médicas | 30 días post-tour | Se elimina automáticamente |
 | Ubicación GPS guía | 30 días post-tour | Se elimina automáticamente |
 | IP, User Agent | 90 días | Seguridad |
-| Chat tripartito | 90 días (DynamoDB TTL) | Servicio al cliente |
+| Chat del tour (DynamoDB) | Hasta que finaliza el tour → se exporta a S3 privado y se borra de DynamoDB | Operación del tour |
+| Export del chat (S3 privado, SSE-KMS) | Por definir con legal (propuesta 1 año) | Seguridad, disputas, incidentes |
 
 ### Proceso de Eliminación
 1. Verificar que no hay bookings futuros activos

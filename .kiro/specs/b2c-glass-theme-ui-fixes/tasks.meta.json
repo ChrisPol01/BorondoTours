@@ -1,0 +1,192 @@
+{
+  "pbtResults": {
+    "1. Escribir la prueba exploratoria de la condición del bug (Playwright, código sin arreglar)": {
+      "status": "passed",
+      "failingExample": "33/33 fallan en el código sin arreglar (Colorido, Claro, Oscuro). Ejemplos: TourCard p3_90 con .bt-drop y backdrop-filter none; cápsulas del Home con relleno rgb(18,48,79) frente a ~transparente en /explorar; borde residual 1px solid bajo la píldora; fila de chips overflow-y hidden de 32px con chip de 34px (<44); p0_50 sin máscara ni degradado; pestañas p0_13/17/18 con .bt-drop, rotadas -90° y fondo transparente; rail con iconos monocromos de 40×40 y sin .bt-glass-std; rail ∩ \"Ver todos\" en 1440×720; vitrina .bt-carousel con 2 de 4 tarjetas en 1 fila; 27 tarjetas como div sin enlace o hacia /explorar?region=…&destacado=…; sin aria-busy ni .bt-card--loading; transición de 0.1s con movimiento reducido; ningún .bt-card--soldout.",
+      "lastRunTimestamp": 1791010424663
+    }
+  },
+  "executionHistory": {
+    "1. Escribir la prueba exploratoria de la condición del bug (Playwright, código sin arreglar)": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000036311
+      },
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000056681
+      },
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791010522488
+      }
+    ],
+    "2. Escribir las pruebas de preservación (ANTES del arreglo)": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000036682
+      },
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791010526654
+      },
+      {
+        "executionId": "98b45e8d-f3de-45ee-8208-2c0c4f9777c1",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791010753967
+      }
+    ],
+    "3.1 Volcar las capas `body-colorido`, `body-claro` y `body-oscuro`": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000037038
+      }
+    ],
+    "3.2 Volcar la TourCard Default y Hover": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000037339
+      }
+    ],
+    "3.3 Guardar el volcado en `otros/design/b2c/css-dump/tourcard-glass.md`": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000037664
+      }
+    ],
+    "3.4 Registrar los colores confirmados de pestañas laterales y rail de redes": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000037994
+      }
+    ],
+    "4. Arreglo de las regresiones de vidrio, tema y UI del B2C": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000038302
+      }
+    ],
+    "4.1 Paso 1 — Tokens únicos de vidrio": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000038617
+      }
+    ],
+    "4.2 Paso 2 — `initGlass` con lista explícita y función pura `glassTargetKind`": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000039112
+      }
+    ],
+    "4.3 Paso 3 — Navbar del Home e indicador limpio": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000039360
+      }
+    ],
+    "4.4 Paso 4 — Chips completos con vidrio estándar": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000039652
+      }
+    ],
+    "4.5 Paso 5 — Uniones entre secciones sin corte": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000039923
+      }
+    ],
+    "4.6 Paso 6 — Carril derecho: rail y pestañas laterales de marca": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000040281
+      }
+    ],
+    "4.7 Paso 7 — Vitrina 2×2 paginada de 4 en 4 con `pageOf` / `pageCount`": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000040579
+      }
+    ],
+    "4.8 Paso 8 — TourCard única y `tourHref` al detalle": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000040871
+      }
+    ],
+    "4.9 Verificar que la prueba exploratoria ahora pasa": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000041176
+      }
+    ],
+    "4.10 Verificar que las pruebas de preservación siguen pasando": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000041481
+      }
+    ],
+    "5.1 Typecheck, lint, tests y build": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000041783
+      }
+    ],
+    "5.2 Auditor de contraste en los 3 temas": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000042119
+      }
+    ],
+    "5.3 Regeneración fig2astro sin diffs manuales": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000042454
+      }
+    ],
+    "5.4 Playwright de integración": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000042733
+      }
+    ],
+    "5.5 Comparación visual con Figma en Colorido, Claro y Oscuro": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000043008
+      }
+    ],
+    "6. Checkpoint — Asegurar que todas las pruebas pasan": [
+      {
+        "executionId": "ee96863a-be9c-4a89-a1d6-7139bcbe1ce0",
+        "chatSessionId": "sess_10cb7ab9-d583-4673-a168-1315671c0956",
+        "timestamp": 1791000043320
+      }
+    ]
+  }
+}

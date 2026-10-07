@@ -120,7 +120,7 @@ function EmptyState({ onClearFilters }: { readonly onClearFilters: () => void })
 
   return (
     <div className="flex flex-col items-center justify-center gap-4 py-16 text-center">
-      <p className="text-body1 font-body text-negro-volcanico/70">
+      <p className="text-body1 font-body text-text-primary/70">
         {t("empty.title")}
       </p>
       <Button
@@ -138,7 +138,7 @@ function ErrorState({ onRetry }: { readonly onRetry: () => void }): JSX.Element 
 
   return (
     <div className="flex flex-col items-center justify-center gap-4 py-16 text-center" role="alert">
-      <p className="text-body1 font-body text-negro-volcanico/70">
+      <p className="text-body1 font-body text-text-primary/70">
         {t("error.generic")}
       </p>
       <Button
@@ -177,10 +177,10 @@ function PaginationControls({
       "min-h-11 rounded-control px-4 py-2",
       "transition-colors duration-200",
       "focus:outline-none focus-visible:ring-2 focus-visible:ring-azul-profundo",
-      "focus-visible:ring-offset-2 focus-visible:ring-offset-blanco-niebla",
+      "focus-visible:ring-offset-2 focus-visible:ring-offset-surface-page",
       enabled
         ? "bg-action-primary text-on-action hover:bg-action-primary-hover"
-        : "bg-arena text-negro-volcanico/40 cursor-not-allowed",
+        : "bg-surface-warm text-text-primary/40 cursor-not-allowed",
     ].join(" ");
 
   return (

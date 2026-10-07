@@ -1,11 +1,10 @@
 import { defineConfig } from 'astro/config'
 import react from '@astrojs/react'
-import tailwind from '@astrojs/tailwind'
+import tailwindcss from '@tailwindcss/vite'
 
+// Portal Operadores — Astro + React islands. Tailwind 4 vía plugin de Vite (igual que apps/web).
 export default defineConfig({
-  integrations: [
-    react(),
-    tailwind(),
-  ],
+  integrations: [react()],
+  vite: { plugins: [tailwindcss()] },
   output: 'static',
 })

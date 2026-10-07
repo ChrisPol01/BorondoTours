@@ -3,7 +3,7 @@ export type TokenProvenanceStatus = "canonical" | "documented_derivative" | "pro
 export interface DerivedTokenProvenance {
   readonly name: `--${string}`;
   readonly value: string;
-  readonly sourceSheet: "Ave Azul" | "1";
+  readonly sourceSheet: "Ave Azul" | "1" | "Figma 166:104691";
   readonly sourceViewport: "all" | "375x812" | "1440x900" | "375x812 + 1440x900";
   readonly anchors: readonly string[];
   readonly allowedUse: string;
@@ -59,6 +59,19 @@ const MEASURED_TOKEN_PROVENANCE: readonly DerivedTokenProvenance[] = [
   measured("--logo-clear-space", "0.5rem", ["header-logo"], "Minimum clear space around horizontal logo"),
   measured("--motion-duration-standard", "200ms", ["state-transition"], "Native/CSS state transitions"),
   measured("--motion-ease-standard", "cubic-bezier(0.2, 0, 0, 1)", ["state-transition"], "Native/CSS state easing"),
+  measured("--glass-rim", "135deg white 35% → 5% → 35%", ["header-glass", "sidebar-capsule"], "Liquid-drop specular rim (mask border)"),
+  measured("--glass-strong", "90% #1c1c1e", ["modal", "menu"], "Denser glass for modals, menus and popovers"),
+  measured("--glass-text", "Blanco Niebla", ["header-glass", "sidebar-capsule"], "Text on dark glass (≥ 7:1)"),
+  measured("--glass-light", "72% white", ["light-glass-card"], "Light frosted glass variant"),
+  measured("--glass-light-border", "85% white", ["light-glass-card"], "Light glass hairline border"),
+  measured("--glass-light-highlight", "90% white top inset", ["light-glass-card"], "Light glass highlight"),
+  measured("--glass-light-text", "Negro Volcánico", ["light-glass-card"], "Text on light glass (≥ 7:1)"),
+  measured("--elevation-pressed", "inset 0 0.125rem 0.375rem / 18% black", ["button-pressed"], "Pressed state of buttons and chips"),
+  measured("--glass-border-hover", "35% white", ["glass-button-hover", "input-hover"], "Glass border on hover"),
+  measured("--glass-hover-background", "18% white", ["glass-button-hover"], "Glass fill on hover (secondary controls)"),
+  measured("--glass-header-background", "transparent", ["header-glass"], "iOS-style near-invisible header surface"),
+  measured("--glass-header-border", "20% Blanco Niebla", ["header-glass"], "Header glass hairline border"),
+  measured("--glass-header-blur", "0.5rem", ["header-glass"], "Header glass backdrop blur"),
 ];
 
 export const DERIVED_TOKEN_PROVENANCE: readonly DerivedTokenProvenance[] = [
@@ -76,4 +89,8 @@ export const DERIVED_TOKEN_PROVENANCE: readonly DerivedTokenProvenance[] = [
   { name: "--glass-background", value: "82% Azul Profundo", sourceSheet: "1", sourceViewport: "375x812 + 1440x900", anchors: ["header-glass", "home-search"], allowedUse: "Liquid glass over approved photography", wcagEvidence: "Blanco Niebla text exceeds 4.5:1; opaque fallback exceeds 10:1", status: "provisional_measurement" },
   { name: "--logo-horizontal-min-width", value: "10rem", sourceSheet: "Ave Azul", sourceViewport: "all", anchors: ["header-logo"], allowedUse: "Horizontal logo only with intrinsic aspect ratio", wcagEvidence: "Brand guideline digital minimum; clear-space token required", status: "canonical" },
   { name: "--motion-duration-reduced", value: "100ms", sourceSheet: "1", sourceViewport: "all", anchors: ["state-transition"], allowedUse: "Reduced-motion color and opacity fades only", wcagEvidence: "Requirement 25.6 maximum; no delayed task completion", status: "documented_derivative" },
+  { name: "--glass-figma-fill", value: "Colorido #5C23AA 50% / Claro #FFFFFF 25% / Oscuro #000000 51%", sourceSheet: "Figma 166:104691", sourceViewport: "all", anchors: ["tour-card", "header-glass"], allowedUse: "Liquid glass surface of cards, navbar, rail and chips (Figma TourCard body-{tema})", wcagEvidence: "Text token per theme reaches 4.5:1 over the tinted glass; verified by contrast auditor", status: "canonical" },
+  { name: "--glass-figma-fill-strong", value: "Colorido #5C23AA 75% / Claro #FFFFFF 50% / Oscuro #000000 76%", sourceSheet: "Figma 166:104691", sourceViewport: "all", anchors: ["tour-card", "header-glass"], allowedUse: "Menus, dialogs and panels that sit over content", wcagEvidence: "Higher opacity raises text contrast above 4.5:1", status: "canonical" },
+  { name: "--glass-figma-text", value: "Colorido/Oscuro #F9FBFC, Claro #0A1A2B", sourceSheet: "Figma 166:104691", sourceViewport: "all", anchors: ["tour-card", "header-glass"], allowedUse: "Text and icons over the Figma glass", wcagEvidence: "Theme-paired with --glass-figma-fill to keep 4.5:1", status: "canonical" },
+  { name: "--glass-figma-blur", value: "7px (Figma GLASS frost radius)", sourceSheet: "Figma 166:104691", sourceViewport: "all", anchors: ["tour-card", "header-glass"], allowedUse: "backdrop-filter radius of the glass", wcagEvidence: "Decorative only; no contrast impact", status: "canonical" },
 ] as const;

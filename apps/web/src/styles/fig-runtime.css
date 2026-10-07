@@ -1,0 +1,1237 @@
+/*
+ * Comportamiento visual del runtime de las vistas generadas (src/components/fig/FigmaRuntime.astro).
+ *
+ * Todo vive dentro de .fig-stage, que se escala con `zoom`: los tamaños están en px del diseño
+ * de 1440. Solo tokens semánticos; variables locales con prefijo --bt- (no son tokens de marca).
+ */
+
+:root {
+  --bt-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --bt-enter: 360ms;
+  --bt-exit: 280ms;
+}
+
+/* ---------- Anti-parpadeo (FOUC) al cargar/recargar ----------
+ * Mientras <html> tiene .fig-booting (lo pone un script inline del <head>, antes del primer
+ * pintado), el escenario se oculta para no mostrar el estado crudo de Figma a medio reorganizar.
+ * El fondo de pagina (gradiente en el body) SI se ve, asi que no hay flash en blanco. El runtime
+ * quita .fig-booting al terminar su primera pasada y el escenario entra con un fundido corto. */
+html.fig-booting .fig-stage { visibility: hidden; }
+.fig-stage { animation: bt-stage-in var(--bt-enter) var(--bt-ease-out) both; }
+html.fig-booting .fig-stage { animation: none; }
+@keyframes bt-stage-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fig-stage { animation: none; }
+}
+
+/* ---------- Superficies compartidas ---------- */
+
+.bt-glass {
+  background: color-mix(in srgb, var(--semantic-surface-card) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--semantic-glass-border) 40%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--semantic-glass-sheen) 24%, transparent), var(--elevation-floating);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  color: var(--semantic-glass-text);
+}
+
+.bt-sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.fig-stage .bt-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color var(--motion-duration-standard) var(--motion-ease-standard);
+}
+.fig-stage .bt-icon-btn:hover { background: color-mix(in srgb, var(--semantic-glass-fill) 14%, transparent); }
+.fig-stage .bt-icon-btn svg { width: 20px; height: 20px; }
+
+/* ---------- Navbar: logo, menú Explorar, idioma, tema ---------- */
+
+.fig-stage .bt-logo-link { flex-shrink: 0; border-radius: 999px; }
+.fig-stage .bt-nav-row { z-index: 45; }
+.fig-stage .bt-nav-pill { overflow: visible !important; }
+
+.fig-stage .bt-menu-trigger svg:last-child { transition: transform var(--motion-duration-standard) var(--motion-ease-standard); }
+.fig-stage .bt-menu-trigger[aria-expanded="true"] svg:last-child { transform: rotate(180deg); }
+
+.bt-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  z-index: 50;
+  min-width: 260px;
+  padding: 8px;
+  border-radius: 20px;
+  transform-origin: top center;
+  animation: bt-drop-in var(--bt-enter) var(--bt-ease-out) both;
+}
+.bt-menu[hidden] { display: none; }
+.bt-menu.is-closing { animation: bt-drop-out var(--bt-exit) ease-in both; }
+.bt-menu--left { left: 0; }
+.bt-menu--right { right: 0; min-width: 200px; }
+
+.fig-stage .bt-menu-item {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  color: var(--semantic-glass-text);
+  font-family: "Inter", var(--type-body);
+  font-size: 15px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  animation: bt-item-in var(--bt-enter) var(--bt-ease-out) both;
+}
+.fig-stage .bt-menu-item small { font-size: 12px; font-weight: 400; opacity: 0.8; }
+.fig-stage .bt-menu-item:hover,
+.fig-stage .bt-menu-item:focus-visible { background: color-mix(in srgb, var(--semantic-action-primary) 18%, transparent); }
+.fig-stage .bt-menu-item[aria-pressed="true"] { background: color-mix(in srgb, var(--semantic-action-primary) 24%, transparent); }
+.fig-stage .bt-menu-item[aria-pressed="true"]::after { content: "?"; position: absolute; right: 14px; }
+.fig-stage .bt-menu-item { position: relative; }
+
+.fig-stage .bt-theme-btn {
+  display: inline-flex;
+  flex-shrink: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color var(--motion-duration-standard) var(--motion-ease-standard);
+}
+.fig-stage .bt-theme-btn:hover { background: color-mix(in srgb, var(--semantic-glass-fill) 14%, transparent); }
+
+/* Enlace "Iniciar sesión": respuesta visible al pasar el mouse. */
+.fig-stage .bt-nav-row a[href="/iniciar-sesion"] { transition: filter var(--motion-duration-standard) var(--motion-ease-standard), transform var(--motion-duration-standard); }
+.fig-stage .bt-nav-row a[href="/iniciar-sesion"]:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.bt-menu-item:nth-child(2) { animation-delay: 40ms; }
+.bt-menu-item:nth-child(3) { animation-delay: 80ms; }
+.bt-menu-item:nth-child(4) { animation-delay: 120ms; }
+.bt-menu-item:nth-child(5) { animation-delay: 160ms; }
+.bt-menu-item:nth-child(6) { animation-delay: 200ms; }
+
+@keyframes bt-drop-in {
+  from { opacity: 0; transform: translateY(-12px) scaleY(0.92); clip-path: inset(0 0 100% 0 round 20px); }
+  to { opacity: 1; transform: none; clip-path: inset(0 0 0 0 round 20px); }
+}
+@keyframes bt-drop-out {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translateY(-8px); }
+}
+@keyframes bt-item-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------- Elementos flotantes ---------- */
+
+/* FAB del asistente: fijo, igual que el rail de redes. */
+.fig-stage .bt-fab-fixed {
+  position: fixed !important;
+  left: auto !important;
+  top: auto !important;
+  right: 8px !important;
+  bottom: 16px !important;
+  z-index: 40;
+  cursor: pointer;
+}
+
+/* FAB agregado por el runtime en pantallas cuyo diseño no lo trae (misma medida que el del Home). */
+.fig-stage .bt-fab {
+  position: fixed;
+  right: 8px;
+  bottom: 16px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 52px;
+  padding: 14px 20px 14px 16px;
+  border-radius: 999px;
+  background: var(--semantic-action-primary);
+  color: var(--semantic-text-on-action);
+  box-shadow: 0 8px 24px 0 color-mix(in srgb, var(--brand-verde-frailejon) 50%, transparent);
+  font: 600 14px "Inter", var(--type-body);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--motion-duration-standard) var(--motion-ease-standard), transform var(--motion-duration-standard);
+}
+.fig-stage .bt-fab:hover { background: var(--semantic-action-primary-hover); transform: translateY(-1px); }
+.fig-stage .bt-fab,
+.fig-stage .bt-fab-fixed { transition: bottom var(--motion-duration-standard) var(--motion-ease-standard), background-color var(--motion-duration-standard); }
+.bt-colophon-visible .fig-stage .bt-fab,
+.bt-colophon-visible .fig-stage .bt-fab-fixed { bottom: 80px !important; }
+
+/* Rail de redes: fijo a la derecha. Vidrio oscuro + iconos claros, legible en los 3 temas. */
+.fig-stage .bt-rail {
+  position: fixed;
+  right: -2px;
+  bottom: 221px;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--semantic-surface-strong) 55%, transparent);
+  border: 1px solid color-mix(in srgb, var(--semantic-glass-border) 40%, transparent);
+  box-shadow: inset 0 2px 10px 0 color-mix(in srgb, var(--semantic-glass-sheen) 20%, transparent), 0 10px 30px 0 color-mix(in srgb, #000000 10%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--semantic-text-on-strong);
+}
+.fig-stage .bt-rail-host { color: var(--semantic-text-on-strong); }
+.fig-stage .bt-rail-link {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  color: inherit;
+  transition: background-color var(--motion-duration-standard) var(--motion-ease-standard);
+}
+.fig-stage .bt-rail-link:hover { background: color-mix(in srgb, #ffffff 16%, transparent); }
+
+/* ---------- Chrome fijo al hacer scroll ---------- */
+
+.fig-stage .bt-nav-fixed { position: fixed !important; z-index: 45; }
+/* La navbar es la misma en todas las pantallas: mismo vidrio estándar antes y después de bajar.
+   Al bajar solo sube el tinte del tema (en Colorido sigue transparente) para leer sobre contenido. */
+/* El vidrio del navbar vive en la capsula anfitriona (.bt-nav-capsule con .bt-glass-std). Al bajar,
+   solo sube el tinte del tema sobre la capsula (en Colorido sigue casi transparente). Las capas de
+   fondo vacias heredadas de Figma (.bt-nav-glass:empty) se neutralizan mas abajo: ya no llevan vidrio. */
+.fig-stage .bt-nav-capsule { transition: background-color var(--motion-duration-standard) var(--motion-ease-standard); }
+/* El navbar usa --bt-nav-fill, que SI cambia con el tema (igual que las modales glass de Figma)
+   pero NO con el scroll (constante arriba y al bajar). Por tema: Colorido = azul glass (no el
+   morado de las tarjetas), Claro = blanco glass, Oscuro = negro glass. Ver --bt-nav-fill por tema. */
+.fig-stage .bt-nav-capsule.bt-glass-std { background-color: var(--bt-nav-fill) !important; }
+/* Red de seguridad (vidrio en un solo nivel): una capa de fondo vacia que ya esta dentro de un
+   anfitrion de vidrio no pinta su propio vidrio ni ocupa espacio en el flujo. Cubre tanto las capas
+   que el runtime podria marcar (.bt-nav-glass) como las que traen su backdrop-filter desde Figma. */
+.fig-stage .bt-nav-glass:empty { display: none !important; }
+/* Neutraliza las capas de vidrio vacias heredadas de Figma (p0_158/164/171) para no pintar dos
+   superficies. OJO con el logo: el ave (p0_160) es un div VACIO con background:url(webp) anidado
+   dentro de la capsula (capsula > p0_159 > p0_160). Estos barridos por :empty no distinguen una
+   capa decorativa de vidrio de un div-imagen, asi que SIEMPRE excluimos lo que este dentro de
+   .bt-logo-link (ahi vive el ave). Sin esta exclusion, background:transparent le borra la imagen. */
+.fig-stage .bt-glass-std > div:empty:not(.bt-logo-link *),
+.fig-stage .bt-glass-std :where(a, div):not(.bt-logo-link, .bt-logo-link *) > div:empty,
+.fig-stage .bt-rail > div:empty,
+.fig-stage .bt-nav-capsule > div:empty:not(.bt-logo-link *),
+.fig-stage .bt-nav-links > a > div:empty {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+.fig-stage .bt-ink { color: var(--bt-glass-text) !important; }
+.fig-stage .bt-ink-fill { fill: var(--bt-glass-text) !important; }
+
+/* ---------- Logo: letras del wordmark en arena + navbar sin parpadeo (FOUC) ---------- */
+/* Las letras "Borondo Tours" son el unico <path> del SVG del logo (el ave es background-image).
+ * En Figma salieron en blanco (--semantic-glass-text); el wordmark original es color arena/crema
+ * (#f3e8d1), el mismo tono de la cresta del ave en logo.png, no el dorado saturado. */
+.fig-stage .bt-logo-link svg path { fill: var(--brand-arena) !important; }
+/* El logo siempre completo dentro de su capsula: no se recorta ni se encoge. */
+.fig-stage .bt-logo-link { overflow: visible; }
+.fig-stage .bt-logo-link svg { overflow: visible; }
+/* Anti-parpadeo del navbar: aunque el runtime aun no haya corrido, el contenedor de la navbar
+ * (primer hijo del stage que contiene el enlace Explorar) ya reserva su chrome. El vidrio de las
+ * capsulas lo pintan sus clases p*_* del markup (ya traen backdrop-filter); aqui solo evitamos el
+ * salto de layout fijando la navbar como fija desde el CSS en cuanto exista .bt-nav-row. */
+.fig-stage .bt-nav-row { contain: layout style; }
+
+
+/* ---------- Vidrio estándar por tema (--bt-glass-*) ---------- */
+
+/*
+ * Un solo set de vidrio por tema, con los valores oficiales de Figma (capa body-{tema} del TourCard
+ * Default, set 166:104691). Los tokens --bt-glass-* no llevan hex suelto: referencian los tokens
+ * semánticos de marca de packages/ui (--glass-* y --semantic-glass-*), que ya cambian por tema vía
+ * data-theme (Colorido, Claro, Oscuro y Sistema por prefers-color-scheme). Así alinear el vidrio es
+ * ajustar el token en tokens.css, no tocar componentes.
+ *   - --bt-glass-fill        relleno translúcido de la superficie
+ *   - --bt-glass-fill-strong relleno de modales y menús (más opaco, para leer sobre contenido)
+ *   - --bt-glass-fill-scrolled relleno del navbar al hacer scroll (tinte del tema)
+ *   - --bt-glass-stroke      color del borde de luz (el gradiente lo pinta el pseudo-elemento)
+ *   - --bt-glass-shadow      brillo interior superior + sombra difusa
+ *   - --bt-glass-blur        desenfoque de fondo
+ *   - --bt-glass-text        color del texto sobre el vidrio
+ *   - --bt-glass-sheen       brillo interior puntual (switch, range)
+ */
+:root {
+  /* UN SOLO glass por tema para TODO el B2C (navbar, tarjetas, menus, modales): el estandar es el
+     glass del navbar. En Colorido es AZUL (azul profundo), NO el morado del TourCard de Figma
+     (decision 2026-10: el usuario pidio que todo el glass siga el color del navbar). En Claro usa
+     el color de marca Arena (#f3e8d1) al 55% para que no se vea blanco-sobre-blanco. En Oscuro,
+     negro glass. Asi --bt-glass-fill y --bt-nav-fill comparten valor y nada queda morado. */
+  --bt-glass-fill: color-mix(in srgb, var(--brand-azul-profundo) 55%, transparent);
+  --bt-glass-fill-strong: color-mix(in srgb, var(--brand-azul-profundo) 72%, transparent);
+  --bt-glass-fill-scrolled: color-mix(in srgb, var(--brand-azul-profundo) 55%, transparent);
+  /* Fondo del navbar: mismo azul glass que el resto de superficies. */
+  --bt-nav-fill: var(--bt-glass-fill);
+  --bt-glass-stroke: var(--semantic-glass-border);
+  /* Borde de luz del GLASS de Figma: angulo 135 (luz 315, arriba-izq), intensidad 0.8. */
+  --bt-glass-rim: linear-gradient(135deg, color-mix(in srgb, #ffffff 80%, transparent), transparent 45%, transparent 60%, color-mix(in srgb, #ffffff 25%, transparent));
+  --bt-glass-shadow: var(--glass-highlight), var(--glass-depth);
+  --bt-glass-blur: var(--glass-figma-blur);
+  --bt-glass-text: var(--glass-figma-text);
+  --bt-glass-sheen: var(--semantic-glass-sheen);
+}
+/* El glass es UNO solo por tema y lo comparten navbar, tarjetas, menus y modales. No cambia con el
+   scroll (constante arriba y al bajar). Por tema:
+   - Colorido: azul profundo (definido en :root).
+   - Claro: Arena de marca (#f3e8d1) al 55% -> evita el blanco-sobre-blanco en modales (hallazgo 7).
+   - Oscuro: negro glass (#0b2238/negro). */
+[data-theme="claro"] {
+  /* Vidrio gris neutro (--derived-neutral #667085, gris pizarra frio) translucido: contrasta con
+     el fondo claro casi blanco (#F2F2F7), con las fotos y con el texto oscuro, sin el blanco-sobre-
+     blanco ni el tono calido del Arena (descartado por el usuario). El strong (modales) va mas denso. */
+  --bt-glass-fill: color-mix(in srgb, var(--derived-neutral) 22%, transparent);
+  --bt-glass-fill-strong: color-mix(in srgb, var(--derived-neutral) 34%, transparent);
+  --bt-glass-fill-scrolled: color-mix(in srgb, var(--derived-neutral) 22%, transparent);
+  --bt-nav-fill: var(--bt-glass-fill);
+  /* Sobre el gris claro translucido el texto va oscuro para contraste AA. */
+  --bt-glass-text: var(--brand-negro-volcanico);
+}
+[data-theme="oscuro"] {
+  --bt-glass-fill: color-mix(in srgb, #0b2238 70%, transparent);
+  --bt-glass-fill-strong: color-mix(in srgb, #0b2238 85%, transparent);
+  --bt-glass-fill-scrolled: color-mix(in srgb, #0b2238 70%, transparent);
+  --bt-nav-fill: var(--bt-glass-fill);
+}
+@media (prefers-color-scheme: light) {
+  [data-theme="sistema"] {
+    --bt-glass-fill: color-mix(in srgb, var(--derived-neutral) 22%, transparent);
+    --bt-glass-fill-strong: color-mix(in srgb, var(--derived-neutral) 34%, transparent);
+    --bt-glass-fill-scrolled: color-mix(in srgb, var(--derived-neutral) 22%, transparent);
+    --bt-nav-fill: var(--bt-glass-fill);
+    --bt-glass-text: var(--brand-negro-volcanico);
+  }
+}
+@media (prefers-color-scheme: dark) {
+  [data-theme="sistema"] {
+    --bt-glass-fill: color-mix(in srgb, #0b2238 70%, transparent);
+    --bt-glass-fill-strong: color-mix(in srgb, #0b2238 85%, transparent);
+    --bt-glass-fill-scrolled: color-mix(in srgb, #0b2238 70%, transparent);
+    --bt-nav-fill: var(--bt-glass-fill);
+  }
+}
+
+/*
+ * .bt-glass-std / .bt-glass-std--strong: la única clase de vidrio. El borde degradado se dibuja con
+ * un pseudo-elemento ::after + mask (muestra solo el contorno) para no perder el relleno translúcido.
+ * .bt-glass (menús/modales) y .bt-rail conservan su regla propia; aquí solo comparten el estándar.
+ */
+.fig-stage .bt-glass-std,
+.fig-stage .bt-glass-std--strong,
+.bt-glass {
+  background-color: var(--bt-glass-fill);
+  color: var(--bt-glass-text);
+  /* GLASS de Figma (frost 7, luz 315, dispersion 0.46): sin equivalente CSS de refraccion. */
+  backdrop-filter: blur(var(--bt-glass-blur)) saturate(1.6) brightness(1.05);
+  -webkit-backdrop-filter: blur(var(--bt-glass-blur)) saturate(1.6) brightness(1.05);
+  /* La capa body-{tema} de Figma no lleva stroke; el contorno de luz lo dibuja ::after. */
+  border: 0;
+  /* Luz desde arriba-izquierda (315, intensidad 0.8) + sombra difusa. */
+  box-shadow: inset 1px 1px 0 color-mix(in srgb, #ffffff 50%, transparent), var(--bt-glass-shadow);
+}
+.fig-stage .bt-glass-std--strong,
+.bt-glass {
+  background-color: var(--bt-glass-fill-strong);
+}
+/*
+ * Borde de luz degradado (135°) con pseudo-elemento + mask. Solo en superficies estáticas
+ * (navbar, chips, rail, sidebar): a los menús y diálogos no se les toca el `position` (lo necesitan
+ * para su colocación) y conservan el borde sólido de arriba.
+ */
+.fig-stage .bt-glass-std:not(.bt-menu):not([role="dialog"]) {
+  position: relative;
+}
+.fig-stage .bt-glass-std:not(.bt-menu):not([role="dialog"])::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--bt-glass-rim);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.bt-overlay { background: color-mix(in srgb, var(--semantic-surface-strong) 35%, transparent) !important; }
+.bt-glass .bt-menu-item,
+.bt-glass .bt-panel-title,
+.bt-glass .bt-card { color: var(--bt-glass-text); }
+
+/* ---------- Navbar: indicador deslizante (tarea 13) ---------- */
+
+.fig-stage .bt-nav-indicator {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  border-radius: 999px;
+  background: var(--semantic-action-primary);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--brand-verde-frailejon) 35%, transparent);
+  pointer-events: none;
+  transition: transform 420ms var(--bt-ease-out), width 420ms var(--bt-ease-out);
+}
+.fig-stage .bt-nav-links > a { position: relative; z-index: 1; transition: color 300ms var(--bt-ease-out); }
+.fig-stage .bt-nav-links > a,
+.fig-stage .bt-nav-links > a > div:empty { background: transparent !important; box-shadow: none !important; }
+.fig-stage .bt-nav-links > a.is-indicated span.bt-ink,
+.fig-stage .bt-nav-links > a.is-indicated span { color: var(--semantic-text-on-action) !important; }
+.fig-stage .bt-nav-links > a.is-indicated path.bt-ink-fill { fill: var(--semantic-text-on-action) !important; }
+/* Sobre fotografía clara (Colorido), el texto claro del vidrio transparente lleva una sombra mínima. */
+:root:not([data-theme]) .fig-stage .bt-nav-capsule .bt-ink { text-shadow: 0 1px 3px color-mix(in srgb, #000000 45%, transparent); }
+.fig-stage .bt-nav-links > a.is-indicated,
+.fig-stage .bt-nav-links > a.is-indicated * { color: var(--semantic-text-on-action) !important; fill: var(--semantic-text-on-action) !important; }
+@media (prefers-reduced-motion: reduce) { .fig-stage .bt-nav-indicator { transition: none; } }
+
+/* ---------- Submenú de /nosotros (Historia · Equipo · Contacto · Legal) ----------
+ * Misma píldora deslizante que la navbar. En el diseño "Historia" trae el relleno azul fijo en su
+ * propio envoltorio: se vuelve transparente y solo la píldora pinta el resaltado. */
+/* La barra toma el tamaño de sus botones (no los 376x45 fijos de Figma) y el vidrio la cubre entera. */
+.fig-stage .bt-subnav {
+  position: relative;
+  overflow: visible !important;
+  width: max-content !important;
+  height: auto !important;
+}
+.fig-stage .bt-subnav > .bt-subnav-item {
+  position: relative;
+  z-index: 1;
+  background: transparent !important;
+  box-shadow: none !important;
+  cursor: pointer;
+  min-height: 44px;
+  align-items: center;
+  transition: color 300ms var(--bt-ease-out);
+}
+/* Mismo peso en los cuatro textos: si el resaltado cambiara el peso, la barra (ancho automático)
+ * cambiaría de tamaño al pasar el mouse y la píldora saltaría. */
+.fig-stage .bt-subnav > .bt-subnav-item > :where(span, a) {
+  color: var(--bt-glass-text) !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  text-decoration: none;
+}
+.fig-stage .bt-subnav > .bt-subnav-item.is-indicated > :where(span, a) { color: var(--semantic-text-on-action) !important; }
+.fig-stage .bt-subnav > .bt-subnav-item:focus-visible { outline: 2px solid var(--semantic-focus); outline-offset: 2px; }
+.fig-stage .bt-subnav > .bt-nav-indicator { inset: 0 auto auto 0; }
+
+/* ---------- Acceso (demostración) ---------- */
+
+.bt-auth-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: color-mix(in srgb, #0f1a2b 45%, transparent);
+  overflow-y: auto;
+}
+.bt-auth-dialog {
+  width: 480px;
+  max-width: 100%;
+  max-height: calc(100vh / var(--fig-scale, 1) - 48px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 32px;
+  border-radius: 24px;
+  font-family: "Inter", var(--type-body);
+  animation: bt-item-in var(--bt-enter) var(--bt-ease-out) both;
+}
+.bt-auth-dialog .bt-field { color: var(--bt-glass-text); }
+.bt-auth-dialog .bt-field input { background: color-mix(in srgb, var(--semantic-surface-page) 70%, transparent); color: var(--bt-glass-text); }
+.bt-auth-dialog .bt-field input[aria-invalid="true"] { border-color: var(--semantic-sold-out); }
+.bt-auth-error { min-height: 0; font-size: 12px; font-weight: 500; color: var(--bt-auth-err, #ff8a80); }
+[data-theme="claro"] .bt-auth-error { --bt-auth-err: #b42318; }
+.bt-auth-code { letter-spacing: 0.5em; font-size: 22px !important; text-align: center; }
+.fig-stage .bt-auth-toggle { align-self: flex-end; margin-top: -4px; font-size: 12px; font-weight: 600; color: var(--bt-glass-text); text-decoration: underline; cursor: pointer; }
+.bt-auth-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.bt-auth-check { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; line-height: 1.4; color: var(--bt-glass-text); cursor: pointer; }
+.bt-auth-check input { width: 18px; height: 18px; margin-top: 1px; accent-color: var(--semantic-action-primary); flex-shrink: 0; }
+.bt-auth-sep { display: flex; align-items: center; gap: 12px; font-size: 12px; opacity: 0.85; color: var(--bt-glass-text); }
+.bt-auth-sep::before, .bt-auth-sep::after { content: ""; flex: 1; height: 1px; background: currentColor; opacity: 0.3; }
+.bt-auth-rules { display: flex; gap: 12px; flex-wrap: wrap; margin: 4px 0 0; padding: 0; list-style: none; font-size: 12px; font-weight: 500; }
+.bt-auth-rules li::before { content: "? "; }
+.bt-auth-rules li[data-ok="true"]::before { content: "? "; color: var(--semantic-available); }
+.fig-stage .bt-auth-btn {
+  display: flex; align-items: center; justify-content: center; width: 100%; min-height: 48px; border-radius: 999px;
+  font: 600 15px "Inter", var(--type-body); cursor: pointer;
+  transition: background-color var(--motion-duration-standard) var(--motion-ease-standard);
+}
+.fig-stage .bt-auth-btn--primary { background: var(--semantic-action-primary); color: var(--semantic-text-on-action); }
+.fig-stage .bt-auth-btn--primary:hover { background: var(--semantic-action-primary-hover); }
+.fig-stage .bt-auth-btn--ghost { border: 1px solid var(--bt-glass-stroke); color: var(--bt-glass-text); }
+.fig-stage .bt-auth-btn--link { min-height: 44px; width: auto; align-self: center; color: var(--bt-glass-text); text-decoration: underline; font-size: 14px; }
+.fig-stage .bt-auth-row .bt-auth-btn--link { align-self: auto; }
+.fig-stage .bt-auth-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.bt-auth-notice { padding: 10px 14px; border-radius: 12px; font-size: 13px; line-height: 1.45; color: var(--bt-glass-text); border: 1px solid var(--bt-glass-stroke); }
+.bt-auth-notice[hidden] { display: none; }
+.bt-auth-notice--demo { background: color-mix(in srgb, var(--semantic-action-cta) 22%, transparent); }
+.bt-auth-notice--error { background: color-mix(in srgb, var(--semantic-sold-out) 28%, transparent); }
+.bt-auth-notice--info { background: color-mix(in srgb, var(--semantic-action-primary) 18%, transparent); }
+
+.fig-stage .bt-sidebar-fixed { position: fixed !important; top: 16px !important; left: 16px !important; z-index: 44; }
+.fig-stage .bt-glass-fill { width: 100% !important; height: 100% !important; }
+
+/* ---------- Panel lateral (vitrinas y asistente) ---------- */
+
+.bt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  justify-content: flex-end;
+  align-items: stretch;
+  padding: 16px;
+  background: color-mix(in srgb, var(--brand-negro-volcanico) 20%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: bt-fade-in var(--bt-enter) ease-out both;
+}
+.bt-overlay[hidden] { display: none; }
+.bt-overlay.is-closing { animation: bt-fade-out var(--bt-exit) ease-in both; }
+
+.bt-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 560px;
+  max-height: 100%;
+  padding: 28px;
+  border-radius: 28px;
+  overflow: hidden;
+  /* Entra de derecha a izquierda. */
+  animation: bt-slide-in var(--bt-enter) var(--bt-ease-out) both;
+}
+/* Sale de izquierda a derecha. */
+.bt-overlay.is-closing .bt-panel { animation: bt-slide-out var(--bt-exit) ease-in both; }
+.bt-panel--narrow { width: 440px; overflow-y: auto; }
+
+.bt-panel-head { display: flex; align-items: flex-start; gap: 12px; }
+.bt-panel-head > div { flex: 1 1 auto; }
+.bt-panel-title { margin: 0; font-family: "Sora", var(--type-heading); font-size: 26px; font-weight: 700; color: var(--semantic-glass-text); }
+.bt-panel-sub { margin: 4px 0 0; font-family: "Inter", var(--type-body); font-size: 14px; opacity: 0.85; }
+
+.fig-stage .bt-close {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  background: color-mix(in srgb, var(--semantic-glass-fill) 12%, transparent);
+  transition: transform var(--motion-duration-standard) var(--motion-ease-standard), background-color var(--motion-duration-standard);
+}
+.fig-stage .bt-close:hover { transform: rotate(90deg); }
+
+@keyframes bt-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes bt-fade-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes bt-slide-in { from { transform: translateX(110%); } to { transform: translateX(0); } }
+@keyframes bt-slide-out { from { transform: translateX(0); } to { transform: translateX(110%); } }
+
+/* Carrusel de tarjetas */
+.bt-carousel { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding-bottom: 6px; scrollbar-width: none; }
+.bt-carousel::-webkit-scrollbar { display: none; }
+.bt-carousel-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.bt-carousel-nav > div { display: flex; gap: 8px; }
+.fig-stage .bt-carousel-nav .bt-icon-btn { border: 1px solid color-mix(in srgb, var(--semantic-glass-border) 40%, transparent); }
+.fig-stage .bt-carousel-nav .bt-icon-btn:disabled { opacity: 0.4; cursor: default; }
+
+.fig-stage .bt-card {
+  position: relative;
+  flex: 0 0 240px;
+  display: flex;
+  flex-direction: column;
+  scroll-snap-align: start;
+  border-radius: 20px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--semantic-glass-fill) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--semantic-glass-border) 24%, transparent);
+  color: var(--semantic-glass-text);
+  transition: transform var(--motion-duration-standard) var(--motion-ease-standard), box-shadow var(--motion-duration-standard);
+}
+.fig-stage .bt-card:hover { transform: translateY(-4px); box-shadow: var(--elevation-floating); }
+.bt-card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
+.bt-card-body { display: flex; flex-direction: column; gap: 6px; padding: 14px; font-family: "Inter", var(--type-body); }
+.bt-card-place { font-size: 12px; opacity: 0.85; }
+.bt-card-name { margin: 0; font-family: "Sora", var(--type-heading); font-size: 16px; font-weight: 600; line-height: 1.25; }
+.bt-card-meta { font-size: 12px; opacity: 0.85; }
+.bt-card-price { display: flex; align-items: baseline; gap: 6px; }
+.bt-card-price strong { font-family: "Sora", var(--type-heading); font-size: 18px; }
+.bt-card-price s { font-size: 12px; opacity: 0.7; }
+.bt-badge {
+  position: absolute;
+  top: 10px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-family: "Inter", var(--type-body);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--semantic-text-on-action);
+}
+.bt-badge--cat { left: 10px; background: var(--semantic-action-primary); }
+.bt-badge--off { right: 10px; background: var(--semantic-action-cta); }
+.bt-avail { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; }
+.bt-avail::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--semantic-available); }
+.bt-avail[data-level="low"]::before { background: var(--semantic-limited); }
+
+/* ---------- TourCard: estados estándar en toda vista (foco, carga, agotado, movimiento reducido) ---------- */
+
+/* Disponibilidad: punto de color + texto. Agotado usa icono (no solo color). */
+.bt-avail[data-level="soldout"]::before,
+.bt-avail[data-level="available"]::before { background: var(--semantic-available); }
+.bt-avail[data-level="low"]::before { background: var(--semantic-limited, var(--semantic-action-cta)); }
+.bt-avail[data-level="soldout"] { color: var(--semantic-sold-out); }
+.bt-avail[data-level="soldout"]::before { display: none; }
+.bt-soldout-icon { width: 14px; height: 14px; margin-right: 4px; vertical-align: -2px; }
+
+/* Foco de teclado: aspecto Hover + anillo de 2 px (solo :focus-visible, no se recorta). */
+.fig-stage .bt-tourcard:focus-visible,
+.fig-stage .bt-card:focus-visible {
+  outline: 2px solid var(--semantic-focus);
+  outline-offset: 2px;
+}
+.fig-stage .bt-tourcard:focus-visible { transform: translateY(-4px); box-shadow: var(--elevation-floating); }
+
+/* Tarjeta Agotada: imagen atenuada/desaturada; el texto conserva su contraste (AA). */
+.fig-stage .bt-card--soldout img,
+.fig-stage .bt-card--soldout [style*="background-image"],
+.fig-stage .bt-card--soldout .bt-card-media { filter: grayscale(0.6); opacity: 0.75; }
+.fig-stage .bt-card--soldout .bt-reserve-pill { display: none !important; }
+
+/* Skeleton de carga: forma real (imagen 16:9, líneas, precio). Sin spinner. */
+.fig-stage .bt-card--loading { position: relative; pointer-events: none; }
+/* Silueta de la tarjeta estándar: la "foto" es un fondo con brillo suave y el panel de vidrio
+ * conserva su forma con barras donde irán los textos. Solo el brillo se anima (y se apaga con
+ * movimiento reducido). */
+.fig-stage .bt-vcard--skeleton {
+  background:
+    linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--brand-blanco-niebla) 14%, transparent) 50%, transparent 70%) 0 0 / 220% 100% no-repeat,
+    color-mix(in srgb, var(--brand-azul-profundo) 70%, var(--brand-blanco-niebla) 8%);
+  animation: bt-shimmer 1.6s linear infinite;
+}
+@keyframes bt-shimmer { from { background-position: 120% 0, 0 0; } to { background-position: -120% 0, 0 0; } }
+.bt-vskel { display: block; height: 12px; border-radius: 6px; background: color-mix(in srgb, var(--brand-blanco-niebla) 22%, transparent); }
+.bt-vskel--badge { position: absolute; top: 12px; left: 12px; width: 84px; height: 24px; border-radius: 999px; }
+.bt-vskel--place { width: 45%; }
+.bt-vskel--name { width: 80%; height: 18px; margin-bottom: 14px; }
+.bt-vskel--meta { width: 55%; }
+.bt-vskel--price { width: 40%; height: 22px; margin-top: 8px; }
+.bt-vskel--pill { width: 34%; height: 18px; border-radius: 999px; justify-self: end; }
+@media (prefers-reduced-motion: reduce) {
+  .fig-stage .bt-vcard--skeleton { animation: none; }
+}
+
+/* Movimiento reducido: sin elevación ni transición en hover/foco (toda tarjeta). */
+@media (prefers-reduced-motion: reduce) {
+  .fig-stage .bt-card,
+  .fig-stage .bt-tourcard {
+    transition: none !important;
+  }
+  .fig-stage .bt-card:hover,
+  .fig-stage .bt-tourcard:hover,
+  .fig-stage .bt-tourcard:focus-visible { transform: none; }
+}
+
+
+.fig-stage .bt-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 999px;
+  background: var(--semantic-action-primary);
+  color: var(--semantic-text-on-action);
+  font-family: "Inter", var(--type-body);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--motion-duration-standard) var(--motion-ease-standard);
+}
+.fig-stage .bt-cta:hover { background: var(--semantic-action-primary-hover); }
+
+/* Formulario del asistente */
+.bt-form { display: flex; flex-direction: column; gap: 14px; font-family: "Inter", var(--type-body); }
+.bt-field { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; }
+.bt-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.bt-field input,
+.bt-field select,
+.bt-field textarea {
+  min-height: 48px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--semantic-glass-border) 40%, transparent);
+  background: color-mix(in srgb, var(--semantic-surface-page) 60%, transparent);
+  color: var(--semantic-glass-text);
+  font: 400 15px "Inter", var(--type-body);
+}
+.bt-field textarea { min-height: 88px; resize: vertical; }
+.bt-field :focus-visible { outline: 2px solid var(--semantic-focus); outline-offset: 2px; }
+.bt-hint { margin: 0; font-size: 12px; opacity: 0.8; }
+
+/* ---------- Catálogo: tarjeta destacada por URL ---------- */
+
+.fig-stage .bt-featured { outline: 2px solid var(--semantic-action-cta); outline-offset: 3px; }
+
+.fig-stage .bt-search-input {
+  flex: 1 1 0; min-width: 0; height: 40px; border: 0; outline: 0; background: transparent;
+  color: var(--bt-glass-text); font: 400 15px "Inter", var(--type-body);
+}
+.fig-stage .bt-search-input::placeholder { color: var(--bt-glass-text); opacity: 0.75; }
+.fig-stage :has(> .bt-search-input):focus-within { outline: 2px solid var(--semantic-focus); outline-offset: 2px; }
+
+.fig-stage .bt-chip { background: transparent !important; transition: background-color var(--motion-duration-standard) var(--motion-ease-standard); }
+.fig-stage .bt-chip > div:empty { display: none; }
+.fig-stage .bt-chip { border: 1px solid var(--bt-glass-stroke); }
+.fig-stage .bt-chip span { color: var(--bt-glass-text) !important; }
+.fig-stage .bt-chip:hover { background: color-mix(in srgb, var(--semantic-action-primary) 18%, transparent) !important; }
+.fig-stage .bt-chip[aria-pressed="true"] { background: var(--semantic-action-primary) !important; border-color: transparent; }
+.fig-stage .bt-chip[aria-pressed="true"] span { color: var(--semantic-text-on-action) !important; }
+
+.fig-stage .bt-check {
+  display: inline-flex; flex-shrink: 0; width: 18px; height: 18px; border-radius: 5px;
+  border: 1.5px solid var(--bt-glass-text); align-items: center; justify-content: center;
+}
+.fig-stage [aria-checked="true"] > .bt-check { background: var(--semantic-action-primary); border-color: var(--semantic-action-primary); }
+.fig-stage [aria-checked="true"] > .bt-check::after { content: "?"; font-size: 12px; font-weight: 700; color: var(--semantic-text-on-action); }
+.fig-stage [role="checkbox"]:focus-visible, .fig-stage [role="switch"]:focus-visible, .fig-stage .bt-chip:focus-visible { outline: 2px solid var(--semantic-focus); outline-offset: 2px; border-radius: 8px; }
+
+.fig-stage .bt-switch { position: relative; flex-shrink: 0; width: 36px; height: 20px; border-radius: 999px; background: color-mix(in srgb, var(--bt-glass-text) 30%, transparent); transition: background-color 200ms; }
+.fig-stage .bt-switch::after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #ffffff; transition: transform 200ms var(--bt-ease-out); }
+.fig-stage [aria-checked="true"] > .bt-switch { background: var(--semantic-action-primary); }
+.fig-stage [aria-checked="true"] > .bt-switch::after { transform: translateX(16px); }
+
+.fig-stage .bt-range { position: relative; width: 252px; height: 24px; --a: 0%; --b: 100%; }
+.fig-stage .bt-range::before { content: ""; position: absolute; left: 0; right: 0; top: 9px; height: 6px; border-radius: 9px; background: linear-gradient(90deg, color-mix(in srgb, var(--bt-glass-text) 25%, transparent) var(--a), var(--semantic-action-primary) var(--a), var(--semantic-action-primary) var(--b), color-mix(in srgb, var(--bt-glass-text) 25%, transparent) var(--b)); }
+.fig-stage .bt-range input { position: absolute; inset: 0; width: 100%; margin: 0; background: transparent; pointer-events: none; appearance: none; -webkit-appearance: none; }
+.fig-stage .bt-range input::-webkit-slider-thumb { pointer-events: auto; -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #ffffff; border: 3px solid var(--semantic-action-primary); cursor: pointer; }
+.fig-stage .bt-range input::-moz-range-thumb { pointer-events: auto; width: 16px; height: 16px; border-radius: 50%; background: #ffffff; border: 3px solid var(--semantic-action-primary); cursor: pointer; }
+.fig-stage .bt-range input:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--semantic-focus); outline-offset: 2px; }
+.fig-stage .bt-range-out { font: 600 13px "Inter", var(--type-body); color: var(--bt-glass-text); }
+
+.fig-stage .bt-reserve-pill {
+  position: absolute; right: 14px; top: 130px; z-index: 2; padding: 8px 16px; border-radius: 999px;
+  background: var(--semantic-action-cta); color: var(--semantic-text-on-action); font: 600 13px "Inter", var(--type-body);
+  opacity: 0; transform: translateY(6px); transition: opacity 200ms, transform 200ms var(--bt-ease-out);
+}
+.fig-stage a:hover > .bt-reserve-pill, .fig-stage a:focus-visible > .bt-reserve-pill { opacity: 1; transform: none; }
+.fig-stage a.bt-low span { }
+.fig-stage .bt-empty { width: 100%; padding: 48px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; color: var(--semantic-text-primary); font-family: "Inter", var(--type-body); }
+.fig-stage .bt-empty h3 { font: 700 22px "Sora", var(--type-heading); }
+
+/* ---------- Centro legal (/nosotros) ---------- */
+
+.fig-stage .bt-legal-head { cursor: pointer; border-radius: 12px; }
+.fig-stage .bt-legal-head:focus-visible { outline: 2px solid var(--semantic-focus); outline-offset: 4px; }
+.fig-stage .bt-legal-head > svg:last-child { transition: transform var(--motion-duration-standard) var(--motion-ease-standard); }
+.fig-stage .bt-legal-head[aria-expanded="true"] > svg:last-child { transform: rotate(180deg); }
+.fig-stage .bt-legal-item > div:first-child { height: 100% !important; }
+.fig-stage .bt-legal-body { animation: bt-item-in var(--bt-enter) var(--bt-ease-out) both; }
+.fig-stage .bt-legal-body[hidden] { display: none; }
+.fig-stage .bt-legal-target { box-shadow: 0 0 0 2px var(--semantic-action-primary); }
+/* Documento completo: bloque con scroll interno para no alargar la página con miles de palabras. */
+.fig-stage .bt-legal-doc {
+  display: block; height: auto !important; width: 100%;
+  max-height: 26rem; overflow-y: auto; overscroll-behavior: contain;
+  padding-right: 0.75rem; white-space: normal; line-height: 1.6;
+}
+.fig-stage .bt-legal-doc:focus-visible { outline: 2px solid var(--semantic-focus); outline-offset: 4px; }
+.fig-stage .bt-legal-doc p { margin: 0 0 0.6rem; }
+.fig-stage .bt-legal-doc .bt-legal-summary { font-weight: 600; }
+.fig-stage .bt-legal-doc .bt-legal-lang { font-size: 0.8125rem; font-style: italic; }
+html[lang^="es"] .fig-stage .bt-legal-doc .bt-legal-lang, html:not([lang]) .fig-stage .bt-legal-doc .bt-legal-lang { display: none; }
+.fig-stage .bt-legal-doc .bt-legal-h { margin: 1rem 0 0.4rem; font-family: var(--type-heading); font-size: 1rem; font-weight: 600; }
+.fig-stage .bt-legal-doc .bt-legal-meta { margin-top: 1rem; font-size: 0.8125rem; opacity: 0.85; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bt-menu, .bt-menu-item, .bt-overlay, .bt-panel, .bt-legal-body,
+  .bt-overlay.is-closing .bt-panel, .bt-menu.is-closing { animation-duration: 1ms !important; animation-delay: 0ms !important; }
+  .bt-carousel { scroll-behavior: auto; }
+}
+
+/* Formulario de contacto (runtime/contact.ts) */
+.bt-contact-box { position: relative; }
+.bt-contact-input {
+  width: 100%; height: 100%; min-height: 44px; box-sizing: border-box;
+  padding: 0.75rem 1rem; border-radius: 0.75rem;
+  border: 1px solid var(--semantic-border-subtle);
+  background: transparent; color: inherit; font: inherit;
+}
+textarea.bt-contact-input { resize: vertical; min-height: 7rem; }
+.bt-contact-input:focus-visible { outline: 2px solid var(--semantic-focus); outline-offset: 2px; }
+.bt-contact-input[aria-invalid="true"] { border-color: var(--derived-danger); }
+.bt-contact-counter { position: absolute; right: 0.75rem; bottom: 0.4rem; font-size: 0.75rem; opacity: 0.8; }
+.bt-contact-check { width: 1.25rem; height: 1.25rem; accent-color: var(--semantic-action-primary); }
+.bt-contact-consent-label { display: inline-flex; gap: 0.5rem; align-items: flex-start; cursor: pointer; }
+
+/* ============================================================================
+ * BLOQUE B — Arreglos de UI (tareas 4.3–4.7). Solo tokens semánticos / --bt-*.
+ * Reglas al final del archivo: anulan por cascada las de arriba con igual peso.
+ * ============================================================================ */
+
+/* ---------- 4.3 Navbar: indicador sin borde residual, píldora dentro del padding ---------- */
+/* El div vacío del enlace (capa de vidrio heredada) no debe dibujar borde ni contorno:
+ * el único borde del activo lo pinta la píldora deslizante. */
+.fig-stage .bt-nav-links > a > div:empty {
+  border: none !important;
+  outline: none !important;
+}
+/* La cápsula de enlaces no recorta la píldora; el vidrio translúcido vive en .bt-nav-glass. */
+.fig-stage .bt-nav-links.bt-nav-capsule,
+.fig-stage .bt-nav-links { overflow: visible !important; }
+/* La píldora queda dentro del padding de la cápsula (no toca su borde de luz). */
+.fig-stage .bt-nav-indicator { inset: 0 auto auto 0; }
+
+/* ---------- 4.4 Chips: vidrio estándar, altura táctil, fila sin recorte vertical ---------- */
+.fig-stage .bt-chip {
+  min-height: 44px;
+  height: auto;
+  box-sizing: border-box;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  border-radius: 999px;
+}
+/* La fila que contiene chips no los recorta: scroll horizontal si hace falta y aire para el foco. */
+.fig-stage .bt-chip-row {
+  height: auto !important;
+  min-height: 44px;
+  overflow-x: auto;
+  overflow-y: visible;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  align-items: center;
+  scrollbar-width: none;
+}
+.fig-stage .bt-chip-row::-webkit-scrollbar { display: none; }
+
+/* ---------- 4.5 Unión hero → p0_50: degradado de fundido en el borde superior ---------- */
+.fig-stage [data-bt-seam] { position: relative; }
+.fig-stage [data-bt-seam]::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 160px;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(to bottom, transparent, var(--semantic-surface-page));
+}
+
+/* ---------- 4.6 Carril derecho: tokens de reserva de espacio ---------- */
+:root {
+  --bt-lane-tabs-top: 150px;   /* franja superior del carril: las 3 pestañas, compactas */
+  --bt-lane-tab-gap: 128px;    /* separación vertical entre pestañas (reposo compacto) */
+  --bt-lane-rail-bottom: 80px; /* el rail de redes queda sobre el FAB (que vive abajo) */
+}
+/* El rail de redes se baja al pie del carril para no cruzarse con las pestañas en ningún alto.
+ * Especificidad (0,3,0) para ganarle a .bt-glass-std:not(...):not(...) que fuerza position:relative. */
+.fig-stage .bt-rail.bt-glass-std,
+.fig-stage .bt-rail.bt-rail-host {
+  position: fixed !important;
+  right: -2px;
+  left: auto;
+  top: auto;
+  bottom: var(--bt-lane-rail-bottom);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  /* El rail se ajusta a las cajas de hover (44px): gap minimo y padding igual al gap, para que la
+     capsula "abrace" los botones (sin el padding grande anterior). */
+  gap: 4px;
+  padding: 4px;
+  border-radius: 16px;
+}
+/* Cuando el colofón entra, el rail sube junto con el FAB para no taparlo. */
+.bt-colophon-visible .fig-stage .bt-rail.bt-glass-std,
+.bt-colophon-visible .fig-stage .bt-rail.bt-rail-host { bottom: calc(var(--bt-lane-rail-bottom) + 56px); }
+/* Cada enlace es la caja de hover/glow (44px, minimo tactil AA): la capsula se ajusta a estas. */
+.fig-stage .bt-rail-link {
+  min-width: 44px;
+  min-height: 44px;
+  width: 44px;
+  height: 44px;
+}
+.fig-stage .bt-rail-link:focus-visible { outline: 2px solid var(--semantic-focus); outline-offset: 2px; }
+/* Logos 40% mas grandes que antes (24px -> 34px) dentro de la caja de 44px. */
+.fig-stage .bt-rail-link svg { width: 34px; height: 34px; display: block; }
+
+/* El rail del Home trae una capa de fondo propia (p0_141, vacia) y, al recibir el vidrio del tema,
+ * se veia una capsula morada translucida grande con los iconos a color encima ("tarjeta dentro de
+ * tarjeta"). Correccion: el rail usa el azul glass del navbar (no el morado de las tarjetas), se
+ * ajusta al tamano de los iconos y la capa vacia interna no pinta nada. Una sola superficie. */
+.fig-stage .bt-rail.bt-rail-host,
+.fig-stage .bt-rail.bt-glass-std {
+  background-color: var(--bt-nav-fill) !important;
+  width: max-content;
+  min-width: 0;
+  align-items: center;
+}
+.fig-stage .bt-rail.bt-rail-host > div:empty,
+.fig-stage .bt-rail.bt-rail-host div:empty {
+  display: none !important;
+}
+/* Capa intermedia heredada de Figma (p0_139/p0_140): sin fondo propio, que no agregue una segunda
+ * superficie; solo contiene a los enlaces. */
+.fig-stage .bt-rail.bt-rail-host > div:not(:empty) {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Colores oficiales de las redes (excepción documentada: marcas de terceros, solo dentro del rail;
+ * contrast.ts no recolorea estos SVG porque ignora .bt-rail y los nodos <svg>). */
+:root {
+  --bt-social-instagram: #d62976;
+  --bt-social-instagram-1: #feda75;
+  --bt-social-instagram-2: #fa7e1e;
+  --bt-social-instagram-3: #d62976;
+  --bt-social-instagram-4: #962fbf;
+  --bt-social-instagram-5: #4f5bd5;
+  --bt-social-facebook: #1877f2;
+  --bt-social-tiktok: #000000;
+  --bt-social-tiktok-cyan: #25f4ee;
+  --bt-social-tiktok-red: #fe2c55;
+}
+
+/* ---------- 4.6 Pestañas laterales: color de marca fijo + despliegue horizontal ---------- */
+/* Colores de marca FIJOS en los 3 temas (no siguen el token del tema). */
+:root {
+  --bt-tab-promos: var(--brand-dorado);        /* Promociones */
+  --bt-tab-best: #f97066;                        /* Más vendidos (coral) */
+  --bt-tab-all: var(--brand-turquesa-laguna);  /* Ver todos */
+}
+/* Reposo: pestaña compacta anclada a la derecha, texto en vertical, color de marca fijo.
+ * Se anula la rotación −90° y las traslaciones que traía el markup/BLOQUE A. */
+.fig-stage a.bt-side-tab {
+  position: fixed;
+  right: 0;
+  left: auto;
+  z-index: 30;
+  display: flex;
+  flex-direction: row;      /* horizontal SIEMPRE: icono + texto en linea */
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  width: 210px;             /* ancho total del boton */
+  /* El markup de Figma trae estos tabs en VERTICAL (width ~45px, height ~125-152px, column).
+     Al pasarlos a horizontal hay que anular ese alto fijo: height auto para que el boton mida
+     lo del contenido (icono + texto) + el padding, no los ~150px heredados. */
+  height: auto !important;
+  min-height: 0;
+  box-sizing: border-box;
+  padding: 10px 16px;       /* altura ~44px: compacto y proporcional al texto de 13px */
+  border-radius: 14px 0 0 14px;   /* curvas solo del lado visible (izquierda) */
+  overflow: visible;
+  white-space: nowrap;
+  color: var(--semantic-text-on-action) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, #ffffff 30%, transparent), 0 8px 24px color-mix(in srgb, #000000 20%, transparent);
+  /* En reposo se ve ~la mitad izquierda; el resto sale por el borde derecho. */
+  transform: translateX(50%);
+  transition: transform 320ms var(--bt-ease-out), background-color 200ms ease, filter 200ms ease;
+}
+/* Posicion vertical de cada pestana (franja superior del carril) + color de marca fijo. */
+.fig-stage a.p0_13 { top: calc(var(--bt-lane-tabs-top) + 56px); background-color: var(--bt-tab-promos) !important; }
+.fig-stage a.p0_17 { top: calc(var(--bt-lane-tabs-top) + 56px + var(--bt-lane-tab-gap)); background-color: var(--bt-tab-best) !important; }
+.fig-stage a.p0_18 { top: calc(var(--bt-lane-tabs-top) + 56px + var(--bt-lane-tab-gap) * 2); background-color: var(--bt-tab-all) !important; }
+/* Texto e icono en Negro Volcanico, horizontal. */
+.fig-stage a.bt-side-tab > span,
+.fig-stage a.bt-side-tab > div:not(:empty),
+.fig-stage a.bt-side-tab span { color: var(--semantic-text-on-action) !important; writing-mode: horizontal-tb; text-orientation: initial; transform: none; }
+.fig-stage a.bt-side-tab path { fill: var(--semantic-text-on-action) !important; stroke: var(--semantic-text-on-action) !important; }
+.fig-stage a.bt-side-tab svg { flex-shrink: 0; }
+/* Hover / foco: el boton se desliza hacia la izquierda hasta mostrarse al 100%. */
+.fig-stage a.bt-side-tab:hover,
+.fig-stage a.bt-side-tab:focus-visible { transform: translateX(0); filter: brightness(1.03); }
+.fig-stage a.bt-side-tab:focus-visible { outline: 2px solid var(--semantic-focus); outline-offset: 2px; }
+@media (max-height: 820px) {
+  :root { --bt-lane-tabs-top: 120px; --bt-lane-tab-gap: 72px; }
+}
+
+/* ---------- 4.7 Vitrinas Promociones y Más vendidos (#bt-promos, #bt-best) ----------
+ * Panel ancho y centrado con carrusel horizontal: cabecera con icono, flechas, "Ver todas" y cerrar;
+ * tarjetas con foto a sangre y un panel de vidrio oscuro con los datos (se lee sobre cualquier foto).
+ * El vidrio del PANEL sigue el del tema (--bt-glass-fill); el de las tarjetas es propio de la foto. */
+.bt-overlay--center { justify-content: center; align-items: center; }
+.bt-panel--wide {
+  width: min(1180px, 100%);
+  max-height: 100%;
+  gap: 20px;
+  padding: 24px 28px 28px;
+  animation: bt-pop-in var(--bt-enter) var(--bt-ease-out) both;
+}
+.bt-overlay--center.is-closing .bt-panel { animation: bt-pop-out var(--bt-exit) ease-in both; }
+@keyframes bt-pop-in { from { opacity: 0; transform: translateY(16px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes bt-pop-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(12px) scale(0.98); } }
+
+/* Claro: el panel flota sobre la foto oscura y difuminada del Home, no sobre el fondo blanco. Un gris
+ * translúcido de poca opacidad se vuelve gris oscuro ahí y el texto negro no se lee (contrast.ts no lo
+ * detecta: calcula contra blanco). Superficie gris claro propia (neutro de marca + blanco niebla) para
+ * que el texto oscuro siempre tenga fondo claro, con un poco de transparencia para seguir siendo vidrio. */
+[data-theme="claro"] .fig-stage .bt-panel--wide.bt-glass {
+  background-color: color-mix(in srgb, color-mix(in srgb, var(--brand-blanco-niebla) 72%, var(--derived-neutral)) 88%, transparent);
+}
+@media (prefers-color-scheme: light) {
+  [data-theme="sistema"] .fig-stage .bt-panel--wide.bt-glass {
+    background-color: color-mix(in srgb, color-mix(in srgb, var(--brand-blanco-niebla) 72%, var(--derived-neutral)) 88%, transparent);
+  }
+}
+.bt-panel--wide .bt-panel-head { align-items: center; gap: 14px; }
+.bt-panel--wide .bt-panel-title { font-size: 24px; line-height: 1.2; }
+.bt-panel--wide .bt-panel-sub { margin-top: 2px; }
+.bt-panel-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--semantic-action-cta);
+  color: var(--semantic-text-on-action);
+}
+.bt-panel-head > .bt-panel-actions { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; }
+.fig-stage .bt-vnav,
+.fig-stage .bt-panel--wide .bt-close { border: 1px solid color-mix(in srgb, var(--semantic-glass-border) 60%, transparent); }
+.fig-stage .bt-vnav:disabled { opacity: 0.4; cursor: default; }
+.fig-stage .bt-vall {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 999px;
+  background: var(--semantic-action-primary);
+  color: var(--semantic-text-on-action) !important;
+  font: 600 15px/1 "Inter", var(--type-body);
+  text-decoration: none;
+  transition: background-color var(--motion-duration-standard) var(--motion-ease-standard);
+}
+.fig-stage .bt-vall:hover { background: var(--semantic-action-primary-hover); }
+
+.bt-vtrack {
+  display: flex;
+  gap: 16px;
+  /* Las tarjetas llegan hasta el borde del panel al desplazarse; el padding mantiene el margen de reposo. */
+  margin: 0 -28px;
+  padding: 4px 28px;
+  scroll-padding-inline: 28px; /* sin esto el snap corre el carrusel y la flecha "anterior" nace habilitada */
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.bt-vtrack::-webkit-scrollbar { display: none; }
+.fig-stage .bt-vtrack:focus-visible { outline: 2px solid var(--semantic-focus); outline-offset: 2px; border-radius: 24px; }
+
+/* Contenedor de la tarjeta estándar: lleva el enlace (.bt-vcard) y el corazón como hermanos. */
+.fig-stage .bt-vitem {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  transition: transform var(--motion-duration-standard) var(--motion-ease-standard);
+}
+.fig-stage .bt-vitem:hover { transform: translateY(-4px); }
+.bt-vtrack > .bt-vitem { flex: 0 0 300px; scroll-snap-align: start; }
+
+/* Grilla de tarjetas estándar (catálogo y "También en …"): columnas iguales, filas del mismo alto. */
+.fig-stage .bt-vgrid {
+  display: grid !important;
+  grid-template-columns: var(--bt-grid-cols, repeat(auto-fill, minmax(270px, 1fr)));
+  gap: 24px;
+  width: var(--bt-grid-w, 100%) !important;
+  max-width: 100%;
+  align-items: stretch;
+  align-content: start;
+  overflow: visible !important;
+}
+.fig-stage .bt-vgrid > .bt-empty { grid-column: 1 / -1; }
+
+.fig-stage .bt-vcard {
+  position: relative;
+  isolation: isolate;
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  min-height: 390px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 12px;
+  border-radius: 24px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--brand-blanco-niebla);
+  background: var(--brand-azul-profundo);
+  border: 1px solid color-mix(in srgb, var(--brand-blanco-niebla) 24%, transparent);
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--brand-negro-volcanico) 25%, transparent);
+  transition: transform var(--motion-duration-standard) var(--motion-ease-standard), box-shadow var(--motion-duration-standard);
+}
+.fig-stage .bt-vcard:hover { box-shadow: var(--elevation-floating); }
+.fig-stage .bt-vcard:focus-visible { outline: 2px solid var(--semantic-focus); outline-offset: 2px; }
+.bt-vcard > img {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 600ms var(--bt-ease-out);
+}
+.fig-stage .bt-vcard:hover > img { transform: scale(1.04); }
+
+.bt-vbadge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 1;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font: 600 12px/1.2 "Inter", var(--type-body);
+  color: var(--brand-blanco-niebla);
+  background: color-mix(in srgb, var(--brand-negro-volcanico) 55%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand-blanco-niebla) 25%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.fig-stage .bt-vheart {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--brand-blanco-niebla);
+  background: color-mix(in srgb, var(--brand-azul-profundo) 88%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand-blanco-niebla) 22%, transparent);
+  transition: transform var(--motion-duration-standard) var(--motion-ease-standard), color var(--motion-duration-standard);
+}
+.fig-stage .bt-vheart:hover { transform: scale(1.08); }
+.fig-stage .bt-vheart[aria-pressed="true"] { color: var(--semantic-status-danger); }
+.fig-stage .bt-vheart[aria-pressed="true"] svg { fill: currentColor; }
+.fig-stage .bt-vheart:focus-visible { outline: 2px solid var(--semantic-focus); outline-offset: 2px; }
+
+.bt-voff {
+  position: relative;
+  z-index: 1;
+  align-self: flex-start;
+  margin: 0 0 -12px 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font: 700 12px/1.2 "Inter", var(--type-body);
+  color: var(--semantic-text-on-action);
+  background: var(--semantic-action-cta);
+}
+.bt-vinfo {
+  display: grid;
+  min-width: 0;
+  gap: 6px;
+  padding: 14px 14px 12px;
+  border-radius: 18px;
+  color: var(--brand-blanco-niebla);
+  background: color-mix(in srgb, var(--brand-negro-volcanico) 52%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand-blanco-niebla) 28%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--brand-blanco-niebla) 25%, transparent);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+}
+.bt-vplace,
+.bt-vmeta > span { display: inline-flex; align-items: center; gap: 6px; font: 400 12px/1.3 "Inter", var(--type-body); }
+.bt-vplace svg,
+.bt-vmeta svg { flex-shrink: 0; }
+.bt-vname { margin: 0; min-height: 2.5em; overflow-wrap: anywhere; font: 600 17px/1.25 "Sora", var(--type-heading); }
+.bt-vplace { overflow-wrap: anywhere; }
+.bt-vmeta { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.bt-vrating svg { color: var(--semantic-action-cta); fill: currentColor; }
+.bt-vprice { display: grid; gap: 2px; margin-top: 2px; }
+.bt-vfrom,
+.bt-vper { font: 400 11px/1.3 "Inter", var(--type-body); }
+.bt-vfrom s { margin-left: 6px; font-size: 12px; opacity: 0.85; }
+/* El precio va solo en su línea; "por persona" y el estado comparten la siguiente y, si no caben,
+ * se parten en dos líneas: el estado nunca se corta y el panel crece con su contenido. */
+.bt-vamount { font: 700 19px/1.2 "Sora", var(--type-heading); overflow-wrap: anywhere; }
+.bt-vline { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 8px; min-width: 0; }
+.bt-vpill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font: 600 11px/1.3 "Inter", var(--type-body);
+  white-space: nowrap;
+  color: var(--brand-blanco-niebla);
+  background: color-mix(in srgb, var(--brand-azul-profundo) 92%, transparent);
+}
+.bt-vpill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--semantic-available); }
+.bt-vpill[data-level="low"] { color: var(--semantic-text-on-action); background: var(--semantic-action-cta); }
+.bt-vpill[data-level="low"]::before { background: var(--semantic-text-on-action); }
+.bt-vpill[data-level="soldout"] { background: var(--semantic-sold-out); }
+.bt-vpill[data-level="soldout"]::before { display: none; }
+
+@media (max-width: 720px) {
+  .bt-overlay--center { align-items: flex-end; padding: 8px; }
+  .bt-panel--wide { padding: 18px 16px 20px; }
+  .bt-panel--wide .bt-panel-head { flex-wrap: wrap; }
+  .bt-panel-actions .bt-vnav { display: none; }
+  .bt-vtrack > .bt-vitem { flex-basis: 78%; }
+  .fig-stage .bt-vgrid { grid-template-columns: 1fr; }
+  .bt-vtrack { margin: 0 -16px; padding: 4px 16px; scroll-padding-inline: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fig-stage .bt-vitem,
+  .fig-stage .bt-vcard,
+  .bt-vcard > img,
+  .fig-stage .bt-vheart { transition: none; }
+  .fig-stage .bt-vitem:hover,
+  .fig-stage .bt-vcard:hover > img,
+  .fig-stage .bt-vheart:hover { transform: none; }
+  .bt-panel--wide,
+  .bt-overlay--center.is-closing .bt-panel { animation-duration: 1ms !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fig-stage a.bt-side-tab { transition: none; }
+}

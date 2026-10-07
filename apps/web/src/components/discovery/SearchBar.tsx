@@ -142,7 +142,7 @@ function SearchBarInner(): JSX.Element {
     <div className="relative w-full">
       {/* Icono de búsqueda decorativo */}
       <Search
-        className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-negro-volcanico/50"
+        className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-text-primary/50"
         size={20}
         aria-hidden="true"
       />
@@ -155,7 +155,7 @@ function SearchBarInner(): JSX.Element {
         maxLength={MAX_LENGTH}
         placeholder={t("discovery:search.placeholder")}
         aria-label={t("discovery:search.placeholder")}
-        className="w-full rounded-lg border border-negro-volcanico/10 bg-blanco-niebla py-3 pl-10 pr-10 font-body text-base text-negro-volcanico placeholder:text-negro-volcanico/50 focus:border-turquesa focus:outline-none focus:ring-2 focus:ring-turquesa/30"
+        className="w-full rounded-lg border border-negro-volcanico/10 bg-surface-card py-3 pl-10 pr-10 font-body text-base text-text-primary placeholder:text-text-primary/50 focus:border-turquesa focus:outline-none focus:ring-2 focus:ring-turquesa/30"
       />
 
       {/* Botón limpiar (R12.7) */}
@@ -164,7 +164,7 @@ function SearchBarInner(): JSX.Element {
           type="button"
           onClick={handleClear}
           aria-label={t("discovery:search.clear")}
-          className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-negro-volcanico/50 hover:bg-negro-volcanico/10 hover:text-negro-volcanico focus:outline-none focus:ring-2 focus:ring-turquesa/30"
+          className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-text-primary/50 hover:bg-negro-volcanico/10 hover:text-text-primary focus:outline-none focus:ring-2 focus:ring-turquesa/30"
         >
           <X size={16} aria-hidden="true" />
         </button>

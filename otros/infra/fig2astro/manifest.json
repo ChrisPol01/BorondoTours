@@ -1,0 +1,522 @@
+{
+  "/404": {
+    "id": "143:42798",
+    "name": "Error 404 / Desktop",
+    "file": "apps/web/src/pages/404.astro",
+    "w": 1440,
+    "h": 745,
+    "bytes": 22869
+  },
+  "/error": {
+    "id": "143:42868",
+    "name": "Error 500 / Desktop",
+    "file": "apps/web/src/pages/error.astro",
+    "w": 1440,
+    "h": 778,
+    "bytes": 27725
+  },
+  "/sin-conexion": {
+    "id": "93:105855",
+    "name": "Sin conexión / Desktop",
+    "file": "apps/web/src/pages/sin-conexion.astro",
+    "w": 1440,
+    "h": 667,
+    "bytes": 29760
+  },
+  "/": {
+    "id": "113:17071",
+    "name": "Home / Desktop — v2",
+    "file": "apps/web/src/pages/index.astro",
+    "w": 1440,
+    "h": 3194,
+    "bytes": 195281
+  },
+  "/estados/home-promociones": {
+    "id": "125:24579",
+    "name": "Home / Desktop — Panel Promociones abierto",
+    "file": "apps/web/src/pages/estados/home-promociones.astro",
+    "w": 1440,
+    "h": 900,
+    "bytes": 130342
+  },
+  "/estados/cookies": {
+    "id": "93:105234",
+    "name": "Consentimiento de cookies / Desktop",
+    "file": "apps/web/src/pages/estados/cookies.astro",
+    "w": 1440,
+    "h": 880,
+    "bytes": 49194
+  },
+  "/explorar": {
+    "id": "109:14080",
+    "name": "Explorar / Desktop",
+    "file": "apps/web/src/pages/explorar.astro",
+    "w": 1440,
+    "h": 1426,
+    "bytes": 176885
+  },
+  "/explorar/mapa": {
+    "id": "125:25560",
+    "name": "Explorar / Desktop — Vista mapa",
+    "file": "apps/web/src/pages/explorar/mapa.astro",
+    "w": 1440,
+    "h": 1024,
+    "bytes": 870351
+  },
+  "/estados/explorar-sugerencias": {
+    "id": "125:26061",
+    "name": "Explorar · sugerencias de búsqueda / Desktop",
+    "file": "apps/web/src/pages/estados/explorar-sugerencias.astro",
+    "w": 1440,
+    "h": 1426,
+    "bytes": 156913
+  },
+  "/experiencias": {
+    "id": "93:92448",
+    "name": "Experiencias por categoría / Desktop",
+    "file": "apps/web/src/pages/experiencias.astro",
+    "w": 1440,
+    "h": 1578,
+    "bytes": 117101
+  },
+  "/destinos": {
+    "id": "93:94077",
+    "name": "Destino / región / Desktop",
+    "file": "apps/web/src/pages/destinos.astro",
+    "w": 1440,
+    "h": 1335,
+    "bytes": 86636
+  },
+  "/tour": {
+    "id": "93:77352",
+    "name": "Detalle del tour / Desktop",
+    "file": "apps/web/src/pages/tour.astro",
+    "w": 1440,
+    "h": 3473,
+    "bytes": 199624
+  },
+  "/estados/tour-lista-espera": {
+    "id": "128:28235",
+    "name": "Detalle del tour / Desktop · lista de espera",
+    "file": "apps/web/src/pages/estados/tour-lista-espera.astro",
+    "w": 1440,
+    "h": 3473,
+    "bytes": 213531
+  },
+  "/estados/tour-lista-espera-confirmada": {
+    "id": "128:28957",
+    "name": "Detalle del tour / Desktop · lista de espera confirmada",
+    "file": "apps/web/src/pages/estados/tour-lista-espera-confirmada.astro",
+    "w": 1440,
+    "h": 3473,
+    "bytes": 203073
+  },
+  "/estados/tour-fecha-agotada": {
+    "id": "135:34434",
+    "name": "Detalle del tour / Desktop · fecha agotada",
+    "file": "apps/web/src/pages/estados/tour-fecha-agotada.astro",
+    "w": 1440,
+    "h": 3473,
+    "bytes": 201621
+  },
+  "/checkout": {
+    "id": "93:80349",
+    "name": "Checkout / Desktop — Paso 1 Tu viaje",
+    "file": "apps/web/src/pages/checkout.astro",
+    "w": 1440,
+    "h": 1451,
+    "bytes": 53497
+  },
+  "/checkout/viajeros": {
+    "id": "93:81291",
+    "name": "Checkout / Desktop — Paso 2 Viajeros",
+    "file": "apps/web/src/pages/checkout/viajeros.astro",
+    "w": 1440,
+    "h": 1546,
+    "bytes": 55505
+  },
+  "/checkout/pago": {
+    "id": "93:82359",
+    "name": "Checkout / Desktop — Paso 3 Pago",
+    "file": "apps/web/src/pages/checkout/pago.astro",
+    "w": 1440,
+    "h": 1238,
+    "bytes": 63300
+  },
+  "/checkout/pago-rechazado": {
+    "id": "128:27651",
+    "name": "Checkout / Desktop — Paso 3 · pago rechazado",
+    "file": "apps/web/src/pages/checkout/pago-rechazado.astro",
+    "w": 1440,
+    "h": 1084,
+    "bytes": 63154
+  },
+  "/checkout/enlace-vencido": {
+    "id": "128:27845",
+    "name": "Checkout / Desktop — Paso 3 · enlace vencido",
+    "file": "apps/web/src/pages/checkout/enlace-vencido.astro",
+    "w": 1440,
+    "h": 1084,
+    "bytes": 64059
+  },
+  "/checkout/cupo-agotado": {
+    "id": "128:28040",
+    "name": "Checkout / Desktop — Paso 3 · cupo agotado",
+    "file": "apps/web/src/pages/checkout/cupo-agotado.astro",
+    "w": 1440,
+    "h": 1084,
+    "bytes": 66528
+  },
+  "/checkout/procesando": {
+    "id": "93:96000",
+    "name": "Procesando pago / Desktop",
+    "file": "apps/web/src/pages/checkout/procesando.astro",
+    "w": 1440,
+    "h": 775,
+    "bytes": 34895
+  },
+  "/checkout/confirmacion": {
+    "id": "93:83133",
+    "name": "Checkout / Desktop — Paso 4 Confirmación",
+    "file": "apps/web/src/pages/checkout/confirmacion.astro",
+    "w": 1440,
+    "h": 1213,
+    "bytes": 55272
+  },
+  "/pago/participante": {
+    "id": "93:96351",
+    "name": "Pago del participante / Desktop",
+    "file": "apps/web/src/pages/pago/participante.astro",
+    "w": 1440,
+    "h": 1214,
+    "bytes": 46332
+  },
+  "/pago/saldo": {
+    "id": "93:96954",
+    "name": "Pago del saldo / Desktop",
+    "file": "apps/web/src/pages/pago/saldo.astro",
+    "w": 1440,
+    "h": 1114,
+    "bytes": 45438
+  },
+  "/iniciar-sesion": {
+    "id": "128:30589",
+    "name": "Iniciar sesión / Desktop",
+    "file": "apps/web/src/pages/iniciar-sesion.astro",
+    "w": 1440,
+    "h": 1084,
+    "bytes": 82772
+  },
+  "/crear-cuenta": {
+    "id": "128:31042",
+    "name": "Crear cuenta / Desktop",
+    "file": "apps/web/src/pages/crear-cuenta.astro",
+    "w": 1440,
+    "h": 1084,
+    "bytes": 82656
+  },
+  "/verificar-codigo": {
+    "id": "128:31502",
+    "name": "Código OTP / Desktop",
+    "file": "apps/web/src/pages/verificar-codigo.astro",
+    "w": 1440,
+    "h": 1084,
+    "bytes": 73232
+  },
+  "/recuperar-contrasena": {
+    "id": "93:95382",
+    "name": "Recuperar contraseña / Desktop",
+    "file": "apps/web/src/pages/recuperar-contrasena.astro",
+    "w": 1440,
+    "h": 751,
+    "bytes": 30416
+  },
+  "/verificar-correo": {
+    "id": "93:95709",
+    "name": "Verificar correo / Desktop",
+    "file": "apps/web/src/pages/verificar-correo.astro",
+    "w": 1440,
+    "h": 709,
+    "bytes": 28840
+  },
+  "/mis-reservas": {
+    "id": "93:83928",
+    "name": "Mis reservas / Desktop — Próximas",
+    "file": "apps/web/src/pages/mis-reservas.astro",
+    "w": 1440,
+    "h": 1153,
+    "bytes": 109292
+  },
+  "/mis-reservas/detalle": {
+    "id": "128:29657",
+    "name": "Mis reservas / Desktop · detalle de reserva",
+    "file": "apps/web/src/pages/mis-reservas/detalle.astro",
+    "w": 1440,
+    "h": 1153,
+    "bytes": 129352
+  },
+  "/mis-reservas/cancelar": {
+    "id": "128:29953",
+    "name": "Mis reservas / Desktop · cancelar",
+    "file": "apps/web/src/pages/mis-reservas/cancelar.astro",
+    "w": 1440,
+    "h": 1153,
+    "bytes": 124917
+  },
+  "/mis-reservas/reprogramar": {
+    "id": "128:30239",
+    "name": "Mis reservas / Desktop · reprogramar",
+    "file": "apps/web/src/pages/mis-reservas/reprogramar.astro",
+    "w": 1440,
+    "h": 1153,
+    "bytes": 123894
+  },
+  "/mis-reservas/calificar": {
+    "id": "128:32426",
+    "name": "Mis reservas / Desktop · calificar tour",
+    "file": "apps/web/src/pages/mis-reservas/calificar.astro",
+    "w": 1440,
+    "h": 1153,
+    "bytes": 140108
+  },
+  "/mis-reservas/voucher": {
+    "id": "93:97527",
+    "name": "Voucher (QR) / Desktop",
+    "file": "apps/web/src/pages/mis-reservas/voucher.astro",
+    "w": 1440,
+    "h": 900,
+    "bytes": 86216
+  },
+  "/mis-reservas/cancelacion-confirmada": {
+    "id": "93:99315",
+    "name": "Cancelación confirmada / Desktop",
+    "file": "apps/web/src/pages/mis-reservas/cancelacion-confirmada.astro",
+    "w": 1440,
+    "h": 900,
+    "bytes": 54688
+  },
+  "/mis-reservas/reembolso": {
+    "id": "93:99993",
+    "name": "Solicitud de reembolso / Desktop",
+    "file": "apps/web/src/pages/mis-reservas/reembolso.astro",
+    "w": 1440,
+    "h": 963,
+    "bytes": 58103
+  },
+  "/bienvenida": {
+    "id": "93:100725",
+    "name": "Onboarding del viajero / Desktop",
+    "file": "apps/web/src/pages/bienvenida.astro",
+    "w": 1440,
+    "h": 900,
+    "bytes": 52465
+  },
+  "/mis-tours": {
+    "id": "93:85311",
+    "name": "Mis tours / Desktop",
+    "file": "apps/web/src/pages/mis-tours.astro",
+    "w": 1440,
+    "h": 1225,
+    "bytes": 957186
+  },
+  "/favoritos": {
+    "id": "93:86862",
+    "name": "Favoritos / Desktop",
+    "file": "apps/web/src/pages/favoritos.astro",
+    "w": 1440,
+    "h": 1123,
+    "bytes": 101962
+  },
+  "/mensajes": {
+    "id": "93:88026",
+    "name": "Mensajes / Desktop",
+    "file": "apps/web/src/pages/mensajes.astro",
+    "w": 1440,
+    "h": 960,
+    "bytes": 77091
+  },
+  "/perfil": {
+    "id": "93:88974",
+    "name": "Perfil / Desktop",
+    "file": "apps/web/src/pages/perfil.astro",
+    "w": 1440,
+    "h": 1468,
+    "bytes": 93763
+  },
+  "/estados/perfil-menu": {
+    "id": "128:31935",
+    "name": "Perfil / Desktop · menú de cuenta",
+    "file": "apps/web/src/pages/estados/perfil-menu.astro",
+    "w": 1440,
+    "h": 1468,
+    "bytes": 125070
+  },
+  "/notificaciones": {
+    "id": "128:32188",
+    "name": "Perfil / Desktop · notificaciones",
+    "file": "apps/web/src/pages/notificaciones.astro",
+    "w": 1440,
+    "h": 1468,
+    "bytes": 103119
+  },
+  "/soporte": {
+    "id": "128:32706",
+    "name": "Perfil / Desktop · soporte",
+    "file": "apps/web/src/pages/soporte.astro",
+    "w": 1440,
+    "h": 1468,
+    "bytes": 114495
+  },
+  "/blog": {
+    "id": "93:90459",
+    "name": "Blog / Desktop",
+    "file": "apps/web/src/pages/blog.astro",
+    "w": 1440,
+    "h": 2114,
+    "bytes": 57798
+  },
+  "/blog/articulo": {
+    "id": "93:101343",
+    "name": "Artículo del blog / Desktop",
+    "file": "apps/web/src/pages/blog/articulo.astro",
+    "w": 1440,
+    "h": 1547,
+    "bytes": 64992
+  },
+  "/nosotros": {
+    "id": "93:91293",
+    "name": "Nosotros / Desktop",
+    "file": "apps/web/src/pages/nosotros.astro",
+    "w": 1440,
+    "h": 2992,
+    "bytes": 96064
+  },
+  "/contacto": {
+    "id": "93:102306",
+    "name": "Contacto / Desktop",
+    "file": "apps/web/src/pages/contacto.astro",
+    "w": 1440,
+    "h": 1056,
+    "bytes": 54895
+  },
+  "/preguntas-frecuentes": {
+    "id": "93:103164",
+    "name": "Preguntas frecuentes / Desktop",
+    "file": "apps/web/src/pages/preguntas-frecuentes.astro",
+    "w": 1440,
+    "h": 1232,
+    "bytes": 52539
+  },
+  "/legal": {
+    "id": "93:103992",
+    "name": "Legal / Desktop",
+    "file": "apps/web/src/pages/legal.astro",
+    "w": 1440,
+    "h": 993,
+    "bytes": 42151
+  },
+  "/politica-de-cancelacion": {
+    "id": "93:104574",
+    "name": "Política de cancelación / Desktop",
+    "file": "apps/web/src/pages/politica-de-cancelacion.astro",
+    "w": 1440,
+    "h": 986,
+    "bytes": 44590
+  },
+  "/estados/explorar-cargando": {
+    "id": "136:38866",
+    "name": "Explorar / Desktop · cargando",
+    "file": "apps/web/src/pages/estados/explorar-cargando.astro",
+    "w": 1440,
+    "h": 1426,
+    "bytes": 100506
+  },
+  "/estados/explorar-sin-resultados": {
+    "id": "136:39362",
+    "name": "Explorar / Desktop · sin resultados",
+    "file": "apps/web/src/pages/estados/explorar-sin-resultados.astro",
+    "w": 1440,
+    "h": 1426,
+    "bytes": 109625
+  },
+  "/checkout/viajeros-pasaporte-pendiente": {
+    "id": "136:40027",
+    "name": "Checkout / Desktop — Paso 2 · pasaporte pendiente",
+    "file": "apps/web/src/pages/checkout/viajeros-pasaporte-pendiente.astro",
+    "w": 1440,
+    "h": 1622,
+    "bytes": 61265
+  },
+  "/checkout/viajeros-pasaporte-cargado": {
+    "id": "136:40284",
+    "name": "Checkout / Desktop — Paso 2 · pasaporte cargado",
+    "file": "apps/web/src/pages/checkout/viajeros-pasaporte-cargado.astro",
+    "w": 1440,
+    "h": 1546,
+    "bytes": 55195
+  },
+  "/checkout/divide-tu-cuenta": {
+    "id": "136:40537",
+    "name": "Checkout / Desktop — Paso 3 · divide tu cuenta",
+    "file": "apps/web/src/pages/checkout/divide-tu-cuenta.astro",
+    "w": 1440,
+    "h": 1478,
+    "bytes": 79720
+  },
+  "/mis-reservas/por-pagar": {
+    "id": "142:40767",
+    "name": "Mis reservas · por pagar / Desktop",
+    "file": "apps/web/src/pages/mis-reservas/por-pagar.astro",
+    "w": 1440,
+    "h": 900,
+    "bytes": 64755
+  },
+  "/mis-reservas/completadas": {
+    "id": "142:41084",
+    "name": "Mis reservas · completadas / Desktop",
+    "file": "apps/web/src/pages/mis-reservas/completadas.astro",
+    "w": 1440,
+    "h": 900,
+    "bytes": 66933
+  },
+  "/mis-reservas/canceladas": {
+    "id": "142:41414",
+    "name": "Mis reservas · canceladas / Desktop",
+    "file": "apps/web/src/pages/mis-reservas/canceladas.astro",
+    "w": 1440,
+    "h": 900,
+    "bytes": 58903
+  },
+  "/estados/mis-reservas-vacio": {
+    "id": "142:41720",
+    "name": "Mis reservas · vacío / Desktop",
+    "file": "apps/web/src/pages/estados/mis-reservas-vacio.astro",
+    "w": 1440,
+    "h": 900,
+    "bytes": 59757
+  },
+  "/estados/favoritos-vacio": {
+    "id": "143:42027",
+    "name": "Favoritos · vacío / Desktop",
+    "file": "apps/web/src/pages/estados/favoritos-vacio.astro",
+    "w": 1440,
+    "h": 900,
+    "bytes": 52916
+  },
+  "/estados/mensajes-bloqueado": {
+    "id": "143:42319",
+    "name": "Mensajes · bloqueado / Desktop",
+    "file": "apps/web/src/pages/estados/mensajes-bloqueado.astro",
+    "w": 1440,
+    "h": 960,
+    "bytes": 74039
+  },
+  "/estados/mensajes-solo-lectura": {
+    "id": "143:42560",
+    "name": "Mensajes · solo lectura / Desktop",
+    "file": "apps/web/src/pages/estados/mensajes-solo-lectura.astro",
+    "w": 1440,
+    "h": 960,
+    "bytes": 69695
+  }
+}

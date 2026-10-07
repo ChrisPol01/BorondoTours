@@ -21,7 +21,7 @@ describe("Footer — 4 trust badges in correct fixed order (R7.1)", () => {
     const titles = [
       "Turismo Responsable",
       "Experiencias Únicas",
-      "Seguridad Garantizada",
+      "Seguridad y Confianza",
       "Atención Personalizada",
     ];
 
@@ -34,13 +34,13 @@ describe("Footer — 4 trust badges in correct fixed order (R7.1)", () => {
     const { container } = render(<Footer />);
 
     // Get all h3 elements which contain the trust badge titles
-    const headings = container.querySelectorAll("h3");
+    const headings = container.querySelectorAll('[data-testid="trust-badges"] h3');
     expect(headings).toHaveLength(4);
 
     const orderedTitles = [
       "Turismo Responsable",
       "Experiencias Únicas",
-      "Seguridad Garantizada",
+      "Seguridad y Confianza",
       "Atención Personalizada",
     ];
 
@@ -64,26 +64,26 @@ describe("Footer — correct icons (R7.3)", () => {
     const { container } = render(<Footer />);
 
     // Lucide React renders <svg> elements with aria-hidden="true"
-    const svgIcons = container.querySelectorAll('svg[aria-hidden="true"]');
+    const svgIcons = container.querySelectorAll('[data-testid="trust-badges"] svg[aria-hidden="true"]');
     expect(svgIcons).toHaveLength(4);
   });
 
-  it("each icon has the correct Lucide class (h-6 w-6)", () => {
+  it("each icon has the correct Lucide class (h-5 w-5)", () => {
     const { container } = render(<Footer />);
 
-    const svgIcons = container.querySelectorAll("svg");
+    const svgIcons = container.querySelectorAll('[data-testid="trust-badges"] svg');
     svgIcons.forEach((svg) => {
-      expect(svg).toHaveClass("h-6");
-      expect(svg).toHaveClass("w-6");
+      expect(svg).toHaveClass("h-5");
+      expect(svg).toHaveClass("w-5");
     });
   });
 
-  it("icons use the turquesa brand color class", () => {
+  it("icons use the Verde Frailejón brand color class", () => {
     const { container } = render(<Footer />);
 
-    const svgIcons = container.querySelectorAll("svg");
+    const svgIcons = container.querySelectorAll('[data-testid="trust-badges"] svg');
     svgIcons.forEach((svg) => {
-      expect(svg).toHaveClass("text-turquesa");
+      expect(svg).toHaveClass("text-verde");
     });
   });
 });
@@ -123,8 +123,8 @@ describe("Footer — i18n texts resolved, not raw keys (R7.4, R7.5)", () => {
   it("uses Azul Profundo background (brand identity)", () => {
     const { container } = render(<Footer />);
 
-    const footer = container.querySelector("footer");
-    expect(footer).toHaveClass("bg-azul-profundo");
-    expect(footer).toHaveClass("text-blanco-niebla");
+    const footer = container.querySelector('[data-testid="footer-main"]');
+    expect(footer).toHaveClass("bg-surface-strong");
+    expect(footer).toHaveClass("text-on-strong");
   });
 });

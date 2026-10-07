@@ -2,9 +2,11 @@
 tags: [spec, loyalty, coins, wallet, gamificacion, niveles, engagement, multifactorial]
 created: 2025-07-14
 updated: 2026-06-07
-status: listo-para-implementar
+status: en-pausa
 kiro-spec: .kiro/specs/flujo-e-loyalty.md
 ---
+
+> ⏸ **EN PAUSA (2026-09-27, decisión del usuario):** Borondo Coins, niveles y wallet no se diseñan ni se implementan hasta cerrar los temas comerciales y legales. En el B2C no se muestran Coins, niveles, promos de Coins ni "usar Coins" en checkout. El contenido de esta spec se conserva como referencia.
 
 # 📋 Spec E — Programa de Lealtad: Borondo Coins, Puntos y Niveles
 

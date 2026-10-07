@@ -44,8 +44,8 @@ spec-detallada: "[[../01-Specs/Spec-A-Discovery]]  · [[../01-Specs/Spec-B-Tour-
 
 ## Flujo D: Autenticación, Landing y Scrollytelling
 
-* **Landing Page Zig-Zag:** Diseño inmersivo de pantalla dividida con GSAP ScrollTrigger. Un video de fondo avanza/retrocede según el scroll del usuario (*Scrollytelling*); el lado derecho muestra grids de Tours en Promoción, Más Vendidos y Servicios Destacados.
-* **Auth Gate (Captura de Leads):** Al hacer clic en un tour desde el grid de la landing, se bloquea la navegación con un Modal de Login/Registro. El usuario debe autenticarse antes de ver el detalle del tour.
+* **Home (actualizado 2026-09-27):** hero con imagen cambiante y efecto "linterna" (reemplaza el scrollytelling con video), buscador que luego alojará el agente de compra, pestañas laterales Promociones / Más vendidos, mosaico de categorías y colofón legal de una línea. Detalle en `otros/design/b2c/tramos/MAPEO-COMPONENTES.md` §L–N.
+* **Auth Gate (actualizado 2026-09-27):** el catálogo y el detalle del tour se ven sin cuenta. El modal de Login/Registro aparece solo al pagar (o al guardar favoritos / abrir el chat), y conserva el tour, la fecha y los viajeros elegidos. Supera la versión anterior que pedía cuenta antes de ver el detalle.
 * **MFA — OTP por email:** Validación en dos pasos para proteger la cuenta y la billetera de Borondo Coins. Fase 2: OTP también por SMS.
 * **Redirección post-login:** `CLIENT` siempre va a `/mis-reservas`. Los roles internos son redirigidos automáticamente a sus respectivas apps (ver Stack-Tecnologico RBAC).
 
@@ -62,5 +62,5 @@ spec-detallada: "[[../01-Specs/Spec-A-Discovery]]  · [[../01-Specs/Spec-B-Tour-
   * 5 niveles de viajero: Explorador → Aventurero → Descubridor → Nómada → Embajador (basados en COP acumulado en compras).
   * Mapa interactivo de Colombia con los departamentos "conquistados" por el cliente (cada tour visitado colorea el departamento).
   * Billetera **Borondo Coins**: todos los Coins son libres (usables en cualquier tour de cualquier operador). Se ganan por compras, reseñas, ver anuncios rewarded y referidos.
-* **Chat Tripartito:** Se habilita automáticamente 24h antes del tour. El cliente puede chatear con el Guía asignado y con un agente de BorondoTours (supervisión). Histórico de chat disponible por 90 días (DynamoDB TTL).
+* **Chat del Tour:** Una sala por tour, entre el guía y el grupo; se habilita 24h antes. Los mensajes del guía llegan a todo el grupo; los de un turista solo al guía, salvo que el guía active "Mostrar mensajes al grupo". Al finalizar el tour se exporta a S3 privado y se borra de DynamoDB (ver Spec-D RF-D08).
 * **Feedback Modal:** Al finalizar el tour, la app muestra un modal bloqueante (no se puede cerrar sin interactuar) para recolectar calificación de 1–5 estrellas y comentario.

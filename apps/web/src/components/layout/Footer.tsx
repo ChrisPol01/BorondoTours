@@ -16,7 +16,6 @@
 
 import { Leaf, Camera, Shield, Users, MapPin, Phone, Mail, Heart } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { translate } from "../../lib/i18n/index";
 
 // ─────────────────────────────────────────────────────────────────────────
 // Tipos
@@ -35,7 +34,7 @@ interface TrustBadge {
 const TRUST_BADGES: readonly TrustBadge[] = [
   { title: "Turismo Responsable", text: "Cuidamos los lugares que visitas.", Icon: Leaf },
   { title: "Experiencias Únicas", text: "Diseñamos viajes auténticos y memorables.", Icon: Camera },
-  { title: "Seguridad Garantizada", text: "Tu tranquilidad es nuestra prioridad.", Icon: Shield },
+  { title: "Seguridad y Confianza", text: "Tu tranquilidad es nuestra prioridad.", Icon: Shield },
   { title: "Atención Personalizada", text: "Estamos contigo en cada paso del viaje.", Icon: Users },
 ] as const;
 
@@ -71,7 +70,7 @@ export function Footer(): React.JSX.Element {
   return (
     <footer role="contentinfo">
       {/* ─── Trust Badges — Fondo Arena (beige) ─── */}
-      <div className="bg-arena py-10">
+      <div className="bg-surface-warm py-10" data-testid="trust-badges">
         <div className="mx-auto max-w-public px-page-gutter">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {TRUST_BADGES.map((badge) => (
@@ -82,7 +81,7 @@ export function Footer(): React.JSX.Element {
       </div>
 
       {/* ─── Footer principal — Fondo Azul Profundo ─── */}
-      <div className="bg-azul-profundo text-blanco-niebla">
+      <div className="bg-surface-strong text-on-strong" data-testid="footer-main">
         <div className="mx-auto max-w-public px-page-gutter py-12">
           <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5">
             {/* Col 1: Logo + slogan + redes */}
@@ -190,7 +189,7 @@ export function Footer(): React.JSX.Element {
         </div>
 
         {/* ─── Copyright + Hecho con ❤️ ─── */}
-        <div className="border-t border-blanco-niebla/10">
+        <div className="border-t border-border-subtle">
           <div className="mx-auto max-w-public px-page-gutter py-5">
             <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
               <p className="text-xs opacity-60">
@@ -226,10 +225,10 @@ function TrustBadgeItem({ badge }: { readonly badge: TrustBadge }): React.JSX.El
         />
       </div>
       <div>
-        <h3 className="font-heading text-sm font-bold text-negro-volcanico">
+        <h3 className="font-heading text-sm font-bold text-text-primary">
           {title}
         </h3>
-        <p className="text-xs text-negro-volcanico/60">
+        <p className="text-xs text-text-primary/60">
           {text}
         </p>
       </div>

@@ -122,8 +122,11 @@ Tours
   - title: string
   - slug: string (UNIQUE)               ← para URLs amigables (/tours/:slug)
   - description_md: text                 ← Markdown
-  - category: enum (NATURALEZA, AVENTURA, CULTURAL, GASTRONOMICO, URBANO, INTERNACIONAL, CRUCERO)
-                                         ← categoría TEMÁTICA del tour
+  - category: enum (RECREACION, BIENESTAR, SOL_Y_PLAYA, GASTRONOMICO, URBANO, CULTURAL, RURAL,
+                    NATURALEZA, AVENTURA, EXTREMO, INTERNACIONAL, CRUCERO)
+                                         ← categoría TEMÁTICA del tour. Nombres comerciales, iconos,
+                                           intensidad y etiquetas: [[Taxonomia-Experiencias]]
+  - tags: string[]                       ← etiquetas de la lista controlada de [[Taxonomia-Experiencias]]
   - product_type: enum (PASADIA, PASANOCHE, EXCURSION, PLAN_PERSONALIZADO, PLAN_AEREO)
                                          ← TIPO de tour a vender (dimensión independiente de category)
   - region_id: uuid FK | null            ← región/ubicación donde se opera el tour (ver §40 Regions)

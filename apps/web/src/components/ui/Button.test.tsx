@@ -50,10 +50,10 @@ describe("Button — variants and states", () => {
 
     const button = screen.getByRole("button");
     expect(button).toHaveClass("bg-action-cta");
-    expect(button).toHaveClass("text-text-primary");
+    expect(button).toHaveClass("text-on-action");
   });
 
-  it("renders secondary variant with transparent bg and border", () => {
+  it("renders secondary variant as outline glass (Figma Button/Outline)", () => {
     render(
       <Wrapper>
         <Button variant="secondary" labelKey="home:cta.secondary" />
@@ -61,9 +61,8 @@ describe("Button — variants and states", () => {
     );
 
     const button = screen.getByRole("button");
-    expect(button).toHaveClass("bg-transparent");
-    expect(button).toHaveClass("border");
-    expect(button).toHaveClass("border-focus");
+    expect(button).toHaveClass("glass-surface");
+    expect(button).toHaveClass("glass-interactive");
     expect(button).toHaveClass("text-text-primary");
   });
 
@@ -75,7 +74,7 @@ describe("Button — variants and states", () => {
     );
 
     const button = screen.getByRole("button");
-    expect(button).toHaveClass("transition-colors");
+    expect(button.className).toContain("transition-[background-color");
     expect(button).toHaveClass("duration-brand");
   });
 
@@ -87,8 +86,8 @@ describe("Button — variants and states", () => {
     );
 
     const button = screen.getByRole("button");
-    expect(button).toHaveClass("focus-visible:ring-2");
-    expect(button).toHaveClass("focus-visible:ring-azul-profundo");
+    expect(button).toHaveClass("focus-visible:outline-2");
+    expect(button).toHaveClass("focus-visible:outline-focus");
   });
 });
 

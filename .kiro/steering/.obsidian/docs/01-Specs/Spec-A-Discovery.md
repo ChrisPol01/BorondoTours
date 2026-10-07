@@ -121,11 +121,14 @@ kiro-spec: .kiro/specs/flujo-a-discovery.md
 
 ## 6. Auth Gate (pre-checkout)
 
-### RF-A10 — Interceptar al usuario antes de reservar
-**Contexto:** El usuario hace clic en "Reservar" en la card o en el detalle. Si no tiene sesión, se presenta el Auth Gate.
+### RF-A10 — Interceptar al usuario antes de pagar
+> **Decisión 2026-09-29 (opción B):** el Auth Gate aparece al hacer clic en **"Pagar"** (checkout paso 3), no al hacer clic en "Reservar". El visitante recorre fecha, viajeros, add-ons y datos del pasajero sin cuenta; esa selección se guarda en el estado del checkout (sessionStorage) y sobrevive al redirect de Google OAuth. Tras autenticarse vuelve al paso de pago con todo precargado. También pide cuenta: guardar favoritos y abrir el chat. Los criterios de abajo que dicen "Reservar" se leen como "Pagar".
+
+**Contexto:** El usuario hace clic en "Pagar" en el checkout. Si no tiene sesión, se presenta el Auth Gate.
 
 **Criterios de aceptación:**
 - [ ] Si el usuario NO está autenticado y hace clic en "Reservar": mostrar modal de Auth (Spec F)
+- [ ] El modal se abre **sobre el Detalle del tour** (la pantalla de origen), con velo `#0F1A2B` 30 % + blur 20 que deja ver el tour, la fecha y los viajeros elegidos detrás (design.md §8f). En móvil, hoja inferior con el mismo velo.
 - [ ] La intención de reserva (tour_id, fecha tentativa) se guarda en Zustand antes de abrir el modal
 - [ ] Post-auth exitoso: redirigir directamente al checkout con los datos preservados
 - [ ] Si el usuario YA está autenticado: ir directamente al checkout sin interrupción
@@ -224,6 +227,8 @@ Tours
 **Plan tentativo:**
 - Fase 3: Widget de chat con Intercom o Crisp (solución off-the-shelf) + handoff a agente humano.
 - Fase 4 (post-inversión): Fine-tuning de un modelo de lenguaje con el histórico de tickets de soporte de BorondoTours.
+
+**Regla de copy (2026-09-27):** mientras el chatbot no esté activo, el B2C (Contacto, footer, FAQ) solo publica el horario del agente humano: **lunes a sábado, 8:00 a.m. – 5:00 p.m.** (confirmado por el usuario 2026-09-27). La frase "atención 24/7" se publica únicamente cuando el chatbot esté en producción; en Figma queda como variante oculta.
 
 ### H-32 — Reclamación de Leads sin Dueño
 **Decisión:** Sin implementación por ahora. Los leads expirados (90 días sin interacción) pasan a la vista "Leads sin dueño" accesible para todos los agentes (Spec-H RF-H04). No se requiere un flujo de "reclamación" formal — cualquier agente puede abrir el lead y crear una nueva cotización.

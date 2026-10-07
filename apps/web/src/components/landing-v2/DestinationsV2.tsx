@@ -139,13 +139,13 @@ function DestinationsV2Content(): JSX.Element {
             <span className="font-heading text-label uppercase tracking-wider text-turquesa">
               {t("destinations.kicker")}
             </span>
-            <h2 className="mt-1 font-heading text-h2 font-bold text-negro-volcanico">
+            <h2 className="mt-1 font-heading text-h2 font-bold text-text-primary">
               {t("destinations.title")}
             </h2>
           </div>
           <a
             href="/discovery"
-            className="hidden text-body2 font-medium text-turquesa transition-colors hover:text-azul-condor md:inline-flex md:items-center md:gap-1"
+            className="hidden text-body2 font-medium text-turquesa transition-colors hover:text-text-muted md:inline-flex md:items-center md:gap-1"
           >
             {t("destinations.viewAll")}
             <span aria-hidden="true">→</span>
@@ -209,7 +209,7 @@ function DestinationsError({
 }): JSX.Element {
   return (
     <div className="flex flex-col items-center gap-4 py-12 text-center" role="alert">
-      <p className="text-body1 font-body text-negro-volcanico/80">{message}</p>
+      <p className="text-body1 font-body text-text-primary/80">{message}</p>
       <Button variant="secondary" labelKey="home:destinations.retry" onClick={onRetry} />
     </div>
   );

@@ -1,0 +1,7 @@
+---
+/**
+ * Aplica el tema guardado (localStorage "borondo.theme") antes del primer pintado para evitar parpadeo.
+ * Debe ir en <head>. La lista de temas válidos coincide con THEMES de src/lib/theme.ts ("colorido" = sin atributo).
+ */
+---
+<script is:inline>try{const t=localStorage.getItem("borondo.theme");if(t==="claro"||t==="oscuro"||t==="sistema")document.documentElement.setAttribute("data-theme",t)}catch{/* sin localStorage: se queda el tema Colorido */}</script>

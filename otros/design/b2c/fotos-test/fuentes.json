@@ -1,5 +1,15 @@
 [
   {
+    "file": "destino-ciudad-perdida-hd.jpg",
+    "kind": "Destino",
+    "label": "Ciudad Perdida, Sierra Nevada de Santa Marta (Magdalena)",
+    "source": "Imagen propia de BorondoTours (otros/design/b2c/web/fondo ciudad perdida.png)",
+    "processing": "Real-ESRGAN x4plus (1536x1024 → 6144x4096) y reducción bicúbica a 3072x2048, JPG q85",
+    "originalSize": "1536x1024",
+    "bytes": 1340857,
+    "license": "Propia"
+  },
+  {
     "file": "destino-eje-cafetero-cocora.jpg",
     "kind": "Destino",
     "label": "Valle del Cocora, Salento (Quindío)",

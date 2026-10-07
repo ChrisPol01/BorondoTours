@@ -133,7 +133,7 @@ export function NearbyTours({
   if (state.status === "loading") {
     return (
       <section aria-label={t("nearby.title")} className="w-full">
-        <h2 className="font-heading text-h3 font-semibold text-negro-volcanico mb-4">
+        <h2 className="font-heading text-h3 font-semibold text-text-primary mb-4">
           {t("nearby.title")}
         </h2>
         <div
@@ -157,7 +157,7 @@ export function NearbyTours({
   // Estado de éxito: carrusel con TourCards
   return (
     <section aria-label={t("nearby.title")} className="w-full">
-      <h2 className="font-heading text-h3 font-semibold text-negro-volcanico mb-4">
+      <h2 className="font-heading text-h3 font-semibold text-text-primary mb-4">
         {t("nearby.title")}
       </h2>
       <div className="flex gap-4 overflow-x-auto pb-2">

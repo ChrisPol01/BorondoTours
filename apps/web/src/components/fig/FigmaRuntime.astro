@@ -1,0 +1,123 @@
+---
+/**
+ * Comportamiento común de las vistas generadas desde Figma.
+ *
+ * La capa visual se genera 1:1; este runtime conecta controles entre estados aprobados sin inventar
+ * APIs, pagos, sesión, uploads ni persistencia de negocio. Las acciones reales se sustituyen por
+ * islands contract-backed cuando los endpoints estén disponibles.
+ */
+---
+
+<script>
+  import { initChrome } from '../../lib/fig/runtime/chrome';
+  import { initHome } from '../../lib/fig/runtime/home';
+  import { initLegal } from '../../lib/fig/runtime/legal';
+  import { initSubnav } from '../../lib/fig/runtime/subnav';
+  import { initCatalog, initCatalogLoading } from '../../lib/fig/runtime/catalog';
+  import { initFixedChrome } from '../../lib/fig/runtime/fixed';
+  import { applyLanguage, currentLang } from '../../lib/fig/runtime/i18n-dom';
+
+  import { initAuth } from '../../lib/fig/runtime/auth';
+  import { initGlass } from '../../lib/fig/runtime/glass';
+  import { initTour } from '../../lib/fig/runtime/tour';
+  import { initContact } from '../../lib/fig/runtime/contact';
+  import { initContrast } from '../../lib/fig/runtime/contrast';
+  import { initTourCards } from '../../lib/fig/runtime/tourcard';
+  import { initStandardCards } from '../../lib/fig/runtime/static-cards';
+
+  // Módulos específicos primero: marcan con data-bt-handled lo que el enrutador genérico debe ignorar.
+  initAuth();
+  initChrome();
+  initHome();
+  initLegal();
+  initSubnav();
+  initCatalog();
+  initCatalogLoading();
+  initTour();
+  initContact();
+  initStandardCards();
+  initTourCards();
+  // Después de chrome (el logo ya está envuelto en su enlace) para marcar bien las cápsulas.
+  initFixedChrome();
+  initGlass();
+  initContrast();
+
+  type Theme = 'colorido' | 'claro' | 'oscuro';
+
+  const normalize = (value: string): string => value.replace(/\s+/g, ' ').trim().toLocaleLowerCase('es');
+
+  const routeRules: readonly [RegExp, string][] = [
+    [/^continuar a pasajeros$/, '/checkout/viajeros'],
+    [/^continuar a pago$/, '/checkout/pago'],
+    [/^(confirmar y pagar|pagar ahora|ir a pagar)/, '/iniciar-sesion'],
+    [/^crear cuenta$/, '/crear-cuenta'],
+    [/^recuperar contraseña$/, '/recuperar-contrasena'],
+    [/^(verificar|confirmar código|continuar con código)$/, '/verificar-codigo'],
+    [/^ir a mis reservas$/, '/mis-reservas'],
+    [/^descargar voucher$/, '/mis-reservas/voucher'],
+    [/^cancelar viaje$/, '/mis-reservas/cancelar'],
+    [/^reprogramar$/, '/mis-reservas/reprogramar'],
+    [/^calificar$/, '/mis-reservas/calificar'],
+    [/^ver mapa$/, '/explorar/mapa'],
+    [/^ver (todo el )?catálogo$/, '/explorar'],
+    [/^explorar tours$/, '/explorar'],
+    [/^cotiza con un asesor$/, '/contacto'],
+  ];
+
+  const routeFor = (label: string): string | null => {
+    for (const [rule, route] of routeRules) if (rule.test(label)) return route;
+    return null;
+  };
+
+  const changeTheme = (): void => {
+    const root = document.documentElement;
+    const themes: readonly Theme[] = ['colorido', 'claro', 'oscuro'];
+    const current = (root.dataset.theme as Theme | undefined) ?? 'colorido';
+    const index = themes.indexOf(current);
+    const next = themes[(index + 1) % themes.length] ?? 'colorido';
+    if (next === 'colorido') delete root.dataset.theme;
+    else root.dataset.theme = next;
+    try { localStorage.setItem('borondo.theme', next); } catch { /* storage no disponible */ }
+  };
+
+  const rememberCookieChoice = (accepted: boolean): void => {
+    try { localStorage.setItem('borondo.cookies', accepted ? 'accepted' : 'essential'); } catch { /* storage no disponible */ }
+    if (location.pathname === '/estados/cookies') location.assign('/');
+  };
+
+  document.querySelectorAll<HTMLButtonElement>('.fig-stage button:not([data-bt-handled])').forEach((button) => {
+    button.addEventListener('click', () => {
+      const label = normalize(button.textContent ?? button.getAttribute('aria-label') ?? '');
+      if (!label) return;
+
+      if (label.includes('tema') || label.includes('apariencia')) { changeTheme(); return; }
+      if (/aceptar (todas|cookies)/.test(label)) { rememberCookieChoice(true); return; }
+      if (/solo (necesarias|esenciales)|rechazar/.test(label)) { rememberCookieChoice(false); return; }
+      if (/^volver/.test(label)) {
+        if (history.length > 1) history.back();
+        else location.assign('/');
+        return;
+      }
+      if (/^reintentar/.test(label)) { location.reload(); return; }
+      if (/^(cerrar|cancelar)$/.test(label)) {
+        if (history.length > 1) history.back();
+        else location.assign('/');
+        return;
+      }
+
+      const route = routeFor(label);
+      if (route) location.assign(route);
+    });
+  });
+
+  // Idioma guardado (borondo.lang): se aplica a toda la vista al cargar.
+  const lang = currentLang();
+  if (lang !== 'es') applyLanguage(lang);
+
+  // Anti-parpadeo (FOUC): la primera pasada del runtime ya reorganizo navbar, pestañas y rail.
+  // Revelamos el escenario en el siguiente frame (tras aplicar el layout) quitando .fig-booting.
+  // El fallback del <head> (load + timeout) cubre el caso de que este script falle.
+  const reveal = (window as unknown as { __figReady?: () => void }).__figReady;
+  if (typeof reveal === 'function') requestAnimationFrame(() => requestAnimationFrame(reveal));
+  else document.documentElement.classList.remove('fig-booting');
+</script>

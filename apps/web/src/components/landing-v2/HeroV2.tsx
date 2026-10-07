@@ -64,12 +64,12 @@ export function HeroV2(): JSX.Element {
         {/* Título con token text-h1 */}
         <h1
           id="hero-v2-heading"
-          className="font-heading text-h1 font-extrabold leading-tight text-blanco-niebla"
+          className="font-heading text-h1 font-extrabold leading-tight text-on-strong"
         >
           {translate("home:hero.title")}
         </h1>
 
-        <p className="mx-auto mt-4 max-w-lg font-body text-body1 leading-relaxed text-blanco-niebla/90">
+        <p className="mx-auto mt-4 max-w-lg font-body text-body1 leading-relaxed text-on-strong/90">
           {translate("home:hero.subtitle")}
         </p>
       </div>

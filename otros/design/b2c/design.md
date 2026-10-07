@@ -258,7 +258,7 @@ Alias Tailwind: `shadow-card`, `shadow-floating`, `shadow-sticky`.
 > **Toda** ventana modal o drawer debe usar este componente, nunca una implementación ad-hoc.
 
 **Anatomía:**
-- **Overlay:** `bg-negro-volcanico/60` cubriendo el viewport; clic cierra (salvo modales bloqueantes de feedback post-tour).
+- **Overlay:** `#0F1A2B` al 30 % + `backdrop-filter: blur(20px)` cubriendo el viewport (ver §8f; antes `bg-negro-volcanico/60`); clic cierra (salvo modales bloqueantes de feedback post-tour). El panel lateral usa un velo leve (20 % + blur 8) y los popovers no llevan velo.
 - **Contenedor:** `bg-surface-page`, `p-6`, texto `text-text-primary`, sombra `shadow-floating`.
   - Modal (`dialog`): `rounded-panel` (2rem), `max-w-2xl`, `w-[calc(100%-2rem)]`, `max-h-[calc(100vh-2rem)]` con scroll interno.
   - Drawer: `w-drawer-mobile` (85vw) con `max-w-drawer-max` (24rem); `rounded-l-panel` (borde derecho) o `rounded-r-panel` (borde izquierdo).
@@ -279,6 +279,75 @@ Alias Tailwind: `shadow-card`, `shadow-floating`, `shadow-sticky`.
 
 ---
 
+## 8f. Patrones de interrupción y estados (decisión 2026-09-29)
+
+> Regla: el desenfoque solo aparece cuando la tarea interrumpe el flujo y tiene pasos propios.
+> Los menús ligeros (cuenta, búsqueda, notificaciones) nunca desenfocan la pantalla.
+
+| Nivel | Desktop | Móvil | Se usa en |
+|---|---|---|---|
+| Diálogo bloqueante | 480 px, centrado en el viewport, radio 24, padding 32. Velo `#0F1A2B` al 30 % + `backdrop-filter: blur(20px)` | Hoja inferior con el mismo velo | Pago rechazado, enlace vencido, cupo agotado, cancelar, reprogramar, calificar, OTP, lista de espera, Auth (sobre el Detalle del tour) |
+| Panel lateral | 480 px a la derecha, alto = viewport − 32, velo 20 % + blur 8, barra con título y cerrar, acciones fijas abajo | Pantalla completa | Detalle de reserva, Soporte |
+| Popover anclado | Junto a su disparador, sin velo, `glass-strong` | Hoja inferior o pantalla completa | Menú de cuenta (sobre el perfil del sidebar, mismo ancho), Notificaciones (a la derecha de la campana, 380 px) |
+| Toast | Abajo a la derecha, 400 px, sobre el FAB; `role="status"` | Arriba, ancho completo | Eventos en tiempo real, "Estás en la lista de espera" |
+| Aviso fijo | Franja superior | Franja superior | Urgencias (nunca diálogo) |
+| Inline | Dentro de la página | Dentro de la página | Sin resultados, skeleton de carga (`aria-busy="true"`), fecha agotada, pasaporte, divide tu cuenta, pestañas de Mis reservas, vacíos, chat bloqueado / solo lectura, 404/500 (página completa) |
+| Acordeón | Colapsado por defecto | Colapsado por defecto | Términos y condiciones, política de cancelación en el checkout |
+
+**Notificaciones con sesión:** la bandeja es un popover de ~380 px en la campana del sidebar (desktop) y una pantalla completa en móvil. Lo que llega en tiempo real se muestra como toast. Lo urgente, como aviso fijo arriba.
+
+**Sidebar con sesión (como ChatGPT o Gemini):** en código `position: sticky; top: 16px; height: calc(100vh - 32px)`; solo el contenido de la derecha hace scroll. En Figma el sidebar mide el alto del frame − 32 y los frames con sesión miden mínimo 900 px. El colofón va dentro de la columna de contenido (desde x = 304), no debajo del sidebar.
+
+**Botón de estado activo:** cuando una acción ya se hizo (p. ej. "Te avisaremos si se abre un cupo"), el botón pasa a verde frailejón al 18 % con borde verde, icono de check y texto `text/primary`.
+
+**FAB de soporte:** en páginas con tarjeta de reserva fija a la derecha (Detalle del tour) usa la versión compacta de 52 px (solo icono, `aria-label="¿Te ayudamos?"`) para no tapar el calendario.
+
+**Mapas:** el mapa de Explorar usa la silueta real de Colombia (departamentos en `brand/blanco-niebla`, bordes `brand/azul-condor` al 35 %) sobre agua `#DCEBEE`. Las etiquetas de precio y la tarjeta del tour van sólidas (`surface/strong`), nunca glass, porque el mapa es claro.
+
+**Calificaciones:** estrellas llenas en `brand/dorado`, vacías solo con contorno.
+
+**Persona de demo:** el viajero con sesión es Andrés Morales (`andres.morales@correo.com`) en todas las pantallas.
+
+## 8g. Cierre del B2C: reglas de auditoría (2026-09-29)
+
+**Sin negro puro.** Ninguna superficie usa `#000000`. Tema Claro: `surface/strong` = `#103B66` (Azul Profundo), `tint` y `border` = `#1C1C1E`. Tema Oscuro: `surface/strong` = `#1F1F22`. `tint` es una capa de baja opacidad (≤ 16 %); si un panel necesita fondo propio usa `glass/strong`, que ya cambia con el tema. Las páginas 404/500, modales, hojas y toasts usan `glass/strong`, no `surface/strong`.
+
+**Texto sobre fotografía:** siempre `text/on-strong` (blanco) en los tres temas, con la viñeta o el vidrio de la tarjeta debajo.
+
+**Estrellas:** icono `icon/star` en `action/cta` (dorado) en todos los temas.
+
+**Vidrio en tarjetas con foto:** la capa "Cristal" mide lo mismo que el panel de información (no la tarjeta entera), con radio 16. Si cubre la foto, la desenfoca.
+
+**Componentes:** la fuente única es la página **Design System** (sección `00 · Componentes y sistema`). Las pantallas usan instancias; no se crean componentes dentro de las pantallas.
+
+**Estados de controles** (sets en `Estados — Controles (componentes)`):
+
+| Control | Estados | Notas |
+|---|---|---|
+| Button | Default · Hover · Pressed · Focus · Disabled · Loading | Variantes Primario, CTA, Outline, Ghost. Alturas S 32 · M 40 · L 48. Propiedades Etiqueta (texto) e Icono (booleano) |
+| Input | Default · Hover · Focus · Filled · Error · Success · Disabled | Error y éxito llevan icono además del color |
+| Chip | Default · Hover · Seleccionado · Focus · Disabled | Seleccionado: fondo `action/primary`, texto `text/on-action` |
+| Tab | Default · Hover · Activa · Focus · Disabled | Activa: `action/primary` al 16 % |
+| Checkbox | Off · On · Indeterminado · Focus · Error · Disabled | Caja 20 px, radio 6 |
+| Radio | Off · On · Focus · Error · Disabled | Círculo 20 px, punto 10 px |
+| Toggle | On · Off · Deshabilitado · Bloqueado | Set existente |
+| TourCard | Default · Hover | Hover: sombra `floating` (en código además `translate-y(-4px)`) |
+
+Foco: anillo de 2 px por fuera en `text/primary`. No se usa `focus` porque en Colorido es el mismo turquesa del botón primario. Deshabilitado: opacidad 50 %. Cargando: spinner, texto "Cargando…" y `aria-busy="true"`.
+
+**Scroll (decisiones de diseño asumidas, según Material 3 y Apple HIG):**
+
+- La página hace scroll vertical. Quedan fijos al viewport: navbar, sidebar con sesión, nav móvil inferior, encabezado limpio del checkout, rail derecho, FAB de soporte, barras fijas inferiores, botones flotantes Mapa/Lista y el resumen del checkout. En Figma se configuran con `numberOfFixedChildren`.
+- Velos, hojas, modales, paneles y toasts van por encima de todo y también fijos al viewport.
+- Tarjeta "Reserva" del Detalle del tour y "Sub-navegación": en código `position: sticky` (top 96 px). Figma no los prototipa como sticky; se documentan aquí.
+- Carruseles y filas de chips que desbordan: scroll horizontal, sin barra visible, con la última tarjeta cortada para indicar que hay más.
+- Dentro de modales y hojas solo hace scroll el cuerpo; título y acciones quedan fijos.
+- El hero y el colofón hacen scroll con la página.
+
+**Pendiente de normalizar en pantallas:** los botones dibujados en las pantallas usan alturas 32, 34, 36, 37, 38, 42, 44 y 51 px y radios 999 o 12. El set Button fija 32/40/48 y radio 999 (Ghost 12). Ver el reporte de auditoría.
+
+---
+
 ## 9. Tono y Voz de la Marca
 
 - **Tono:** cercano, experto, inspirador. Segunda persona (de tú a tú).
@@ -292,7 +361,7 @@ Alias Tailwind: `shadow-card`, `shadow-floating`, `shadow-sticky`.
 Cada promesa con su icono lineal:
 1. **Turismo Responsable** (hoja) — Cuidamos los lugares que visitas.
 2. **Experiencias Únicas** (cámara) — Diseñamos viajes auténticos y memorables.
-3. **Seguridad Garantizada** (escudo) — Tu tranquilidad es nuestra prioridad.
+3. **Seguridad y Confianza** (escudo) — Tu tranquilidad es nuestra prioridad.
 4. **Atención Personalizada** (personas) — Estamos contigo en cada paso.
 
 ---

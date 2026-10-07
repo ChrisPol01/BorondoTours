@@ -11,12 +11,20 @@ Cuando los operadores suban sus fotos (Spec-I RF-I04, paso "Multimedia"), estas 
 
 ## Fuentes y licencia
 - Fotos `destino-*` y `exp-*` en JPG: **Unsplash** bajo la [Unsplash License](https://unsplash.com/license) (uso gratuito, comercial permitido, atribución no obligatoria). No se pueden vender sin modificar ni usar para crear un servicio de fotos competidor.
-- `destino-ciudad-perdida.png`: imagen propia de BorondoTours (copia de `../web/fondo ciudad perdida.png`), 1536×1024. Para producción conviene una versión de mayor resolución.
+- `destino-ciudad-perdida.png`: imagen propia de BorondoTours (copia de `../web/fondo ciudad perdida.png`), 1536×1024.
+- `destino-ciudad-perdida-hd.jpg`: la misma imagen escalada con super-resolución (Real-ESRGAN x4plus → reducida a 3072×2048). **Usar esta** en hero y producción.
+
+## Subida a Figma (medido 2026-09-27)
+- Verificado: el hero HD de 3072 px (1,3 MB) subió en 0,65 s.
+- Fotos de 1–3 MB (hasta 2560 px) suben en 1–3 s con `figma_execute_code` en modo `async: true` + `figma_job_status`. Se usan los originales; no hacen falta copias livianas.
+- Figma reduce automáticamente cualquier imagen mayor a 4096 px por lado → no subir más grande.
+- Lo que bloqueaba el plugin era pedir `capture: true` del frame completo (1440×1920) en la misma llamada. Capturas siempre aparte y con `scale ≤ 0.6`.
+- Si algún día hace falta aligerar: `otros/design/tools/figma-assets/generar-copias-figma.ps1`.
 
 ## Inventario
 | Archivo | Uso sugerido |
 |---|---|
-| destino-ciudad-perdida.png | Hero de Home |
+| destino-ciudad-perdida-hd.jpg | Hero de Home (3072px) |
 | destino-eje-cafetero-cocora.jpg | Tour / destino Eje Cafetero |
 | destino-tayrona.jpg | Tour / destino Caribe |
 | destino-amazonas.jpg | Tour / destino Amazonas |

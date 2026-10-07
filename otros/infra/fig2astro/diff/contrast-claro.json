@@ -1,0 +1,324 @@
+{
+  "/": [],
+  "/404": [],
+  "/bienvenida": [],
+  "/blog": [
+    {
+      "text": "Blog",
+      "cls": "p43_94 bt-ink",
+      "color": "rgb(10, 26, 43)",
+      "bg": "rgb(85,85,86)",
+      "ratio": 2.35,
+      "min": 4.5
+    },
+    {
+      "text": "Nosotros",
+      "cls": "p43_94 bt-ink",
+      "color": "rgb(10, 26, 43)",
+      "bg": "rgb(85,85,86)",
+      "ratio": 2.35,
+      "min": 4.5
+    },
+    {
+      "text": "ES",
+      "cls": "p43_41 bt-ink",
+      "color": "rgb(10, 26, 43)",
+      "bg": "rgb(85,85,86)",
+      "ratio": 2.35,
+      "min": 4.5
+    }
+  ],
+  "/blog/articulo": [],
+  "/checkout": [],
+  "/checkout/confirmacion": [],
+  "/checkout/cupo-agotado": [
+    {
+      "text": "Confirmación",
+      "cls": "p17_17",
+      "color": "rgb(81, 81, 86)",
+      "bg": "rgb(174,179,187)",
+      "ratio": 3.74,
+      "min": 4.5
+    },
+    {
+      "text": "Elige cómo pagar. Te mostramos el costo de cada medio antes ",
+      "cls": "p17_19",
+      "color": "rgb(81, 81, 86)",
+      "bg": "rgb(174,179,187)",
+      "ratio": 3.74,
+      "min": 4.5
+    }
+  ],
+  "/checkout/divide-tu-cuenta": [],
+  "/checkout/enlace-vencido": [
+    {
+      "text": "Confirmación",
+      "cls": "p16_17",
+      "color": "rgb(81, 81, 86)",
+      "bg": "rgb(174,179,187)",
+      "ratio": 3.74,
+      "min": 4.5
+    },
+    {
+      "text": "Elige cómo pagar. Te mostramos el costo de cada medio antes ",
+      "cls": "p16_19",
+      "color": "rgb(81, 81, 86)",
+      "bg": "rgb(174,179,187)",
+      "ratio": 3.74,
+      "min": 4.5
+    }
+  ],
+  "/checkout/pago": [],
+  "/checkout/pago-rechazado": [
+    {
+      "text": "Confirmación",
+      "cls": "p15_17",
+      "color": "rgb(81, 81, 86)",
+      "bg": "rgb(174,179,187)",
+      "ratio": 3.74,
+      "min": 4.5
+    },
+    {
+      "text": "Elige cómo pagar. Te mostramos el costo de cada medio antes ",
+      "cls": "p15_19",
+      "color": "rgb(81, 81, 86)",
+      "bg": "rgb(174,179,187)",
+      "ratio": 3.74,
+      "min": 4.5
+    }
+  ],
+  "/checkout/procesando": [],
+  "/checkout/viajeros": [],
+  "/checkout/viajeros-pasaporte-cargado": [],
+  "/checkout/viajeros-pasaporte-pendiente": [],
+  "/contacto": [
+    {
+      "text": "Blog",
+      "cls": "p46_68 bt-ink",
+      "color": "rgb(10, 26, 43)",
+      "bg": "rgb(85,85,86)",
+      "ratio": 2.35,
+      "min": 4.5
+    },
+    {
+      "text": "Nosotros",
+      "cls": "p46_68 bt-ink",
+      "color": "rgb(10, 26, 43)",
+      "bg": "rgb(85,85,86)",
+      "ratio": 2.35,
+      "min": 4.5
+    },
+    {
+      "text": "ES",
+      "cls": "p46_26 bt-ink",
+      "color": "rgb(10, 26, 43)",
+      "bg": "rgb(85,85,86)",
+      "ratio": 2.35,
+      "min": 4.5
+    }
+  ],
+  "/crear-cuenta": [],
+  "/destinos": [],
+  "/error": [],
+  "/estados/cookies": [],
+  "/estados/explorar-cargando": [],
+  "/estados/explorar-sin-resultados": [],
+  "/estados/explorar-sugerencias": [],
+  "/estados/favoritos-vacio": [],
+  "/estados/home-promociones": [],
+  "/estados/mensajes-bloqueado": [],
+  "/estados/mensajes-solo-lectura": [],
+  "/estados/mis-reservas-vacio": [],
+  "/estados/perfil-menu": [],
+  "/estados/tour-fecha-agotada": [],
+  "/estados/tour-lista-espera": [
+    {
+      "text": "Inicio",
+      "cls": "p9_6",
+      "color": "rgb(81, 81, 86)",
+      "bg": "rgb(174,179,187)",
+      "ratio": 3.74,
+      "min": 4.5
+    },
+    {
+      "text": "Explorar",
+      "cls": "p9_6",
+      "color": "rgb(81, 81, 86)",
+      "bg": "rgb(174,179,187)",
+      "ratio": 3.74,
+      "min": 4.5
+    },
+    {
+      "text": "Eje Cafetero",
+      "cls": "p9_6",
+      "color": "rgb(81, 81, 86)",
+      "bg": "rgb(174,179,187)",
+      "ratio": 3.74,
+      "min": 4.5
+    },
+    {
+      "text": "Salento, Quindío",
+      "cls": "p9_40",
+      "color": "rgb(81, 81, 86)",
+      "bg": "rgb(173,178,187)",
+      "ratio": 3.71,
+      "min": 4.5
+    },
+    {
+      "text": "1 día · 8 horas",
+      "cls": "p9_40",
+      "color": "rgb(81, 81, 86)",
+      "bg": "rgb(174,179,187)",
+      "ratio": 3.74,
+      "min": 4.5
+    },
+    {
+      "text": "Moderado",
+      "cls": "p9_40",
+      "color": "rgb(81, 81, 86)",
+      "bg": "rgb(174,179,187)",
+      "ratio": 3.74,
+      "min": 4.5
+    },
+    {
+      "text": "Máx. 16 personas",
+      "cls": "p9_40",
+      "color": "rgb(81, 81, 86)",
+      "bg": "rgb(174,179,187)",
+      "ratio": 3.74,
+      "min": 4.5
+    },
+    {
+      "text": "· 126 reseñas de viajeros verificados",
+      "cls": "p9_40",
+      "color": "rgb(81, 81, 86)",
+      "bg": "rgb(173,178,187)",
+      "ratio": 3.71,
+      "min": 4.5
+    },
+    {
+      "text": "1",
+      "cls": "p9_125",
+      "color": "rgb(16, 16, 16)",
+      "bg": "rgb(104,107,116)",
+      "ratio": 3.58,
+      "min": 4.5
+    },
+    {
+      "text": "2",
+      "cls": "p9_125",
+      "color": "rgb(16, 16, 16)",
+      "bg": "rgb(104,107,116)",
+      "ratio": 3.58,
+      "min": 4.5
+    }
+  ],
+  "/estados/tour-lista-espera-confirmada": [],
+  "/experiencias": [],
+  "/explorar": [],
+  "/explorar/mapa": [],
+  "/favoritos": [],
+  "/iniciar-sesion": [],
+  "/legal": [
+    {
+      "text": "Blog",
+      "cls": "p48_62 bt-ink",
+      "color": "rgb(10, 26, 43)",
+      "bg": "rgb(85,85,86)",
+      "ratio": 2.35,
+      "min": 4.5
+    },
+    {
+      "text": "Nosotros",
+      "cls": "p48_62 bt-ink",
+      "color": "rgb(10, 26, 43)",
+      "bg": "rgb(85,85,86)",
+      "ratio": 2.35,
+      "min": 4.5
+    },
+    {
+      "text": "ES",
+      "cls": "p48_66 bt-ink",
+      "color": "rgb(10, 26, 43)",
+      "bg": "rgb(85,85,86)",
+      "ratio": 2.35,
+      "min": 4.5
+    }
+  ],
+  "/mensajes": [],
+  "/mis-reservas": [],
+  "/mis-reservas/calificar": [],
+  "/mis-reservas/cancelacion-confirmada": [],
+  "/mis-reservas/canceladas": [],
+  "/mis-reservas/cancelar": [],
+  "/mis-reservas/completadas": [],
+  "/mis-reservas/detalle": [],
+  "/mis-reservas/por-pagar": [],
+  "/mis-reservas/reembolso": [],
+  "/mis-reservas/reprogramar": [],
+  "/mis-reservas/voucher": [],
+  "/mis-tours": [],
+  "/nosotros": [],
+  "/notificaciones": [],
+  "/pago/participante": [],
+  "/pago/saldo": [],
+  "/perfil": [],
+  "/politica-de-cancelacion": [
+    {
+      "text": "Blog",
+      "cls": "p49_57 bt-ink",
+      "color": "rgb(10, 26, 43)",
+      "bg": "rgb(85,85,86)",
+      "ratio": 2.35,
+      "min": 4.5
+    },
+    {
+      "text": "Nosotros",
+      "cls": "p49_57 bt-ink",
+      "color": "rgb(10, 26, 43)",
+      "bg": "rgb(85,85,86)",
+      "ratio": 2.35,
+      "min": 4.5
+    },
+    {
+      "text": "ES",
+      "cls": "p49_61 bt-ink",
+      "color": "rgb(10, 26, 43)",
+      "bg": "rgb(85,85,86)",
+      "ratio": 2.35,
+      "min": 4.5
+    }
+  ],
+  "/preguntas-frecuentes": [
+    {
+      "text": "Blog",
+      "cls": "p47_70 bt-ink",
+      "color": "rgb(10, 26, 43)",
+      "bg": "rgb(85,85,86)",
+      "ratio": 2.35,
+      "min": 4.5
+    },
+    {
+      "text": "Nosotros",
+      "cls": "p47_70 bt-ink",
+      "color": "rgb(10, 26, 43)",
+      "bg": "rgb(85,85,86)",
+      "ratio": 2.35,
+      "min": 4.5
+    },
+    {
+      "text": "ES",
+      "cls": "p47_74 bt-ink",
+      "color": "rgb(10, 26, 43)",
+      "bg": "rgb(85,85,86)",
+      "ratio": 2.35,
+      "min": 4.5
+    }
+  ],
+  "/recuperar-contrasena": [],
+  "/sin-conexion": [],
+  "/soporte": [],
+  "/tour": [],
+  "/verificar-codigo": [],
+  "/verificar-correo": []
+}

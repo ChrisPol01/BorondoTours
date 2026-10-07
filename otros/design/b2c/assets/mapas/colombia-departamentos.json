@@ -1,0 +1,204 @@
+{
+  "viewBox": "0 0 613 694",
+  "attribution": "@svg-maps/colombia (MapSVG), CC BY 4.0",
+  "departments": [
+    {
+      "id": "ama",
+      "daneCode": "91",
+      "name": "Amazonas",
+      "region": "AMAZONIA"
+    },
+    {
+      "id": "ant",
+      "daneCode": "05",
+      "name": "Antioquia",
+      "region": "ANDINA"
+    },
+    {
+      "id": "ara",
+      "daneCode": "81",
+      "name": "Arauca",
+      "region": "ORINOQUIA"
+    },
+    {
+      "id": "atl",
+      "daneCode": "08",
+      "name": "Atlántico",
+      "region": "CARIBE"
+    },
+    {
+      "id": "dc",
+      "daneCode": "11",
+      "name": "Bogotá D. C.",
+      "region": "ANDINA"
+    },
+    {
+      "id": "bol",
+      "daneCode": "13",
+      "name": "Bolívar",
+      "region": "CARIBE"
+    },
+    {
+      "id": "boy",
+      "daneCode": "15",
+      "name": "Boyacá",
+      "region": "ANDINA"
+    },
+    {
+      "id": "cal",
+      "daneCode": "17",
+      "name": "Caldas",
+      "region": "ANDINA"
+    },
+    {
+      "id": "caq",
+      "daneCode": "18",
+      "name": "Caquetá",
+      "region": "AMAZONIA"
+    },
+    {
+      "id": "cas",
+      "daneCode": "85",
+      "name": "Casanare",
+      "region": "ORINOQUIA"
+    },
+    {
+      "id": "cau",
+      "daneCode": "19",
+      "name": "Cauca",
+      "region": "PACIFICA"
+    },
+    {
+      "id": "ces",
+      "daneCode": "20",
+      "name": "Cesar",
+      "region": "CARIBE"
+    },
+    {
+      "id": "cho",
+      "daneCode": "27",
+      "name": "Chocó",
+      "region": "PACIFICA"
+    },
+    {
+      "id": "cor",
+      "daneCode": "23",
+      "name": "Córdoba",
+      "region": "CARIBE"
+    },
+    {
+      "id": "cun",
+      "daneCode": "25",
+      "name": "Cundinamarca",
+      "region": "ANDINA"
+    },
+    {
+      "id": "gua",
+      "daneCode": "94",
+      "name": "Guainía",
+      "region": "AMAZONIA"
+    },
+    {
+      "id": "guv",
+      "daneCode": "95",
+      "name": "Guaviare",
+      "region": "AMAZONIA"
+    },
+    {
+      "id": "hui",
+      "daneCode": "41",
+      "name": "Huila",
+      "region": "ANDINA"
+    },
+    {
+      "id": "lag",
+      "daneCode": "44",
+      "name": "La Guajira",
+      "region": "CARIBE"
+    },
+    {
+      "id": "mag",
+      "daneCode": "47",
+      "name": "Magdalena",
+      "region": "CARIBE"
+    },
+    {
+      "id": "met",
+      "daneCode": "50",
+      "name": "Meta",
+      "region": "ORINOQUIA"
+    },
+    {
+      "id": "nar",
+      "daneCode": "52",
+      "name": "Nariño",
+      "region": "PACIFICA"
+    },
+    {
+      "id": "nsa",
+      "daneCode": "54",
+      "name": "Norte de Santander",
+      "region": "ANDINA"
+    },
+    {
+      "id": "put",
+      "daneCode": "86",
+      "name": "Putumayo",
+      "region": "AMAZONIA"
+    },
+    {
+      "id": "qui",
+      "daneCode": "63",
+      "name": "Quindío",
+      "region": "ANDINA"
+    },
+    {
+      "id": "ris",
+      "daneCode": "66",
+      "name": "Risaralda",
+      "region": "ANDINA"
+    },
+    {
+      "id": "sap",
+      "daneCode": "88",
+      "name": "San Andrés, Providencia y Santa Catalina",
+      "region": "INSULAR"
+    },
+    {
+      "id": "san",
+      "daneCode": "68",
+      "name": "Santander",
+      "region": "ANDINA"
+    },
+    {
+      "id": "suc",
+      "daneCode": "70",
+      "name": "Sucre",
+      "region": "CARIBE"
+    },
+    {
+      "id": "tol",
+      "daneCode": "73",
+      "name": "Tolima",
+      "region": "ANDINA"
+    },
+    {
+      "id": "vac",
+      "daneCode": "76",
+      "name": "Valle del Cauca",
+      "region": "PACIFICA"
+    },
+    {
+      "id": "vau",
+      "daneCode": "97",
+      "name": "Vaupés",
+      "region": "AMAZONIA"
+    },
+    {
+      "id": "vid",
+      "daneCode": "99",
+      "name": "Vichada",
+      "region": "ORINOQUIA"
+    }
+  ]
+}

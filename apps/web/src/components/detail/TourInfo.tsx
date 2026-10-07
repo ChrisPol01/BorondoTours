@@ -87,12 +87,12 @@ export function TourInfo({ tour }: TourInfoProps): JSX.Element {
   return (
     <section className="flex flex-col gap-4">
       {/* R15.2: Nombre como único H1 de la página */}
-      <h1 className="font-heading text-h1 font-extrabold text-negro-volcanico">
+      <h1 className="font-heading text-h1 font-extrabold text-text-primary">
         {tour.name}
       </h1>
 
       {/* Destino y región */}
-      <p className="text-body1 text-negro-volcanico/70">
+      <p className="text-body1 text-text-primary/70">
         {tour.destination}
         {tour.destination && tour.region ? " · " : ""}
         {regionLabel}
@@ -100,7 +100,7 @@ export function TourInfo({ tour }: TourInfoProps): JSX.Element {
 
       {/* Duración formateada (R15.2) */}
       {duration.length > 0 && (
-        <p className="text-body2 font-semibold text-negro-volcanico/80">
+        <p className="text-body2 font-semibold text-text-primary/80">
           {duration}
         </p>
       )}
@@ -108,7 +108,7 @@ export function TourInfo({ tour }: TourInfoProps): JSX.Element {
       {/* Badges: operador + dificultad (R15.3) */}
       <div className="flex flex-wrap items-center gap-2">
         {/* Badge operador */}
-        <span className="inline-flex items-center rounded-full border border-azul-profundo/20 bg-azul-profundo/10 px-3 py-1 text-label font-semibold text-azul-profundo">
+        <span className="inline-flex items-center rounded-full border border-border-subtle bg-surface-strong/10 px-3 py-1 text-label font-semibold text-text-heading">
           {tour.operatorName}
         </span>
 
@@ -121,7 +121,7 @@ export function TourInfo({ tour }: TourInfoProps): JSX.Element {
       </div>
 
       {/* Precio base (R15.2) */}
-      <p className="text-h4 font-bold text-negro-volcanico">
+      <p className="text-h4 font-bold text-text-primary">
         {price}
       </p>
 

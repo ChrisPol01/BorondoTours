@@ -65,7 +65,7 @@ describe("TourCard — visible elements (R4.6)", () => {
   it("renders the duration label", () => {
     render(<TourCard tour={mockTour} href="/tours/laguna-del-otun" />);
 
-    expect(screen.getByText("3 días / 2 noches")).toBeInTheDocument();
+    expect(screen.getByText(/3 días \/ 2 noches/)).toBeInTheDocument();
   });
 
   it("renders the formatted price", () => {
@@ -75,10 +75,11 @@ describe("TourCard — visible elements (R4.6)", () => {
     expect(screen.getByText(/1\.250\.000/)).toBeInTheDocument();
   });
 
-  it("renders the operator badge", () => {
+  it("does not show the operator name (white label)", () => {
     render(<TourCard tour={mockTour} href="/tours/laguna-del-otun" />);
 
-    expect(screen.getByText("Borondo Expediciones")).toBeInTheDocument();
+    // Marca blanca: la tarjeta nunca muestra el nombre del operador.
+    expect(screen.queryByText("Borondo Expediciones")).toBeNull();
   });
 });
 
@@ -113,21 +114,16 @@ describe("TourCard — keyboard activation (R4.8)", () => {
 });
 
 describe("TourCard — glass variant", () => {
-  it("renders with glass-surface class when glass=true", () => {
-    const { container } = render(
-      <TourCard tour={mockTour} href="/tours/laguna-del-otun" glass />,
-    );
-
-    // The Card component with variant=glass wraps in GlassSurface which adds glass-surface class
-    const glassSurface = container.querySelector(".glass-surface");
-    expect(glassSurface).toBeInTheDocument();
+  it("renders the photo overlay for text legibility when glass=true", () => {
+    const { container } = render(<TourCard tour={mockTour} href="/tours/laguna-del-otun" glass />);
+    expect(container.querySelector(".bg-gradient-to-t")).toBeInTheDocument();
   });
 
   it("uses light text classes (blanco-niebla) on glass variant", () => {
     render(<TourCard tour={mockTour} href="/tours/laguna-del-otun" glass />);
 
     const name = screen.getByText("Laguna del Otún");
-    expect(name).toHaveClass("text-blanco-niebla");
+    expect(name).toHaveClass("text-on-strong");
   });
 });
 

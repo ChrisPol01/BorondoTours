@@ -44,6 +44,11 @@ export const esCatalog: LanguageCatalog = {
     "action.close": "Cerrar",
     "state.loading": "Cargando…",
     "content.unavailable": "Contenido no disponible",
+    "theme.label": "Apariencia",
+    "theme.colorido": "Colorido",
+    "theme.claro": "Claro",
+    "theme.oscuro": "Oscuro",
+    "theme.sistema": "Sistema",
   },
 
   // ── nav: barra de navegación y CTA (R6) ──
@@ -62,6 +67,17 @@ export const esCatalog: LanguageCatalog = {
     mobileNavigation: "Navegación principal",
     closeDrawer: "Cerrar panel de navegación",
     logoAlt: "Borondo Tours — inicio",
+    explore: "Explorar",
+    signIn: "Iniciar sesión",
+    languageShort: "ES",
+    languageLabel: "Idioma: Español",
+    themeToggle: "Cambiar tema de color",
+    primary: "Navegación principal",
+    promotions: "Promociones",
+    bestSellers: "Más vendidos",
+    viewAll: "Ver todos",
+    social: "Redes sociales",
+    support: "¿Te ayudamos?",
   },
 
   // ── footer: cuatro promesas de valor en orden fijo (R7) ──
@@ -85,13 +101,27 @@ export const esCatalog: LanguageCatalog = {
     "contact.title": "Contacto",
   },
 
-  // ── home: landing (hero, buscador, secciones) (R8, R9, R10) ──
+  // ── home: landing (hero, buscador, secciones) — Figma 113:17071 ──
   home: {
-    "hero.badge": "Explora Colombia",
+    "hero.badge": "Explora donde nace la naturaleza",
     "hero.title": "Viajes que transforman tu manera de ver el mundo.",
     "hero.subtitle":
       "Explora paisajes únicos, vive experiencias auténticas y conecta con la naturaleza.",
     "hero.imageAlt": "",
+
+    // Pines sobre el hero (destinos en portada)
+    "hero.pin.ciudadPerdida.title": "Ciudad Perdida",
+    "hero.pin.ciudadPerdida.meta": "4 días · desde $1.450.000",
+    "hero.pin.rioBuritaca.title": "Río Buritaca",
+    "hero.pin.rioBuritaca.meta": "Pasadía · desde $180.000",
+
+    // Etiqueta de la foto de portada + carrusel
+    "hero.cover.title": "Ciudad Perdida",
+    "hero.cover.location": "Sierra Nevada de Santa Marta",
+    "hero.cover.dotAlt": "Foto {n} de la portada",
+
+    // Hint del futuro agente de compra
+    "hero.agentHint": "Pronto podrás pedirlo en tus palabras: \u201cun plan de naturaleza para 4 en diciembre\u201d",
 
     "search.destinationLabel": "Destino",
     "search.destinationPlaceholder": "¿A dónde quieres ir?",
@@ -103,6 +133,8 @@ export const esCatalog: LanguageCatalog = {
     "search.destinationRequired": "Escribe un destino para continuar.",
     "search.dateInvalid": "Elige una fecha que no sea pasada.",
     "search.travelersInvalid": "Indica entre 1 y 99 viajeros.",
+    "search.travelersLess": "Menos viajeros",
+    "search.travelersMore": "Más viajeros",
 
     "cta.primary": "Explorar destinos",
     "cta.secondary": "Conocer más",

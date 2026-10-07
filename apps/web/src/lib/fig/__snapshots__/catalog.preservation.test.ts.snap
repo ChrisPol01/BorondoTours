@@ -1,0 +1,130 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Preservation · filtros del catálogo (Req. 3.2) > combinaciones fijas de categoría, búsqueda, orden y página 1`] = `
+{
+  "aventura-precio-asc": {
+    "page0": [
+      "senderismo-al-paramo",
+      "desierto-de-la-tatacoa",
+      "ciudad-perdida",
+    ],
+    "page1": [],
+    "total": 3,
+  },
+  "destacado-ciudad-perdida": {
+    "page0": [
+      "ciudad-perdida",
+      "parque-tayrona-y-playas",
+      "isla-de-san-andres-4-dias",
+      "islas-del-rosario-pasadia",
+      "centro-historico-a-pie",
+      "rio-buritaca",
+    ],
+    "page1": [],
+    "total": 6,
+  },
+  "eje-cafetero-precio-desc": {
+    "page0": [
+      "paisaje-cultural-cafetero",
+      "finca-cafetera-y-cabalgata",
+      "valle-del-cocora-y-salento",
+      "cocora-al-amanecer",
+      "ruta-del-cafe-en-finca",
+    ],
+    "page1": [],
+    "total": 5,
+  },
+  "iva-pasadia": {
+    "page0": [
+      "valle-del-cocora-y-salento",
+      "parque-tayrona-y-playas",
+      "guatape-y-el-penol",
+      "islas-del-rosario-pasadia",
+      "ruta-del-cafe-en-finca",
+      "centro-historico-a-pie",
+    ],
+    "page1": [
+      "avistamiento-de-aves",
+      "rio-buritaca",
+      "cocora-al-amanecer",
+    ],
+    "total": 9,
+  },
+  "q-cafe": {
+    "page0": [
+      "valle-del-cocora-y-salento",
+      "ruta-del-cafe-en-finca",
+      "finca-cafetera-y-cabalgata",
+      "paisaje-cultural-cafetero",
+      "cocora-al-amanecer",
+    ],
+    "page1": [],
+    "total": 5,
+  },
+  "q-caribe-valoracion": {
+    "page0": [
+      "parque-tayrona-y-playas",
+      "ciudad-perdida",
+      "isla-de-san-andres-4-dias",
+      "islas-del-rosario-pasadia",
+      "centro-historico-a-pie",
+      "rio-buritaca",
+    ],
+    "page1": [],
+    "total": 6,
+  },
+  "sin-resultados": {
+    "page0": [],
+    "page1": [],
+    "total": 0,
+  },
+  "sol-y-playa": {
+    "page0": [
+      "parque-tayrona-y-playas",
+      "isla-de-san-andres-4-dias",
+      "islas-del-rosario-pasadia",
+    ],
+    "page1": [],
+    "total": 3,
+  },
+  "todos": {
+    "page0": [
+      "valle-del-cocora-y-salento",
+      "parque-tayrona-y-playas",
+      "isla-de-san-andres-4-dias",
+      "guatape-y-el-penol",
+      "islas-del-rosario-pasadia",
+      "ruta-del-cafe-en-finca",
+    ],
+    "page1": [
+      "ciudad-perdida",
+      "centro-historico-a-pie",
+      "desierto-de-la-tatacoa",
+      "senderismo-al-paramo",
+      "avistamiento-de-aves",
+      "finca-cafetera-y-cabalgata",
+    ],
+    "total": 15,
+  },
+}
+`;
+
+exports[`Preservation · filtros del catálogo (Req. 3.2) > el dataset demo conserva sus tours y su orden 1`] = `
+[
+  "valle-del-cocora-y-salento",
+  "parque-tayrona-y-playas",
+  "ruta-del-cafe-en-finca",
+  "islas-del-rosario-pasadia",
+  "senderismo-al-paramo",
+  "avistamiento-de-aves",
+  "isla-de-san-andres-4-dias",
+  "guatape-y-el-penol",
+  "desierto-de-la-tatacoa",
+  "ciudad-perdida",
+  "finca-cafetera-y-cabalgata",
+  "centro-historico-a-pie",
+  "paisaje-cultural-cafetero",
+  "rio-buritaca",
+  "cocora-al-amanecer",
+]
+`;

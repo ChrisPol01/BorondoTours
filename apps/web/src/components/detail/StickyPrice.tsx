@@ -54,9 +54,9 @@ export function StickyPrice({ priceCop, onReserve }: StickyPriceProps): JSX.Elem
         className="hidden lg:block lg:sticky lg:top-4 lg:self-start"
         aria-label={t("reserve.ariaLabel")}
       >
-        <div className="flex flex-col gap-4 rounded-xl border border-arena bg-blanco-niebla p-6 shadow-md">
+        <div className="flex flex-col gap-4 rounded-xl border border-arena bg-surface-card p-6 shadow-md">
           {/* Precio */}
-          <p className="text-h4 font-bold text-negro-volcanico">
+          <p className="text-h4 font-bold text-text-primary">
             {formattedPrice}
           </p>
 
@@ -71,12 +71,12 @@ export function StickyPrice({ priceCop, onReserve }: StickyPriceProps): JSX.Elem
 
       {/* ── Mobile: barra inferior fija (<1024px) — R15.6, R15.7 ───────── */}
       <div
-        className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between border-t border-arena bg-blanco-niebla px-4 py-3 shadow-sticky lg:hidden"
+        className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between border-t border-arena bg-surface-card px-4 py-3 shadow-sticky lg:hidden"
         role="complementary"
         aria-label={t("reserve.ariaLabel")}
       >
         {/* Precio compacto */}
-        <p className="text-body1 font-bold text-negro-volcanico">
+        <p className="text-body1 font-bold text-text-primary">
           {formattedPrice}
         </p>
 

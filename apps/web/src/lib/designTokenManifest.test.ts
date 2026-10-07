@@ -1,9 +1,13 @@
+// @vitest-environment node
+// Lee archivos del disco con import.meta.url; en jsdom la URL no es file:// y falla.
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { DERIVED_TOKEN_PROVENANCE } from "./designTokenManifest";
 
-const tokensCss = readFileSync(new URL("../styles/tokens.css", import.meta.url), "utf8");
-const globalCss = readFileSync(new URL("../styles/global.css", import.meta.url), "utf8");
+// Los tokens viven en @borondo/ui (packages/ui/src/styles) desde la Fase 2.
+const uiStyles = new URL("../../../../packages/ui/src/styles/", import.meta.url);
+const tokensCss = readFileSync(new URL("tokens.css", uiStyles), "utf8");
+const globalCss = readFileSync(new URL("theme.css", uiStyles), "utf8");
 const packageJson = JSON.parse(readFileSync(new URL("../../package.json", import.meta.url), "utf8")) as {
   dependencies: Record<string, string>;
   devDependencies: Record<string, string>;

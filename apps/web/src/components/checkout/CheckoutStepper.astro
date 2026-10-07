@@ -33,9 +33,9 @@ const steps = [
             <span
               class:list={[
                 'flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-pill font-body text-body2 font-semibold',
-                isActive && 'bg-turquesa text-blanco-niebla',
-                isDone && 'bg-verde text-blanco-niebla',
-                !isActive && !isDone && 'bg-arena text-azul-condor',
+                isActive && 'bg-turquesa text-on-strong',
+                isDone && 'bg-verde text-on-strong',
+                !isActive && !isDone && 'bg-surface-warm text-text-muted',
               ]}
               aria-current={isActive ? 'step' : undefined}
             >
@@ -44,7 +44,7 @@ const steps = [
             <span
               class:list={[
                 'font-body text-body2 md:text-body1',
-                isActive ? 'font-semibold text-turquesa' : 'text-azul-condor',
+                isActive ? 'font-semibold text-turquesa' : 'text-text-muted',
               ]}
             >
               {step.label}

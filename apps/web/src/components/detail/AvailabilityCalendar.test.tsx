@@ -9,7 +9,6 @@
  */
 import { describe, it, expect, vi, beforeAll } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 
 import { AvailabilityCalendar } from "./AvailabilityCalendar";
 import { LanguageProvider } from "../../lib/i18n/provider";
@@ -364,8 +363,8 @@ describe("AvailabilityCalendar — blocks selection on red/gray (R17.5)", () => 
     // onDateSelect should still have been called only once (for the green date)
     expect(onDateSelect).toHaveBeenCalledTimes(1);
 
-    // Re-query the green button after re-render to check aria-selected
+    // Re-query the green button after re-render to check aria-pressed
     const updatedGreen = findDayButton(container, "10 cupos disponibles", "cursor-pointer");
-    expect(updatedGreen).toHaveAttribute("aria-selected", "true");
+    expect(updatedGreen).toHaveAttribute("aria-pressed", "true");
   });
 });

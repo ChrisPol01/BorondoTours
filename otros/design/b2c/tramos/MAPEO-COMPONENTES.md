@@ -267,3 +267,128 @@ Leyenda de pantallas: 01 Home · 02 Catálogo · 03 Detalle Tour · 04 Checkout 
 3. **Equipo fundador: nombres reales** — Christopher Epe y Nathalia Salcedo (cargos por confirmar). Sin firma manuscrita real en Nosotros (usar nombre tipográfico). Contacto solo con canales corporativos.
 4. **Atención:** agente humano 8×6 (8 h/día, 6 días; franja horaria por confirmar) + chatbot 24/7 para solicitudes genéricas. ⚠️ El chatbot está diferido en Spec-A (H-47, Fase 3+): la copy "24/7" solo se publica cuando el chatbot esté activo.
 5. **Categorías de experiencias:** propuesta alineada al enum `Tours.category` (ver respuesta al usuario) — pendiente aprobación.
+
+## H. Decisiones del usuario (2026-09-27, 3ª ronda) — cierran los pendientes
+1. **Categorías de experiencias:** 12 categorías comerciales con etiquetas e intensidad → `docs/03-Knowledge/Taxonomia-Experiencias.md` (enum actualizado en Modelo-Datos-Core). Footer "Experiencias": Recreación, Sol y Playa, Naturaleza, Cultura, Aventura, Deportes Extremos.
+2. **Coins en pausa:** no se diseñan Coins, niveles ni wallet. Impacto en pantallas:
+   - 09 Borondo Coins → **no se diseña** por ahora.
+   - Portal (05–11): quitar PromoCoins del sidebar, CoinsBalanceCard y LevelBadge/nivel del header y del panel.
+   - 04 Checkout: sin "Usar Coins". 08 Perfil: sin nivel. Menú lateral sin "Borondo Coins".
+3. **Chat del tour (pantalla 11 Mensajes):** una sala por tour entre guía y grupo. Mensajes del guía → todo el grupo; del turista → solo el guía, salvo que el guía active "Mostrar mensajes al grupo". Sin chats entre viajeros, sin llamada/video. Al terminar el tour: solo lectura → export a S3 → borrado de DynamoDB (Spec-D RF-D08 actualizado). La lista de conversaciones = tours activos/próximos del viajero.
+4. **Blog:** Spec-L creada (artículos + reseñas aprobadas, flujo BORRADOR → EN_REVISION → PUBLICADO/RECHAZADO). Se diseña también la plantilla de artículo.
+5. **Nosotros:** equipo = Christopher Epe (CEO) y Nathalia Salcedo (COO). Sin firma manuscrita real; canales corporativos únicamente. Fotos de ellos: placeholder hasta recibir fotos reales.
+6. **Horario de atención:** agente humano → "Lunes a sábado, 8:00 a.m. – 5:00 p.m." (confirmado en J.2) + chatbot 24/7 para solicitudes generales (copy condicionada a que el chatbot esté activo).
+7. **Sede:** Cali, Colombia (footer, Contacto, mapa).
+8. **Fase 2 confirmada:** quitar carrito, chats grupales entre viajeros, llamada/video y "Nivel premium"; Colecciones/Compartir lista de Favoritos → Fase 2; Cumpleaños → reto de lealtad (en pausa con Coins).
+9. **Sello de confianza:** "Seguridad Garantizada" → **"Seguridad y Confianza"** (actualizado en manual de marca, steering 12, DESIGN.md, design.md, 01-home).
+10. **Chivito = logo** (componente `Logo`), no mascota.
+
+## I. Cierre de pendientes (2026-09-27) — listo para diseñar pantallas
+1. **Deuda técnica de assets resuelta:** herramientas en `otros/design/tools/figma-assets/` (servidor local, copias, escalado). Nada depende de TEMP; los originales viven en el repo.
+2. **Límite de subida a Figma:** máximo útil 4096 px por lado (Figma reduce lo que pase de ahí). Medido: 3072 px / 1,3 MB en 0,65 s con `async: true`. No hace falta subir copias reducidas.
+3. **Ciudad Perdida HD:** `fotos-test/destino-ciudad-perdida-hd.jpg` (Real-ESRGAN x4plus → 3072×2048). Ya aplicada en el hero de la Home (nodo 11:6).
+4. **Home:** footer "Cali, Colombia", 4 sellos con iconos reales y "Seguridad y Confianza" verificados en Figma.
+5. **Spec-A H-47:** regla de copy — sin "24/7" hasta que el chatbot esté activo.
+
+## J. Ajustes del usuario (2026-09-27, 4ª ronda)
+1. **Fotos ≤ 1920 px** en todo `fotos-test/` (con 3072 px se caía el chat y el plugin). Hero HD de Ciudad Perdida = 1920×1280. Las fotos definitivas las pone el usuario manualmente al terminar el frontend.
+2. **Horario:** lunes a sábado, 8:00 a.m. – 5:00 p.m.
+3. **Sede:** "Cali, Valle del Cauca" (sin dirección exacta). Contacto sin dirección de calle ni "Oficina 402"; el mapa solo centra Cali.
+4. **Equipo en Nosotros:** avatares de silueta gris (hombre / mujer) como placeholder; el usuario los reemplaza.
+
+## K. Fase A en Figma (2026-09-27) — componentes base + marco del portal
+**Contenedor** `Fase A — Componentes base` (27:197, Page 1, y=1400):
+- Card (27:209): tonos Default / Cálida / Fuerte.
+- GlassPanel (27:213): azul profundo 72% + borde blanco 30% + blur 16.
+- StatusPill (27:268): Confirmada, Reserva parcial, Pendiente de pago, En curso, Completada, Cancelada, No disponible (texto + icono, nunca solo color).
+- StatusMessage (28:307) y Toast (28:353): Éxito / Error / Aviso / Info.
+- Toggle (28:375): On / Off / Deshabilitado / Bloqueado (candado para transaccionales obligatorias).
+- Tab (28:384) + ejemplo de grupo; Breadcrumb (28:413) claro / sobre foto; Pagination (28:414).
+- SectionTitle (28:449) con / sin enlace; PageHeader del portal (28:450); CtaBanner con isotipo (28:461).
+- Modal (29:472) + versión con overlay; MobileMenu drawer derecho (29:519).
+- Avatar/Placeholder (29:584) silueta Hombre / Mujer + TeamMemberCard (29:585): Christopher Epe (CEO), Nathalia Salcedo (COO).
+
+**Portal** `Portal — componentes del marco` (29:620, x=3200):
+- PortalHeader (29:622): logo, nav pública, buscar / favoritos / campana con contador, usuario (sin nivel).
+- SidebarItem (29:681): Default / Activo / Hover, icono por instance swap (`Icon/*`), propiedad booleana `Contador`.
+- HelpCard (dentro de 29:696) con horario "Lunes a sábado, 8:00 a.m. – 5:00 p.m.".
+- PortalSidebar (29:817): Mi Panel, Mis Tours, Mi Perfil, Favoritos, Mensajes (2), Configuración, HelpCard, Cerrar sesión. Sin Borondo Coins.
+- Iconos como componentes `Icon/*` (19 Lucide, trazo 2 px).
+- Marco de pantalla `Portal / Marco — Desktop` (29:934, 1440×1024): header + sidebar 280 + main (padding 56, gap 32) con PageHeader y slot de contenido. Skip link oculto (se muestra al foco).
+
+**Notas técnicas del plugin:** Figma pierde la opacidad de un fill ligado a variable en la primera asignación y al crear instancias → el módulo `ui4` del bridge asigna dos veces y copia fills del componente (`inst`, `fixFrom`). Construir fuera de contenedores grandes con wrap y moverlos al final (evita llamadas de 2–3 min).
+
+## L. Dirección UX/UI aprobada (2026-09-27, 5ª ronda)
+1. **Navegación:** navbar liquid glass en 3 cápsulas separadas (logo · funciones · perfil/configuración) con indicador tipo gota que se desliza entre opciones. En móvil las funciones bajan a una barra inferior (4 pestañas + "Más" que abre un panel). Área privada en escritorio: riel lateral izquierdo colapsable (estilo apps de IA), pensado para alojar luego las conversaciones del agente.
+2. **Login:** ver catálogo y detalle sin cuenta; se pide cuenta solo al pagar (facturación DIAN y Coins a futuro). Corregir APP1 Flujo D.
+3. **Hero sin scrollytelling:** imagen cambiante + efecto "linterna" (el cursor ilumina la foto y revela puntos de tours clicables). Equivalente móvil sin cursor. Respeta `prefers-reduced-motion`.
+4. **Buscador → agente:** el buscador del hero ocupa el mismo espacio que tendrá el chat del agente de compra en lenguaje natural (futuro), para no rediseñar la Home.
+5. **Consolidación:** ~9 pantallas. "Nosotros" reúne historia, equipo, contacto y centro legal (términos, privacidad, cancelación, retracto, cookies), cada documento con URL propia.
+6. **Sin Coins ni urgencia falsa.** Crew: grupo del tour, kit del viaje, tarjeta para compartir, mapa de visitados (por confirmar alcance).
+
+## M. Ajustes del usuario (2026-09-27, 6ª ronda) — concreción
+1. **Texto adaptativo sobre foto:** cada imagen de fondo lleva metadato `tone: dark | light` (calculado al subir, por zona del texto). Oscuro → texto Blanco Niebla; claro → Negro Volcánico. Siempre con scrim suave de respaldo (contraste ≥ 4.5:1 garantizado). En Figma: variante `Tono` en Hero y Navbar.
+2. **Navbar sin sesión (una sola barra):** cápsula 1 = logo completo (ave + nombre). Cápsula 2 = navegación agrupada: **Explorar** (agrupa Catálogo, Destinos, Experiencias) · **Blog** · **Nosotros**. Cápsula 3 = idioma · tema · "Iniciar sesión" (idioma y tema a la izquierda del botón).
+3. **Navbar con sesión:** arriba queda logo · **Explorar** (única opción) · buscar · avisos · avatar. El resto pasa al **riel lateral izquierdo** (glass, colapsable a iconos): Mis viajes · Guardados · Mensajes · Blog · (futuro: conversaciones del agente). **Nosotros** se mueve al menú del avatar junto a Configuración, Idioma, Tema y Cerrar sesión. Home no aparece en el riel (el logo lleva a Home).
+4. **Temas (4):** Colorido (por defecto, marca) · Claro · Oscuro · Sistema (sigue al SO entre Claro/Oscuro). Se resuelven con tokens semánticos; en Figma se diseñan completos Colorido y Oscuro, Claro se deriva.
+5. **Sin footer:** se elimina el footer grande. Queda un **colofón de una línea** al final de cada página (© BorondoTours S.A.S. · NIT · RNT · Términos · Privacidad) por obligación de identificación del comerciante (Ley 1480) y enlaces rastreables para SEO.
+6. **Pestañas laterales fijas (derecha, Home):** "Promociones", "Más vendidos" abren un **panel glass** que entra de derecha a izquierda (80% del ancho, alto ≈ tarjeta + 20%) con carrusel horizontal de TourCards; "Ver todos" navega al catálogo. Fijas al hacer scroll. Debajo, bloque compacto de **redes** (Instagram, Facebook, X) con sus colores. Móvil: las pestañas pasan a chips horizontales y el panel a bottom sheet.
+7. **Botón flotante de soporte (abajo derecha):** chatbot → si no resuelve, escalado a agente humano (lunes a sábado, 8:00 a.m.–5:00 p.m.; fuera de horario deja ticket). Sin "24/7" (Spec-A H-47).
+8. **Confianza:** carrusel de logos (solo afiliaciones reales y vigentes: RNT, FONTUR, ANATO, "Built on AWS" según sus guías de marca) + testimonios de reseñas COMPLETED + métricas reales. Nada inventado (publicidad engañosa, Ley 1480). Placeholders marcados hasta tener datos.
+9. **Destinos = mosaico bento de categorías** (estilo gfourmis, sin naranja ni botones centrales): cada cuadro es un botón con foto y nombre de la categoría de [[Taxonomia-Experiencias]] (Sol y Playa, Naturaleza, Aventura, Cultura, Ciudad, Recreación, Relax, Gastronomía) → catálogo con `?category=`.
+10. **Nosotros = una sola página** con sub-navegación de pills fija (Historia · Equipo · Contacto · Legal). Legal en acordeón; cada documento con ancla y URL propia (`/nosotros/terminos` renderiza la misma página abierta en ese documento) y número de versión visible, para registrar qué versión aceptó cada usuario.
+11. **Rigor de diseño:** retícula de 12 columnas estricta. Simetría en lo funcional (formularios, checkout, tablas); asimetría intencional solo en bloques editoriales (mosaico, hero, historias).
+12. **Crew en esta fase (las 4):** Tu grupo del tour (desde el chat del tour) · Kit del viaje (desde manifiesto + tour) · Tarjeta para compartir (imagen generada del viaje) · Mapa de lugares visitados (sin Coins; no depende de Spec-E en pausa).
+
+## N. Ajustes del usuario (2026-09-27, 7ª ronda) — reemplaza M.3, M.5, M.8
+1. **Con sesión, todo el navbar pasa al lateral izquierdo** (no queda barra arriba). 3 secciones:
+   - **Logo** (completo; colapsado = isotipo).
+   - **Opciones con icono + nombre:** Explorar (catálogo, destinos, experiencias) · Mis reservas (pestañas: Próximas, Por pagar, Completadas, Canceladas) · Mis tours (mapa de recorridos) · Favoritos · Mensajes · Soporte (abre el chatbot).
+   - **Perfil** (foto + nombre) → menú: Editar perfil · Tema · Idioma · Recomendar BorondoTours · Borondo Coins · Configuración · Nosotros · Cerrar sesión.
+   - Móvil: barra inferior (Explorar, Reservas, Mis tours, Mensajes, Perfil); Favoritos y Soporte dentro de Perfil.
+   - Borondo Coins y la recompensa de "Recomendar" quedan **ocultos mientras Spec-E esté en pausa** ("Recomendar" funciona como compartir enlace, sin premio).
+2. **Mis tours = mapa de recorridos:** mapa mundial con zoom inicial en Colombia. Cada tour COMPLETED se marca con pin coloreado en su destino real (región o país). Contador de **km recorridos** = distancia en línea recta (haversine) entre el punto de salida de la reserva y el destino, sumada por tour. Se muestra solo la cifra; no se muestran direcciones (dato personal). Tours internacionales dependen de Fase 2+.
+3. **Colofón informativo:** una tira fija y estática de una línea (© BorondoTours S.A.S. · NIT · RNT · redes con icono). **No en movimiento** (marquesina): incumple WCAG 2.2.2 y los enlaces no se pueden tocar. El detalle completo vive en Nosotros.
+4. **Sin reseñas en la Home por ahora.** Se reemplazan por 4 rectángulos de producto: Viajes internacionales · Parques de Orlando · Cruceros · Viajes personalizados. Mientras no haya tours publicados de ese tipo, llevan a "Cotiza con un asesor". No usar logos, personajes ni imágenes de Disney (marca registrada); solo nombre del destino.
+5. **Carrusel de logos = medios de pago reales:** OnePay.la + PSE, Nequi, Daviplata, Visa, Mastercard (con sus guías de marca), + RNT. **No** Bold (no está integrado → publicidad engañosa) ni AgentCore/Bedrock (a un viajero no le genera confianza y requiere permiso de marca AWS).
+
+## O. Confirmaciones del usuario (2026-09-27, 8ª ronda)
+1. **Bold sí se usa** para aceptar pagos → entra al carrusel de medios de pago junto a OnePay.la (corrige N.5). ⚠️ Documentar en ADR-001/Stack (hoy solo figura OnePay.la): rol de Bold (¿datáfono/links/pasarela?) y conciliación.
+2. Tira legal fija (N.3), logos de medios de pago (N.5) y orden de diseño: **aprobados**.
+3. **Km recorridos:** se diseña pero queda **inhabilitado** en funcionamiento (estado "Próximamente") hasta decidir cálculo por IA o por Google Maps.
+4. Mapa mundial con destinos reales y ocultar Coins/premio de "Recomendar": aprobados.
+5. **"Cotiza con un asesor":** en el menú de Perfil, justo antes de Configuración. Sin sesión, es una opción dentro del chatbot de soporte.
+
+## P. Estados diseñados y orden del lienzo (2026-09-27, 9ª ronda)
+
+**Orden del lienzo (Figma, Page 1):** cada pantalla vive en una Section `NN · Nombre`, de izquierda a derecha según el flujo del viajero. Dentro de cada Section: escritorio a la izquierda, móvil a la derecha y, debajo, un bloque **Estados** con sus variantes.
+- Fila superior: `00 · Componentes y sistema`.
+- Fila de flujo: `01 Home` → `02 Explorar` → `03 Detalle del tour` → `04–07 Checkout (Tu viaje, Viajeros, Pago, Confirmación)` → `08 Mis reservas` → `09 Mis tours` → `10 Favoritos` → `11 Mensajes` → `12 Perfil` → `13 Blog` → `14 Nosotros` → `15 Estados globales`.
+- Fila inferior: `99 · Archivo — versiones anteriores` (no usar en implementación).
+
+**Estados por pantalla (componentes a implementar):**
+| Sección | Estados |
+|---|---|
+| 02 Explorar | Sin resultados (sugerencias de categoría + quitar filtros) · Skeleton de TourCard (`aria-busy`) |
+| 03 Detalle | Fecha agotada en la tarjeta de reserva · Modal lista de espera (cupos + correo) · Confirmación de lista de espera |
+| 05 Viajeros | Extranjero con pasaporte pendiente (botón de pago deshabilitado) · Pasaporte cargado (exención aplicada) |
+| 06 Pago | Pago rechazado · Enlace de pago vencido · Cupo agotado al pagar · Divide tu cuenta activo (estado por participante) |
+| 08 Mis reservas | Pestañas Por pagar / Completadas / Canceladas · Vacío · Detalle de reserva (QR, pagos, acciones) · Modal cancelar (franjas ADR-007 + resumen + soporte EPS + OTP) · Modal reprogramar (fechas con semáforo + diferencia) |
+| 10 Favoritos | Vacío |
+| 11 Mensajes | Chat bloqueado antes de 24 h · Chat de solo lectura al finalizar |
+| 15 Globales | Auth gate: iniciar sesión (error de credenciales), crear cuenta (consentimientos sin marcar), OTP · Feedback post-tour bloqueante (tour + guía) · Panel de notificaciones · Menú de perfil · 404 · 500 (código de referencia) · Panel de soporte (horario humano, sin 24/7) |
+
+**Decisiones de copy tomadas en estos estados (validar):**
+1. **Cancelación con Coins en pausa:** el monto devuelto se muestra como **"Saldo a favor"** (sin nombrar Borondo Coins). ⚠️ Confirmar si, mientras Spec-E está en pausa, el saldo a favor se guarda como crédito interno o se reembolsa al medio de pago. Hoy el modelo de datos lo acredita en `Wallets`.
+2. **Reembolso bancario:** el modal aclara que solo aplica por retracto (5 días hábiles) o cancelación por fuerza mayor del tour (Ley 1480, Spec-C RF-C09).
+3. **Lista de espera:** "Avisar no reserva el cupo; se asigna al primero que pague" (Spec-B RF-B05b). La prioridad para niveles 4–5 queda oculta mientras Spec-E esté en pausa.
+4. **Registro:** crear cuenta se habilita solo tras aceptar el tratamiento de datos; el consentimiento de marketing es opcional y separado (Ley 1581).
+5. **Feedback post-tour:** modal sin botón de cerrar; dos bloques (tour y guía), como Spec-D RF-D09.
+
+**Pendiente de Figma:** reemplazar los colores fijos por variables para que los 4 temas cambien de forma automática; centrar la sub-navegación de Nosotros móvil; corregir el contador del riel colapsado que tapa el icono.
+
+## Q. Confirmaciones del usuario (2026-09-27, 10ª ronda) — corrige O.1
+1. **Bold = cuenta receptora**, no medio de pago. OnePay.la es la pasarela que arma el frontend de pagos. Bold sale del carrusel de medios de pago y del checkout. Documentado en ADR-001.
+2. **Costo del método:** etiqueta junto a cada método con la tarifa de OnePay. Validar más adelante si se suma al total o se muestra como descuento (Spec-C RF-C15).
+3. **Módulos de Figma estandarizados:** una sola base (`bt`) y módulos que la importan (`bts`, `btm`, `btd`, `btmap`). Se eliminaron los duplicados (`ui`–`ui4`, `btf`, `bti`). Código exportado en `otros/infra/figma-bridge-plugin/modules/`.
+4. **Mapa real de Colombia:** 33 departamentos (@svg-maps/colombia, CC BY 4.0) como componentes con `Visitado` (No/Sí) × `Estado` (Reposo/Hover) e interacción hover, agrupados por región natural, con recuadro de San Andrés. Reemplaza la silueta provisional en Mis tours. Datos en código: `apps/web/src/lib/colombiaMap.ts`.

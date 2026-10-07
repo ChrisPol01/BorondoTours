@@ -1,0 +1,120 @@
+{
+  "/": [],
+  "/404": [],
+  "/bienvenida": [],
+  "/blog": [],
+  "/blog/articulo": [],
+  "/checkout": [],
+  "/checkout/confirmacion": [],
+  "/checkout/cupo-agotado": [
+    {
+      "text": "Costo fijo $2.200",
+      "cls": "p17_36",
+      "color": "rgb(249, 251, 252)",
+      "bg": "rgb(0,183,199)",
+      "ratio": 2.35,
+      "min": 4.5
+    }
+  ],
+  "/checkout/divide-tu-cuenta": [],
+  "/checkout/enlace-vencido": [],
+  "/checkout/pago": [],
+  "/checkout/pago-rechazado": [],
+  "/checkout/procesando": [],
+  "/checkout/viajeros": [],
+  "/checkout/viajeros-pasaporte-cargado": [],
+  "/checkout/viajeros-pasaporte-pendiente": [],
+  "/contacto": [],
+  "/crear-cuenta": [],
+  "/destinos": [],
+  "/error": [],
+  "/estados/cookies": [],
+  "/estados/explorar-cargando": [],
+  "/estados/explorar-sin-resultados": [],
+  "/estados/explorar-sugerencias": [
+    {
+      "text": "Todas",
+      "cls": "p5_35",
+      "color": "rgb(16, 16, 16)",
+      "bg": "rgb(39,99,106)",
+      "ratio": 2.79,
+      "min": 4.5
+    }
+  ],
+  "/estados/favoritos-vacio": [],
+  "/estados/home-promociones": [],
+  "/estados/mensajes-bloqueado": [],
+  "/estados/mensajes-solo-lectura": [],
+  "/estados/mis-reservas-vacio": [],
+  "/estados/perfil-menu": [],
+  "/estados/tour-fecha-agotada": [],
+  "/estados/tour-lista-espera": [
+    {
+      "text": "1",
+      "cls": "p9_125",
+      "color": "rgb(16, 16, 16)",
+      "bg": "rgb(105,122,142)",
+      "ratio": 4.32,
+      "min": 4.5
+    },
+    {
+      "text": "2",
+      "cls": "p9_125",
+      "color": "rgb(16, 16, 16)",
+      "bg": "rgb(105,122,142)",
+      "ratio": 4.32,
+      "min": 4.5
+    }
+  ],
+  "/estados/tour-lista-espera-confirmada": [
+    {
+      "text": "Ahorra 12%",
+      "cls": "p10_114",
+      "color": "rgb(16, 16, 16)",
+      "bg": "rgb(122,99,47)",
+      "ratio": 3.32,
+      "min": 4.5
+    }
+  ],
+  "/experiencias": [],
+  "/explorar": [
+    {
+      "text": "Quedan pocos",
+      "cls": "p3_111",
+      "color": "rgb(249, 251, 252)",
+      "bg": "rgb(0,183,199)",
+      "ratio": 2.35,
+      "min": 4.5
+    }
+  ],
+  "/explorar/mapa": [],
+  "/favoritos": [],
+  "/iniciar-sesion": [],
+  "/legal": [],
+  "/mensajes": [],
+  "/mis-reservas": [],
+  "/mis-reservas/calificar": [],
+  "/mis-reservas/cancelacion-confirmada": [],
+  "/mis-reservas/canceladas": [],
+  "/mis-reservas/cancelar": [],
+  "/mis-reservas/completadas": [],
+  "/mis-reservas/detalle": [],
+  "/mis-reservas/por-pagar": [],
+  "/mis-reservas/reembolso": [],
+  "/mis-reservas/reprogramar": [],
+  "/mis-reservas/voucher": [],
+  "/mis-tours": [],
+  "/nosotros": [],
+  "/notificaciones": [],
+  "/pago/participante": [],
+  "/pago/saldo": [],
+  "/perfil": [],
+  "/politica-de-cancelacion": [],
+  "/preguntas-frecuentes": [],
+  "/recuperar-contrasena": [],
+  "/sin-conexion": [],
+  "/soporte": [],
+  "/tour": [],
+  "/verificar-codigo": [],
+  "/verificar-correo": []
+}

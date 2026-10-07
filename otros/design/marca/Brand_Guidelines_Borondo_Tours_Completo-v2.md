@@ -182,5 +182,5 @@ Estas cuatro promesas son el núcleo del servicio al cliente y deben estar prese
 
 1.  **Turismo Responsable:** Cuidamos los lugares que visitas. *(Acompañado del icono de Hoja)*
 2.  **Experiencias Únicas:** Diseñamos viajes auténticos y memorables. *(Acompañado del icono de Cámara fotográfica)*
-3.  **Seguridad Garantizada:** Tu tranquilidad es nuestra prioridad. *(Acompañado del icono de Escudo/Seguridad)*
+3.  **Seguridad y Confianza:** Tu tranquilidad es nuestra prioridad. *(Acompañado del icono de Escudo/Seguridad)*
 4.  **Atención Personalizada:** Estamos contigo en cada paso del viaje. *(Acompañado del icono de Personas / Comunidad)*

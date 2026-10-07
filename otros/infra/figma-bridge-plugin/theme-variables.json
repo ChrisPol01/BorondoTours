@@ -1,0 +1,174 @@
+{
+    "_nota":  "Valores de las colecciones \u0027Tema Â· X\u0027 en Figma (exportado 2026-09-27). Hex con alfa = #RRGGBBAA. alias = variable de marca. Fuente para btt.ensure() y tokens.css.",
+    "comun":  {
+                  "glass/text":  "#F9FBFC",
+                  "glass/light":  "#FFFFFFB8",
+                  "glass/light-text":  "#101010"
+              },
+    "Colorido":  {
+                     "_uso":  "Predeterminado: estilo del Home en todas las pantallas (mismos valores que Inmersivo, 2026-09-27).",
+                     "surface/page":  "#0A1A2B",
+                     "surface/card":  "#12304F",
+                     "surface/warm":  "#173B5E",
+                     "surface/strong":  "#06111D",
+                     "tint":  "#2364AA",
+                     "border":  "#F9FBFC",
+                     "text/heading":  "#F9FBFC",
+                     "text/primary":  "#F9FBFC",
+                     "text/muted":  "#BAE6FD",
+                     "text/subtle":  "#A9BCD0",
+                     "text/on-strong":  "#F9FBFC",
+                     "text/on-action":  {
+                                            "alias":  "brand/negro-volcanico"
+                                        },
+                     "action/primary":  {
+                                            "alias":  "brand/turquesa-laguna"
+                                        },
+                     "action/primary-hover":  {
+                                                  "alias":  "brand/verde-frailejon"
+                                              },
+                     "action/cta":  {
+                                        "alias":  "brand/dorado"
+                                    },
+                     "status/available":  {
+                                              "alias":  "brand/verde-frailejon"
+                                          },
+                     "status/limited":  {
+                                            "alias":  "brand/dorado"
+                                        },
+                     "status/danger":  "#F97066",
+                     "status/unavailable":  "#8FA3B8",
+                     "focus":  "#00B7C7",
+                     "bg/top":  "#103B66",
+                     "bg/bottom":  "#07121F",
+                     "glass/fill":  "#FFFFFF0F",
+                     "glass/strong":  "#3A3A3CD1",
+                     "glass/border":  "#FFFFFF24",
+                     "glass/shadow":  "#0000001A",
+                     "glass/sheen":  "#FFFFFF33",
+                     "glass/rim-hi":  "#FFFFFF99",
+                     "glass/rim-lo":  "#FFFFFF00",
+                     "glass/glow":  "#FFFFFF12",
+                     "ambient/1":  "#00B7C71F",
+                     "ambient/2":  "#79C14214",
+                     "ambient/3":  "#2364AA29"
+                 },
+    "Claro":  {
+                  "surface/page":  "#F2F2F7",
+                  "surface/card":  "#FFFFFF",
+                  "surface/warm":  "#E9E9EE",
+                  "surface/strong":  "#103B66",
+                  "tint":  "#1C1C1E",
+                  "border":  "#1C1C1E",
+                  "text/heading":  "#1C1C1E",
+                  "text/primary":  "#1C1C1E",
+                  "text/muted":  "#515156",
+                  "text/subtle":  "#636366",
+                  "text/on-strong":  "#F9FBFC",
+                  "text/on-action":  "#101010",
+                  "action/primary":  "#00B7C7",
+                  "action/primary-hover":  "#79C142",
+                  "action/cta":  "#FDB813",
+                  "status/available":  "#79C142",
+                  "status/limited":  "#FDB813",
+                  "status/danger":  "#B42318",
+                  "status/unavailable":  "#8E8E93",
+                  "focus":  "#007AFF",
+                  "bg/top":  "#FFFFFF",
+                  "bg/bottom":  "#E3EEF8",
+                  "glass/fill":  "#FFFFFF0F",
+                  "glass/strong":  "#FFFFFFBF",
+                  "glass/border":  "#FFFFFF99",
+                  "glass/shadow":  "#00000038",
+                  "glass/sheen":  "#FFFFFF40",
+                  "glass/rim-hi":  "#FFFFFF59",
+                  "glass/rim-lo":  "#FFFFFF0D",
+                  "glass/glow":  "#FFFFFF0F",
+                  "ambient/1":  "#5AC8FA24",
+                  "ambient/2":  "#007AFF12",
+                  "ambient/3":  "#00B7C71A"
+              },
+    "Oscuro":  {
+                   "surface/page":  "#0B0B0C",
+                   "surface/card":  "#161618",
+                   "surface/warm":  "#1F1F22",
+                   "surface/strong":  "#1F1F22",
+                   "tint":  "#FFFFFF",
+                   "border":  "#FFFFFF",
+                   "text/heading":  "#FFFFFF",
+                   "text/primary":  "#EDEDED",
+                   "text/muted":  "#A1A1AA",
+                   "text/subtle":  "#8A8A8F",
+                   "text/on-strong":  "#F9FBFC",
+                   "text/on-action":  "#101010",
+                   "action/primary":  "#00B7C7",
+                   "action/primary-hover":  "#79C142",
+                   "action/cta":  "#FDB813",
+                   "status/available":  "#8BD152",
+                   "status/limited":  "#FDB813",
+                   "status/danger":  "#F97066",
+                   "status/unavailable":  "#6B6B70",
+                   "focus":  "#00B7C7",
+                   "bg/top":  "#141416",
+                   "bg/bottom":  "#0B0B0C",
+                   "glass/fill":  "#FFFFFF0F",
+                   "glass/strong":  "#3A3A3CD9",
+                   "glass/border":  "#FFFFFF29",
+                   "glass/shadow":  "#0000001A",
+                   "glass/sheen":  "#FFFFFF33",
+                   "glass/rim-hi":  "#FFFFFF99",
+                   "glass/rim-lo":  "#FFFFFF00",
+                   "glass/glow":  "#FFFFFF14",
+                   "ambient/1":  "#00B7C714",
+                   "ambient/2":  "#FFFFFF0A",
+                   "ambient/3":  "#79C1420D"
+               },
+    "Inmersivo":  {
+                      "_uso":  "Solo Home con fotografÃ­a en tema Colorido (pluginData surface=Inmersivo; en cÃ³digo data-surface=\"inmersivo\").",
+                      "surface/page":  "#0A1A2B",
+                      "surface/card":  "#12304F",
+                      "surface/warm":  "#173B5E",
+                      "surface/strong":  "#06111D",
+                      "tint":  "#2364AA",
+                      "border":  "#F9FBFC",
+                      "text/heading":  "#F9FBFC",
+                      "text/primary":  "#F9FBFC",
+                      "text/muted":  "#BAE6FD",
+                      "text/subtle":  "#A9BCD0",
+                      "text/on-strong":  "#F9FBFC",
+                      "text/on-action":  {
+                                             "alias":  "brand/negro-volcanico"
+                                         },
+                      "action/primary":  {
+                                             "alias":  "brand/turquesa-laguna"
+                                         },
+                      "action/primary-hover":  {
+                                                   "alias":  "brand/verde-frailejon"
+                                               },
+                      "action/cta":  {
+                                         "alias":  "brand/dorado"
+                                     },
+                      "status/available":  {
+                                               "alias":  "brand/verde-frailejon"
+                                           },
+                      "status/limited":  {
+                                             "alias":  "brand/dorado"
+                                         },
+                      "status/danger":  "#F97066",
+                      "status/unavailable":  "#8FA3B8",
+                      "focus":  "#00B7C7",
+                      "bg/top":  "#103B66",
+                      "bg/bottom":  "#07121F",
+                      "glass/fill":  "#FFFFFF0F",
+                      "glass/strong":  "#3A3A3CD1",
+                      "glass/border":  "#FFFFFF24",
+                      "glass/shadow":  "#0000001A",
+                      "glass/sheen":  "#FFFFFF33",
+                      "glass/rim-hi":  "#FFFFFF99",
+                      "glass/rim-lo":  "#FFFFFF00",
+                      "glass/glow":  "#FFFFFF12",
+                      "ambient/1":  "#00B7C71F",
+                      "ambient/2":  "#79C14214",
+                      "ambient/3":  "#2364AA29"
+                  }
+}

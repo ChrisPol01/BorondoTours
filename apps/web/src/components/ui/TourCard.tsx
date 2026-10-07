@@ -61,11 +61,11 @@ export function TourCard({ tour, href }: TourCardProps): JSX.Element {
       <div className="absolute right-3 top-3 z-10">
         <button
           type="button"
-          className="flex h-9 w-9 items-center justify-center rounded-full bg-blanco-niebla/80 shadow-sm backdrop-blur-sm transition-colors hover:bg-blanco-niebla"
+          className="flex h-9 w-9 items-center justify-center rounded-full bg-surface-card/80 shadow-sm backdrop-blur-sm transition-colors hover:bg-surface-card"
           aria-label={`Agregar ${tour.name} a favoritos`}
           onClick={(e) => e.preventDefault()}
         >
-          <Heart className="h-4 w-4 text-negro-volcanico/60" strokeWidth={2} />
+          <Heart className="h-4 w-4 text-text-primary/60" strokeWidth={2} />
         </button>
       </div>
 
@@ -78,20 +78,20 @@ export function TourCard({ tour, href }: TourCardProps): JSX.Element {
       {/* Contenido superpuesto abajo */}
       <div className="absolute inset-x-0 bottom-0 z-10 flex flex-col gap-1 p-4">
         {/* Nombre del tour */}
-        <h3 className="font-heading text-lg font-bold leading-tight text-blanco-niebla line-clamp-2">
+        <h3 className="font-heading text-lg font-bold leading-tight text-on-strong line-clamp-2">
           {tour.name}
         </h3>
 
         {/* Duración • Tipo */}
-        <span className="text-sm text-blanco-niebla/80">
+        <span className="text-sm text-on-strong/80">
           {tour.durationLabel} • {typeLabel}
         </span>
 
         {/* Precio y rating */}
         <div className="mt-1 flex items-end justify-between">
           <div>
-            <span className="text-xs text-blanco-niebla/60">Desde</span>
-            <p className="text-base font-bold text-blanco-niebla">
+            <span className="text-xs text-on-strong/60">Desde</span>
+            <p className="text-base font-bold text-on-strong">
               {formatPriceCop(tour.basePriceCop)}
             </p>
           </div>
@@ -99,10 +99,10 @@ export function TourCard({ tour, href }: TourCardProps): JSX.Element {
           {/* Rating */}
           <div className="flex items-center gap-1">
             <Star className="h-3.5 w-3.5 fill-dorado text-dorado" />
-            <span className="text-sm font-semibold text-blanco-niebla">
+            <span className="text-sm font-semibold text-on-strong">
               {tour.rating ?? "4.8"}
             </span>
-            <span className="text-xs text-blanco-niebla/60">
+            <span className="text-xs text-on-strong/60">
               ({tour.reviewCount ?? 96})
             </span>
           </div>

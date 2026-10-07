@@ -17,6 +17,7 @@
   "dependencies": {
     "@astrojs/react": "^4.0.0",
     "@borondo/contracts": "workspace:*",
+    "@borondo/ui": "workspace:*",
     "@nanostores/react": "^0.8.0",
     "@tanstack/react-query": "^5.101.4",
     "@unpic/react": "^1.0.2",

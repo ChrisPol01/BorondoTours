@@ -1,0 +1,224 @@
+/**
+ * Design tokens Borondo Tours — Ave Azul.
+ * Brand primitives come only from the approved guideline. Derived values are
+ * traceable in `src/lib/designTokenManifest.ts` and remain reusable aliases.
+ */
+:root {
+  /* Canonical Ave Azul primitives. */
+  --brand-azul-profundo: #103b66;
+  --brand-azul-condor: #2364aa;
+  --brand-turquesa-laguna: #00b7c7;
+  --brand-verde-frailejon: #79c142;
+  --brand-arena: #f3e8d1;
+  --brand-dorado: #fdb813;
+  --brand-blanco-niebla: #f9fbfc;
+  --brand-negro-volcanico: #101010;
+  /* Vidrio oficial de Figma (TourCard set 166:104691, capa body-{tema}). El tinte morado del
+     vidrio en Colorido no esta en la paleta de marca: es el valor oficial extraido de Figma. */
+  --brand-morado-vidrio: #5c23aa;
+
+  /* Documented accessibility derivatives; never copied into components. */
+  --derived-danger: #b42318;
+  --derived-neutral: #667085;
+  --derived-adventure: #9a3d08;
+
+  /* Semantic colors — tema Colorido (predeterminado): estilo del Home en todas las pantallas: azul marino con
+     degradado, luz ambiental y vidrio neutro gota de agua. Claro = blanco con difuminado azul.
+     Paridad con Figma "Tema · Colorido" (= "Tema · Inmersivo"), decisión 2026-09-27. */
+  --semantic-surface-page: #0a1a2b;
+  /* Figma "Tema · Colorido" surface/card = #12304F (sincronizado 2026-09-29; antes blanco 10 %). */
+  --semantic-surface-card: #12304f;
+  --semantic-surface-warm: #173b5e;
+  --semantic-surface-strong: #06111d;
+  --semantic-bg-top: var(--brand-azul-profundo);
+  --semantic-bg-bottom: #07121f;
+  --semantic-text-heading: var(--brand-blanco-niebla);
+  --semantic-text-primary: var(--brand-blanco-niebla);
+  --semantic-text-muted: #bae6fd;
+  --semantic-text-subtle: #a9bcd0;
+  --semantic-text-on-strong: var(--brand-blanco-niebla);
+  --semantic-text-on-action: var(--brand-negro-volcanico);
+  /* Texto sobre fotografía con velo oscuro: siempre claro, en los 3 temas. */
+  --semantic-text-on-media: var(--brand-blanco-niebla);
+  --semantic-text-on-media-muted: color-mix(in srgb, var(--brand-blanco-niebla) 82%, transparent);
+  /* Texto sobre el color de error sólido (#F97066 en Colorido/Oscuro, #B42318 en Claro). */
+  --semantic-text-on-danger: var(--brand-negro-volcanico);
+  /* Sobretítulos de sección: Dorado sobre fondo oscuro; en Claro pasa a Azul Cóndor (contraste AA). */
+  --semantic-text-accent: var(--brand-dorado);
+  --semantic-action-primary: var(--brand-turquesa-laguna);
+  --semantic-action-primary-hover: var(--brand-verde-frailejon);
+  --semantic-action-cta: var(--brand-dorado);
+  --semantic-focus: var(--brand-turquesa-laguna);
+  --semantic-border-subtle: color-mix(in srgb, var(--brand-blanco-niebla) 18%, transparent);
+  --gradient-page: linear-gradient(180deg, var(--semantic-bg-top), var(--semantic-bg-bottom));
+  /* Luz ambiental: manchas de color muy suaves para que el vidrio tenga algo que desenfocar. */
+  --ambient-1: color-mix(in srgb, var(--brand-turquesa-laguna) 12%, transparent);
+  --ambient-2: color-mix(in srgb, var(--brand-verde-frailejon) 8%, transparent);
+  --ambient-3: color-mix(in srgb, var(--brand-azul-condor) 16%, transparent);
+  --gradient-ambient: radial-gradient(40rem 40rem at 85% 0%, var(--ambient-1), transparent 70%), radial-gradient(36rem 36rem at 0% 45%, var(--ambient-2), transparent 70%), radial-gradient(44rem 44rem at 60% 100%, var(--ambient-3), transparent 70%);
+
+  /* Availability and difficulty are always paired with text/icon semantics. */
+  --semantic-available: var(--brand-verde-frailejon);
+  --semantic-limited: var(--brand-dorado);
+  --semantic-sold-out: #f97066;
+  --semantic-unavailable: #8fa3b8;
+  --semantic-adventure: var(--derived-adventure);
+  /* Pestaña "Más vendidos" del rail de la Home (coral fijo en los 3 temas; texto Negro Volcánico, 7:1). */
+  --semantic-accent-hot: #f97066;
+
+  /* Approved gradients: every endpoint is an Ave Azul primitive. */
+  --gradient-nature: linear-gradient(135deg, var(--brand-turquesa-laguna), var(--brand-verde-frailejon));
+  --gradient-depth: linear-gradient(135deg, var(--brand-azul-profundo), var(--brand-turquesa-laguna));
+
+  /* Typography: exact guideline ratios at mobile/tablet/desktop. */
+  --type-heading: "Sora", "Sora Fallback", system-ui, sans-serif;
+  --type-body: "Inter", "Inter Fallback", system-ui, sans-serif;
+  --type-scale: 0.85;
+  --type-h1: calc(3.5rem * var(--type-scale));
+  --type-h2: calc(2.5rem * var(--type-scale));
+  --type-h3: calc(1.75rem * var(--type-scale));
+  --type-h4: calc(1.25rem * var(--type-scale));
+  --type-body-1: 1rem;
+  --type-body-2: 0.875rem;
+  --type-button: 1rem;
+  --type-label: 0.75rem;
+  --leading-h1: 1.12;
+  --leading-h2: 1.2;
+  --leading-h3: 1.28;
+  --leading-h4: 1.32;
+  --leading-body: 1.6;
+  --leading-button: 1;
+  --leading-label: 1.5;
+  /* Escala extendida del Figma (Home v2 y componentes). Los titulares escalan con --type-scale. */
+  --type-display: calc(3.75rem * var(--type-scale));   /* 60 — titular del hero */
+  --type-section: calc(2.75rem * var(--type-scale));   /* 44 — titular de sección */
+  --type-title: 1.375rem;                              /* 22 — destino en portada, tarjeta móvil */
+  --type-card-title: 1.0625rem;                        /* 17 — promesas, tarjeta compacta */
+  --type-lead: 1.125rem;                               /* 18 — bajada del hero */
+  --type-nav: 0.9375rem;                               /* 15 — navegación, botón L */
+  --type-caption: 0.8125rem;                           /* 13 — chips, pines, colofón */
+  --type-micro: 0.6875rem;                             /* 11 — metadatos de pin */
+  --leading-display: 1.08;
+  --leading-section: 1.15;
+  --leading-title: 1.27;
+  --leading-tight: 1.3;
+
+  /* Responsive geometry measured from the 375px and 1440px compositions. */
+  --layout-container-public: 80rem;
+  --layout-container-reading: 48rem;
+  --layout-container-account: 90rem;
+  --layout-page-gutter: 1rem;
+  --layout-section-gap: clamp(3rem, 7vw, 7rem);
+  --layout-header-mobile: 4.5rem;
+  --layout-header-desktop: 5.5rem;
+  --layout-map-height: 31.25rem;
+  --layout-tour-rail-card: 17.5rem;
+  --layout-booking-sidebar: 20rem;
+  --layout-hero-mobile: 60vh;
+  --layout-hero-tablet: 70vh;
+  --layout-hero-desktop: 80vh;
+  --layout-drawer-mobile: 85vw;
+  --layout-drawer-max: 24rem;
+  --layout-gallery-overflow: 4rem;
+  --layout-tour-media-aspect: 16 / 9;
+
+  /* Shape, elevation and borders. */
+  --shape-control: 0.75rem;
+  --shape-card: 1.25rem;
+  --shape-panel: 2rem;
+  --shape-pill: 9999px;
+  --border-hairline: 1px;
+  --elevation-card: 0 0.5rem 1.5rem color-mix(in srgb, var(--brand-azul-profundo) 12%, transparent);
+  --elevation-floating: 0 1rem 3rem color-mix(in srgb, var(--brand-azul-profundo) 24%, transparent);
+  --elevation-pressed: inset 0 0 0.375rem color-mix(in srgb, var(--brand-negro-volcanico) 28%, transparent);
+  --elevation-sticky: 0 -0.125rem 0.5rem color-mix(in srgb, var(--brand-negro-volcanico) 8%, transparent);
+
+  /* Vidrio (paridad con Figma glass/*): relleno translúcido + borde claro + brillo superior + sombra difusa.
+     glass-strong = modales y menús (más opaco para leer sobre contenido). */
+  --glass-background: color-mix(in srgb, #ffffff 6%, transparent);
+  --glass-strong: color-mix(in srgb, #3a3a3c 82%, transparent);
+  --glass-border: color-mix(in srgb, var(--brand-blanco-niebla) 40%, transparent);
+  --glass-rim: linear-gradient(135deg, color-mix(in srgb, #ffffff 60%, transparent), transparent);
+  --glass-border-hover: color-mix(in srgb, #ffffff 60%, transparent);
+  --glass-hover-background: color-mix(in srgb, #ffffff 14%, transparent);
+  --glass-text: var(--brand-blanco-niebla);
+  --glass-highlight: inset 0 2px 10px color-mix(in srgb, #ffffff 20%, transparent);
+  --glass-depth: 0 0.625rem 1.875rem color-mix(in srgb, #000000 10%, transparent);
+  /* Texto sobre vidrio: oscuro → blanco; claro (.glass-light) → negro. Iguales en todos los temas. */
+  --glass-light: color-mix(in srgb, #ffffff 72%, transparent);
+  --glass-light-border: color-mix(in srgb, #ffffff 85%, transparent);
+  --glass-light-highlight: inset 0 1.5px 1px color-mix(in srgb, #ffffff 90%, transparent);
+  --glass-light-text: var(--brand-negro-volcanico);
+  --glass-blur: 2.5rem;
+  --glass-fallback: #3a3a3c;
+  /*
+   * Vidrio oficial de Figma (TourCard set 166:104691, capa body-{tema} de la variante Default).
+   * Colorido: morado #5c23aa al 50 %; Claro: blanco al 25 %; Oscuro: negro al 51 %. Efecto GLASS
+   * (frost 7, luz 315 grados). El strong es +25 pts de opacidad para leer sobre contenido.
+   */
+  --glass-figma-fill: color-mix(in srgb, var(--brand-morado-vidrio) 50%, transparent);
+  --glass-figma-fill-strong: color-mix(in srgb, var(--brand-morado-vidrio) 75%, transparent);
+  --glass-figma-text: var(--brand-blanco-niebla);
+  --glass-figma-blur: 7px;
+
+  /*
+   * Aliases de interoperabilidad Figma → CSS. El compilador conserva el nombre original de cada
+   * variable de Figma (`glass/fill`, `status/available`, etc.); estos aliases las conectan con los
+   * tokens canónicos del paquete y mantienen Colorido/Claro/Oscuro sincronizados.
+   */
+  --semantic-ambient-1: var(--ambient-1);
+  --semantic-ambient-2: var(--ambient-2);
+  --semantic-ambient-3: var(--ambient-3);
+  --semantic-glass-strong: var(--glass-strong);
+  --semantic-glass-fill: var(--glass-background);
+  --semantic-glass-surface: var(--glass-background);
+  --semantic-glass-border: var(--glass-border);
+  --semantic-glass-text: var(--glass-text);
+  --semantic-glass-shadow: color-mix(in srgb, #000000 10%, transparent);
+  --semantic-glass-sheen: color-mix(in srgb, #ffffff 20%, transparent);
+  --semantic-glass-rim-hi: color-mix(in srgb, #ffffff 60%, transparent);
+  --semantic-glass-rim-lo: transparent;
+  --semantic-tint: var(--semantic-surface-card);
+  --semantic-status-available: var(--semantic-available);
+  --semantic-status-unavailable: var(--semantic-unavailable);
+  --semantic-status-danger: var(--semantic-sold-out);
+  --semantic-semantic-available: var(--semantic-available);
+  --semantic-border: var(--semantic-border-subtle);
+
+  /* Header glass — estilo iOS: casi invisible, blur prominente, saturación alta. */
+  --glass-header-background: transparent;
+  --glass-header-border: color-mix(in srgb, var(--brand-blanco-niebla) 20%, transparent);
+  --glass-header-blur: 0.5rem;
+
+  /* Logo integrity and motion. */
+  --logo-horizontal-min-width: 10rem;
+  --logo-clear-space: 0.5rem;
+  --icon-stroke: 2px;
+  --motion-duration-standard: 200ms;
+  --motion-duration-reduced: 100ms;
+  --motion-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/*
+ * Temas de color (paridad con Figma: colecciones "Tema · Colorido / Claro / Oscuro").
+ * - Colorido es el predeterminado (sin atributo o data-theme="colorido").
+ * - Claro: estilo iOS, fondo gris muy claro y vidrio blanco translúcido.
+ * - Oscuro: neutro negro/gris; los acentos de marca no cambian.
+ * - Sistema (data-theme="sistema"): elige Claro u Oscuro según prefers-color-scheme.
+ * Cada bloque va en una línea para no duplicar tokens derivados en el manifiesto.
+ */
+[data-theme="claro"], [data-theme="sistema"] { --semantic-surface-page: #f2f2f7; --semantic-surface-card: #ffffff; --semantic-surface-warm: #e9e9ee; --semantic-surface-strong: #1c1c1e; --semantic-bg-top: #ffffff; --semantic-bg-bottom: #e3eef8; --semantic-text-heading: #1c1c1e; --semantic-text-primary: #1c1c1e; --semantic-text-muted: #515156; --semantic-text-subtle: #636366; --semantic-sold-out: var(--derived-danger); --semantic-text-on-danger: var(--brand-blanco-niebla); --semantic-text-accent: var(--brand-azul-condor); --semantic-focus: #007aff; --semantic-border-subtle: color-mix(in srgb, #000000 12%, transparent); --semantic-unavailable: #8e8e93; --ambient-1: color-mix(in srgb, #5ac8fa 14%, transparent); --ambient-2: color-mix(in srgb, #007aff 7%, transparent); --ambient-3: color-mix(in srgb, var(--brand-turquesa-laguna) 10%, transparent); --glass-background: color-mix(in srgb, #ffffff 6%, transparent); --glass-strong: color-mix(in srgb, #ffffff 75%, transparent); --glass-border: color-mix(in srgb, #ffffff 60%, transparent); --glass-rim: linear-gradient(135deg, color-mix(in srgb, #ffffff 90%, transparent), transparent); --glass-text: var(--brand-negro-volcanico); --glass-highlight: inset 0 2px 10px color-mix(in srgb, #ffffff 35%, transparent); --glass-depth: 0 0.625rem 1.875rem color-mix(in srgb, #000000 10%, transparent); --glass-fallback: #eef2f6; --glass-border-hover: color-mix(in srgb, #000000 28%, transparent); --glass-hover-background: color-mix(in srgb, #000000 6%, transparent); --glass-figma-fill: color-mix(in srgb, #ffffff 25%, transparent); --glass-figma-fill-strong: color-mix(in srgb, #ffffff 50%, transparent); --glass-figma-text: #0a1a2b; }
+
+[data-theme="oscuro"] { --semantic-surface-page: #0b0b0c; --semantic-surface-card: #161618; --semantic-bg-top: #141416; --semantic-bg-bottom: #0b0b0c; --semantic-text-heading: #ffffff; --semantic-text-subtle: #8a8a8f; --semantic-surface-warm: #1f1f22; --semantic-surface-strong: #000000; --semantic-text-primary: #ededed; --semantic-text-muted: #a1a1aa; --semantic-focus: var(--brand-turquesa-laguna); --semantic-border-subtle: color-mix(in srgb, #ffffff 12%, transparent); --semantic-available: #8bd152; --semantic-sold-out: #f97066; --semantic-unavailable: #6b6b70; --ambient-1: color-mix(in srgb, var(--brand-turquesa-laguna) 8%, transparent); --ambient-2: color-mix(in srgb, #ffffff 4%, transparent); --ambient-3: color-mix(in srgb, var(--brand-verde-frailejon) 5%, transparent); --glass-background: color-mix(in srgb, #ffffff 6%, transparent); --glass-strong: color-mix(in srgb, #3a3a3c 85%, transparent); --glass-border: color-mix(in srgb, #ffffff 16%, transparent); --glass-rim: linear-gradient(135deg, color-mix(in srgb, #ffffff 50%, transparent), color-mix(in srgb, #ffffff 8%, transparent) 50%, color-mix(in srgb, #ffffff 50%, transparent)); --glass-highlight: inset 0 1.5px 1px color-mix(in srgb, #ffffff 40%, transparent), inset 0 0 16px color-mix(in srgb, #ffffff 8%, transparent); --glass-depth: 0 0.625rem 1.875rem color-mix(in srgb, #000000 45%, transparent); --glass-fallback: #2c2c2e; --glass-figma-fill: color-mix(in srgb, #000000 51%, transparent); --glass-figma-fill-strong: color-mix(in srgb, #000000 76%, transparent); --glass-figma-text: var(--brand-blanco-niebla); color-scheme: dark; }
+
+@media (prefers-color-scheme: dark) {
+  [data-theme="sistema"] { --semantic-surface-page: #0b0b0c; --semantic-surface-card: #161618; --semantic-bg-top: #141416; --semantic-bg-bottom: #0b0b0c; --semantic-text-heading: #ffffff; --semantic-text-subtle: #8a8a8f; --semantic-surface-warm: #1f1f22; --semantic-surface-strong: #000000; --semantic-text-primary: #ededed; --semantic-text-muted: #a1a1aa; --semantic-focus: var(--brand-turquesa-laguna); --semantic-border-subtle: color-mix(in srgb, #ffffff 12%, transparent); --semantic-available: #8bd152; --semantic-sold-out: #f97066; --semantic-unavailable: #6b6b70; --ambient-1: color-mix(in srgb, var(--brand-turquesa-laguna) 8%, transparent); --ambient-2: color-mix(in srgb, #ffffff 4%, transparent); --ambient-3: color-mix(in srgb, var(--brand-verde-frailejon) 5%, transparent); --glass-background: color-mix(in srgb, #ffffff 6%, transparent); --glass-strong: color-mix(in srgb, #3a3a3c 85%, transparent); --glass-border: color-mix(in srgb, #ffffff 16%, transparent); --glass-rim: linear-gradient(135deg, color-mix(in srgb, #ffffff 50%, transparent), color-mix(in srgb, #ffffff 8%, transparent) 50%, color-mix(in srgb, #ffffff 50%, transparent)); --glass-highlight: inset 0 1.5px 1px color-mix(in srgb, #ffffff 40%, transparent), inset 0 0 16px color-mix(in srgb, #ffffff 8%, transparent); --glass-depth: 0 0.625rem 1.875rem color-mix(in srgb, #000000 45%, transparent); --glass-fallback: #2c2c2e; --glass-figma-fill: color-mix(in srgb, #000000 51%, transparent); --glass-figma-fill-strong: color-mix(in srgb, #000000 76%, transparent); --glass-figma-text: var(--brand-blanco-niebla); color-scheme: dark; }
+}
+
+@media (min-width: 48rem) {
+  :root { --type-scale: 0.95; --layout-page-gutter: 1.5rem; }
+}
+
+@media (min-width: 64.0625rem) {
+  :root { --type-scale: 1; --layout-page-gutter: 2rem; }
+}

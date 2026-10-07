@@ -1,0 +1,68 @@
+/*
+ * Home (/) — comportamiento sobre las clases generadas por fig2astro (p0_*).
+ * Lo carga FigmaPage solo en la vista del Home (figmaId 113:17071).
+ */
+
+/* La imagen del hero venía corrida 12 px a la derecha y 9 px hacia abajo. */
+.p0_0 > .p0_1 { left: 0; top: 0; }
+
+/* Capa que entra de izquierda a derecha al cambiar de diapositiva (queda debajo de los degradados). */
+.bt-hero-slide {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  animation: bt-hero-in 900ms cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+@keyframes bt-hero-in {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+/* Texto del destino y chips: transición suave al cambiar de diapositiva. */
+.p0_44 > h3,
+.p0_44 > span,
+.p0_19 .p0_21,
+.p0_24 .p0_21 { transition: opacity 260ms ease, transform 260ms ease; }
+.bt-swapping .p0_44 > h3,
+.bt-swapping .p0_44 > span,
+.bt-swapping .p0_19 .p0_21,
+.bt-swapping .p0_24 .p0_21 { opacity: 0; transform: translateX(-8px); }
+
+/* Indicadores: p0_48 inactivo, p0_47 activo. Las dimensiones y colores vienen del diseño. */
+.p0_46 { overflow: visible; }
+.p0_46 > div {
+  cursor: pointer;
+  transition: width 400ms cubic-bezier(0.22, 1, 0.36, 1), background-color 400ms ease;
+}
+.p0_46 > div::before { content: ""; position: absolute; inset: -10px -3px; } /* área táctil */
+.p0_46 > div:focus-visible { outline: 2px solid var(--semantic-focus); outline-offset: 4px; }
+
+/* Chips de tours de la región (p0_19, p0_24): actúan como botones al catálogo. */
+.p0_19, .p0_24 {
+  cursor: pointer;
+  transition: transform var(--motion-duration-standard) var(--motion-ease-standard), background-color var(--motion-duration-standard);
+}
+.p0_19:hover, .p0_24:hover { transform: translateY(-2px); background-color: color-mix(in srgb, var(--semantic-glass-fill) 26%, transparent); }
+.p0_19:focus-visible, .p0_24:focus-visible { outline: 2px solid var(--semantic-focus); outline-offset: 3px; }
+
+/* Pestañas laterales: en reposo muestran el 60 % y al pasar el mouse salen al 100 % (derecha → izquierda).
+ * `translate` se compone con la rotación que trae cada clase; los desplazamientos los calcula el runtime. */
+.bt-side-tab {
+  translate: var(--bt-peek-x, 0) 0;
+  transition: translate 320ms cubic-bezier(0.22, 1, 0.36, 1), filter 200ms ease;
+  z-index: 30;
+}
+.bt-side-tab:hover,
+.bt-side-tab:focus-visible { translate: var(--bt-full-x, 0) 0; filter: brightness(1.05); }
+
+/* Tarjetas de "Más allá de Colombia" (p0_111) → WhatsApp. */
+.p0_111 { overflow: visible; }
+.p0_111 > button { cursor: pointer; transition: transform var(--motion-duration-standard) var(--motion-ease-standard); }
+.p0_111 > button:hover { transform: translateY(-4px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .bt-hero-slide { animation-duration: 1ms; }
+  .bt-side-tab, .p0_46 > div { transition-duration: 1ms; }
+}
