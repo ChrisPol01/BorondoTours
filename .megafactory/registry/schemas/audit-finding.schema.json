@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Hallazgo de auditoría (AuditFinding.<slug>.json, §9.1)",
+  "type": "object",
+  "required": [
+    "feature",
+    "result",
+    "actions"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "feature": {
+      "type": "string"
+    },
+    "result": {
+      "enum": [
+        "finding",
+        "no-finding"
+      ]
+    },
+    "controlId": {
+      "type": "string",
+      "maxLength": 40
+    },
+    "condition": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "criteria": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "cause": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "effect": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "recommendation": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "actions": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "$ref": "#/$defs/action"
+      }
+    }
+  },
+  "$defs": {
+    "action": {
+      "title": "Acción que abre un ítem enlazado (§9.6)",
+      "description": "Esquema compartido de las acciones de los tipos fuente. El título solo admite caracteres seguros para que spawn lo pase entre comillas dobles sin escape. La unicidad de id (action-ids-unique), el dueño existente (owner-unknown) y changeClassHint solo con change/defect/standard (hint-entry) se comprueban en código. itemId, linked y linkedChange no existen en el contenido: los deriva el CLI de los enlaces del manifest.",
+      "type": "object",
+      "required": [
+        "id",
+        "title",
+        "entryType",
+        "owner",
+        "due"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._-]{1,40}$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 120,
+          "pattern": "^[\\p{L}\\p{N} .,:()/_-]+$"
+        },
+        "entryType": {
+          "enum": [
+            "feature",
+            "change",
+            "defect",
+            "standard",
+            "debt",
+            "migration-wave",
+            "audit-remediation",
+            "decommission",
+            "experiment",
+            "problem"
+          ]
+        },
+        "owner": {
+          "type": "string",
+          "pattern": "^(h:)?[a-z][a-z0-9-]{1,40}$"
+        },
+        "due": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "changeClassHint": {
+          "enum": [
+            "standard",
+            "normal",
+            "emergency"
+          ]
+        }
+      }
+    }
+  }
+}

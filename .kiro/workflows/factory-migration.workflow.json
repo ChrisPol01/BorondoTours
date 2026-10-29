@@ -1,0 +1,100 @@
+{
+  "name": "bt-factory-migration",
+  "description": "Carril govern de la Megafábrica SDLC: plan de migración con estrategia por carga y vuelta atrás por ola, decisión humana y un ítem migration-wave por ola. El campo type de cada nodo queda pendiente de validación por el orquestador.",
+  "inputs": {
+    "task": "prompt"
+  },
+  "modelId": "auto",
+  "steps": [
+    {
+      "type": "step",
+      "id": "init",
+      "agent": "sdlc-conductor",
+      "captureOutput": true,
+      "prompt": "Rol: conductor. Modo: init. Receta: migration.\nEntrada:\n{{task}}\nUsa init --entry migration. Ejecuta init y run start; imprime FEATURE_ID, RUN_ID y PHASE. Si run start sale con 2, señala error con las razones (nunca success)."
+    },
+    {
+      "type": "repeat",
+      "id": "migration-loop",
+      "maxIterations": 3,
+      "onMaxIterations": "pause",
+      "stopCondition": {
+        "fileCheck": {
+          "path": ".megafactory/state/migration.review.json",
+          "jsonPath": "$.loopStatus",
+          "value": "stop"
+        }
+      },
+      "steps": [
+        {
+          "type": "step",
+          "id": "migration-plan",
+          "agent": "sdlc-solutions-architect",
+          "prompt": "Contexto:\n{{init.output}}\nRol: solutions-architect. Modo: migration-plan. Bucle: migration.review.\nProduce o corrige MigrationPlan.json con la estrategia de cada carga y las olas."
+        },
+        {
+          "type": "step",
+          "id": "migration-review",
+          "agent": "sdlc-artifact-reviewer",
+          "prompt": "Contexto:\n{{init.output}}\nRol: artifact-reviewer. Modo: review. Bucle: migration.review. Revisa migration-plan y ejecuta loop verdict."
+        }
+      ]
+    },
+    {
+      "type": "parallel",
+      "id": "migration-signoff",
+      "joinPolicy": "allSettled",
+      "branches": [
+        {
+          "type": "step",
+          "id": "finops-sign",
+          "agent": "sdlc-finops",
+          "prompt": "Contexto:\n{{init.output}}\nRol: finops. Modo: sign."
+        },
+        {
+          "type": "step",
+          "id": "security-architect-sign",
+          "agent": "sdlc-security-architect",
+          "prompt": "Contexto:\n{{init.output}}\nRol: security-architect. Modo: sign."
+        }
+      ]
+    },
+    {
+      "type": "step",
+      "id": "gate-scope",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: gate. Fase: scope. Cierra corrida: no.\nSi falla, pausa con razones y opciones; al reanudar reevalúa."
+    },
+    {
+      "type": "step",
+      "id": "gate-assess",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: gate. Fase: assess. Cierra corrida: no.\nSi falla, pausa con razones y opciones; al reanudar reevalúa."
+    },
+    {
+      "type": "step",
+      "id": "decide-human",
+      "agent": "sdlc-conductor",
+      "completion": true,
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: approve-review.\nPide la decisión con request-approval --what review:<FEATURE_ID> y deja PENDING_HUMAN_COMMAND=node .megafactory/bin/factory.mjs approve --feature <FEATURE_ID> --what review:<FEATURE_ID> --by human:<nombre> (aprobación del plan)."
+    },
+    {
+      "type": "step",
+      "id": "gate-decide",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: gate. Fase: decide. Cierra corrida: no.\nSi falla, pausa con razones y opciones; al reanudar reevalúa."
+    },
+    {
+      "type": "step",
+      "id": "spawn",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: spawn.\nLee status --feature <FEATURE_ID> --json y crea un ítem migration-wave por ola (enlace wave-of) con init --entry <entryType> --link <tipo>:<FEATURE_ID> --action <id>. Si un init falla, detente en esa acción con RESULT=blocked."
+    },
+    {
+      "type": "step",
+      "id": "gate-act",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: gate. Fase: act. Cierra corrida: sí.\nSi falla, pausa con razones y opciones; al reanudar reevalúa. Siempre termina con run finish (ok o failed) y la lección."
+    }
+  ]
+}

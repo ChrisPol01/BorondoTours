@@ -1,0 +1,70 @@
+{
+  "feature": "ejemplo-privacidad",
+  "decisionClass": "risk",
+  "reserved": false,
+  "summary": "La función de recordatorios por mensaje usa teléfono y preferencia horaria; se emite opinión favorable con medidas: consentimiento explícito, retención de 12 meses y seudonimización en analítica.",
+  "options": [
+    {
+      "id": "O1",
+      "title": "Favorable con medidas",
+      "pros": [
+        "Cumple la finalidad con mínimo de datos"
+      ],
+      "cons": [
+        "Requiere gestionar consentimiento"
+      ]
+    },
+    {
+      "id": "O2",
+      "title": "Desfavorable",
+      "pros": [
+        "Sin tratamiento nuevo"
+      ],
+      "cons": [
+        "Se pierde la función"
+      ]
+    }
+  ],
+  "recommendation": {
+    "option": "O1",
+    "rationale": "Los datos son necesarios para la finalidad y las medidas reducen el riesgo a bajo."
+  },
+  "risks": [
+    {
+      "id": "R1",
+      "description": "Teléfonos visibles en el panel de soporte",
+      "likelihood": "medium",
+      "impact": "medium",
+      "mitigation": "Enmascarar en el panel y registrar accesos"
+    }
+  ],
+  "processing": "Teléfono y preferencia horaria de clientes para enviar recordatorios, en la región principal del perfil, por 12 meses.",
+  "legalBasis": "Consentimiento explícito según la jurisdicción del perfil",
+  "necessityProportionality": "El teléfono es necesario para el canal; la fecha de nacimiento pedida en el borrador no lo es y se retira.",
+  "risksToSubjects": [
+    {
+      "risk": "Exposición de teléfonos en analítica",
+      "severity": "medium",
+      "measure": "Seudonimizar antes de enviar a analítica"
+    }
+  ],
+  "subjectRights": [
+    "Supresión del teléfono al retirar el consentimiento, plazo según la jurisdicción"
+  ],
+  "breachAssessment": [],
+  "opinion": "favorable-with-measures",
+  "approvalPath": {
+    "approver": "agent:security-lead",
+    "command": "node .megafactory/bin/factory.mjs delegated-approve --feature ejemplo-privacidad --what risk:reminders-privacy --by agent:security-lead --role security-lead --agent sdlc-security-lead"
+  },
+  "actions": [
+    {
+      "id": "A1",
+      "title": "Seudonimizar teléfonos en analítica",
+      "entryType": "change",
+      "owner": "data-engineer",
+      "due": "2027-02-20",
+      "changeClassHint": "normal"
+    }
+  ]
+}

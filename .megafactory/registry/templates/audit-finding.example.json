@@ -1,0 +1,19 @@
+{
+  "feature": "ejemplo-feature",
+  "result": "finding",
+  "controlId": "C1",
+  "condition": "La revisión trimestral de accesos no se hizo en el último trimestre.",
+  "criteria": "El control C1 exige una revisión cada trimestre.",
+  "cause": "La tarea dependía de un recordatorio manual.",
+  "effect": "Accesos sin revisar a datos personales durante tres meses.",
+  "recommendation": "Automatizar el recordatorio y registrar la revisión en el bus.",
+  "actions": [
+    {
+      "id": "F1",
+      "title": "Automatizar la revisión trimestral de accesos",
+      "entryType": "audit-remediation",
+      "owner": "compliance-officer",
+      "due": "2026-12-15"
+    }
+  ]
+}

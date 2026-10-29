@@ -1,0 +1,57 @@
+{
+  "mcpServers": {
+    "mf-aws-appsignals": {
+      "command": "uvx",
+      "args": [
+        "awslabs.cloudwatch-applicationsignals-mcp-server@0.2.1"
+      ],
+      "env": {
+        "AWS_PROFILE": "${MF_AWS_PROFILE_READONLY}",
+        "AWS_REGION": "${MF_AWS_REGION}"
+      },
+      "disabled": true,
+      "autoApprove": []
+    },
+    "mf-chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@1.12.0"
+      ],
+      "disabled": true,
+      "autoApprove": []
+    },
+    "mf-github": {
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${MF_GITHUB_TOKEN}"
+      },
+      "disabled": true,
+      "autoApprove": []
+    },
+    "mf-kubernetes": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "kubernetes-mcp-server@0.0.69",
+        "--read-only"
+      ],
+      "env": {
+        "KUBECONFIG": "${MF_KUBERNETES_KUBECONFIG}"
+      },
+      "disabled": true,
+      "autoApprove": []
+    },
+    "mf-pagerduty": {
+      "command": "uvx",
+      "args": [
+        "pagerduty-mcp@1.1.0"
+      ],
+      "env": {
+        "PAGERDUTY_USER_API_KEY": "${MF_PAGERDUTY_USER_API_KEY}"
+      },
+      "disabled": true,
+      "autoApprove": []
+    }
+  }
+}

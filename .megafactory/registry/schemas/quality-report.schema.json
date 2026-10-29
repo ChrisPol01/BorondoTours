@@ -1,0 +1,266 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "feature",
+    "gate",
+    "codeFingerprint",
+    "tools",
+    "findings",
+    "verdict"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "feature": {
+      "type": "string"
+    },
+    "gate": {
+      "type": "string",
+      "enum": [
+        "peer",
+        "security",
+        "qa"
+      ]
+    },
+    "codeFingerprint": {
+      "type": "string"
+    },
+    "tools": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "cmd",
+          "exitCode",
+          "available"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "cmd": {
+            "type": "string"
+          },
+          "exitCode": {
+            "type": "integer"
+          },
+          "available": {
+            "type": "boolean"
+          },
+          "summary": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "severity",
+          "message",
+          "ownerRole",
+          "status"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "info",
+              "low",
+              "medium",
+              "high",
+              "critical"
+            ]
+          },
+          "file": {
+            "type": "string"
+          },
+          "line": {
+            "type": "integer"
+          },
+          "rule": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "suggestion": {
+            "type": "string"
+          },
+          "ownerRole": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "open",
+              "fixed",
+              "wontfix"
+            ]
+          },
+          "refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "edgeCasesCovered": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "flaky": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "perf": {
+      "type": "object",
+      "required": [
+        "tool",
+        "scenarios",
+        "percentiles",
+        "budgets",
+        "budgetMet"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "tool": {
+          "type": "string"
+        },
+        "scenarios": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "percentiles": {
+          "type": "object",
+          "required": [
+            "p50",
+            "p95",
+            "p99"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "p50": {
+              "type": "number"
+            },
+            "p95": {
+              "type": "number"
+            },
+            "p99": {
+              "type": "number"
+            }
+          }
+        },
+        "budgets": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "budgetMet": {
+          "type": "boolean"
+        }
+      }
+    },
+    "llm": {
+      "type": "object",
+      "required": [
+        "evalSuite",
+        "metrics",
+        "owaspLlm",
+        "thresholdsMet"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "evalSuite": {
+          "type": "string"
+        },
+        "metrics": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "owaspLlm": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "thresholdsMet": {
+          "type": "boolean"
+        }
+      }
+    },
+    "testPlan": {
+      "type": "object",
+      "required": [
+        "scope",
+        "levels",
+        "environments",
+        "risks",
+        "exitCriteria"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "scope": {
+          "type": "string"
+        },
+        "levels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "environments": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "risks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "exitCriteria": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "fail"
+      ]
+    },
+    "pendingDecisions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}

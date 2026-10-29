@@ -1,0 +1,101 @@
+{
+  "name": "bt-factory-release",
+  "description": "Fase 5 de la Megafábrica SDLC: plan de release y plan operativo en bucle, firmas, despliegue a dev y telemetría; staging y producción los ejecuta el humano (según el steering del proyecto, `profile.steering`). Requiere la puerta de quality. Pasos interactivos (prod-approval, telemetry-prod) fuera de parallel. El campo 'type' de cada nodo y la forma de 'branches'/'stopCondition' quedan pendientes de validación por el orquestador.",
+  "inputs": {
+    "task": "prompt"
+  },
+  "modelId": "auto",
+  "steps": [
+    {
+      "type": "step",
+      "id": "init",
+      "agent": "sdlc-conductor",
+      "captureOutput": true,
+      "prompt": "Rol: conductor. Modo: init. Receta: release.\nEntrada:\n{{task}}\nRequiere la puerta quality. Ejecuta run start; imprime FEATURE_ID, RUN_ID y PHASE. Si run start sale con 2, señala error con las razones (nunca success)."
+    },
+    {
+      "type": "repeat",
+      "id": "release-loop",
+      "maxIterations": 2,
+      "onMaxIterations": "pause",
+      "stopCondition": {
+        "fileCheck": {
+          "path": ".megafactory/state/release.review.json",
+          "jsonPath": "$.loopStatus",
+          "value": "stop"
+        }
+      },
+      "steps": [
+        {
+          "type": "step",
+          "id": "devops-sre",
+          "agent": "sdlc-devops-sre",
+          "prompt": "Contexto:\n{{init.output}}\nRol: devops-sre. Modo: release. Bucle: release.review.\nProduce o corrige OpsPlan.json (IaC, pipeline, observabilidad, entornos y runbooks)."
+        },
+        {
+          "type": "step",
+          "id": "release-manager",
+          "agent": "sdlc-release-manager",
+          "prompt": "Contexto:\n{{init.output}}\nRol: release-manager. Modo: release. Bucle: release.review.\nProduce o corrige ReleasePlan.json (estrategia, criterios de rollback, go/no-go y comandos de prod para el humano)."
+        },
+        {
+          "type": "step",
+          "id": "release-review",
+          "agent": "sdlc-artifact-reviewer",
+          "prompt": "Contexto:\n{{init.output}}\nRol: artifact-reviewer. Modo: review. Bucle: release.review. Revisa release-plan y ops-plan y ejecuta loop verdict."
+        }
+      ]
+    },
+    {
+      "type": "parallel",
+      "id": "release-signoff",
+      "joinPolicy": "allSettled",
+      "branches": [
+        {
+          "type": "step",
+          "id": "devops-sign",
+          "agent": "sdlc-devops-sre",
+          "prompt": "Contexto:\n{{init.output}}\nRol: devops-sre. Modo: sign. Firma release-plan."
+        },
+        {
+          "type": "step",
+          "id": "release-manager-sign",
+          "agent": "sdlc-release-manager",
+          "prompt": "Contexto:\n{{init.output}}\nRol: release-manager. Modo: sign. Firma ops-plan."
+        }
+      ]
+    },
+    {
+      "type": "step",
+      "id": "deploy-dev",
+      "agent": "sdlc-devops-sre",
+      "prompt": "Contexto:\n{{init.output}}\nRol: devops-sre. Modo: deploy-dev. Entorno: dev.\nDespliega a dev solo con los comandos de dev que tu perfil de permisos deja en ask (perfil de nube de dev: AdministratorAccess-232025404765). Si queda bloqueado, deja deploy.status: blocked y pendingHumanCommand."
+    },
+    {
+      "type": "step",
+      "id": "telemetry-dev",
+      "agent": "sdlc-devops-sre",
+      "prompt": "Contexto:\n{{init.output}}\nRol: devops-sre. Modo: telemetry. Entorno: dev.\nRecoge telemetría de dev y produce release-report:dev."
+    },
+    {
+      "type": "step",
+      "id": "prod-approval",
+      "agent": "sdlc-release-manager",
+      "completion": true,
+      "prompt": "Contexto:\n{{init.output}}\nRol: release-manager. Modo: prod-approval. Entorno: prod.\nPresenta ReleasePlan.prodCommands y solicita la aprobación humana de producción (HUMAN_APPROVAL release-prod). No despliega."
+    },
+    {
+      "type": "step",
+      "id": "telemetry-prod",
+      "agent": "sdlc-release-manager",
+      "completion": true,
+      "prompt": "Contexto:\n{{init.output}}\nRol: release-manager. Modo: telemetry. Entorno: prod.\nEl humano ejecuta el despliegue de prod y pega la telemetría; produce release-report:prod con lo pegado."
+    },
+    {
+      "type": "step",
+      "id": "close",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: close. Fase: release. Cierra corrida: sí.\nEjecuta gate --phase release (fija feature.status done), run finish (ok o failed) y escribe la lección."
+    }
+  ]
+}

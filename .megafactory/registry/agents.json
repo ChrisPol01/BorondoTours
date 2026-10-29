@@ -1,0 +1,2330 @@
+{
+  "schemaVersion": 1,
+  "roles": [
+    {
+      "role": "conductor",
+      "title": "Conductor de la fábrica",
+      "protocolNumber": 0,
+      "phase": "all",
+      "primaryAgent": "sdlc-conductor",
+      "backupAgent": "sdlc-artifact-reviewer",
+      "profile": "conductor",
+      "profileExtras": {
+        "capabilities": [
+          "subagent"
+        ],
+        "subagents": [
+          "sdlc-*"
+        ],
+        "excludeSubagents": [
+          "sdlc-conductor",
+          "sdlc-devops-sre",
+          "sdlc-release-manager",
+          "sdlc-sre",
+          "sdlc-resilience-engineer",
+          "sdlc-on-call-engineer"
+        ]
+      },
+      "roleCard": ".megafactory/core/library/roles/conductor/card.md",
+      "modes": {
+        "init": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role",
+          "idempotency": "cli"
+        },
+        "gate": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role",
+          "idempotency": "cli"
+        },
+        "checkpoint": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role",
+          "idempotency": "cli"
+        },
+        "close": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role",
+          "idempotency": "cli"
+        },
+        "reassign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role",
+          "idempotency": "cli"
+        },
+        "status": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role",
+          "idempotency": "cli"
+        },
+        "chat-run": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role",
+          "idempotency": "cli"
+        },
+        "spawn": {
+          "artifacts": [],
+          "doneWhen": "actions-spawned"
+        },
+        "metrics-report": {
+          "artifacts": [
+            "agentops-report"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "approve-review": {
+          "artifacts": [],
+          "doneWhen": {
+            "rule": "approval-present",
+            "args": {
+              "whatAny": [
+                "review"
+              ]
+            }
+          }
+        },
+        "approve-change": {
+          "artifacts": [
+            "change-record"
+          ],
+          "doneWhen": {
+            "rule": "approval-present",
+            "args": {
+              "whatAny": [
+                "change"
+              ],
+              "skipWhen": {
+                "field": "changeClass",
+                "values": [
+                  "standard"
+                ]
+              }
+            }
+          }
+        },
+        "approve-risk": {
+          "artifacts": [],
+          "doneWhen": {
+            "rule": "approval-present",
+            "args": {
+              "whatAny": [
+                "risk",
+                "remediate"
+              ]
+            }
+          }
+        },
+        "approve-postmortem": {
+          "artifacts": [
+            "postmortem"
+          ],
+          "doneWhen": {
+            "rule": "approval-present",
+            "args": {
+              "whatAny": [
+                "postmortem"
+              ]
+            }
+          }
+        },
+        "human-step": {
+          "artifacts": [],
+          "doneWhen": "always-run",
+          "idempotency": "cli"
+        }
+      },
+      "produces": [],
+      "consumes": [],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "artifact-reviewer",
+      "title": "Revisor de bucle y árbitro",
+      "protocolNumber": 0,
+      "phase": "all",
+      "primaryAgent": "sdlc-artifact-reviewer",
+      "backupAgent": "sdlc-conductor",
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/artifact-reviewer/card.md",
+      "modes": {
+        "review": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role",
+          "idempotency": "cli"
+        },
+        "arbiter": {
+          "artifacts": [],
+          "doneWhen": "position-in-current-round-or-resolved",
+          "idempotency": "cli"
+        },
+        "verdict": {
+          "artifacts": [
+            "quality-verdict"
+          ],
+          "doneWhen": "no-missing-signatures-of-role",
+          "idempotency": "cli"
+        }
+      },
+      "produces": [
+        "quality-verdict"
+      ],
+      "consumes": [],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "product-manager",
+      "title": "Product Manager",
+      "protocolNumber": 1,
+      "phase": "discovery",
+      "primaryAgent": "sdlc-product-manager",
+      "backupAgent": "sdlc-business-analyst",
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/product-manager/card.md",
+      "modes": {
+        "contract": {
+          "artifacts": [
+            "prd"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        }
+      },
+      "produces": [
+        "prd"
+      ],
+      "consumes": [
+        "edge-cases"
+      ],
+      "cosigns": [
+        "edge-cases",
+        "compliance-requirements"
+      ],
+      "active": true
+    },
+    {
+      "role": "business-analyst",
+      "title": "Business Analyst",
+      "protocolNumber": 2,
+      "phase": "discovery",
+      "primaryAgent": "sdlc-business-analyst",
+      "backupAgent": "sdlc-product-manager",
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/business-analyst/card.md",
+      "modes": {
+        "contract": {
+          "artifacts": [
+            "edge-cases"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        }
+      },
+      "produces": [
+        "edge-cases"
+      ],
+      "consumes": [
+        "prd"
+      ],
+      "cosigns": [
+        "prd"
+      ],
+      "active": true
+    },
+    {
+      "role": "compliance-officer",
+      "title": "Compliance & Privacy Officer",
+      "protocolNumber": 3,
+      "phase": "discovery",
+      "primaryAgent": "sdlc-compliance-officer",
+      "backupAgent": "sdlc-security-architect",
+      "profile": "analyst",
+      "profileExtras": {
+        "tools": [
+          "web"
+        ],
+        "capabilities": [
+          "web_fetch",
+          "web_search"
+        ]
+      },
+      "roleCard": ".megafactory/core/library/roles/compliance-officer/card.md",
+      "modes": {
+        "contract": {
+          "artifacts": [
+            "compliance-requirements"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        },
+        "control-matrix": {
+          "artifacts": [
+            "control-matrix"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "evidence-map": {
+          "artifacts": [
+            "audit-evidence-map"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "audit-finding": {
+          "artifacts": [
+            "audit-finding"
+          ],
+          "doneWhen": "min-instances-published"
+        }
+      },
+      "produces": [
+        "compliance-requirements"
+      ],
+      "consumes": [
+        "prd",
+        "edge-cases"
+      ],
+      "cosigns": [
+        "prd",
+        "threat-model"
+      ],
+      "active": true
+    },
+    {
+      "role": "solutions-architect",
+      "title": "Solutions Architect",
+      "protocolNumber": 4,
+      "phase": "contracts",
+      "primaryAgent": "sdlc-solutions-architect",
+      "backupAgent": "sdlc-security-architect",
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/solutions-architect/card.md",
+      "modes": {
+        "contract": {
+          "artifacts": [
+            "c4-model",
+            "adr-draft"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        },
+        "debt-record": {
+          "artifacts": [
+            "tech-debt-record"
+          ],
+          "doneWhen": "min-instances-published"
+        },
+        "migration-plan": {
+          "artifacts": [
+            "migration-plan"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "system-context": {
+          "artifacts": [
+            "system-context"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        }
+      },
+      "produces": [
+        "c4-model",
+        "adr-draft"
+      ],
+      "consumes": [
+        "prd",
+        "edge-cases",
+        "compliance-requirements",
+        "cost-estimate",
+        "threat-model"
+      ],
+      "cosigns": [
+        "prd",
+        "edge-cases",
+        "compliance-requirements",
+        "cost-estimate",
+        "threat-model",
+        "domain-rules"
+      ],
+      "active": true
+    },
+    {
+      "role": "security-architect",
+      "title": "Security Architect",
+      "protocolNumber": 8,
+      "phase": "contracts",
+      "primaryAgent": "sdlc-security-architect",
+      "backupAgent": "sdlc-security-auditor",
+      "profile": "analyst",
+      "profileExtras": {
+        "tools": [
+          "web"
+        ],
+        "capabilities": [
+          "web_fetch",
+          "web_search"
+        ]
+      },
+      "roleCard": ".megafactory/core/library/roles/security-architect/card.md",
+      "modes": {
+        "contract": {
+          "artifacts": [
+            "threat-model"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        }
+      },
+      "produces": [
+        "threat-model"
+      ],
+      "consumes": [
+        "prd",
+        "edge-cases",
+        "compliance-requirements",
+        "c4-model",
+        "openapi",
+        "data-model",
+        "integrations"
+      ],
+      "cosigns": [
+        "c4-model",
+        "adr-draft",
+        "openapi",
+        "data-model",
+        "integrations"
+      ],
+      "active": true
+    },
+    {
+      "role": "security-auditor",
+      "title": "Security Auditor SAST/DAST",
+      "protocolNumber": 14,
+      "phase": "quality",
+      "primaryAgent": "sdlc-security-auditor",
+      "backupAgent": "sdlc-peer-reviewer",
+      "profile": "auditor",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/security-auditor/card.md",
+      "modes": {
+        "gate": {
+          "artifacts": [
+            "quality-report:security"
+          ],
+          "doneWhen": "verdict-pass"
+        },
+        "triage": {
+          "artifacts": [
+            "security-finding"
+          ],
+          "doneWhen": {
+            "rule": "status-reached",
+            "args": {
+              "field": "findingStatus",
+              "values": [
+                "triaged",
+                "contained",
+                "remediated",
+                "risk-accepted"
+              ]
+            }
+          }
+        },
+        "contained": {
+          "artifacts": [
+            "security-finding"
+          ],
+          "doneWhen": {
+            "rule": "status-reached",
+            "args": {
+              "field": "findingStatus",
+              "values": [
+                "contained",
+                "remediated",
+                "risk-accepted"
+              ]
+            }
+          }
+        },
+        "verify-fix": {
+          "artifacts": [
+            "security-finding"
+          ],
+          "doneWhen": {
+            "rule": "status-reached",
+            "args": {
+              "field": "findingStatus",
+              "values": [
+                "remediated",
+                "risk-accepted"
+              ]
+            }
+          }
+        },
+        "posture-review": {
+          "artifacts": [
+            "security-posture-review"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        }
+      },
+      "produces": [
+        "quality-report:security"
+      ],
+      "consumes": [
+        "threat-model",
+        "compliance-requirements",
+        "integrations",
+        "openapi"
+      ],
+      "cosigns": [
+        "audit-evidence-map"
+      ],
+      "active": true
+    },
+    {
+      "role": "peer-reviewer",
+      "title": "Peer Reviewer",
+      "protocolNumber": 13,
+      "phase": "quality",
+      "primaryAgent": "sdlc-peer-reviewer",
+      "backupAgent": "sdlc-security-auditor",
+      "profile": "auditor",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/peer-reviewer/card.md",
+      "modes": {
+        "gate": {
+          "artifacts": [
+            "quality-report:peer"
+          ],
+          "doneWhen": "verdict-pass"
+        }
+      },
+      "produces": [
+        "quality-report:peer"
+      ],
+      "consumes": [
+        "openapi",
+        "design-tokens",
+        "a11y-rules"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "tech-writer",
+      "title": "Technical Writer",
+      "protocolNumber": 12,
+      "phase": "build",
+      "primaryAgent": "sdlc-tech-writer",
+      "backupAgent": "sdlc-content-seo",
+      "profile": "writer",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/tech-writer/card.md",
+      "modes": {
+        "build": {
+          "artifacts": [
+            "build-report:tech-writer"
+          ],
+          "doneWhen": "build-report-complete"
+        },
+        "fix": {
+          "artifacts": [
+            "build-report:tech-writer"
+          ],
+          "doneWhen": "build-report-complete"
+        },
+        "promote-adr": {
+          "artifacts": [],
+          "doneWhen": "always-run"
+        },
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        }
+      },
+      "produces": [
+        "build-report:tech-writer"
+      ],
+      "consumes": [
+        "prd",
+        "c4-model",
+        "openapi",
+        "data-model"
+      ],
+      "cosigns": [
+        "system-context"
+      ],
+      "active": true
+    },
+    {
+      "role": "finops",
+      "title": "FinOps & Cloud Cost Optimizer",
+      "protocolNumber": 5,
+      "phase": "contracts",
+      "primaryAgent": "sdlc-finops",
+      "backupAgent": "sdlc-solutions-architect",
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/finops/card.md",
+      "modes": {
+        "contract": {
+          "artifacts": [
+            "cost-estimate"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        },
+        "cost-review": {
+          "artifacts": [
+            "cost-review"
+          ],
+          "doneWhen": "artifacts-current"
+        }
+      },
+      "produces": [
+        "cost-estimate"
+      ],
+      "consumes": [
+        "c4-model",
+        "data-model"
+      ],
+      "cosigns": [
+        "c4-model"
+      ],
+      "active": true
+    },
+    {
+      "role": "release-manager",
+      "title": "Release Manager",
+      "protocolNumber": 17,
+      "phase": "release",
+      "primaryAgent": "sdlc-release-manager",
+      "backupAgent": "sdlc-devops-sre",
+      "profile": "ops",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/release-manager/card.md",
+      "modes": {
+        "release": {
+          "artifacts": [
+            "release-plan"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        },
+        "prod-approval": {
+          "artifacts": [],
+          "doneWhen": "prod-approved"
+        },
+        "telemetry": {
+          "artifacts": [
+            "release-report:prod"
+          ],
+          "doneWhen": "telemetry-decided"
+        },
+        "change-record": {
+          "artifacts": [
+            "change-record"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "decommission-plan": {
+          "artifacts": [
+            "decommission-plan"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        }
+      },
+      "produces": [
+        "release-plan",
+        "release-report:prod"
+      ],
+      "consumes": [
+        "ops-plan",
+        "quality-verdict",
+        "release-report:dev"
+      ],
+      "cosigns": [
+        "ops-plan"
+      ],
+      "active": true
+    },
+    {
+      "role": "engineering-manager",
+      "title": "Gerente de ingeniería",
+      "protocolNumber": 38,
+      "phase": "scope",
+      "primaryAgent": "sdlc-engineering-manager",
+      "backupAgent": null,
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/engineering-manager/card.md",
+      "modes": {
+        "capacity-plan": {
+          "artifacts": [
+            "team-capacity-plan"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "error-budget-policy": {
+          "artifacts": [
+            "team-capacity-plan"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        }
+      },
+      "produces": [
+        "team-capacity-plan"
+      ],
+      "consumes": [
+        "slo-spec",
+        "agentops-report",
+        "incident-record"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "dpo",
+      "title": "Delegado de protección de datos",
+      "protocolNumber": 63,
+      "phase": "assess",
+      "primaryAgent": "sdlc-dpo",
+      "backupAgent": "sdlc-compliance-officer",
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/dpo/card.md",
+      "modes": {
+        "dpia-review": {
+          "artifacts": [
+            "privacy-opinion"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "data-subject-request": {
+          "artifacts": [
+            "privacy-opinion"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "breach-assessment": {
+          "artifacts": [
+            "privacy-opinion"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        }
+      },
+      "produces": [
+        "privacy-opinion"
+      ],
+      "consumes": [
+        "compliance-requirements",
+        "data-model",
+        "threat-model",
+        "incident-record"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "cto",
+      "title": "CTO de la fábrica",
+      "protocolNumber": 0,
+      "phase": "all",
+      "primaryAgent": "sdlc-cto",
+      "backupAgent": "sdlc-conductor",
+      "profile": "conductor",
+      "profileExtras": {
+        "capabilities": [
+          "subagent"
+        ],
+        "subagents": [
+          "sdlc-conductor"
+        ]
+      },
+      "roleCard": ".megafactory/core/library/roles/cto/card.md",
+      "modes": {
+        "intake": {
+          "artifacts": [
+            "executive-report"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "prioritize": {
+          "artifacts": [
+            "executive-report"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "report": {
+          "artifacts": [
+            "executive-report"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "pre-approve": {
+          "artifacts": [],
+          "doneWhen": "always-run",
+          "idempotency": "cli"
+        }
+      },
+      "produces": [
+        "executive-report"
+      ],
+      "consumes": [
+        "agentops-report",
+        "quality-verdict",
+        "release-report",
+        "cost-review",
+        "cost-estimate",
+        "security-posture-review",
+        "postmortem",
+        "area-report"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "product-lead",
+      "title": "Supervisor del área Producto",
+      "protocolNumber": 0,
+      "phase": "all",
+      "primaryAgent": "sdlc-product-lead",
+      "backupAgent": "sdlc-conductor",
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/product-lead/card.md",
+      "modes": {
+        "distribute": {
+          "artifacts": [
+            "area-report:product"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "area-review": {
+          "artifacts": [
+            "area-report:product"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "unblock": {
+          "artifacts": [],
+          "doneWhen": "always-run",
+          "idempotency": "cli"
+        }
+      },
+      "produces": [
+        "area-report:product"
+      ],
+      "consumes": [
+        "edge-cases",
+        "prd",
+        "build-report:tech-writer"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "security-lead",
+      "title": "Supervisor del área Seguridad",
+      "protocolNumber": 0,
+      "phase": "all",
+      "primaryAgent": "sdlc-security-lead",
+      "backupAgent": "sdlc-conductor",
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/security-lead/card.md",
+      "modes": {
+        "distribute": {
+          "artifacts": [
+            "area-report:security"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "area-review": {
+          "artifacts": [
+            "area-report:security"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "unblock": {
+          "artifacts": [],
+          "doneWhen": "always-run",
+          "idempotency": "cli"
+        }
+      },
+      "produces": [
+        "area-report:security"
+      ],
+      "consumes": [
+        "compliance-requirements",
+        "privacy-opinion",
+        "threat-model",
+        "quality-report:security"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "architecture-lead",
+      "title": "Supervisor del área Arquitectura",
+      "protocolNumber": 0,
+      "phase": "all",
+      "primaryAgent": "sdlc-architecture-lead",
+      "backupAgent": "sdlc-conductor",
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/architecture-lead/card.md",
+      "modes": {
+        "distribute": {
+          "artifacts": [
+            "area-report:architecture"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "area-review": {
+          "artifacts": [
+            "area-report:architecture"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "unblock": {
+          "artifacts": [],
+          "doneWhen": "always-run",
+          "idempotency": "cli"
+        }
+      },
+      "produces": [
+        "area-report:architecture"
+      ],
+      "consumes": [
+        "openapi",
+        "build-report:api-contract",
+        "data-model",
+        "dbml-view",
+        "build-report:data-modeler",
+        "domain-rules",
+        "build-report:domain-rules",
+        "integrations",
+        "build-report:integrations",
+        "c4-model",
+        "adr-draft"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "quality-lead",
+      "title": "Supervisor del área Calidad",
+      "protocolNumber": 0,
+      "phase": "all",
+      "primaryAgent": "sdlc-quality-lead",
+      "backupAgent": "sdlc-conductor",
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/quality-lead/card.md",
+      "modes": {
+        "distribute": {
+          "artifacts": [
+            "area-report:quality"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "area-review": {
+          "artifacts": [
+            "area-report:quality"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "unblock": {
+          "artifacts": [],
+          "doneWhen": "always-run",
+          "idempotency": "cli"
+        }
+      },
+      "produces": [
+        "area-report:quality"
+      ],
+      "consumes": [
+        "quality-report:peer",
+        "quality-report:qa"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "platform-lead",
+      "title": "Supervisor del área Plataforma",
+      "protocolNumber": 0,
+      "phase": "all",
+      "primaryAgent": "sdlc-platform-lead",
+      "backupAgent": "sdlc-conductor",
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/platform-lead/card.md",
+      "modes": {
+        "distribute": {
+          "artifacts": [
+            "area-report:platform"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "area-review": {
+          "artifacts": [
+            "area-report:platform"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "unblock": {
+          "artifacts": [],
+          "doneWhen": "always-run",
+          "idempotency": "cli"
+        }
+      },
+      "produces": [
+        "area-report:platform"
+      ],
+      "consumes": [
+        "db-change-review",
+        "ops-plan",
+        "release-report:dev",
+        "cost-estimate",
+        "release-plan",
+        "release-report:prod"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "engineering-lead",
+      "title": "Supervisor del área Ingeniería",
+      "protocolNumber": 0,
+      "phase": "all",
+      "primaryAgent": "sdlc-engineering-lead",
+      "backupAgent": "sdlc-conductor",
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/engineering-lead/card.md",
+      "modes": {
+        "distribute": {
+          "artifacts": [
+            "area-report:engineering"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "area-review": {
+          "artifacts": [
+            "area-report:engineering"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "unblock": {
+          "artifacts": [],
+          "doneWhen": "always-run",
+          "idempotency": "cli"
+        }
+      },
+      "produces": [
+        "area-report:engineering"
+      ],
+      "consumes": [
+        "build-report:backend",
+        "build-report:content-seo",
+        "team-capacity-plan",
+        "build-report:frontend",
+        "design-tokens",
+        "a11y-rules",
+        "build-report:uiux-a11y"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "api-contract",
+      "title": "API Contract Manager",
+      "protocolNumber": 6,
+      "phase": "contracts",
+      "primaryAgent": "sdlc-api-contract",
+      "backupAgent": "sdlc-backend",
+      "profile": "contract",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/api-contract/card.md",
+      "modes": {
+        "contract": {
+          "artifacts": [
+            "openapi",
+            "asyncapi"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        },
+        "zod": {
+          "artifacts": [
+            "build-report:api-contract"
+          ],
+          "doneWhen": "build-report-complete"
+        },
+        "dispute": {
+          "artifacts": [],
+          "doneWhen": "position-in-current-round-or-resolved"
+        }
+      },
+      "produces": [
+        "openapi",
+        "build-report:api-contract"
+      ],
+      "consumes": [
+        "prd",
+        "edge-cases",
+        "compliance-requirements",
+        "c4-model",
+        "data-model",
+        "threat-model"
+      ],
+      "cosigns": [
+        "data-model"
+      ],
+      "active": true
+    },
+    {
+      "role": "data-modeler",
+      "title": "DBA / Data Modeler",
+      "protocolNumber": 7,
+      "phase": "contracts",
+      "primaryAgent": "sdlc-data-modeler",
+      "backupAgent": "sdlc-backend",
+      "profile": "developer",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/data-modeler/card.md",
+      "modes": {
+        "contract": {
+          "artifacts": [
+            "data-model",
+            "dbml-view"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        },
+        "build": {
+          "artifacts": [
+            "build-report:data-modeler"
+          ],
+          "doneWhen": "build-report-complete"
+        },
+        "fix": {
+          "artifacts": [
+            "build-report:data-modeler"
+          ],
+          "doneWhen": "build-report-complete"
+        },
+        "dispute": {
+          "artifacts": [],
+          "doneWhen": "position-in-current-round-or-resolved"
+        }
+      },
+      "produces": [
+        "data-model",
+        "dbml-view",
+        "build-report:data-modeler"
+      ],
+      "consumes": [
+        "prd",
+        "edge-cases",
+        "compliance-requirements",
+        "openapi",
+        "c4-model"
+      ],
+      "cosigns": [
+        "openapi"
+      ],
+      "active": true
+    },
+    {
+      "role": "domain-rules",
+      "title": "Guardián de reglas financieras y de negocio",
+      "protocolNumber": 0,
+      "phase": "contracts",
+      "primaryAgent": "sdlc-domain-rules",
+      "backupAgent": "sdlc-backend",
+      "profile": "developer",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/domain-rules/card.md",
+      "modes": {
+        "contract": {
+          "artifacts": [
+            "domain-rules"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        },
+        "build": {
+          "artifacts": [
+            "build-report:domain-rules"
+          ],
+          "doneWhen": "build-report-complete"
+        },
+        "fix": {
+          "artifacts": [
+            "build-report:domain-rules"
+          ],
+          "doneWhen": "build-report-complete"
+        }
+      },
+      "produces": [
+        "domain-rules",
+        "build-report:domain-rules"
+      ],
+      "consumes": [
+        "prd",
+        "edge-cases",
+        "compliance-requirements"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "integrations",
+      "title": "Integraciones externas",
+      "protocolNumber": 0,
+      "phase": "contracts",
+      "primaryAgent": "sdlc-integrations",
+      "backupAgent": "sdlc-backend",
+      "profile": "developer",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/integrations/card.md",
+      "modes": {
+        "contract": {
+          "artifacts": [
+            "integrations"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "build": {
+          "artifacts": [
+            "build-report:integrations"
+          ],
+          "doneWhen": "build-report-complete"
+        },
+        "fix": {
+          "artifacts": [
+            "build-report:integrations"
+          ],
+          "doneWhen": "build-report-complete"
+        }
+      },
+      "produces": [
+        "integrations",
+        "build-report:integrations"
+      ],
+      "consumes": [
+        "prd",
+        "edge-cases",
+        "compliance-requirements",
+        "c4-model",
+        "threat-model",
+        "openapi"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "backend",
+      "title": "Backend Developer",
+      "protocolNumber": 10,
+      "phase": "build",
+      "primaryAgent": "sdlc-backend",
+      "backupAgent": "sdlc-integrations",
+      "profile": "developer",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/backend/card.md",
+      "modes": {
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        },
+        "build": {
+          "artifacts": [
+            "build-report:backend"
+          ],
+          "doneWhen": "build-report-complete"
+        },
+        "fix": {
+          "artifacts": [
+            "build-report:backend"
+          ],
+          "doneWhen": "build-report-complete"
+        },
+        "dispute": {
+          "artifacts": [],
+          "doneWhen": "position-in-current-round-or-resolved"
+        }
+      },
+      "produces": [
+        "build-report:backend"
+      ],
+      "consumes": [
+        "openapi",
+        "data-model",
+        "threat-model",
+        "compliance-requirements",
+        "domain-rules",
+        "integrations",
+        "edge-cases"
+      ],
+      "cosigns": [
+        "openapi",
+        "data-model",
+        "domain-rules",
+        "integrations"
+      ],
+      "active": true
+    },
+    {
+      "role": "frontend",
+      "title": "Frontend Developer",
+      "protocolNumber": 11,
+      "phase": "build",
+      "primaryAgent": "sdlc-frontend",
+      "backupAgent": "sdlc-content-seo",
+      "profile": "developer",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/frontend/card.md",
+      "modes": {
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        },
+        "build": {
+          "artifacts": [
+            "build-report:frontend"
+          ],
+          "doneWhen": "build-report-complete"
+        },
+        "fix": {
+          "artifacts": [
+            "build-report:frontend"
+          ],
+          "doneWhen": "build-report-complete"
+        }
+      },
+      "produces": [
+        "build-report:frontend"
+      ],
+      "consumes": [
+        "openapi",
+        "design-tokens",
+        "a11y-rules",
+        "edge-cases",
+        "compliance-requirements",
+        "prd"
+      ],
+      "cosigns": [
+        "openapi",
+        "design-tokens",
+        "a11y-rules"
+      ],
+      "active": true
+    },
+    {
+      "role": "uiux-a11y",
+      "title": "UI/UX & Accessibility Designer",
+      "protocolNumber": 9,
+      "phase": "contracts",
+      "primaryAgent": "sdlc-uiux-a11y",
+      "backupAgent": "sdlc-frontend",
+      "profile": "analyst",
+      "profileExtras": {
+        "tools": [
+          "subagent"
+        ],
+        "capabilities": [
+          "subagent"
+        ],
+        "subagents": [
+          "figma-sync"
+        ]
+      },
+      "roleCard": ".megafactory/core/library/roles/uiux-a11y/card.md",
+      "modes": {
+        "contract": {
+          "artifacts": [
+            "design-tokens",
+            "a11y-rules"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "design-qa": {
+          "artifacts": [
+            "build-report:uiux-a11y"
+          ],
+          "doneWhen": "build-report-complete"
+        }
+      },
+      "produces": [
+        "design-tokens",
+        "a11y-rules",
+        "build-report:uiux-a11y"
+      ],
+      "consumes": [
+        "prd",
+        "edge-cases",
+        "compliance-requirements"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "content-seo",
+      "title": "Contenido, i18n y SEO B2C",
+      "protocolNumber": 0,
+      "phase": "build",
+      "primaryAgent": "sdlc-content-seo",
+      "backupAgent": "sdlc-frontend",
+      "profile": "developer",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/content-seo/card.md",
+      "modes": {
+        "build": {
+          "artifacts": [
+            "build-report:content-seo"
+          ],
+          "doneWhen": "build-report-complete"
+        },
+        "fix": {
+          "artifacts": [
+            "build-report:content-seo"
+          ],
+          "doneWhen": "build-report-complete"
+        }
+      },
+      "produces": [
+        "build-report:content-seo"
+      ],
+      "consumes": [
+        "prd",
+        "design-tokens",
+        "compliance-requirements"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "qa-e2e",
+      "title": "QA Automation Engineer",
+      "protocolNumber": 15,
+      "phase": "quality",
+      "primaryAgent": "sdlc-qa-e2e",
+      "backupAgent": "sdlc-frontend",
+      "profile": "auditor",
+      "profileExtras": {
+        "fsWrite": [
+          "apps/web/e2e/**"
+        ]
+      },
+      "roleCard": ".megafactory/core/library/roles/qa-e2e/card.md",
+      "modes": {
+        "gate": {
+          "artifacts": [
+            "quality-report:qa"
+          ],
+          "doneWhen": "verdict-pass"
+        }
+      },
+      "produces": [
+        "quality-report:qa"
+      ],
+      "consumes": [
+        "edge-cases",
+        "a11y-rules",
+        "prd",
+        "openapi"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "devops-sre",
+      "title": "DevOps / SRE",
+      "protocolNumber": 16,
+      "phase": "release",
+      "primaryAgent": "sdlc-devops-sre",
+      "backupAgent": "sdlc-release-manager",
+      "profile": "ops",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/devops-sre/card.md",
+      "modes": {
+        "release": {
+          "artifacts": [
+            "ops-plan"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        },
+        "deploy-dev": {
+          "artifacts": [
+            "release-report:dev"
+          ],
+          "doneWhen": "deploy-done"
+        },
+        "telemetry": {
+          "artifacts": [
+            "release-report:dev"
+          ],
+          "doneWhen": "telemetry-decided"
+        }
+      },
+      "produces": [
+        "ops-plan",
+        "release-report:dev"
+      ],
+      "consumes": [
+        "c4-model",
+        "cost-estimate",
+        "threat-model",
+        "quality-verdict",
+        "release-plan"
+      ],
+      "cosigns": [
+        "release-plan"
+      ],
+      "active": true
+    },
+    {
+      "role": "dba-prod",
+      "title": "Administrador de bases de datos de producción",
+      "protocolNumber": 55,
+      "phase": "release",
+      "primaryAgent": "sdlc-dba-prod",
+      "backupAgent": "sdlc-data-modeler",
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/dba-prod/card.md",
+      "modes": {
+        "migration-review": {
+          "artifacts": [
+            "db-change-review"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "backup-restore-check": {
+          "artifacts": [
+            "db-change-review"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "capacity-review": {
+          "artifacts": [
+            "db-change-review"
+          ],
+          "doneWhen": "artifacts-current"
+        }
+      },
+      "produces": [
+        "db-change-review"
+      ],
+      "consumes": [
+        "data-model",
+        "migration-plan",
+        "release-plan",
+        "slo-spec",
+        "continuity-plan"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "sre",
+      "title": "Site Reliability Engineer",
+      "protocolNumber": 26,
+      "phase": "detect",
+      "primaryAgent": "sdlc-sre",
+      "backupAgent": "sdlc-devops-sre",
+      "profile": "sre",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/sre/card.md",
+      "modes": {
+        "detect": {
+          "artifacts": [
+            "incident-record"
+          ],
+          "doneWhen": {
+            "rule": "status-reached",
+            "args": {
+              "field": "incidentStatus",
+              "values": [
+                "detected",
+                "responding",
+                "mitigated",
+                "resolved"
+              ]
+            }
+          }
+        },
+        "respond": {
+          "artifacts": [
+            "incident-record"
+          ],
+          "doneWhen": {
+            "rule": "status-reached",
+            "args": {
+              "field": "incidentStatus",
+              "values": [
+                "responding",
+                "mitigated",
+                "resolved"
+              ]
+            }
+          }
+        },
+        "mitigated": {
+          "artifacts": [
+            "incident-record"
+          ],
+          "doneWhen": {
+            "rule": "status-reached",
+            "args": {
+              "field": "incidentStatus",
+              "values": [
+                "mitigated",
+                "resolved"
+              ]
+            }
+          }
+        },
+        "recover": {
+          "artifacts": [
+            "incident-record"
+          ],
+          "doneWhen": {
+            "rule": "status-reached",
+            "args": {
+              "field": "incidentStatus",
+              "values": [
+                "resolved"
+              ]
+            }
+          }
+        },
+        "postmortem": {
+          "artifacts": [
+            "postmortem",
+            "problem-record"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "review-scope": {
+          "artifacts": [
+            "review-scope"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "slo-review": {
+          "artifacts": [
+            "slo-spec"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "runbooks": {
+          "artifacts": [
+            "runbook"
+          ],
+          "doneWhen": "min-instances-published"
+        },
+        "contain": {
+          "artifacts": [],
+          "doneWhen": "always-run"
+        },
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        }
+      },
+      "produces": [
+        "incident-record",
+        "postmortem",
+        "problem-record"
+      ],
+      "consumes": [
+        "ops-plan",
+        "release-report",
+        "security-finding"
+      ],
+      "cosigns": [
+        "continuity-plan",
+        "chaos-experiment"
+      ],
+      "active": true
+    },
+    {
+      "role": "resilience-engineer",
+      "title": "Resilience Engineer",
+      "protocolNumber": 27,
+      "phase": "scope",
+      "primaryAgent": "sdlc-resilience-engineer",
+      "backupAgent": "sdlc-sre",
+      "profile": "sre",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/resilience-engineer/card.md",
+      "modes": {
+        "continuity-plan": {
+          "artifacts": [
+            "continuity-plan"
+          ],
+          "doneWhen": "signed-or-no-pending-signatures"
+        },
+        "chaos-design": {
+          "artifacts": [
+            "chaos-experiment"
+          ],
+          "doneWhen": "min-instances-published"
+        },
+        "chaos-results": {
+          "artifacts": [
+            "chaos-experiment"
+          ],
+          "doneWhen": "results-recorded"
+        }
+      },
+      "produces": [
+        "continuity-plan",
+        "chaos-experiment"
+      ],
+      "consumes": [
+        "slo-spec",
+        "incident-record",
+        "ops-plan"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "service-owner",
+      "title": "Dueño del servicio",
+      "protocolNumber": 52,
+      "phase": "assess",
+      "primaryAgent": "sdlc-service-owner",
+      "backupAgent": null,
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/service-owner/card.md",
+      "modes": {
+        "service-review": {
+          "artifacts": [
+            "service-review"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "slo-acceptance": {
+          "artifacts": [
+            "service-review"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "postmortem-acceptance": {
+          "artifacts": [
+            "service-review"
+          ],
+          "doneWhen": "artifacts-current"
+        }
+      },
+      "produces": [
+        "service-review"
+      ],
+      "consumes": [
+        "slo-spec",
+        "postmortem",
+        "problem-record",
+        "incident-record",
+        "review-scope",
+        "runbook"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "service-desk-l1",
+      "title": "Mesa de servicio, primer nivel",
+      "protocolNumber": 53,
+      "phase": "detect",
+      "primaryAgent": "sdlc-service-desk-l1",
+      "backupAgent": "sdlc-support-l2",
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/service-desk-l1/card.md",
+      "modes": {
+        "triage": {
+          "artifacts": [
+            "ticket-triage"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "known-error-match": {
+          "artifacts": [
+            "ticket-triage"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "route-l2": {
+          "artifacts": [
+            "ticket-triage"
+          ],
+          "doneWhen": "artifacts-current"
+        }
+      },
+      "produces": [
+        "ticket-triage"
+      ],
+      "consumes": [
+        "problem-record",
+        "runbook",
+        "incident-record",
+        "service-review"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "support-l2",
+      "title": "Soporte técnico de segundo nivel",
+      "protocolNumber": 54,
+      "phase": "respond",
+      "primaryAgent": "sdlc-support-l2",
+      "backupAgent": null,
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/support-l2/card.md",
+      "modes": {
+        "diagnose": {
+          "artifacts": [
+            "support-diagnosis"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "workaround": {
+          "artifacts": [
+            "support-diagnosis"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "defect-handoff": {
+          "artifacts": [
+            "support-diagnosis"
+          ],
+          "doneWhen": "artifacts-current"
+        }
+      },
+      "produces": [
+        "support-diagnosis"
+      ],
+      "consumes": [
+        "ticket-triage",
+        "runbook",
+        "incident-record",
+        "problem-record",
+        "release-report"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "on-call-engineer",
+      "title": "Ingeniero de guardia (paquetes de ejecución)",
+      "protocolNumber": 56,
+      "phase": "respond",
+      "primaryAgent": "sdlc-on-call-engineer",
+      "backupAgent": "sdlc-devops-sre",
+      "profile": "sre",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/on-call-engineer/card.md",
+      "modes": {
+        "prepare": {
+          "artifacts": [
+            "execution-package"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "record-output": {
+          "artifacts": [
+            "execution-package"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "handover": {
+          "artifacts": [
+            "execution-package"
+          ],
+          "doneWhen": "artifacts-current"
+        }
+      },
+      "produces": [
+        "execution-package"
+      ],
+      "consumes": [
+        "runbook",
+        "incident-record",
+        "change-record",
+        "release-plan",
+        "ops-plan"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "operations-lead",
+      "title": "Supervisor del área Operaciones",
+      "protocolNumber": 0,
+      "phase": "all",
+      "primaryAgent": "sdlc-operations-lead",
+      "backupAgent": "sdlc-conductor",
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/operations-lead/card.md",
+      "modes": {
+        "distribute": {
+          "artifacts": [
+            "area-report:operations"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "area-review": {
+          "artifacts": [
+            "area-report:operations"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "unblock": {
+          "artifacts": [],
+          "doneWhen": "always-run",
+          "idempotency": "cli"
+        }
+      },
+      "produces": [
+        "area-report:operations"
+      ],
+      "consumes": [
+        "execution-package",
+        "continuity-plan",
+        "chaos-experiment",
+        "ticket-triage",
+        "service-review",
+        "incident-record",
+        "postmortem",
+        "problem-record",
+        "support-diagnosis"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "figma-sync",
+      "title": "figma-sync",
+      "protocolNumber": 0,
+      "phase": "contracts",
+      "primaryAgent": "figma-sync",
+      "backupAgent": null,
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": null,
+      "modes": {},
+      "produces": [],
+      "consumes": [],
+      "cosigns": [],
+      "active": true,
+      "noInbox": true
+    }
+  ],
+  "dormant": [
+    {
+      "role": "ai-engineer",
+      "pack": "ai-llm",
+      "title": "AI Engineer (LLM)",
+      "reason": "pack ai-llm no activo",
+      "activateWhen": "activar el pack ai-llm en el perfil"
+    },
+    {
+      "role": "data-ai-lead",
+      "pack": "ai-llm",
+      "title": "Supervisor del área Datos e IA",
+      "reason": "pack ai-llm no activo",
+      "activateWhen": "activar el pack ai-llm en el perfil"
+    },
+    {
+      "role": "ai-governance-officer",
+      "pack": "ai-llm",
+      "title": "Oficial de gobierno de IA",
+      "reason": "pack ai-llm no activo",
+      "activateWhen": "activar el pack ai-llm en el perfil"
+    },
+    {
+      "role": "product-owner",
+      "pack": "core",
+      "title": "Product Owner",
+      "reason": "rol opcional sin activar",
+      "activateWhen": "agregarlo a roles.enable del perfil"
+    },
+    {
+      "role": "change-authority",
+      "pack": "core",
+      "title": "Change Authority",
+      "reason": "rol opcional sin activar",
+      "activateWhen": "agregarlo a roles.enable del perfil"
+    },
+    {
+      "role": "data-engineer",
+      "pack": "data-ml",
+      "title": "Data Engineer",
+      "reason": "pack data-ml no activo",
+      "activateWhen": "activar el pack data-ml en el perfil"
+    },
+    {
+      "role": "product-analyst",
+      "pack": "data-ml",
+      "title": "Product Analyst",
+      "reason": "pack data-ml no activo",
+      "activateWhen": "activar el pack data-ml en el perfil"
+    },
+    {
+      "role": "ml-engineer",
+      "pack": "data-ml",
+      "title": "ML Engineer",
+      "reason": "pack data-ml no activo",
+      "activateWhen": "activar el pack data-ml en el perfil"
+    },
+    {
+      "role": "cdo",
+      "pack": "data-ml",
+      "title": "Chief Data Officer",
+      "reason": "pack data-ml no activo",
+      "activateWhen": "activar el pack data-ml en el perfil"
+    },
+    {
+      "role": "data-owner",
+      "pack": "data-ml",
+      "title": "Dueño de datos",
+      "reason": "pack data-ml no activo",
+      "activateWhen": "activar el pack data-ml en el perfil"
+    },
+    {
+      "role": "data-scientist",
+      "pack": "data-ml",
+      "title": "Científico de datos",
+      "reason": "pack data-ml no activo",
+      "activateWhen": "activar el pack data-ml en el perfil"
+    },
+    {
+      "role": "ceo-sponsor",
+      "pack": "enterprise-governance",
+      "title": "Patrocinador ejecutivo",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "cio",
+      "pack": "enterprise-governance",
+      "title": "Chief Information Officer",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "ciso",
+      "pack": "enterprise-governance",
+      "title": "Chief Information Security Officer",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "cfo",
+      "pack": "enterprise-governance",
+      "title": "Chief Financial Officer",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "coo",
+      "pack": "enterprise-governance",
+      "title": "Chief Operating Officer",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "portfolio-manager",
+      "pack": "enterprise-governance",
+      "title": "Gestor de portafolio",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "pmo-lead",
+      "pack": "enterprise-governance",
+      "title": "Líder de PMO",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "agile-coach",
+      "pack": "enterprise-governance",
+      "title": "Coach ágil",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "enterprise-architect",
+      "pack": "enterprise-governance",
+      "title": "Arquitecto empresarial",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "endpoint-admin",
+      "pack": "enterprise-governance",
+      "title": "Administrador de equipos de usuario",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "principal-engineer",
+      "pack": "enterprise-governance",
+      "title": "Principal Engineer",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "pentester",
+      "pack": "enterprise-governance",
+      "title": "Penetration Tester",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "soc-analyst",
+      "pack": "enterprise-governance",
+      "title": "SOC Analyst",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "internal-auditor",
+      "pack": "enterprise-governance",
+      "title": "Internal Auditor",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "external-auditor",
+      "pack": "enterprise-governance",
+      "title": "External Audit Liaison",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "legal-counsel",
+      "pack": "enterprise-governance",
+      "title": "Legal Counsel (licencias y contratos)",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "it-asset-manager",
+      "pack": "enterprise-governance",
+      "title": "IT Asset Manager",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "vendor-manager",
+      "pack": "enterprise-governance",
+      "title": "Vendor Manager",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "finops-practitioner",
+      "pack": "enterprise-governance",
+      "title": "FinOps Practitioner (compromisos y presupuestos)",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "sustainability-officer",
+      "pack": "enterprise-governance",
+      "title": "Sustainability Officer (GreenOps)",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "developer-advocate",
+      "pack": "enterprise-governance",
+      "title": "Developer Advocate",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "knowledge-manager",
+      "pack": "enterprise-governance",
+      "title": "Knowledge Manager",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "ocm-lead",
+      "pack": "enterprise-governance",
+      "title": "Organizational Change Management Lead",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "platform-engineer",
+      "pack": "infra-iac",
+      "title": "Platform Engineer (IaC)",
+      "reason": "pack infra-iac no activo",
+      "activateWhen": "activar el pack infra-iac en el perfil"
+    },
+    {
+      "role": "network-engineer",
+      "pack": "infra-iac",
+      "title": "Ingeniero de redes",
+      "reason": "pack infra-iac no activo",
+      "activateWhen": "activar el pack infra-iac en el perfil"
+    },
+    {
+      "role": "iam-administrator",
+      "pack": "infra-iac",
+      "title": "IAM Administrator",
+      "reason": "pack infra-iac no activo",
+      "activateWhen": "activar el pack infra-iac en el perfil"
+    },
+    {
+      "role": "iot-edge-engineer",
+      "pack": "iot-edge",
+      "title": "IoT & Edge Engineer",
+      "reason": "pack iot-edge no activo",
+      "activateWhen": "activar el pack iot-edge en el perfil"
+    },
+    {
+      "role": "iot-fleet-manager",
+      "pack": "iot-edge",
+      "title": "Gestor de flota IoT",
+      "reason": "pack iot-edge no activo",
+      "activateWhen": "activar el pack iot-edge en el perfil"
+    },
+    {
+      "role": "mobile-developer",
+      "pack": "mobile",
+      "title": "Mobile Developer",
+      "reason": "pack mobile no activo",
+      "activateWhen": "activar el pack mobile en el perfil"
+    },
+    {
+      "role": "performance-engineer",
+      "pack": "mobile",
+      "title": "Performance Engineer",
+      "reason": "pack mobile no activo",
+      "activateWhen": "activar el pack mobile en el perfil"
+    },
+    {
+      "role": "exploratory-tester",
+      "pack": "mobile",
+      "title": "Exploratory Tester",
+      "reason": "pack mobile no activo",
+      "activateWhen": "activar el pack mobile en el perfil"
+    },
+    {
+      "role": "accessibility-tester",
+      "pack": "mobile",
+      "title": "Accessibility Tester",
+      "reason": "pack mobile no activo",
+      "activateWhen": "activar el pack mobile en el perfil"
+    },
+    {
+      "role": "incident-commander",
+      "pack": "ops-day2",
+      "title": "Incident Commander",
+      "reason": "rol opcional sin activar",
+      "activateWhen": "agregarlo a roles.enable del perfil"
+    },
+    {
+      "role": "communications-lead",
+      "pack": "ops-day2",
+      "title": "Communications Lead",
+      "reason": "rol opcional sin activar",
+      "activateWhen": "agregarlo a roles.enable del perfil"
+    },
+    {
+      "role": "risk-manager",
+      "pack": "ops-day2",
+      "title": "Risk Manager",
+      "reason": "rol opcional sin activar",
+      "activateWhen": "agregarlo a roles.enable del perfil"
+    },
+    {
+      "role": "api-product-manager",
+      "pack": "web-app",
+      "title": "API Product Manager",
+      "reason": "rol opcional sin activar",
+      "activateWhen": "agregarlo a roles.enable del perfil"
+    },
+    {
+      "role": "ux-researcher",
+      "pack": "web-app",
+      "title": "UX Researcher",
+      "reason": "rol opcional sin activar",
+      "activateWhen": "agregarlo a roles.enable del perfil"
+    },
+    {
+      "role": "translator",
+      "pack": "web-app",
+      "title": "Translator & Linguistic Reviewer",
+      "reason": "rol opcional sin activar",
+      "activateWhen": "agregarlo a roles.enable del perfil"
+    }
+  ]
+}

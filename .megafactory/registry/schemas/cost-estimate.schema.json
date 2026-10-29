@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "feature",
+    "region",
+    "currency",
+    "pricingSource",
+    "scenarios",
+    "verdict"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "feature": {
+      "type": "string"
+    },
+    "region": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]{2,30}$",
+      "enum": [
+        "us-east-1"
+      ]
+    },
+    "currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "const": "USD"
+    },
+    "pricingSource": {
+      "type": "string",
+      "pattern": "^(mcp-awspricing|manual|aws-calculator|calculator:[a-z0-9-]{2,40}|mcp:[a-z0-9.-]{2,60})$"
+    },
+    "pricingDate": {
+      "type": "string"
+    },
+    "confidence": {
+      "type": "string",
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ]
+    },
+    "scenarios": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "lineItems",
+          "monthlyTotalUsd"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "enum": [
+              "low",
+              "expected",
+              "peak"
+            ]
+          },
+          "assumptions": {
+            "type": "object"
+          },
+          "lineItems": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "service",
+                "dimension",
+                "unit",
+                "quantity",
+                "unitPriceUsd",
+                "monthlyUsd"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "service": {
+                  "type": "string"
+                },
+                "dimension": {
+                  "type": "string"
+                },
+                "unit": {
+                  "type": "string"
+                },
+                "quantity": {
+                  "type": "number"
+                },
+                "unitPriceUsd": {
+                  "type": "number"
+                },
+                "monthlyUsd": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "monthlyTotalUsd": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "alternatives": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "freeTierConsidered": {
+      "type": "boolean"
+    },
+    "budgetAlarmUsd": {
+      "type": "number"
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "within_budget",
+        "over_budget",
+        "needs_decision"
+      ]
+    },
+    "pendingDecisions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}

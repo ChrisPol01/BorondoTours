@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Plan de retiro (DecommissionPlan.json, §9.1)",
+  "type": "object",
+  "required": ["feature", "target", "reason", "dataDisposition", "cleanup"],
+  "additionalProperties": false,
+  "properties": {
+    "feature": { "type": "string" },
+    "target": { "type": "string", "minLength": 1, "maxLength": 200 },
+    "reason": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "dataDisposition": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "cutoverDate": { "type": "string", "maxLength": 40 },
+    "consumers": { "type": "array", "maxItems": 40, "items": { "type": "string", "maxLength": 200 } },
+    "cleanup": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "dns": { "$ref": "#/$defs/cleanupItem" },
+        "certificates": { "$ref": "#/$defs/cleanupItem" },
+        "iam": { "$ref": "#/$defs/cleanupItem" },
+        "secretNames": { "$ref": "#/$defs/cleanupItem" },
+        "monitors": { "$ref": "#/$defs/cleanupItem" },
+        "licenses": { "$ref": "#/$defs/cleanupItem" }
+      }
+    }
+  },
+  "$defs": {
+    "cleanupItem": {
+      "type": "object",
+      "required": ["status", "items"],
+      "additionalProperties": false,
+      "properties": {
+        "status": { "enum": ["planned", "done", "not-applicable"] },
+        "items": { "type": "array", "maxItems": 40, "items": { "type": "string", "maxLength": 200 } },
+        "note": { "type": "string", "maxLength": 500 }
+      }
+    }
+  }
+}

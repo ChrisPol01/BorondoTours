@@ -1,0 +1,75 @@
+{
+  "feature": "ejemplo-db",
+  "decisionClass": "production",
+  "reserved": true,
+  "summary": "La migración agrega NOT NULL a una columna de una tabla de 40 millones de filas; se aprueba con condiciones: restricción no validada, validación posterior y relleno por lotes.",
+  "options": [
+    {
+      "id": "O1",
+      "title": "Restricción no validada y validación posterior",
+      "pros": [
+        "Sin bloqueo largo"
+      ],
+      "cons": [
+        "Dos salidas"
+      ]
+    },
+    {
+      "id": "O2",
+      "title": "NOT NULL directo",
+      "pros": [
+        "Una salida"
+      ],
+      "cons": [
+        "Bloqueo largo de escrituras"
+      ]
+    }
+  ],
+  "recommendation": {
+    "option": "O1",
+    "rationale": "Evita el bloqueo largo y cada paso es reversible."
+  },
+  "risks": [
+    {
+      "id": "R1",
+      "description": "El relleno compite con la carga de pico",
+      "likelihood": "medium",
+      "impact": "medium",
+      "mitigation": "Lotes de 5 mil filas fuera del pico con interruptor"
+    }
+  ],
+  "engine": "PostgreSQL 16",
+  "migrations": [
+    {
+      "id": "M1",
+      "operation": "Agregar restricción NOT NULL no validada",
+      "lockRisk": "short",
+      "mitigation": "Validar en salida posterior",
+      "reversible": "yes"
+    }
+  ],
+  "backupCheck": [
+    {
+      "item": "Restauración probada en entorno aislado",
+      "status": "verified"
+    }
+  ],
+  "capacityNotes": [
+    "Conexiones en pico al 62 % del máximo"
+  ],
+  "verdict": "safe-with-conditions",
+  "approvalPath": {
+    "approver": "user",
+    "command": "node .megafactory/bin/factory.mjs approve --feature ejemplo-db --what production:migration-m1 --by human:<nombre>"
+  },
+  "actions": [
+    {
+      "id": "A1",
+      "title": "Validar la restricción en la siguiente salida",
+      "entryType": "change",
+      "owner": "data-modeler",
+      "due": "2027-02-15",
+      "changeClassHint": "normal"
+    }
+  ]
+}

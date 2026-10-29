@@ -1,0 +1,1178 @@
+feature: b2c-funcional-con-datos-simulados-y
+conventions:
+  daysBeforeTour: diferencia de fechas calendario entre la fecha del tour y la fecha de hoy, ambas en America/Bogota; entero sin horas ni minutos (Spec-D RF-D08b, Domain-Financiero)
+  balanceDueDate: fecha del tour menos full_payment_days_before del tour simulado; el saldo se puede pagar hasta el final de ese dia en America/Bogota y queda vencido desde el dia siguiente
+  stateSource: nombres de estado de packages/contracts/src/enums/booking-status.ts y Maquina-Estados-Booking.md; el booking es multidimensional y no hay enum plano
+  splitPhase: HOLD_GROUP no existe en PAYMENT_STATUS; es la fase derivada del grupo mientras algun participante vigente no ha pagado su porcentaje de reserva (Spec-C RF-C06)
+  splitVigentes: participante vigente es el que esta en PENDING_RESERVATION, RESERVATION_PAID o BALANCE_PAID; SLOT_RELEASED y FORFEITED no cuentan en el total, en el saldo pendiente ni en los guards del grupo
+  splitGroupRecalc: recalcular_fase_del_grupo evalua en este orden y dispara a lo sumo un evento del booking; todos los participantes SLOT_RELEASED sin pago dispara link_expired; IN_PAID con todos los vigentes con reserva pagada dispara split_all_reservations_paid; PARTIAL_PAID con todos los vigentes en BALANCE_PAID dispara split_all_balances_paid; PARTIAL_PAID sin vigentes y con algun FORFEITED dispara split_all_participants_forfeited en lifecycle; en otro caso no dispara nada
+  bookingTabsPrecedence: las reglas de bookingTabs se evaluan en orden (oculta, canceladas, completadas, por-pagar, proximas) y la primera que cumple asigna la pestana; asi cada reserva cae en una sola
+stateMachines:
+  - id: booking-payment
+    entity: booking.payment_status
+    states: [IN_PAID, PARTIAL_PAID, CONFIRMED, SETTLED, EXPIRED_PAID, PAYMENT_FAILED, CHARGEBACK]
+    initial: IN_PAID
+    terminal: [CHARGEBACK]
+    transitions:
+      - from: IN_PAID
+        to: CONFIRMED
+        event: payment_approved_full
+        guard: payment_event_id no procesado, link activo unico y cupo apartado vigente
+        sideEffects: [descontar_cupo, crear_notificacion, toast_reserva_confirmada]
+        idempotencyKey: payment_event_id
+      - from: IN_PAID
+        to: PARTIAL_PAID
+        event: payment_approved_deposit
+        guard: el tour admite abono, daysBeforeTour mayor a full_payment_days_before y payment_event_id no procesado
+        sideEffects: [descontar_cupo, fijar_balance_due_date, crear_notificacion]
+        idempotencyKey: payment_event_id
+      - from: IN_PAID
+        to: PARTIAL_PAID
+        event: split_all_reservations_paid
+        guard: reserva Divide tu cuenta y todos los participantes vigentes (PENDING_RESERVATION, RESERVATION_PAID o BALANCE_PAID; sin contar SLOT_RELEASED ni FORFEITED) pagaron su porcentaje de reserva
+        sideEffects: [cerrar_fase_hold_group, fijar_balance_due_date_por_participante, crear_notificacion]
+        idempotencyKey: id del evento que cierra la fase (payment_event_id del ultimo pago de reserva o participant_link_id del enlace que vencio)
+      - from: IN_PAID
+        to: EXPIRED_PAID
+        event: link_expired
+        guard: link vencido sin pago aprobado (15 minutos en pago individual, vigencia del enlace en Divide tu cuenta con todos los participantes sin pagar)
+        sideEffects: [liberar_cupo, crear_notificacion]
+        idempotencyKey: booking_reference
+      - from: IN_PAID
+        to: PAYMENT_FAILED
+        event: payment_declined
+        guard: escenario demo rechazado y payment_event_id no procesado
+        sideEffects: [crear_notificacion]
+        idempotencyKey: payment_event_id
+      - from: PAYMENT_FAILED
+        to: IN_PAID
+        event: retry_new_attempt
+        guard: cupo apartado vigente o revalidado con disponibilidad
+        sideEffects: [generar_link_nuevo, recalcular_costo_metodo]
+        idempotencyKey: attempt_id
+      - from: EXPIRED_PAID
+        to: IN_PAID
+        event: new_link_generated
+        guard: daysBeforeTour mayor o igual a 0 y hay cupo en la fecha
+        sideEffects: [apartar_cupo, generar_link_nuevo]
+        idempotencyKey: attempt_id
+      - from: PARTIAL_PAID
+        to: CONFIRMED
+        event: balance_paid
+        guard: reserva individual (no Divide tu cuenta), saldo pendiente igual a cero y hoy no posterior a balance_due_date
+        sideEffects: [crear_notificacion]
+        idempotencyKey: payment_event_id
+      - from: PARTIAL_PAID
+        to: IN_PAID
+        event: split_participant_reopened
+        guard: reserva Divide tu cuenta, un participante paso de SLOT_RELEASED a PENDING_RESERVATION por participant_new_link y hoy no posterior a balance_due_date
+        sideEffects: [reabrir_fase_hold_group, conservar_pagos_y_balance_due_date_de_los_demas, crear_notificacion]
+        idempotencyKey: participant_link_id
+      - from: PARTIAL_PAID
+        to: CONFIRMED
+        event: split_all_balances_paid
+        guard: reserva Divide tu cuenta, al menos un participante vigente y todos los vigentes en BALANCE_PAID; el saldo pendiente solo suma a los vigentes y excluye a FORFEITED y SLOT_RELEASED
+        sideEffects: [habilitar_voucher, crear_notificacion]
+        idempotencyKey: booking_reference
+      - from: CONFIRMED
+        to: SETTLED
+        event: simulated_disbursement
+        guard: solo datos semilla de la demo; el B2C nunca dispara la dispersion
+        sideEffects: []
+        idempotencyKey: booking_reference
+    invalidTransitions:
+      - from: CONFIRMED
+        event: payment_approved_full
+        expectedError: idempotent_noop
+      - from: CONFIRMED
+        event: payment_declined
+        expectedError: idempotent_noop
+      - from: PARTIAL_PAID
+        event: payment_approved_deposit
+        expectedError: idempotent_noop
+      - from: PARTIAL_PAID
+        event: balance_paid_after_due_date
+        expectedError: balance_due_date_passed
+      - from: EXPIRED_PAID
+        event: payment_approved_full
+        expectedError: requires_new_attempt
+      - from: EXPIRED_PAID
+        event: new_link_generated_without_slot
+        expectedError: sold_out
+      - from: SETTLED
+        event: balance_paid
+        expectedError: idempotent_noop
+      - from: IN_PAID
+        event: balance_paid
+        expectedError: invalid_state
+      - from: PARTIAL_PAID
+        event: balance_paid_on_split_booking
+        expectedError: invalid_state
+      - from: PARTIAL_PAID
+        event: split_all_balances_paid_with_pending_balance
+        expectedError: invalid_state
+      - from: PARTIAL_PAID
+        event: split_participant_reopened_after_balance_due_date
+        expectedError: balance_due_date_passed
+      - from: IN_PAID
+        event: split_all_balances_paid
+        expectedError: invalid_state
+      - from: CONFIRMED
+        event: split_participant_reopened
+        expectedError: invalid_state
+      - from: CONFIRMED
+        event: split_all_balances_paid
+        expectedError: idempotent_noop
+  - id: booking-lifecycle
+    entity: booking.lifecycle_status
+    states: [ACTIVE, CANCELED, OPERATOR_CANCELLED, RESCHEDULED]
+    initial: ACTIVE
+    terminal: [CANCELED, OPERATOR_CANCELLED, RESCHEDULED]
+    transitions:
+      - from: ACTIVE
+        to: CANCELED
+        event: cancel_confirmed
+        guard: OTP valido, daysBeforeTour mayor o igual a 5, payment_status en PARTIAL_PAID, CONFIRMED o SETTLED y operational_status PENDING
+        sideEffects: [calcular_penalidad_sobre_lo_pagado, abonar_saldo_a_favor, liberar_cupo, operational_a_cancelled, crear_notificacion]
+        idempotencyKey: cancellation_request_id
+      - from: ACTIVE
+        to: CANCELED
+        event: balance_due_date_passed
+        guard: reserva individual (no Divide tu cuenta), payment_status PARTIAL_PAID, saldo pendiente mayor a cero y hoy posterior a balance_due_date
+        sideEffects: [penalized_true, retener_abono_como_penalidad, saldo_a_favor_cero, liberar_cupo, operational_a_cancelled, crear_notificacion]
+        idempotencyKey: booking_reference
+      - from: ACTIVE
+        to: CANCELED
+        event: split_all_participants_forfeited
+        guard: reserva Divide tu cuenta en PARTIAL_PAID, ningun participante en BALANCE_PAID ni en RESERVATION_PAID y al menos uno en FORFEITED (los demas SLOT_RELEASED)
+        sideEffects: [penalized_true, retener_cuotas_de_reserva_no_reembolsables, saldo_a_favor_cero, liberar_cupo, operational_a_cancelled, crear_notificacion]
+        idempotencyKey: booking_reference
+      - from: ACTIVE
+        to: RESCHEDULED
+        event: reschedule_applied
+        guard: reschedule_count menor a 2, daysBeforeTour mayor o igual a 5, payment_status en PARTIAL_PAID, CONFIRMED o SETTLED, cupo en la nueva fecha y diferencia pagada o igual a cero
+        sideEffects: [crear_booking_nuevo_que_hereda_payment_status, reschedule_count_mas_uno_en_el_nuevo, mover_cupo, operational_congelado, crear_notificacion]
+        idempotencyKey: reschedule_request_id
+      - from: ACTIVE
+        to: OPERATOR_CANCELLED
+        event: operator_cancel_seeded
+        guard: solo datos semilla de la demo; el B2C no dispara la cancelacion del operador
+        sideEffects: [habilitar_solicitud_de_reembolso, operational_a_cancelled]
+        idempotencyKey: booking_reference
+    invalidTransitions:
+      - from: CANCELED
+        event: cancel_confirmed
+        expectedError: idempotent_noop
+      - from: CANCELED
+        event: reschedule_applied
+        expectedError: invalid_state
+      - from: RESCHEDULED
+        event: reschedule_applied
+        expectedError: invalid_state
+      - from: RESCHEDULED
+        event: cancel_confirmed
+        expectedError: invalid_state
+      - from: OPERATOR_CANCELLED
+        event: cancel_confirmed
+        expectedError: invalid_state
+      - from: ACTIVE
+        event: reschedule_applied_with_count_2
+        expectedError: max_reschedules_reached
+      - from: ACTIVE
+        event: cancel_confirmed_under_5_days
+        expectedError: too_close_to_tour
+  - id: booking-operational
+    entity: booking.operational_status
+    states: [PENDING, ASSISTED, NO_ASSISTED, IN_TOUR, TOUR_COMPLETED, TOUR_CANCELLED_ONSITE, CANCELLED]
+    initial: PENDING
+    terminal: [NO_ASSISTED, TOUR_COMPLETED, TOUR_CANCELLED_ONSITE, CANCELLED]
+    transitions:
+      - from: PENDING
+        to: TOUR_COMPLETED
+        event: tour_completed_seeded
+        guard: payment_status en CONFIRMED o SETTLED, lifecycle ACTIVE y fecha del tour anterior a hoy en America/Bogota
+        sideEffects: [habilitar_calificacion, sumar_km_mis_tours]
+        idempotencyKey: booking_reference
+      - from: PENDING
+        to: NO_ASSISTED
+        event: no_show_seeded
+        guard: payment_status en CONFIRMED o SETTLED y fecha del tour anterior a hoy
+        sideEffects: [penalized_true, sin_saldo_a_favor]
+        idempotencyKey: booking_reference
+      - from: PENDING
+        to: CANCELLED
+        event: lifecycle_closed
+        guard: lifecycle pasa a CANCELED u OPERATOR_CANCELLED
+        sideEffects: []
+        idempotencyKey: booking_reference
+    invalidTransitions:
+      - from: PENDING
+        event: tour_completed_seeded_unpaid
+        expectedError: invalid_state
+      - from: CANCELLED
+        event: tour_completed_seeded
+        expectedError: invalid_state
+      - from: TOUR_COMPLETED
+        event: no_show_seeded
+        expectedError: invalid_state
+  - id: split-participant
+    entity: split_participant
+    states: [PENDING_RESERVATION, RESERVATION_PAID, BALANCE_PAID, SLOT_RELEASED, FORFEITED]
+    initial: PENDING_RESERVATION
+    terminal: [BALANCE_PAID, FORFEITED]
+    notes: SLOT_RELEASED no es terminal porque admite participant_new_link mientras el booking este en IN_PAID o PARTIAL_PAID y antes de balance_due_date; si el booking llega a CONFIRMED, CANCELED o EXPIRED_PAID con fecha pasada, el participante queda en SLOT_RELEASED sin salidas validas
+    transitions:
+      - from: PENDING_RESERVATION
+        to: RESERVATION_PAID
+        event: participant_reservation_paid
+        guard: enlace del participante vigente y payment_event_id no procesado
+        sideEffects: [recalcular_fase_del_grupo, crear_notificacion]
+        idempotencyKey: payment_event_id
+      - from: PENDING_RESERVATION
+        to: SLOT_RELEASED
+        event: participant_link_expired
+        guard: vigencia del enlace del participante vencida sin pago
+        sideEffects: [liberar_solo_su_cupo, recalcular_total_para_vigentes, recalcular_fase_del_grupo, crear_notificacion]
+        idempotencyKey: participant_link_id
+      - from: SLOT_RELEASED
+        to: PENDING_RESERVATION
+        event: participant_new_link
+        guard: booking en IN_PAID, PARTIAL_PAID o EXPIRED_PAID, lifecycle ACTIVE, hay cupo en la fecha y daysBeforeTour mayor a full_payment_days_before
+        sideEffects: [apartar_su_cupo, generar_enlace_nuevo, disparar_split_participant_reopened_si_partial_paid, disparar_new_link_generated_si_expired_paid]
+        idempotencyKey: participant_link_id
+      - from: RESERVATION_PAID
+        to: BALANCE_PAID
+        event: participant_balance_paid
+        guard: saldo individual igual a cero antes del plazo del saldo
+        sideEffects: [recalcular_fase_del_grupo, crear_notificacion]
+        idempotencyKey: payment_event_id
+      - from: RESERVATION_PAID
+        to: FORFEITED
+        event: participant_balance_deadline_passed
+        guard: saldo individual mayor a cero al vencer el plazo del saldo (Spec-C RF-C06b)
+        sideEffects: [cancelar_solo_su_cupo, retener_cuota_de_reserva_no_reembolsable, saldo_a_favor_cero, recalcular_fase_del_grupo, crear_notificacion]
+        idempotencyKey: participant_link_id
+    invalidTransitions:
+      - from: RESERVATION_PAID
+        event: participant_reservation_paid
+        expectedError: idempotent_noop
+      - from: SLOT_RELEASED
+        event: participant_reservation_paid
+        expectedError: requires_new_attempt
+      - from: SLOT_RELEASED
+        event: participant_new_link_without_slot
+        expectedError: sold_out
+      - from: SLOT_RELEASED
+        event: participant_new_link_after_balance_due_date
+        expectedError: balance_due_date_passed
+      - from: SLOT_RELEASED
+        event: participant_new_link_on_confirmed_booking
+        expectedError: invalid_state
+      - from: FORFEITED
+        event: participant_new_link
+        expectedError: invalid_state
+      - from: FORFEITED
+        event: participant_balance_paid
+        expectedError: invalid_state
+      - from: BALANCE_PAID
+        event: participant_balance_paid
+        expectedError: idempotent_noop
+  - id: reschedule-request
+    entity: reschedule_request
+    states: [PENDING_DIFFERENCE, APPLIED, EXPIRED]
+    initial: PENDING_DIFFERENCE
+    terminal: [APPLIED, EXPIRED]
+    transitions:
+      - from: PENDING_DIFFERENCE
+        to: APPLIED
+        event: difference_paid_or_zero
+        guard: diferencia igual a cero o pago simulado aprobado dentro de 48 horas y cupo vigente en la nueva fecha
+        sideEffects: [disparar_reschedule_applied_en_lifecycle]
+        idempotencyKey: reschedule_request_id
+      - from: PENDING_DIFFERENCE
+        to: EXPIRED
+        event: difference_window_48h_passed
+        guard: 48 horas desde la solicitud sin pago de la diferencia (Spec-D RF-D08b)
+        sideEffects: [booking_original_conserva_fecha, reschedule_count_sin_cambio, liberar_cupo_nueva_fecha, crear_notificacion]
+        idempotencyKey: reschedule_request_id
+    invalidTransitions:
+      - from: EXPIRED
+        event: difference_paid_or_zero
+        expectedError: requires_new_attempt
+      - from: APPLIED
+        event: difference_paid_or_zero
+        expectedError: idempotent_noop
+  - id: payment-attempt
+    entity: payment_attempt
+    states: [CREATED, PROCESSING, APPROVED, REJECTED, LINK_EXPIRED, SOLD_OUT]
+    initial: CREATED
+    terminal: [APPROVED, REJECTED, LINK_EXPIRED, SOLD_OUT]
+    transitions:
+      - from: CREATED
+        to: PROCESSING
+        event: pay_clicked
+        guard: sesion activa, pasaporte cargado si no residente, metodo elegido
+        sideEffects: [bloquear_boton_pagar]
+        idempotencyKey: attempt_id
+      - from: PROCESSING
+        to: APPROVED
+        event: simulated_webhook_approved
+        guard: payment_event_id no procesado
+        sideEffects: [payment_status_a_confirmed_o_partial_paid]
+        idempotencyKey: payment_event_id
+      - from: PROCESSING
+        to: REJECTED
+        event: simulated_webhook_rejected
+        guard: escenario demo rechazado
+        sideEffects: [payment_status_a_payment_failed, crear_notificacion]
+        idempotencyKey: payment_event_id
+      - from: PROCESSING
+        to: LINK_EXPIRED
+        event: simulated_link_expired
+        guard: escenario demo enlace vencido
+        sideEffects: [payment_status_a_expired_paid, crear_notificacion]
+        idempotencyKey: payment_event_id
+      - from: PROCESSING
+        to: SOLD_OUT
+        event: simulated_sold_out
+        guard: cupo de la fecha igual a cero
+        sideEffects: [payment_status_a_expired_paid, ofrecer_lista_de_espera, crear_notificacion]
+        idempotencyKey: payment_event_id
+    invalidTransitions:
+      - from: APPROVED
+        event: simulated_webhook_approved
+        expectedError: idempotent_noop
+      - from: REJECTED
+        event: simulated_webhook_approved
+        expectedError: requires_new_attempt
+      - from: LINK_EXPIRED
+        event: pay_clicked
+        expectedError: requires_new_attempt
+  - id: refund-request
+    entity: refund_request
+    states: [PENDING_REVIEW, APPROVED, REJECTED, IN_PROCESS, COMPLETED]
+    initial: PENDING_REVIEW
+    terminal: [REJECTED, COMPLETED]
+    transitions:
+      - from: PENDING_REVIEW
+        to: APPROVED
+        event: erp_review_seeded
+        guard: solo datos semilla; la revision la hace COORD o SUPER_ADMIN en el ERP, fuera de alcance
+        sideEffects: []
+        idempotencyKey: refund_request_id
+      - from: PENDING_REVIEW
+        to: REJECTED
+        event: erp_review_seeded
+        guard: solo datos semilla
+        sideEffects: []
+        idempotencyKey: refund_request_id
+    invalidTransitions:
+      - from: PENDING_REVIEW
+        event: refund_submitted
+        expectedError: idempotent_noop
+bookingTabs:
+  - tab: oculta
+    order: 1
+    rule: lifecycle RESCHEDULED (la reemplaza el booking nuevo) o payment_status CHARGEBACK (no existe en la semilla del B2C)
+  - tab: canceladas
+    order: 2
+    rule: lifecycle CANCELED u OPERATOR_CANCELLED (etiqueta Cancelada); o lifecycle ACTIVE con payment_status IN_PAID, PAYMENT_FAILED o EXPIRED_PAID y daysBeforeTour menor a 0 (etiqueta Vencida, sin voucher ni boton Pagar)
+  - tab: completadas
+    order: 3
+    rule: operational TOUR_COMPLETED (con calificacion) o NO_ASSISTED (etiqueta No asististe, sin calificar); o lifecycle ACTIVE con payment_status CONFIRMED o SETTLED, operational PENDING, ASSISTED o IN_TOUR y daysBeforeTour menor a 0 (etiqueta En cierre, sin calificar hasta TOUR_COMPLETED)
+  - tab: por-pagar
+    order: 4
+    rule: lifecycle ACTIVE, payment_status IN_PAID (incluye la fase HOLD_GROUP), PARTIAL_PAID, PAYMENT_FAILED o EXPIRED_PAID y daysBeforeTour mayor o igual a 0
+  - tab: proximas
+    order: 5
+    rule: lifecycle ACTIVE, payment_status CONFIRMED o SETTLED, operational PENDING, ASSISTED o IN_TOUR y daysBeforeTour mayor o igual a 0
+bookingTabsUnreachable:
+  - combination: lifecycle ACTIVE, payment_status PARTIAL_PAID y daysBeforeTour menor a 0
+    reason: balance_due_date es anterior a la fecha del tour; antes de llegar a la fecha la reserva individual pasa a CANCELED por balance_due_date_passed y la dividida a CONFIRMED o CANCELED por recalcular_fase_del_grupo; el validador de la semilla la rechaza
+  - combination: operational TOUR_CANCELLED_ONSITE
+    reason: ninguna transicion de booking-operational lo alcanza en el B2C y la semilla no lo usa; el validador de la semilla lo rechaza
+  - combination: operational TOUR_COMPLETED o NO_ASSISTED con payment_status distinto de CONFIRMED o SETTLED
+    reason: los guards de tour_completed_seeded y no_show_seeded exigen CONFIRMED o SETTLED; el validador de la semilla la rechaza
+openQuestions:
+  - id: OQ-EC-01
+    blocking: false
+    owner: product-manager
+    question: steering 05 resume Split Fare como HOLD_GROUP hasta 100 por ciento pagado y Spec-C RF-C06 define responsabilidad individual; se adopta Spec-C (igual que prd@v2 y la revision R1-02). Confirmar que el steering 05 se lee como todos los participantes vigentes pagaron su porcentaje de reserva
+  - id: OQ-EC-02
+    blocking: false
+    owner: domain-rules
+    question: Spec-C seccion 8 nombra los estados del grupo HOLD_GROUP, PARTIAL_PAID, CONFIRMED y SETTLED con otro significado que packages/contracts (alli SETTLED es la dispersion). Se mapea a contracts con la fase HOLD_GROUP sobre IN_PAID, todas las reservas pagadas a PARTIAL_PAID y todos los saldos pagados a CONFIRMED; la pantalla muestra la etiqueta Reserva confirmada con saldo pendiente
+  - id: OQ-EC-03
+    blocking: false
+    owner: product-manager
+    question: Maquina-Estados-Booking seccion 7 dice que el booking nuevo nace en PARTIAL_PAID hasta pagar la diferencia; Spec-D RF-D08b y AC-017-5 dicen que sin pago en 48 horas se cancela la solicitud y se conserva la fecha original. Se adopta el modelo de solicitud (reschedule-request) y el booking nuevo solo se crea al aplicar
+  - id: OQ-EC-04
+    blocking: false
+    owner: product-manager
+    question: No Show (NO_ASSISTED) se ubica en Completadas con la etiqueta No asististe; confirmar si debe ir en Canceladas
+edgeCases:
+  - id: EC-001
+    storyRef: US-002
+    category: concurrency
+    given: una fecha con 1 cupo restante abierta en dos pestanas del mismo navegador
+    when: ambas pestanas pulsan Reservar ahora y pagan con exito una tras otra
+    then: solo la primera reserva queda en CONFIRMED; la segunda termina en el estado Cupo agotado (intento SOLD_OUT, payment_status EXPIRED_PAID) y no se crea sobreventa en la disponibilidad simulada
+    severity: critical
+    testLevel: integration
+    ownerRole: frontend
+  - id: EC-002
+    storyRef: US-002
+    category: concurrency
+    given: el selector de viajeros con cupos restantes igual a 3
+    when: pulso + rapidamente 6 veces o mantengo pulsado
+    then: el total de viajeros no supera 3, el boton + queda deshabilitado con aria-disabled y se anuncia el limite
+    severity: high
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-003
+    storyRef: US-004
+    category: concurrency
+    given: el carrito guardado con 4 viajeros y una fecha cuyo cupo bajo a 2 mientras el usuario estaba en el paso 2
+    when: vuelve al paso 1 o pulsa Pagar
+    then: se revalida la disponibilidad, se avisa que solo quedan 2 cupos y no se permite pagar con 4 viajeros
+    severity: high
+    testLevel: integration
+    ownerRole: frontend
+  - id: EC-004
+    storyRef: US-007
+    category: idempotency
+    given: un pago simulado aprobado con payment_event_id ya procesado
+    when: el adaptador simulado entrega de nuevo el mismo evento, o el usuario recarga /checkout/procesando o pulsa Atras y vuelve
+    then: no se crea una segunda reserva ni se descuenta otro cupo; la confirmacion muestra la misma referencia BT-AAAA-NNNNN
+    severity: critical
+    testLevel: integration
+    ownerRole: frontend
+  - id: EC-005
+    storyRef: US-006
+    category: idempotency
+    given: el paso 3 con el boton Pagar habilitado
+    when: hago doble clic o pulso Enter dos veces seguidas
+    then: se crea un solo intento de pago; el boton queda deshabilitado con aria-busy mientras procesa
+    severity: critical
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-006
+    storyRef: US-013
+    category: idempotency
+    given: la bateria de contrato de la capa de datos
+    when: se ejecuta sobre la implementacion simulada con eventos de pago repetidos y desordenados (payment_declined despues de payment_approved_full, o payment_approved_deposit repetido)
+    then: payment_status queda en el del primer evento terminal valido (CONFIRMED o PARTIAL_PAID) y los eventos posteriores son no-op registrados (idempotent_noop); la misma bateria queda lista para la API /api/v1
+    severity: critical
+    testLevel: unit
+    ownerRole: frontend
+  - id: EC-007
+    storyRef: US-008
+    category: timeout
+    given: el cupo apartado 15 minutos tras un pago rechazado (payment_status PAYMENT_FAILED)
+    when: el usuario reintenta despues de 15 minutos
+    then: el cupo se revalida; si hay cupo el reintento vuelve a IN_PAID con un link nuevo; si no hay cupo payment_status queda EXPIRED_PAID, se muestra Cupo agotado y no se cobra
+    severity: high
+    testLevel: integration
+    ownerRole: frontend
+  - id: EC-008
+    storyRef: US-007
+    category: timeout
+    given: /checkout/procesando con el adaptador simulado sin respuesta (escenario demo de demora)
+    when: pasan mas de 5 segundos
+    then: no se queda girando para siempre; tras un tope definido se muestra un estado de verificacion pendiente con acceso a Mis reservas y la reserva queda en Por pagar con payment_status IN_PAID
+    severity: high
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-009
+    storyRef: US-007
+    category: invalid-state
+    given: un usuario que abre /checkout/confirmacion o /checkout/procesando directo por URL sin intento de pago
+    when: se pinta la pagina
+    then: no se muestra una confirmacion falsa ni datos de muestra; redirige a /checkout o a /mis-reservas
+    severity: high
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-010
+    storyRef: US-004
+    category: invalid-state
+    given: el carrito apunta a un slug de tour que ya no existe en el catalogo simulado o tiene una fecha pasada
+    when: abro /checkout
+    then: se limpia el carrito y se muestra el estado vacio con Explorar tours o el aviso de elegir otra fecha, sin pageerror
+    severity: medium
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-011
+    storyRef: US-001
+    category: invalid-state
+    given: /tour?tour=slug-inexistente o /tour sin parametro
+    when: se pinta el detalle
+    then: se muestra el estado No encontrado con enlace a Explorar y no el tour Valle del Cocora por defecto
+    severity: medium
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-012
+    storyRef: US-003
+    category: invalid-state
+    given: un usuario ya inscrito en la lista de espera de esa fecha
+    when: pulsa de nuevo Unirme a la lista de espera
+    then: no se duplica la inscripcion; se informa que ya esta inscrito
+    severity: low
+    testLevel: integration
+    ownerRole: frontend
+  - id: EC-013
+    storyRef: US-014
+    category: authorization
+    given: un visitante sin sesion
+    when: abre por URL /mis-reservas, /perfil, /mensajes, /notificaciones, /favoritos, /mis-tours, /pago/saldo o el voucher
+    then: redirige a /iniciar-sesion con next relativo al mismo origen y, tras iniciar sesion, vuelve a esa ruta
+    severity: high
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-014
+    storyRef: US-020
+    category: authorization
+    given: el parametro next del login con una URL absoluta externa o un esquema javascript
+    when: inicio sesion
+    then: se ignora el next y navego a /mis-reservas (sin open redirect)
+    severity: high
+    testLevel: e2e
+    ownerRole: security-auditor
+  - id: EC-015
+    storyRef: US-013
+    category: cross-tenant
+    given: dos usuarios demo en el mismo navegador, A con reservas y B sin reservas
+    when: B inicia sesion despues de que A cierra sesion
+    then: B no ve reservas, notificaciones, mensajes, favoritos ni perfil de A; cada usuario demo tiene su espacio de persistencia aislado
+    severity: critical
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-016
+    storyRef: US-015
+    category: cross-tenant
+    given: el usuario B con sesion y la referencia de una reserva de A
+    when: abre el voucher, el detalle, /pago/saldo o la cancelacion con esa referencia en la URL
+    then: la capa de datos responde no encontrado y la pantalla muestra el estado vacio, sin revelar tour ni montos de A
+    severity: critical
+    testLevel: integration
+    ownerRole: frontend
+  - id: EC-017
+    storyRef: US-020
+    category: authorization
+    given: una sesion cerrada desde el menu de cuenta
+    when: pulso Atras del navegador hacia una pantalla privada
+    then: la pantalla no muestra datos en cache; vuelve a pedir login
+    severity: high
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-018
+    storyRef: US-016
+    category: cancellation-band
+    given: hoy 2026-11-01 en America/Bogota y una reserva cuyo tour es el 2026-11-11 (daysBeforeTour igual a 10)
+    when: abro Cancelar
+    then: aplica la franja de 10 o mas dias con penalidad 40 por ciento y saldo a favor 60 por ciento de lo pagado
+    severity: critical
+    testLevel: unit
+    ownerRole: domain-rules
+  - id: EC-019
+    storyRef: US-016
+    category: cancellation-band
+    given: hoy 2026-11-01 en America/Bogota y tours el 2026-11-10, el 2026-11-06 y el 2026-11-05 (daysBeforeTour 9, 5 y 4), con la hora de inicio del tour a las 05:00 y la consulta hecha a las 23:59
+    when: se calcula la franja
+    then: 9 y 5 dan penalidad 60 por ciento; 4 cae en menos de 5 dias con penalidad 100 por ciento y boton deshabilitado; la hora del dia no cambia el resultado porque solo cuentan las fechas calendario
+    severity: critical
+    testLevel: unit
+    ownerRole: domain-rules
+  - id: EC-020
+    storyRef: US-016
+    category: cancellation-band
+    given: un navegador con zona horaria UTC+9 en el que ya es 2026-11-02 mientras en America/Bogota sigue siendo 2026-11-01, y un tour el 2026-11-11
+    when: se calcula la franja
+    then: daysBeforeTour es 10 (fecha de Bogota) y aplica la franja de 10 o mas dias; la franja no depende de la zona del dispositivo
+    severity: high
+    testLevel: unit
+    ownerRole: domain-rules
+  - id: EC-021
+    storyRef: US-016
+    category: cancellation-band
+    given: una cancelacion con fuerza mayor marcada y soporte adjunto
+    when: se muestra el resumen
+    then: la penalidad estandar se muestra como provisional con el aviso de reduccion tras revision (10 por ciento en 10 o mas dias, 30 por ciento en 5-9 dias); no se aplica automaticamente
+    severity: high
+    testLevel: unit
+    ownerRole: domain-rules
+  - id: EC-022
+    storyRef: US-016
+    category: cancellation-band
+    given: una reserva PARTIAL_PAID con abono pagado, saldo pendiente y hoy anterior o igual a balance_due_date
+    when: se calcula la cancelacion
+    then: el abono si es reembolsable segun la franja (Maquina-Estados-Booking seccion 2); la penalidad y el saldo a favor se calculan sobre lo pagado (no sobre el total) y nunca quedan negativos; el texto dice Saldo a favor y nunca Borondo Coins
+    severity: critical
+    testLevel: unit
+    ownerRole: domain-rules
+  - id: EC-023
+    storyRef: US-016
+    category: cancellation-band
+    given: una reserva con operational NO_ASSISTED o TOUR_COMPLETED, o con lifecycle CANCELED, OPERATOR_CANCELLED o RESCHEDULED
+    when: busco Cancelar
+    then: la accion no se ofrece; No Show aplica 100 por ciento sin saldo a favor (penalized true)
+    severity: high
+    testLevel: unit
+    ownerRole: domain-rules
+  - id: EC-024
+    storyRef: US-016
+    category: validation
+    given: el dialogo OTP de cancelacion
+    when: escribo un codigo incorrecto hasta agotar los intentos
+    then: se informan los intentos restantes en cada error, al agotarlos se bloquea la confirmacion y la reserva sigue en lifecycle ACTIVE sin cambio de payment_status
+    severity: high
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-025
+    storyRef: US-016
+    category: idempotency
+    given: el OTP correcto ya aceptado
+    when: pulso Confirmar cancelacion dos veces o recargo /cancelacion-confirmada
+    then: la cancelacion se registra una sola vez (cancel_confirmed sobre CANCELED es idempotent_noop), el saldo a favor no se duplica y la notificacion no se repite
+    severity: critical
+    testLevel: integration
+    ownerRole: frontend
+  - id: EC-026
+    storyRef: US-017
+    category: invalid-state
+    given: una reserva con reschedule_count igual a 2, una a daysBeforeTour 4 y una con payment_status IN_PAID
+    when: abro Reprogramar
+    then: la opcion esta deshabilitada con su motivo visible y anunciado (maximo de 2 alcanzado, menos de 5 dias, pago pendiente); el detalle muestra 0 reprogramaciones restantes en la primera
+    severity: high
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-027
+    storyRef: US-017
+    category: concurrency
+    given: el dialogo de reprogramar con una fecha nueva elegida que se agota antes de confirmar
+    when: pulso Reprogramar
+    then: se revalida el cupo, se informa que la fecha se agoto y la reserva conserva su fecha original y su lifecycle ACTIVE
+    severity: high
+    testLevel: integration
+    ownerRole: frontend
+  - id: EC-028
+    storyRef: US-017
+    category: financial
+    given: una nueva fecha con precio mayor, igual o menor al congelado en la reserva
+    when: se calcula la diferencia
+    then: mayor cobra la diferencia exacta, igual no pasa por pago, menor avisa que no se reembolsa; la diferencia usa el precio congelado y no el precio actual del catalogo de la fecha original
+    severity: critical
+    testLevel: unit
+    ownerRole: domain-rules
+  - id: EC-029
+    storyRef: US-017
+    category: invalid-state
+    given: una solicitud de reprogramacion en PENDING_DIFFERENCE cuyo pago simulado de la diferencia es rechazado
+    when: vuelvo a Mis reservas
+    then: la reserva conserva la fecha original y lifecycle ACTIVE, reschedule_count no cambia y la solicitud sigue en PENDING_DIFFERENCE con opcion de reintentar mientras no pasen 48 horas
+    severity: high
+    testLevel: integration
+    ownerRole: frontend
+  - id: EC-030
+    storyRef: US-009
+    category: split-fare
+    given: una reserva Divide tu cuenta de 4 participantes, 3 en RESERVATION_PAID y 1 en PENDING_RESERVATION con su enlace vigente
+    when: consulto Mis reservas y el detalle
+    then: payment_status es IN_PAID con fase HOLD_GROUP, la reserva aparece en Por pagar con el estado por participante (3 Pagado, 1 Pendiente con horas restantes), no aparece voucher ni QR y Reprogramar esta deshabilitado
+    severity: critical
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-031
+    storyRef: US-009
+    category: split-fare
+    given: la reserva de EC-030 cuando vence el enlace del participante pendiente
+    when: se alcanza la vigencia del enlace
+    then: solo ese participante pasa a SLOT_RELEASED y se libera solo su cupo; los otros 3 conservan el suyo, el total se recalcula para 3 participantes vigentes y, como todos los vigentes ya pagaron, payment_status pasa a PARTIAL_PAID por split_all_reservations_paid (fase HOLD_GROUP cerrada); si todos los participantes quedan SLOT_RELEASED sin pago payment_status pasa a EXPIRED_PAID por link_expired; el participante liberado sigue SLOT_RELEASED (no terminal) y puede recibir un enlace nuevo segun EC-081
+    severity: critical
+    testLevel: unit
+    ownerRole: domain-rules
+  - id: EC-032
+    storyRef: US-009
+    category: split-fare
+    given: un total de 1.000.001 COP, N igual a 3 y porcentaje de reserva del tour igual a 30 por ciento
+    when: se calculan la parte de reserva (total/N) por porcentaje de reserva y el saldo individual de cada participante
+    then: la suma de las 3 reservas mas los 3 saldos es exactamente 1.000.001, cada reserva mas su saldo es la parte del participante, no hay pesos perdidos ni sobrantes y el residuo se asigna de forma determinista a una parte fijada por domain-rules
+    severity: high
+    testLevel: unit
+    ownerRole: domain-rules
+  - id: EC-033
+    storyRef: US-009
+    category: idempotency
+    given: el enlace de reserva de un participante en RESERVATION_PAID
+    when: se abre de nuevo y se pulsa Pagar
+    then: muestra Ya pagado y no crea otro cobro (participant_reservation_paid es idempotent_noop)
+    severity: high
+    testLevel: integration
+    ownerRole: frontend
+  - id: EC-034
+    storyRef: US-009
+    category: validation
+    given: el formulario de participantes con nombres vacios, duplicados o solo espacios
+    when: pulso Compartir enlaces por WhatsApp
+    then: no avanza, marca cada campo invalido con aria-invalid y el enlace compartido no lleva nombres ni correos en la URL
+    severity: medium
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-035
+    storyRef: US-004
+    category: quote-expiry
+    given: un carrito guardado hace mas de 72 horas
+    when: vuelvo a /checkout
+    then: la cotizacion se considera vencida, se recalcula el precio con el catalogo vigente y se avisa si cambio antes de pagar
+    severity: high
+    testLevel: integration
+    ownerRole: frontend
+  - id: EC-036
+    storyRef: US-013
+    category: quote-expiry
+    given: una reserva ya creada y luego un cambio de precio del tour en el catalogo simulado
+    when: abro Mis reservas, el voucher o Pagar saldo
+    then: la reserva conserva el precio congelado al crearla; el saldo pendiente no cambia
+    severity: critical
+    testLevel: unit
+    ownerRole: domain-rules
+  - id: EC-037
+    storyRef: US-019
+    category: retracto
+    given: reservas compradas hace 5 dias habiles y hace 6 dias habiles, con un festivo colombiano y un fin de semana en medio
+    when: busco Solicitar reembolso por retracto
+    then: el plazo cuenta dias habiles excluyendo sabados, domingos y festivos de Colombia; a 5 dias se ofrece, a 6 no
+    severity: critical
+    testLevel: unit
+    ownerRole: domain-rules
+  - id: EC-038
+    storyRef: US-019
+    category: retracto
+    given: una reserva comprada hace 2 dias habiles cuyo tour empieza en daysBeforeTour 3
+    when: busco Solicitar reembolso
+    then: se ofrece la solicitud con la causal retracto aunque el tour empiece en menos de 5 dias (RF-C09 no tiene excepcion por fecha del tour); al enviarla se crea una solicitud en PENDING_REVIEW, la pantalla avisa que la revision humana de COORD o SUPER_ADMIN decide y no muestra un monto aprobado; la duda legal queda en LEGAL-03 de Compliance
+    severity: high
+    testLevel: integration
+    ownerRole: frontend
+  - id: EC-039
+    storyRef: US-019
+    category: idempotency
+    given: una solicitud de reembolso ya registrada en PENDING_REVIEW
+    when: pulso de nuevo Enviar solicitud o vuelvo a abrir la opcion
+    then: no se crea una segunda solicitud; se muestra la referencia existente
+    severity: medium
+    testLevel: integration
+    ownerRole: frontend
+  - id: EC-040
+    storyRef: US-005
+    category: foreigner
+    given: residente fiscal No con pasaporte cargado y luego cambio a Si
+    when: vuelvo al resumen
+    then: desaparece la linea Exento de IVA, el indicador del pasaporte se descarta y el total visible sigue igual
+    severity: high
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-041
+    storyRef: US-005
+    category: foreigner
+    given: el input de pasaporte
+    when: subo un archivo de tipo no permitido, uno de 0 bytes o uno mayor al tamano maximo
+    then: se rechaza con mensaje asociado al campo, el pago sigue bloqueado y no se guarda nada del archivo
+    severity: high
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-042
+    storyRef: US-005
+    category: foreigner
+    given: un no residente con tipo de documento CC
+    when: pulso Continuar
+    then: se exige pasaporte o se advierte la incoherencia; la exencion solo aplica con pasaporte cargado
+    severity: medium
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-043
+    storyRef: US-005
+    category: privacy
+    given: un pasaporte o soporte cargado y luego recargo la pagina o cierro sesion
+    when: reviso localStorage, sessionStorage, IndexedDB, la URL y la consola
+    then: no queda el archivo, su nombre ni su contenido; tras recargar el pasaporte debe cargarse de nuevo
+    severity: critical
+    testLevel: e2e
+    ownerRole: security-auditor
+  - id: EC-044
+    storyRef: US-005
+    category: privacy
+    given: condiciones medicas escritas sin marcar el consentimiento separado
+    when: pulso Continuar
+    then: no se guardan las condiciones medicas; el consentimiento nunca viene premarcado y su texto no aparece en notificaciones ni mensajes
+    severity: high
+    testLevel: e2e
+    ownerRole: security-auditor
+  - id: EC-045
+    storyRef: US-006
+    category: financial
+    given: el metodo Tarjeta con tarifa porcentual mas fija sobre un total con decimales
+    when: se suma el costo del metodo
+    then: el redondeo a pesos es determinista y coincide entre resumen, boton Pagar y confirmacion
+    severity: high
+    testLevel: unit
+    ownerRole: domain-rules
+  - id: EC-046
+    storyRef: US-004
+    category: financial
+    given: un tour con full_payment_days_before igual a 5 y una fecha con daysBeforeTour 5 o menor
+    when: elijo la modalidad de pago
+    then: la opcion Abono no se ofrece y solo queda Pago completo (IN_PAID a CONFIRMED sin PARTIAL_PAID); con daysBeforeTour 6 si se ofrece
+    severity: high
+    testLevel: unit
+    ownerRole: domain-rules
+  - id: EC-047
+    storyRef: US-008
+    category: invalid-state
+    given: el selector de escenario de pago demo
+    when: se construye la app sin modo demo
+    then: el selector no se renderiza ni se puede activar por parametro de URL
+    severity: medium
+    testLevel: integration
+    ownerRole: frontend
+  - id: EC-048
+    storyRef: US-008
+    category: invalid-state
+    given: pago rechazado (PAYMENT_FAILED) y luego cambio de metodo
+    when: pago con el nuevo metodo
+    then: se crea un intento nuevo, la reserva vuelve a IN_PAID con la misma referencia y el costo del metodo se recalcula
+    severity: high
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-049
+    storyRef: US-013
+    category: data-integrity
+    given: datos simulados corruptos, de una version anterior o borrados a mano en el almacenamiento del navegador, incluidos valores de estado fuera de los enums de packages/contracts
+    when: abro Mis reservas o el checkout
+    then: la capa de datos descarta lo invalido validando con el esquema, ofrece Restablecer datos de demostracion y no hay pageerror
+    severity: high
+    testLevel: unit
+    ownerRole: frontend
+  - id: EC-050
+    storyRef: US-013
+    category: data-integrity
+    given: almacenamiento del navegador lleno o deshabilitado (modo privado estricto)
+    when: se crea una reserva
+    then: se informa el error de forma visible y la pantalla no queda en un estado intermedio
+    severity: medium
+    testLevel: unit
+    ownerRole: frontend
+  - id: EC-051
+    storyRef: US-013
+    category: state-machine
+    given: las funciones de transicion de cada dimension (booking-payment, booking-lifecycle, booking-operational, split-participant, reschedule-request) y recalcular_fase_del_grupo segun conventions.splitGroupRecalc
+    when: se aplican los eventos de invalidTransitions de cada maquina (por ejemplo cancel_confirmed sobre RESCHEDULED, balance_paid sobre IN_PAID, balance_paid_on_split_booking sobre PARTIAL_PAID, split_participant_reopened sobre CONFIRMED, participant_new_link_without_slot sobre SLOT_RELEASED, participant_balance_paid sobre FORFEITED, tour_completed_seeded sin pago)
+    then: cada funcion responde el expectedError declarado (invalid_state, idempotent_noop, requires_new_attempt, max_reschedules_reached, too_close_to_tour, balance_due_date_passed o sold_out) sin mutar la reserva, y cada transicion valida e invalida tiene su test
+    severity: critical
+    testLevel: unit
+    ownerRole: domain-rules
+  - id: EC-052
+    storyRef: US-018
+    category: invalid-state
+    given: una reserva ya calificada o con operational distinto de TOUR_COMPLETED
+    when: abro Calificar por URL o desde la lista
+    then: no se permite calificar de nuevo ni calificar antes de completar
+    severity: medium
+    testLevel: integration
+    ownerRole: frontend
+  - id: EC-053
+    storyRef: US-018
+    category: security
+    given: un comentario de resena o un mensaje de chat con etiquetas HTML o script
+    when: se muestra
+    then: se renderiza como texto plano sin ejecutar nada
+    severity: critical
+    testLevel: e2e
+    ownerRole: security-auditor
+  - id: EC-054
+    storyRef: US-023
+    category: validation
+    given: el campo de mensaje con solo espacios o mas largo que el limite
+    when: pulso Enviar o Enter (y Shift+Enter)
+    then: vacio no se envia, el limite se respeta con contador y Shift+Enter inserta salto de linea
+    severity: low
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-055
+    storyRef: US-022
+    category: data-integrity
+    given: mas de 50 avisos o avisos de mas de 90 dias
+    when: abro la bandeja
+    then: se conservan solo los 50 mas recientes de los ultimos 90 dias y el contador de no leidas coincide con la lista
+    severity: low
+    testLevel: unit
+    ownerRole: frontend
+  - id: EC-056
+    storyRef: US-022
+    category: privacy
+    given: cualquier notificacion, toast, mensaje de WhatsApp compartido o archivo .ics generado
+    when: se lee su contenido
+    then: no incluye documento completo, datos medicos, datos de pago ni correo de terceros
+    severity: high
+    testLevel: unit
+    ownerRole: security-auditor
+  - id: EC-057
+    storyRef: US-021
+    category: validation
+    given: /perfil con fecha de nacimiento futura, telefono sin indicativo o nombre vacio
+    when: pulso Guardar cambios
+    then: no guarda, cada campo muestra su error con aria-invalid y el foco va al primero
+    severity: medium
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-058
+    storyRef: US-021
+    category: privacy
+    given: la solicitud de eliminacion de datos ya registrada
+    when: la pido de nuevo
+    then: muestra la referencia existente sin duplicar; las reservas confirmadas no se borran (solo se anonimizan en la explicacion)
+    severity: medium
+    testLevel: integration
+    ownerRole: frontend
+  - id: EC-059
+    storyRef: US-025
+    category: validation
+    given: el formulario de contacto con menos caracteres del minimo, correo invalido o sin consentimiento
+    when: pulso Enviar
+    then: no envia, muestra el error de cada campo y el antispam de 30 s no se activa por envios rechazados
+    severity: low
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-060
+    storyRef: US-026
+    category: privacy
+    given: el banner de cookies sin decision
+    when: navego a otra pagina sin elegir
+    then: no se cargan cookies opcionales hasta decidir y el banner sigue visible sin tapar el boton principal en 390 px
+    severity: medium
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-061
+    storyRef: US-010
+    category: validation
+    given: el buscador del hero con un rango de fechas invertido, pasado o viajeros en 0
+    when: pulso Buscar aventura
+    then: el rango se corrige o se informa el error y viajeros no baja de 1; la URL resultante solo lleva criterios validos
+    severity: low
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-062
+    storyRef: US-011
+    category: validation
+    given: /explorar con categoria o region desconocida o con caracteres especiales en la URL
+    when: se pinta el catalogo
+    then: se ignora el filtro invalido, no hay pageerror y no se refleja el valor sin escapar en la pagina
+    severity: medium
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-063
+    storyRef: US-012
+    category: invalid-state
+    given: /explorar/mapa sin PUBLIC_MAPBOX_TOKEN o con filtros que dejan 0 tours
+    when: lo abro
+    then: usa el mapa SVG de respaldo y con 0 tours muestra el estado vacio en lugar de un mapa sin pines
+    severity: medium
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-064
+    storyRef: US-029
+    category: i18n
+    given: el idioma en, fr, pt, zh o ja con una clave que falta en ese idioma
+    when: se pinta la pantalla
+    then: cae al espanol base sin mostrar la clave cruda y un test detecta la clave faltante en los 6 idiomas
+    severity: medium
+    testLevel: unit
+    ownerRole: content-seo
+  - id: EC-065
+    storyRef: US-029
+    category: i18n
+    given: montos, fechas y plurales en zh y ja
+    when: se muestran
+    then: los montos siguen en COP con formato correcto, las fechas usan el formato del idioma y los conteos 0, 1 y 2 usan el plural correcto
+    severity: medium
+    testLevel: unit
+    ownerRole: content-seo
+  - id: EC-066
+    storyRef: US-030
+    category: responsive
+    given: 390x844 con el teclado virtual abierto en el paso 2 del checkout
+    when: enfoco el ultimo campo
+    then: la barra fija inferior no tapa el campo enfocado ni su mensaje de error
+    severity: high
+    testLevel: e2e
+    ownerRole: uiux-a11y
+  - id: EC-067
+    storyRef: US-030
+    category: responsive
+    given: anchos limite 320, 389, 391 y 1024 px y rotacion a horizontal
+    when: abro las paginas del alcance
+    then: no hay desborde horizontal, se aplica la version movil o escritorio sin saltos y los objetivos tactiles siguen en 44 px
+    severity: medium
+    testLevel: e2e
+    ownerRole: uiux-a11y
+  - id: EC-068
+    storyRef: US-030
+    category: a11y
+    given: el menu movil, la bandeja o el detalle de reserva abiertos como hoja
+    when: navego con Tab, Shift+Tab y Escape
+    then: el foco queda atrapado, Escape cierra y el foco vuelve al disparador; el fondo no hace scroll
+    severity: high
+    testLevel: e2e
+    ownerRole: uiux-a11y
+  - id: EC-069
+    storyRef: US-033
+    category: a11y
+    given: los estados hover, focus, disabled y error en los 3 temas
+    when: se mide el contraste
+    then: los textos de error y deshabilitados informativos cumplen 4,5:1 y el foco visible cumple 3:1 contra el fondo
+    severity: medium
+    testLevel: e2e
+    ownerRole: uiux-a11y
+  - id: EC-070
+    storyRef: US-015
+    category: invalid-state
+    given: la libreria de QR no aprobada o fallando
+    when: abro e imprimo el voucher
+    then: se ve el respaldo marcado como QR ilustrativo con la referencia legible y el voucher imprime sin errores
+    severity: medium
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-071
+    storyRef: US-007
+    category: validation
+    given: un archivo .ics generado para un tour con nombre con acentos, comas y punto y coma
+    when: se importa en un calendario
+    then: el archivo es valido (escapes RFC 5545, zona America/Bogota, UID estable por reserva)
+    severity: low
+    testLevel: unit
+    ownerRole: frontend
+  - id: EC-072
+    storyRef: US-035
+    category: invalid-state
+    given: /tours/slug-inexistente
+    when: lo abro
+    then: muestra el estado No encontrado o redirige a /explorar sin 404 de API ni console.error
+    severity: low
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-073
+    storyRef: US-020
+    category: data-integrity
+    given: sesion abierta en dos pestanas
+    when: cierro sesion en una
+    then: la otra deja de mostrar datos privados al interactuar o recibir el evento de almacenamiento y pide login
+    severity: medium
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-074
+    storyRef: US-034
+    category: invalid-state
+    given: /bienvenida ya vista o abierta sin sesion
+    when: la abro por URL
+    then: con bienvenida vista navega al destino de la cuenta; sin sesion pide login
+    severity: low
+    testLevel: e2e
+    ownerRole: frontend
+  - id: EC-075
+    storyRef: US-016
+    category: balance-due
+    given: una reserva PARTIAL_PAID con abono de 400.000 COP, saldo pendiente y hoy igual al dia siguiente de balance_due_date en America/Bogota
+    when: se evalua la reserva al abrir Mis reservas o Pagar saldo
+    then: lifecycle pasa a CANCELED con penalized true, operational a CANCELLED, el abono se retiene como penalidad, Saldo a favor es 0, se libera el cupo, Pagar saldo ya no se ofrece (balance_due_date_passed) y llega una notificacion
+    severity: critical
+    testLevel: unit
+    ownerRole: domain-rules
+  - id: EC-076
+    storyRef: US-016
+    category: balance-due
+    given: una reserva PARTIAL_PAID con hoy igual a balance_due_date y daysBeforeTour 7
+    when: abro Pagar saldo o Cancelar
+    then: el saldo todavia se puede pagar (balance_paid lleva a CONFIRMED); si cancelo aplica la franja 5-9 dias con penalidad 60 por ciento sobre el abono y 40 por ciento como Saldo a favor, sin penalized por vencimiento
+    severity: high
+    testLevel: unit
+    ownerRole: domain-rules
+  - id: EC-077
+    storyRef: US-017
+    category: invalid-state
+    given: una reserva con reschedule_count igual a 2 y el boton Reprogramar forzado por URL o por la capa de datos
+    when: se intenta aplicar la reprogramacion
+    then: la capa de datos responde max_reschedules_reached sin crear booking nuevo ni mover cupo, y la pantalla indica que una tercera requiere soporte
+    severity: high
+    testLevel: integration
+    ownerRole: frontend
+  - id: EC-078
+    storyRef: US-017
+    category: reschedule
+    given: una reserva PARTIAL_PAID con reschedule_count 0 y daysBeforeTour 12 que se reprograma a una fecha del mismo precio
+    when: se aplica la reprogramacion
+    then: el booking original queda RESCHEDULED y sale de las pestanas; el booking nuevo hereda PARTIAL_PAID y lo pagado, tiene reschedule_count 1, su balance_due_date se recalcula con la nueva fecha y full_payment_days_before, y aparece una sola vez en Por pagar
+    severity: critical
+    testLevel: unit
+    ownerRole: domain-rules
+  - id: EC-079
+    storyRef: US-017
+    category: timeout
+    given: una solicitud de reprogramacion en PENDING_DIFFERENCE con diferencia de 80.000 COP
+    when: pasan 48 horas simuladas sin pagarla
+    then: la solicitud pasa a EXPIRED, la reserva conserva su fecha original, lifecycle ACTIVE y reschedule_count, se libera el cupo apartado en la nueva fecha y llega una notificacion; pagar despues responde requires_new_attempt
+    severity: high
+    testLevel: integration
+    ownerRole: frontend
+  - id: EC-080
+    storyRef: US-014
+    category: state-machine
+    given: la semilla de demo con una reserva por cada combinacion de bookingTabs (CONFIRMED y PENDING futura, IN_PAID en fase HOLD_GROUP, PARTIAL_PAID, PAYMENT_FAILED futura y pasada, IN_PAID pasada, EXPIRED_PAID futura y pasada, CONFIRMED y SETTLED con operational PENDING y fecha pasada, TOUR_COMPLETED, NO_ASSISTED, CANCELED, OPERATOR_CANCELLED, RESCHEDULED con su booking nuevo) y una semilla aparte con cada combinacion de bookingTabsUnreachable
+    when: abro Mis reservas y ejecuto el validador de la semilla
+    then: cada reserva aparece en exactamente una pestana segun bookingTabs evaluado en el orden de bookingTabsPrecedence; IN_PAID, PAYMENT_FAILED y EXPIRED_PAID pasadas van a Canceladas con la etiqueta Vencida; CONFIRMED y SETTLED pasadas sin cierre van a Completadas con la etiqueta En cierre y sin calificar; RESCHEDULED no aparece y no hay duplicado de la reprogramada; los contadores de cada pestana coinciden con su lista; el validador rechaza cada combinacion de bookingTabsUnreachable con su razon
+    severity: high
+    testLevel: unit
+    ownerRole: frontend
+  - id: EC-081
+    storyRef: US-009
+    category: split-fare
+    given: un participante en SLOT_RELEASED y la fecha con 0 cupos o con 1 cupo
+    when: el organizador pulsa Generar enlace nuevo para esa persona
+    then: con 0 cupos se informa Cupo agotado (sold_out) y el participante sigue SLOT_RELEASED; con 1 cupo vuelve a PENDING_RESERVATION con un enlace nuevo y se aparta su cupo; si el booking estaba en PARTIAL_PAID pasa a IN_PAID por split_participant_reopened (fase HOLD_GROUP reabierta) conservando los pagos y la balance_due_date de los demas, y si estaba en EXPIRED_PAID pasa a IN_PAID por new_link_generated; cuando ese participante paga su reserva el booking vuelve a PARTIAL_PAID por split_all_reservations_paid con su propio payment_event_id; con el booking en CONFIRMED o despues de balance_due_date el boton no aparece y la funcion responde invalid_state o balance_due_date_passed
+    severity: high
+    testLevel: integration
+    ownerRole: frontend
+  - id: EC-082
+    storyRef: US-009
+    category: split-fare
+    given: el enlace viejo de un participante que ya esta en SLOT_RELEASED
+    when: se abre y se pulsa Pagar
+    then: el pago no se acepta (requires_new_attempt), se explica que el enlace vencio y no se cobra ni se aparta cupo
+    severity: high
+    testLevel: integration
+    ownerRole: frontend
+  - id: EC-083
+    storyRef: US-009
+    category: split-fare
+    given: una reserva dividida en PARTIAL_PAID con 3 participantes en RESERVATION_PAID, 2 que pagan su saldo y 1 que no lo paga al vencer el plazo del saldo
+    when: vence el plazo del saldo
+    then: ese participante pasa a FORFEITED, se cancela solo su cupo, su cuota de reserva figura como no reembolsable y sin Saldo a favor (RF-C06b); los otros 2 no se afectan y, como todos los vigentes (sin contar FORFEITED ni SLOT_RELEASED) estan en BALANCE_PAID, payment_status pasa a CONFIRMED por split_all_balances_paid y la reserva se mueve a Proximas; balance_paid no se usa en reservas divididas (balance_paid_on_split_booking responde invalid_state)
+    severity: critical
+    testLevel: unit
+    ownerRole: domain-rules
+  - id: EC-084
+    storyRef: US-009
+    category: split-fare
+    given: una reserva dividida en PARTIAL_PAID con 2 participantes en RESERVATION_PAID y 1 en SLOT_RELEASED, y ninguno paga su saldo
+    when: vence el plazo del saldo de ambos
+    then: los 2 pasan a FORFEITED con su cuota de reserva no reembolsable; como no queda ningun vigente, lifecycle pasa a CANCELED por split_all_participants_forfeited con penalized true, sin Saldo a favor, se libera el cupo y la reserva aparece en Canceladas; split_all_balances_paid no se dispara
+    severity: critical
+    testLevel: unit
+    ownerRole: domain-rules
+  - id: EC-085
+    storyRef: US-009
+    category: idempotency
+    given: una reserva dividida reabierta por split_participant_reopened (IN_PAID) cuyo participante nuevo paga la reserva y el webhook simulado llega dos veces con el mismo payment_event_id
+    when: se procesan ambos eventos
+    then: el participante pasa una sola vez a RESERVATION_PAID, el booking vuelve una sola vez a PARTIAL_PAID por split_all_reservations_paid y el segundo evento es idempotent_noop; el primer cierre de la fase HOLD_GROUP (con otro payment_event_id) no bloquea este segundo cierre
+    severity: high
+    testLevel: unit
+    ownerRole: domain-rules

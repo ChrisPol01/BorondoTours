@@ -1,0 +1,22 @@
+{
+  "feature": "ejemplo-feature",
+  "sbomRef": "SBOM del último build en el pipeline, formato CycloneDX",
+  "accessReview": [
+    {
+      "role": "devops-sre",
+      "permissions": "despliegue a dev",
+      "finding": "sin hallazgos"
+    }
+  ],
+  "findings": [],
+  "actions": [
+    {
+      "id": "SP1",
+      "title": "Rotar la credencial del despliegue a dev",
+      "entryType": "change",
+      "owner": "devops-sre",
+      "due": "2026-12-01",
+      "changeClassHint": "standard"
+    }
+  ]
+}

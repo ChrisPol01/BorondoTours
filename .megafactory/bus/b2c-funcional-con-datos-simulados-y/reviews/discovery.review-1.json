@@ -1,0 +1,104 @@
+{
+  "loop": "discovery.review",
+  "feature": "b2c-funcional-con-datos-simulados-y",
+  "iteration": 1,
+  "verdict": "changes_requested",
+  "findings": [
+    {
+      "id": "R1-01",
+      "artifact": "edge-cases@v1",
+      "severity": "high",
+      "location": "stateMachines[booking] y invalidTransitions; EC-006, EC-051",
+      "issue": "La máquina booking es un enum plano inventado (PENDING_PAYMENT, HOLD_GROUP, PARTIALLY_PAID, CONFIRMED, COMPLETED, CANCELLED, EXPIRED). packages/contracts/src/enums/booking-status.ts y docs/04-Tech-Design/Services/Maquina-Estados-Booking.md §1 y §10 definen un booking multidimensional (payment_status: IN_PAID, PARTIAL_PAID, CONFIRMED, SETTLED, EXPIRED_PAID, PAYMENT_FAILED, CHARGEBACK; lifecycle_status: ACTIVE, CANCELED, OPERATOR_CANCELLED, RESCHEDULED; operational_status) y dicen expresamente que no puede ser enum plano. US-013 exige que la capa simulada siga packages/contracts para cambiar a /api/v1 sin tocar pantallas; con estos nombres la simulación y los tests de transición (AC-013-5) nacen incompatibles con el contrato.",
+      "requiredChange": "Rehacer stateMachines con las dimensiones y nombres de packages/contracts: al menos payment (IN_PAID→PARTIAL_PAID|CONFIRMED|EXPIRED_PAID|PAYMENT_FAILED, PARTIAL_PAID→CONFIRMED, EXPIRED_PAID revivible con nuevo link) y lifecycle (ACTIVE→CANCELED|RESCHEDULED|OPERATOR_CANCELLED); operational solo lo necesario para Completadas (TOUR_COMPLETED) y No Show (NO_ASSISTED). Agregar el mapeo de pestañas de Mis reservas (Próximas, Por pagar, Completadas, Canceladas) a combinaciones de dimensiones y reescribir invalidTransitions por dimensión. Ajustar EC-051 y EC-006 a los nuevos nombres.",
+      "ownerRole": "business-analyst"
+    },
+    {
+      "id": "R1-02",
+      "artifact": "edge-cases@v1",
+      "severity": "high",
+      "location": "stateMachines[booking] HOLD_GROUP; EC-030, EC-031, EC-032",
+      "issue": "Divide tu cuenta contradice Spec-C RF-C06/RF-C06b y Domain-Financiero (casos borde): la responsabilidad es individual, cada link cobra (total/N)×%_reserva, si un participante no paga a tiempo solo se libera su cupo y el resto conserva el suyo, y la reserva confirma cuando los participantes que siguen pagaron su % de reserva; la cuota no reembolsable aplica a quien no paga el saldo (RF-C06b). EC-031 expira todo el grupo y libera todos los cupos, la transición HOLD_GROUP→CONFIRMED exige el 100 % del total y EC-030 deja el grupo retenido con 3 de 4 pagados.",
+      "requiredChange": "Modelar el vencimiento por participante: participante sin pago en plazo → se libera solo su cupo; HOLD_GROUP→PARTIAL_PAID/CONFIRMED cuando los participantes vigentes pagaron su % de reserva; cobro del saldo individual con cuota no reembolsable si no se paga (RF-C06b). Reescribir EC-030 y EC-031 con ese comportamiento y que EC-032 reparta (total/N)×%_reserva y el saldo sin pérdida de pesos. Si se considera que steering 05 (\"HOLD_GROUP hasta 100 % pagado\") manda otra cosa, registrarlo como pregunta abierta en lugar de elegir en silencio.",
+      "ownerRole": "business-analyst"
+    },
+    {
+      "id": "R1-03",
+      "artifact": "prd@v1",
+      "severity": "high",
+      "location": "US-009 AC-009-1, AC-009-3, AC-009-4; NFR y notes de US-009",
+      "issue": "US-009 describe un grupo retenido hasta que el 100 % del total esté pagado y partes iguales del total, sin el % de reserva por persona definido por el operador ni la liberación individual del cupo de RF-C06. Es la misma contradicción de R1-02 en el PRD, y los firmantes y domain-rules la heredarían.",
+      "requiredChange": "Alinear US-009 con RF-C06/RF-C06b: cada parte = (total/N)×%_reserva del product_type/tour simulado, estado por participante (Pagado, Pendiente, Cupo liberado), liberación solo del cupo del participante que no pagó, saldo individual posterior y aviso de cuota no reembolsable. AC-009-4: Por pagar refleja reserva o saldo pendiente por participante, no un grupo retenido al 100 %. Si el dueño prefiere el modelo de grupo, abrir una openQuestion bloqueante citando la contradicción con RF-C06.",
+      "ownerRole": "product-manager"
+    },
+    {
+      "id": "R1-04",
+      "artifact": "edge-cases@v1",
+      "severity": "medium",
+      "location": "stateMachines[booking] PARTIALLY_PAID y reschedule_confirmed; EC-026, EC-029, EC-046",
+      "issue": "Faltan reglas documentadas en Maquina-Estados-Booking.md §2 y §7: (a) abono vencido: pasada balance_due_date sin el saldo, lifecycle=CANCELED con penalized=true y pérdida del abono, y antes de esa fecha el abono sí es reembolsable según franja; (b) reprogramación: máximo 2, también desde PARTIAL_PAID, crea un booking nuevo que hereda payment_status y deja el original RESCHEDULED, y si la diferencia no se paga en 48 h se cancela la solicitud (Spec-D RF-D08b). El EC actual reprograma mutando CONFIRMED→CONFIRMED solo desde CONFIRMED.",
+      "requiredChange": "Agregar la transición por balance_due_date con su EC (abono perdido, Saldo a favor 0, notificación) y otro EC para cancelación con abono antes de esa fecha. Rehacer la transición de reprogramación según §7 (máximo 2, estados de origen PARTIAL_PAID/CONFIRMED/SETTLED, booking nuevo + RESCHEDULED) y añadir el EC de diferencia no pagada en 48 h.",
+      "ownerRole": "business-analyst"
+    },
+    {
+      "id": "R1-05",
+      "artifact": "edge-cases@v1",
+      "severity": "medium",
+      "location": "EC-038",
+      "issue": "El then de EC-038 no es verificable (\"se aplica la regla acordada o se escala\"). Spec-C RF-C09 y Maquina-Estados-Booking §6 ya fijan el comportamiento del frontend: retracto dentro de 5 días hábiles desde la compra crea una RefundRequest en PENDING_REVIEW que revisa COORD/SUPER_ADMIN, sin excepción por la fecha del tour. La duda de LEGAL-03 afecta la aprobación humana, no lo que la pantalla ofrece.",
+      "requiredChange": "Reescribir EC-038 con un resultado determinista alineado con AC-019-1 y RF-C09: dentro del plazo se ofrece la solicitud aunque el tour empiece en menos de 5 días; queda PENDING_REVIEW con aviso de que la revisión humana decide; referencia a LEGAL-03 en notas. Quitar el escalamiento genérico.",
+      "ownerRole": "business-analyst"
+    },
+    {
+      "id": "R1-06",
+      "artifact": "edge-cases@v1",
+      "severity": "low",
+      "location": "EC-018, EC-019, EC-020",
+      "issue": "La granularidad del conteo de días es mixta: EC-018 usa días calendario y EC-019 usa horas (4 días con 23 horas). Domain-Financiero usa daysBeforeTour entero y RF-D08b días calendario; sin una definición única los vectores de domain-rules pueden divergir.",
+      "requiredChange": "Definir daysBeforeTour como diferencia de fechas calendario en America/Bogota (o la que confirme domain-rules) y reformular EC-019 con fechas, no horas.",
+      "ownerRole": "business-analyst"
+    },
+    {
+      "id": "R1-07",
+      "artifact": "prd@v1",
+      "severity": "low",
+      "location": "US-013 AC-013-5; US-017 AC-017-1",
+      "issue": "AC-013-5 enumera estados (pendiente, confirmada, por pagar, completada, cancelada) que no coinciden ni con EdgeCases ni con packages/contracts. AC-017-1 no menciona el máximo de 2 reprogramaciones ni el origen PARTIAL_PAID.",
+      "requiredChange": "Referenciar en AC-013-5 las dimensiones de estado de packages/contracts (tras R1-01) en lugar de una lista propia, y agregar a US-017 el límite de 2 reprogramaciones con botón deshabilitado al alcanzarlo.",
+      "ownerRole": "product-manager"
+    },
+    {
+      "id": "R1-08",
+      "artifact": "prd@v1",
+      "severity": "low",
+      "location": "scope.scopePaths",
+      "issue": "scope.scopePaths del PRD omite apps/web/src/styles/, apps/web/e2e/, apps/web/test(s)/ y packages/ui/src/, que sí están en manifest.feature.scopePaths y que el trabajo necesita (fig-runtime.css, tests, kit). La declaración del PRD queda desalineada con el manifiesto.",
+      "requiredChange": "Igualar scope.scopePaths del PRD a las rutas efectivas del manifiesto.",
+      "ownerRole": "product-manager"
+    },
+    {
+      "id": "R1-09",
+      "artifact": "prd@v1",
+      "severity": "low",
+      "location": "US-005 AC-005-3; US-016 AC-016-3; US-019 AC-019-1; US-028/US-023",
+      "issue": "Compliance agregó requisitos que el PRD no traza: consentimiento separado antes de cargar pasaporte (CR-003) y soportes (CR-025), aviso de modo demostración (CR-019), aviso de publicación de reseña (CR-020), aviso de registro del chat (CR-021) y registro de consentimientos (CR-022). Son verificables en Compliance, pero los AC del PRD que tocan esos campos no los mencionan.",
+      "requiredChange": "Agregar en los AC afectados una referencia al CR correspondiente (o una línea en notes) para que frontend y qa-e2e los encuentren desde la historia.",
+      "ownerRole": "product-manager"
+    },
+    {
+      "id": "R1-10",
+      "artifact": "compliance-requirements@v1",
+      "severity": "low",
+      "location": "CR-011",
+      "issue": "CR-011 tiene ownerRole backend en una feature con layers ui y content-seo y backend fuera de alcance; la puerta de calidad buscaría evidencia de un rol que no construye nada aquí.",
+      "requiredChange": "Asignar CR-011 a frontend con verificación review (el frontend no dispara envíos comerciales) y dejar en el texto que el horario lo aplica la feature de notificaciones.",
+      "ownerRole": "compliance-officer"
+    }
+  ],
+  "debt": [
+    "LEGAL-01..LEGAL-12 de Compliance requieren revisión legal humana; LEGAL-01 (aviso sin Coins) y LEGAL-11 (norma de la exención de IVA) condicionan textos visibles del registro y del paso 2.",
+    "dep:qrcode pendiente de aprobación humana; el voucher sale con el respaldo de AC-015-3.",
+    "El CLI loop verdict valida la revisión pero no llama writeLoopVerdict: state/discovery.review.json no cambia y la receta repetirá el bucle por stopCondition (propuesta para el motor, fuera del alcance de esta feature)."
+  ],
+  "summary": "Iteración 1 de discovery.review sobre prd@v1, edge-cases@v1 y compliance-requirements@v1. El PRD cubre el alcance pedido (B2C funcional simulado, responsive, sin p0_126 ni backend) con 35 historias INVEST y AC trazables a los Specs, y Compliance tiene 25 CR verificables con dueño. Hay tres hallazgos high: la máquina de estados del booking ignora el modelo multidimensional de packages/contracts y Maquina-Estados-Booking (R1-01), y Divide tu cuenta contradice la responsabilidad individual de Spec-C RF-C06 tanto en EdgeCases (R1-02) como en el PRD (R1-03). Dos medium en EdgeCases: faltan el vencimiento del abono y las reglas de reprogramación (R1-04), y EC-038 no es verificable (R1-05). Veredicto changes_requested; los low pueden corregirse en la misma pasada."
+}

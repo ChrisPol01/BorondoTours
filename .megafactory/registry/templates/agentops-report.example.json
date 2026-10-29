@@ -1,0 +1,48 @@
+{
+  "feature": "ejemplo-feature",
+  "period": "2026-11",
+  "services": [
+    "reference-web"
+  ],
+  "formulaVersion": 1,
+  "dora": {
+    "changeLeadTime": {
+      "value": 3,
+      "unit": "hours",
+      "n": 2,
+      "dataGaps": 1
+    }
+  },
+  "space": {
+    "satisfaction": {
+      "feedback": {
+        "mean": 4,
+        "n": 3
+      }
+    },
+    "activity": {
+      "artifactsPublished": 12
+    },
+    "flow": {
+      "humanWaitHours": {
+        "value": 4,
+        "n": 2
+      }
+    }
+  },
+  "agents": [
+    {
+      "role": "product-manager",
+      "agent": "sdlc-product-manager",
+      "firstAttemptAcceptance": 0.5,
+      "versionsAvg": 1.5
+    }
+  ],
+  "learning": {},
+  "dataQuality": {
+    "itemsScanned": 3,
+    "itemsSkipped": 0,
+    "missingFields": []
+  },
+  "notes": "Sin ranking ni comparación entre equipos."
+}

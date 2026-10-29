@@ -1,0 +1,429 @@
+{
+  "name": "bt-factory-feature-e2e",
+  "description": "Megafábrica SDLC de punta a punta (discovery → contracts → build → quality) para una feature. La release queda fuera a propósito (más de 50 pasos y producción exige humano). 49 pasos (límite 50): para agregar uno hay que quitar otro. El campo 'type' de cada nodo y la forma de 'branches'/'stopCondition' quedan pendientes de validación por el orquestador.",
+  "inputs": {
+    "task": "prompt"
+  },
+  "modelId": "auto",
+  "steps": [
+    {
+      "type": "step",
+      "id": "init",
+      "agent": "sdlc-conductor",
+      "captureOutput": true,
+      "prompt": "Rol: conductor. Modo: init. Receta: feature-e2e.\nEntrada:\n{{task}}\nEjecuta init y run start; imprime FEATURE_ID, RUN_ID y PHASE. Si run start sale con 2, señala error con las razones (nunca success)."
+    },
+    {
+      "type": "repeat",
+      "id": "d-discovery-loop",
+      "maxIterations": 3,
+      "onMaxIterations": "pause",
+      "stopCondition": {
+        "fileCheck": {
+          "path": ".megafactory/state/discovery.review.json",
+          "jsonPath": "$.loopStatus",
+          "value": "stop"
+        }
+      },
+      "steps": [
+        {
+          "type": "step",
+          "id": "d-pm",
+          "agent": "sdlc-product-manager",
+          "prompt": "Contexto:\n{{init.output}}\nRol: product-manager. Modo: contract. Bucle: discovery.review.\nRequerimiento:\n{{task}}\nProduce o corrige PRD.json según inbox."
+        },
+        {
+          "type": "step",
+          "id": "d-ba",
+          "agent": "sdlc-business-analyst",
+          "prompt": "Contexto:\n{{init.output}}\nRol: business-analyst. Modo: contract. Bucle: discovery.review."
+        },
+        {
+          "type": "step",
+          "id": "d-compliance",
+          "agent": "sdlc-compliance-officer",
+          "prompt": "Contexto:\n{{init.output}}\nRol: compliance-officer. Modo: contract. Bucle: discovery.review."
+        },
+        {
+          "type": "step",
+          "id": "d-discovery-review",
+          "agent": "sdlc-artifact-reviewer",
+          "prompt": "Contexto:\n{{init.output}}\nRol: artifact-reviewer. Modo: review. Bucle: discovery.review. Revisa prd, edge-cases y compliance-requirements y ejecuta loop verdict."
+        }
+      ]
+    },
+    {
+      "type": "parallel",
+      "id": "d-discovery-signoff",
+      "joinPolicy": "allSettled",
+      "branches": [
+        {
+          "type": "step",
+          "id": "d-ba-sign",
+          "agent": "sdlc-business-analyst",
+          "prompt": "Contexto:\n{{init.output}}\nRol: business-analyst. Modo: sign."
+        },
+        {
+          "type": "step",
+          "id": "d-compliance-sign",
+          "agent": "sdlc-compliance-officer",
+          "prompt": "Contexto:\n{{init.output}}\nRol: compliance-officer. Modo: sign."
+        },
+        {
+          "type": "step",
+          "id": "d-architect-sign",
+          "agent": "sdlc-solutions-architect",
+          "prompt": "Contexto:\n{{init.output}}\nRol: solutions-architect. Modo: sign. Rechaza con categoría ambiguity cualquier historia ambigua."
+        },
+        {
+          "type": "step",
+          "id": "d-pm-sign",
+          "agent": "sdlc-product-manager",
+          "prompt": "Contexto:\n{{init.output}}\nRol: product-manager. Modo: sign."
+        }
+      ]
+    },
+    {
+      "type": "step",
+      "id": "d-gate-discovery",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: gate. Fase: discovery. Cierra corrida: no.\nSi falla, pausa con razones y opciones; al reanudar reevalúa."
+    },
+    {
+      "type": "repeat",
+      "id": "c-contracts-loop",
+      "maxIterations": 3,
+      "onMaxIterations": "pause",
+      "stopCondition": {
+        "fileCheck": {
+          "path": ".megafactory/state/contracts.review.json",
+          "jsonPath": "$.loopStatus",
+          "value": "stop"
+        }
+      },
+      "steps": [
+        {
+          "type": "step",
+          "id": "c-architect",
+          "agent": "sdlc-solutions-architect",
+          "prompt": "Contexto:\n{{init.output}}\nRol: solutions-architect. Modo: contract. Bucle: contracts.review."
+        },
+        {
+          "type": "parallel",
+          "id": "c-contracts-design",
+          "joinPolicy": "allSettled",
+          "branches": [
+            {
+              "type": "sequence",
+              "id": "c-contracts-api-seq",
+              "steps": [
+                {
+                  "type": "step",
+                  "id": "c-api-contract",
+                  "agent": "sdlc-api-contract",
+                  "prompt": "Contexto:\n{{init.output}}\nRol: api-contract. Modo: contract. Bucle: contracts.review."
+                },
+                {
+                  "type": "step",
+                  "id": "c-data-modeler",
+                  "agent": "sdlc-data-modeler",
+                  "prompt": "Contexto:\n{{init.output}}\nRol: data-modeler. Modo: contract. Bucle: contracts.review."
+                },
+                {
+                  "type": "step",
+                  "id": "c-integrations",
+                  "agent": "sdlc-integrations",
+                  "prompt": "Contexto:\n{{init.output}}\nRol: integrations. Modo: contract. Bucle: contracts.review. Después de api-contract."
+                }
+              ]
+            },
+            {
+              "type": "step",
+              "id": "c-uiux-a11y",
+              "agent": "sdlc-uiux-a11y",
+              "prompt": "Contexto:\n{{init.output}}\nRol: uiux-a11y. Modo: contract. Bucle: contracts.review."
+            },
+            {
+              "type": "step",
+              "id": "c-domain-rules",
+              "agent": "sdlc-domain-rules",
+              "prompt": "Contexto:\n{{init.output}}\nRol: domain-rules. Modo: contract. Bucle: contracts.review."
+            }
+          ]
+        },
+        {
+          "type": "parallel",
+          "id": "c-contracts-assess",
+          "joinPolicy": "allSettled",
+          "branches": [
+            {
+              "type": "step",
+              "id": "c-finops",
+              "agent": "sdlc-finops",
+              "prompt": "Contexto:\n{{init.output}}\nRol: finops. Modo: contract. Bucle: contracts.review."
+            },
+            {
+              "type": "step",
+              "id": "c-security-architect",
+              "agent": "sdlc-security-architect",
+              "prompt": "Contexto:\n{{init.output}}\nRol: security-architect. Modo: contract. Bucle: contracts.review."
+            }
+          ]
+        },
+        {
+          "type": "step",
+          "id": "c-contracts-review",
+          "agent": "sdlc-artifact-reviewer",
+          "prompt": "Contexto:\n{{init.output}}\nRol: artifact-reviewer. Modo: review. Bucle: contracts.review. Revisa openapi, data-model, integrations, design-tokens, a11y-rules, domain-rules, cost-estimate y threat-model y ejecuta loop verdict."
+        }
+      ]
+    },
+    {
+      "type": "parallel",
+      "id": "c-contracts-signoff",
+      "joinPolicy": "allSettled",
+      "branches": [
+        {
+          "type": "step",
+          "id": "c-security-architect-sign",
+          "agent": "sdlc-security-architect",
+          "prompt": "Contexto:\n{{init.output}}\nRol: security-architect. Modo: sign."
+        },
+        {
+          "type": "step",
+          "id": "c-finops-sign",
+          "agent": "sdlc-finops",
+          "prompt": "Contexto:\n{{init.output}}\nRol: finops. Modo: sign."
+        },
+        {
+          "type": "step",
+          "id": "c-architect-sign",
+          "agent": "sdlc-solutions-architect",
+          "prompt": "Contexto:\n{{init.output}}\nRol: solutions-architect. Modo: sign."
+        },
+        {
+          "type": "step",
+          "id": "c-data-modeler-sign",
+          "agent": "sdlc-data-modeler",
+          "prompt": "Contexto:\n{{init.output}}\nRol: data-modeler. Modo: sign."
+        },
+        {
+          "type": "step",
+          "id": "c-backend-sign",
+          "agent": "sdlc-backend",
+          "prompt": "Contexto:\n{{init.output}}\nRol: backend. Modo: sign."
+        },
+        {
+          "type": "step",
+          "id": "c-frontend-sign",
+          "agent": "sdlc-frontend",
+          "prompt": "Contexto:\n{{init.output}}\nRol: frontend. Modo: sign."
+        },
+        {
+          "type": "step",
+          "id": "c-api-contract-sign",
+          "agent": "sdlc-api-contract",
+          "prompt": "Contexto:\n{{init.output}}\nRol: api-contract. Modo: sign."
+        },
+        {
+          "type": "step",
+          "id": "c-compliance-sign",
+          "agent": "sdlc-compliance-officer",
+          "prompt": "Contexto:\n{{init.output}}\nRol: compliance-officer. Modo: sign."
+        }
+      ]
+    },
+    {
+      "type": "step",
+      "id": "c-gate-contracts",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: gate. Fase: contracts. Cierra corrida: no.\nSi falla, pausa con razones y opciones; al reanudar reevalúa."
+    },
+    {
+      "type": "step",
+      "id": "b-data-modeler-build",
+      "agent": "sdlc-data-modeler",
+      "prompt": "Contexto:\n{{init.output}}\nRol: data-modeler. Modo: build.\nAplica el modelo de datos y produce su BuildReport."
+    },
+    {
+      "type": "step",
+      "id": "b-api-contract-zod",
+      "agent": "sdlc-api-contract",
+      "prompt": "Contexto:\n{{init.output}}\nRol: api-contract. Modo: zod.\nGenera o verifica los esquemas de validación y produce su BuildReport."
+    },
+    {
+      "type": "parallel",
+      "id": "b-build",
+      "joinPolicy": "allSettled",
+      "branches": [
+        {
+          "type": "sequence",
+          "id": "b-build-backend-seq",
+          "steps": [
+            {
+              "type": "step",
+              "id": "b-domain-rules-build",
+              "agent": "sdlc-domain-rules",
+              "prompt": "Contexto:\n{{init.output}}\nRol: domain-rules. Modo: build."
+            },
+            {
+              "type": "step",
+              "id": "b-integrations-build",
+              "agent": "sdlc-integrations",
+              "prompt": "Contexto:\n{{init.output}}\nRol: integrations. Modo: build."
+            },
+            {
+              "type": "step",
+              "id": "b-backend-build",
+              "agent": "sdlc-backend",
+              "prompt": "Contexto:\n{{init.output}}\nRol: backend. Modo: build. Si el contrato no cierra, abre una disputa (dispute_opened) y termina."
+            }
+          ]
+        },
+        {
+          "type": "sequence",
+          "id": "b-build-frontend-seq",
+          "steps": [
+            {
+              "type": "step",
+              "id": "b-frontend-build",
+              "agent": "sdlc-frontend",
+              "prompt": "Contexto:\n{{init.output}}\nRol: frontend. Modo: build."
+            },
+            {
+              "type": "step",
+              "id": "b-uiux-design-qa",
+              "agent": "sdlc-uiux-a11y",
+              "prompt": "Contexto:\n{{init.output}}\nRol: uiux-a11y. Modo: design-qa."
+            },
+            {
+              "type": "step",
+              "id": "b-content-seo",
+              "agent": "sdlc-content-seo",
+              "prompt": "Contexto:\n{{init.output}}\nRol: content-seo. Modo: build."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "step",
+      "id": "b-tech-writer",
+      "agent": "sdlc-tech-writer",
+      "prompt": "Contexto:\n{{init.output}}\nRol: tech-writer. Modo: build."
+    },
+    {
+      "type": "step",
+      "id": "b-checkpoint-build",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: checkpoint. Fase: build. Cierra corrida: no.\nSi hay una disputa sin cerrar, pausa; al reanudar con la disputa cerrada ejecuta run finish --result aborted y pide relanzar build y luego quality-gates. Sin disputas, ejecuta gate --phase build (sin run finish) y continúa."
+    },
+    {
+      "type": "repeat",
+      "id": "q-quality-loop",
+      "maxIterations": 3,
+      "onMaxIterations": "pause",
+      "stopCondition": {
+        "fileCheck": {
+          "path": ".megafactory/state/quality.review.json",
+          "jsonPath": "$.loopStatus",
+          "value": "stop"
+        }
+      },
+      "steps": [
+        {
+          "type": "parallel",
+          "id": "q-fixes",
+          "joinPolicy": "allSettled",
+          "branches": [
+            {
+              "type": "sequence",
+              "id": "q-fixes-backend-seq",
+              "steps": [
+                {
+                  "type": "step",
+                  "id": "q-backend-fix",
+                  "agent": "sdlc-backend",
+                  "prompt": "Contexto:\n{{init.output}}\nRol: backend. Modo: fix."
+                },
+                {
+                  "type": "step",
+                  "id": "q-integrations-fix",
+                  "agent": "sdlc-integrations",
+                  "prompt": "Contexto:\n{{init.output}}\nRol: integrations. Modo: fix."
+                }
+              ]
+            },
+            {
+              "type": "step",
+              "id": "q-frontend-fix",
+              "agent": "sdlc-frontend",
+              "prompt": "Contexto:\n{{init.output}}\nRol: frontend. Modo: fix."
+            },
+            {
+              "type": "step",
+              "id": "q-domain-rules-fix",
+              "agent": "sdlc-domain-rules",
+              "prompt": "Contexto:\n{{init.output}}\nRol: domain-rules. Modo: fix."
+            },
+            {
+              "type": "step",
+              "id": "q-data-modeler-fix",
+              "agent": "sdlc-data-modeler",
+              "prompt": "Contexto:\n{{init.output}}\nRol: data-modeler. Modo: fix."
+            },
+            {
+              "type": "step",
+              "id": "q-tech-writer-fix",
+              "agent": "sdlc-tech-writer",
+              "prompt": "Contexto:\n{{init.output}}\nRol: tech-writer. Modo: fix."
+            }
+          ]
+        },
+        {
+          "type": "sequence",
+          "id": "q-gates",
+          "steps": [
+            {
+              "type": "step",
+              "id": "q-qa-e2e",
+              "agent": "sdlc-qa-e2e",
+              "prompt": "Contexto:\n{{init.output}}\nRol: qa-e2e. Modo: gate.\nEjecuta las specs e2e y produce quality-report:qa. Puede escribir specs en la carpeta e2e que permite su perfil de permisos."
+            },
+            {
+              "type": "parallel",
+              "id": "q-static-gates",
+              "joinPolicy": "allSettled",
+              "branches": [
+                {
+                  "type": "step",
+                  "id": "q-peer-review",
+                  "agent": "sdlc-peer-reviewer",
+                  "prompt": "Contexto:\n{{init.output}}\nRol: peer-reviewer. Modo: gate. No escribe código."
+                },
+                {
+                  "type": "step",
+                  "id": "q-security-audit",
+                  "agent": "sdlc-security-auditor",
+                  "prompt": "Contexto:\n{{init.output}}\nRol: security-auditor. Modo: gate. No escribe código."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "step",
+          "id": "q-quality-review",
+          "agent": "sdlc-artifact-reviewer",
+          "prompt": "Contexto:\n{{init.output}}\nRol: artifact-reviewer. Modo: verdict. Bucle: quality.review. Consolida los quality-report, produce QualityVerdict y ejecuta loop verdict."
+        }
+      ]
+    },
+    {
+      "type": "step",
+      "id": "q-gate-quality-close",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: gate. Fase: quality. Cierra corrida: sí.\nEjecuta gate --phase quality y run finish (ok o failed) y la lección. Siguiente: factory-release."
+    }
+  ]
+}

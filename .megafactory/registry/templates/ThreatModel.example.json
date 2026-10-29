@@ -1,0 +1,53 @@
+{
+  "feature": "ejemplo-feature",
+  "assets": [
+    "registro de préstamos"
+  ],
+  "actors": [
+    "persona usuaria",
+    "proveedor externo"
+  ],
+  "trustBoundaries": [
+    "puerta de entrada de la API"
+  ],
+  "dataFlows": [],
+  "threats": [
+    {
+      "id": "T-001",
+      "stride": "S",
+      "element": "aviso del proveedor externo",
+      "description": "Suplantación del aviso de confirmación",
+      "likelihood": "medium",
+      "impact": "high",
+      "risk": "high",
+      "owaspTop10": "A01:2021",
+      "nistCsf": "PR",
+      "mitigations": [
+        {
+          "id": "M-001",
+          "control": "Verificar la firma HMAC del aviso",
+          "layer": "api",
+          "ownerRole": "backend",
+          "verification": "test"
+        }
+      ],
+      "status": "mitigated"
+    }
+  ],
+  "authorizationMatrix": [
+    {
+      "operationId": "returnLoan",
+      "roles": [
+        "SUPER_ADMIN"
+      ],
+      "tenantScope": "operator_id",
+      "tables": [
+        "loan_return"
+      ],
+      "negativeTests": [
+        "persona ajena al préstamo rechazada"
+      ]
+    }
+  ],
+  "notApplicable": []
+}

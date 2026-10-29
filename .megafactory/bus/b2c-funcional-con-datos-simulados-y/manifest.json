@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 1,
+  "feature": {
+    "id": "b2c-funcional-con-datos-simulados-y",
+    "title": "B2C funcional con datos simulados y responsive",
+    "specRefs": [
+      "Spec-A,Spec-B,Spec-C,Spec-D,Spec-F"
+    ],
+    "status": "active",
+    "phase": "discovery",
+    "layers": [
+      "ui",
+      "content-seo"
+    ],
+    "declaredScopePaths": [
+      "apps/web/e2e/",
+      "apps/web/public/",
+      "apps/web/src/assets/",
+      "apps/web/src/components/",
+      "apps/web/src/islands/",
+      "apps/web/src/layouts/",
+      "apps/web/src/lib/",
+      "apps/web/src/pages/",
+      "apps/web/src/stores/",
+      "apps/web/src/styles/",
+      "apps/web/test/",
+      "apps/web/tests/",
+      "packages/ui/src/"
+    ],
+    "scopePaths": [
+      "apps/web/e2e/",
+      "apps/web/public/",
+      "apps/web/src/assets/",
+      "apps/web/src/components/",
+      "apps/web/src/islands/",
+      "apps/web/src/layouts/",
+      "apps/web/src/lib/",
+      "apps/web/src/pages/",
+      "apps/web/src/stores/",
+      "apps/web/src/styles/",
+      "apps/web/test/",
+      "apps/web/tests/",
+      "packages/ui/src/"
+    ],
+    "createdAt": "2026-10-24T10:40:02.183Z",
+    "createdBy": "sdlc-conductor"
+  },
+  "artifacts": [
+    {
+      "id": "prd",
+      "type": "prd",
+      "slug": null,
+      "phase": "discovery",
+      "required": true,
+      "signable": true,
+      "planned": true,
+      "version": 3,
+      "status": "draft",
+      "hash": "sha256:96faa0cc62124624b2d37b7e16a29bf3bb9b6c73e9ee8eb15629013bcd4de85c",
+      "waivedBy": null,
+      "dependsOn": [],
+      "consumers": [
+        "business-analyst",
+        "compliance-officer",
+        "solutions-architect",
+        "api-contract",
+        "data-modeler",
+        "uiux-a11y",
+        "domain-rules",
+        "tech-writer",
+        "content-seo"
+      ],
+      "requiredSigners": [
+        "business-analyst",
+        "compliance-officer",
+        "solutions-architect"
+      ],
+      "signatures": [
+        {
+          "role": "product-manager",
+          "agent": "sdlc-product-manager",
+          "hash": "sha256:96faa0cc62124624b2d37b7e16a29bf3bb9b6c73e9ee8eb15629013bcd4de85c",
+          "at": "2026-10-24T13:49:34.611Z"
+        }
+      ],
+      "rejections": [],
+      "pendingDecisions": [],
+      "waiver": null,
+      "history": [
+        {
+          "version": 1,
+          "hash": "sha256:7f12ab4e7dd8913f9070e4c707582fa8dc1fc437c769059e4edf72408948ab2a",
+          "dependsOnDigest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "refreshOnly": false,
+          "at": "2026-10-24T11:06:05.472Z"
+        },
+        {
+          "version": 2,
+          "hash": "sha256:d653115c5008358a8356b320d9d30cd7f68a04ced274b342d29cf0ece5ca0959",
+          "dependsOnDigest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "refreshOnly": false,
+          "at": "2026-10-24T11:22:36.015Z"
+        },
+        {
+          "version": 3,
+          "hash": "sha256:96faa0cc62124624b2d37b7e16a29bf3bb9b6c73e9ee8eb15629013bcd4de85c",
+          "dependsOnDigest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "refreshOnly": false,
+          "at": "2026-10-24T13:49:34.611Z"
+        }
+      ],
+      "producer": {
+        "role": "product-manager",
+        "agent": "sdlc-product-manager"
+      },
+      "pathChecked": "01-discovery/PRD.json",
+      "updatedAt": "2026-10-24T13:49:34.611Z"
+    },
+    {
+      "id": "edge-cases",
+      "type": "edge-cases",
+      "slug": null,
+      "phase": "discovery",
+      "required": true,
+      "signable": true,
+      "planned": true,
+      "version": 3,
+      "status": "draft",
+      "hash": "sha256:7cca5c6301925a4e64d3cd3bb8c0c4124d0b0bd2aabe123e0e9c11e3e6d5e5f2",
+      "waivedBy": null,
+      "dependsOn": [
+        {
+          "id": "prd",
+          "version": 3,
+          "hash": "sha256:96faa0cc62124624b2d37b7e16a29bf3bb9b6c73e9ee8eb15629013bcd4de85c"
+        }
+      ],
+      "consumers": [
+        "product-manager",
+        "solutions-architect",
+        "api-contract",
+        "qa-e2e",
+        "domain-rules",
+        "backend"
+      ],
+      "requiredSigners": [
+        "product-manager",
+        "solutions-architect"
+      ],
+      "signatures": [
+        {
+          "role": "business-analyst",
+          "agent": "sdlc-business-analyst",
+          "hash": "sha256:7cca5c6301925a4e64d3cd3bb8c0c4124d0b0bd2aabe123e0e9c11e3e6d5e5f2",
+          "at": "2026-10-24T13:53:29.074Z"
+        }
+      ],
+      "rejections": [],
+      "pendingDecisions": [],
+      "waiver": null,
+      "history": [
+        {
+          "version": 1,
+          "hash": "sha256:bcdc002ab529b9dbbef2b6188426c39d35956b03836e00993ec0e08ff4352b7d",
+          "dependsOnDigest": "sha256:0b0cf8a6bdbcbff00b8cf6ca17f911b3ca586f5b882a8cb83ce597cec106fb61",
+          "refreshOnly": false,
+          "at": "2026-10-24T11:10:01.228Z"
+        },
+        {
+          "version": 2,
+          "hash": "sha256:a5ecbca7a998e3f1cd19ca5dace3f60dc7655cb9114c492844253678d782c8f1",
+          "dependsOnDigest": "sha256:458404ad21a3f6f47a09040c2a7379e90fa67418f3825c2e422f3390d1ca951a",
+          "refreshOnly": false,
+          "at": "2026-10-24T11:28:27.529Z"
+        },
+        {
+          "version": 3,
+          "hash": "sha256:7cca5c6301925a4e64d3cd3bb8c0c4124d0b0bd2aabe123e0e9c11e3e6d5e5f2",
+          "dependsOnDigest": "sha256:9b45a7f2d28d122043c62349de5fdc1a5ecdf1fb27f70b321c3118b6deffeccf",
+          "refreshOnly": false,
+          "at": "2026-10-24T13:53:29.074Z"
+        }
+      ],
+      "producer": {
+        "role": "business-analyst",
+        "agent": "sdlc-business-analyst"
+      },
+      "pathChecked": "01-discovery/EdgeCases.yml",
+      "updatedAt": "2026-10-24T13:53:29.074Z"
+    },
+    {
+      "id": "compliance-requirements",
+      "type": "compliance-requirements",
+      "slug": null,
+      "phase": "discovery",
+      "required": true,
+      "signable": true,
+      "planned": true,
+      "version": 3,
+      "status": "draft",
+      "hash": "sha256:c1dce74e315bc297ce953e690e6bc22593fefd7a52c3fff95353c5617393c31d",
+      "waivedBy": null,
+      "dependsOn": [
+        {
+          "id": "edge-cases",
+          "version": 3,
+          "hash": "sha256:7cca5c6301925a4e64d3cd3bb8c0c4124d0b0bd2aabe123e0e9c11e3e6d5e5f2"
+        },
+        {
+          "id": "prd",
+          "version": 3,
+          "hash": "sha256:96faa0cc62124624b2d37b7e16a29bf3bb9b6c73e9ee8eb15629013bcd4de85c"
+        }
+      ],
+      "consumers": [
+        "product-manager",
+        "solutions-architect",
+        "api-contract",
+        "data-modeler",
+        "security-architect",
+        "security-auditor"
+      ],
+      "requiredSigners": [
+        "product-manager",
+        "solutions-architect"
+      ],
+      "signatures": [
+        {
+          "role": "compliance-officer",
+          "agent": "sdlc-compliance-officer",
+          "hash": "sha256:c1dce74e315bc297ce953e690e6bc22593fefd7a52c3fff95353c5617393c31d",
+          "at": "2026-10-24T13:55:27.988Z"
+        }
+      ],
+      "rejections": [],
+      "pendingDecisions": [],
+      "waiver": null,
+      "history": [
+        {
+          "version": 1,
+          "hash": "sha256:13b17c67fa73695be8d0a68b7b765d45d45937def580142b86b43963891f0398",
+          "dependsOnDigest": "sha256:14bb2e492944a5d88404dc52b2d7ffb6a1016ec03cd6a4e5d31624c4f9e506b8",
+          "refreshOnly": false,
+          "at": "2026-10-24T11:14:47.558Z"
+        },
+        {
+          "version": 2,
+          "hash": "sha256:5ec455b41ce3ceb987a8628e9dce406e18434a93e491dd3b389013d43f16f533",
+          "dependsOnDigest": "sha256:697f924ccaed362c864a440648fc62cc0e61adb86925f53fdcd7d4d502f1a5c3",
+          "refreshOnly": false,
+          "at": "2026-10-24T11:31:06.668Z"
+        },
+        {
+          "version": 3,
+          "hash": "sha256:c1dce74e315bc297ce953e690e6bc22593fefd7a52c3fff95353c5617393c31d",
+          "dependsOnDigest": "sha256:c4a6a1f622e429e80d6095db095bded616cdfa933fb3f98a6e0278dfbbfc90bf",
+          "refreshOnly": false,
+          "at": "2026-10-24T13:55:27.988Z"
+        }
+      ],
+      "producer": {
+        "role": "compliance-officer",
+        "agent": "sdlc-compliance-officer"
+      },
+      "pathChecked": "01-discovery/Compliance_Requirements.json",
+      "updatedAt": "2026-10-24T13:55:27.988Z"
+    }
+  ],
+  "gates": {
+    "discovery": {
+      "status": "not_run",
+      "at": null,
+      "reasons": []
+    },
+    "contracts": {
+      "status": "not_run",
+      "at": null,
+      "reasons": []
+    },
+    "build": {
+      "status": "not_run",
+      "at": null,
+      "reasons": []
+    },
+    "quality": {
+      "status": "not_run",
+      "at": null,
+      "reasons": [],
+      "codeFingerprint": null
+    },
+    "release": {
+      "status": "not_run",
+      "at": null,
+      "reasons": []
+    }
+  },
+  "assignments": {},
+  "claims": [
+    {
+      "role": "product-manager",
+      "agent": "sdlc-product-manager",
+      "since": "2026-10-24T13:49:17.663Z",
+      "expiresAt": "2026-10-24T15:49:17.663Z"
+    },
+    {
+      "role": "business-analyst",
+      "agent": "sdlc-business-analyst",
+      "since": "2026-10-24T13:50:32.636Z",
+      "expiresAt": "2026-10-24T15:50:32.636Z"
+    },
+    {
+      "role": "compliance-officer",
+      "agent": "sdlc-compliance-officer",
+      "since": "2026-10-24T13:54:45.347Z",
+      "expiresAt": "2026-10-24T15:54:45.347Z"
+    },
+    {
+      "role": "artifact-reviewer",
+      "agent": "sdlc-artifact-reviewer",
+      "since": "2026-10-24T13:56:14.996Z",
+      "expiresAt": "2026-10-24T15:56:14.996Z"
+    }
+  ],
+  "disputes": [],
+  "approvals": [],
+  "lastEvent": {
+    "id": "evt_dada5e34-7a50-4947-9627-c1dd5c845e7a",
+    "hash": "sha256:68987f8e62aac08b4337f6079c8c2567e5034eb16d36b13fd89c6b71475178d8"
+  }
+}

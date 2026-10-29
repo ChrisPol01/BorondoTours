@@ -1,0 +1,20 @@
+{
+  "feature": "ejemplo-feature",
+  "summary": "Tiempos de espera repetidos en la consulta de vencidos tras cada carga mensual.",
+  "incidents": [
+    "inc-ejemplo"
+  ],
+  "rootCause": "La carga mensual invalida las estadísticas de la tabla y el planificador elige un recorrido completo.",
+  "knownError": "Tras la carga mensual, las consultas de vencidos superan el tiempo de espera hasta recalcular estadísticas.",
+  "workaround": "Recalcular estadísticas al terminar la carga.",
+  "actions": [
+    {
+      "id": "PR1",
+      "title": "Recalcular estadísticas como paso final de la carga mensual",
+      "entryType": "change",
+      "owner": "data-engineer",
+      "due": "2026-12-01",
+      "changeClassHint": "standard"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "feature": "ejemplo-feature",
+  "source": "análisis de dependencias del pipeline",
+  "cve": "CVE-2026-12345",
+  "component": "librería de parseo de fechas",
+  "severity": "critical",
+  "status": "triaged",
+  "detectedAt": "2026-11-02T09:00:00Z",
+  "deadline": "2026-11-09",
+  "exploitKnown": true,
+  "publicExposure": true,
+  "actions": [
+    {
+      "id": "A1",
+      "title": "Actualizar la librería de parseo de fechas a la versión corregida",
+      "entryType": "change",
+      "owner": "release-manager",
+      "due": "2026-11-08",
+      "changeClassHint": "emergency"
+    }
+  ]
+}

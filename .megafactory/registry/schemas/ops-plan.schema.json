@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "feature",
+    "iac",
+    "pipeline",
+    "observability",
+    "environments",
+    "clickOpsFree",
+    "inventoryUpdated"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "feature": {
+      "type": "string"
+    },
+    "iac": {
+      "type": "object",
+      "required": [
+        "tool",
+        "changes",
+        "iacFingerprint",
+        "validations"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "tool": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{1,30}$",
+          "enum": [
+            "sam"
+          ]
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "iacFingerprint": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "validations": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "pipeline": {
+      "type": "object",
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "type": "string",
+          "const": "proposal"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "observability": {
+      "type": "object"
+    },
+    "environments": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "costAlarmUsd": {
+      "type": "number"
+    },
+    "runbookRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "clickOpsFree": {
+      "type": "boolean"
+    },
+    "clickOpsExceptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "inventoryUpdated": {
+      "type": "boolean"
+    },
+    "pendingDecisions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}

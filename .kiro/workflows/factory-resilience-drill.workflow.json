@@ -1,0 +1,131 @@
+{
+  "name": "bt-factory-resilience-drill",
+  "description": "Carril govern de la Megafábrica SDLC: simulacro de resiliencia con plan de continuidad, experimentos de caos aprobados por una persona, ejecución humana, resultados re-firmados y acciones. El campo type de cada nodo queda pendiente de validación por el orquestador.",
+  "inputs": {
+    "task": "prompt"
+  },
+  "modelId": "auto",
+  "steps": [
+    {
+      "type": "step",
+      "id": "init",
+      "agent": "sdlc-conductor",
+      "captureOutput": true,
+      "prompt": "Rol: conductor. Modo: init. Receta: resilience-drill.\nEntrada:\n{{task}}\nUsa init --entry resilience-drill. Ejecuta init y run start; imprime FEATURE_ID, RUN_ID y PHASE. Si run start sale con 2, señala error con las razones (nunca success)."
+    },
+    {
+      "type": "step",
+      "id": "continuity-plan",
+      "agent": "sdlc-resilience-engineer",
+      "prompt": "Contexto:\n{{init.output}}\nRol: resilience-engineer. Modo: continuity-plan.\nProduce o corrige ContinuityPlan.json con el análisis de impacto, RTO y RPO por servicio y la estrategia."
+    },
+    {
+      "type": "parallel",
+      "id": "continuity-signoff",
+      "joinPolicy": "allSettled",
+      "branches": [
+        {
+          "type": "step",
+          "id": "sre-sign",
+          "agent": "sdlc-sre",
+          "prompt": "Contexto:\n{{init.output}}\nRol: sre. Modo: sign."
+        },
+        {
+          "type": "step",
+          "id": "architect-sign",
+          "agent": "sdlc-solutions-architect",
+          "prompt": "Contexto:\n{{init.output}}\nRol: solutions-architect. Modo: sign."
+        }
+      ]
+    },
+    {
+      "type": "step",
+      "id": "gate-scope",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: gate. Fase: scope. Cierra corrida: no.\nSi falla, pausa con razones y opciones; al reanudar reevalúa."
+    },
+    {
+      "type": "repeat",
+      "id": "resilience-loop",
+      "maxIterations": 3,
+      "onMaxIterations": "pause",
+      "stopCondition": {
+        "fileCheck": {
+          "path": ".megafactory/state/resilience.review.json",
+          "jsonPath": "$.loopStatus",
+          "value": "stop"
+        }
+      },
+      "steps": [
+        {
+          "type": "step",
+          "id": "chaos-design",
+          "agent": "sdlc-resilience-engineer",
+          "prompt": "Contexto:\n{{init.output}}\nRol: resilience-engineer. Modo: chaos-design. Bucle: resilience.review.\nPublica un chaos-experiment por escenario con hipótesis, criterios de corte y radio de impacto."
+        },
+        {
+          "type": "step",
+          "id": "resilience-review",
+          "agent": "sdlc-artifact-reviewer",
+          "prompt": "Contexto:\n{{init.output}}\nRol: artifact-reviewer. Modo: review. Bucle: resilience.review. Revisa continuity-plan y chaos-experiment y ejecuta loop verdict."
+        }
+      ]
+    },
+    {
+      "type": "step",
+      "id": "sre-sign-design",
+      "agent": "sdlc-sre",
+      "prompt": "Contexto:\n{{init.output}}\nRol: sre. Modo: sign."
+    },
+    {
+      "type": "step",
+      "id": "gate-assess",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: gate. Fase: assess. Cierra corrida: no.\nSi falla, pausa con razones y opciones; al reanudar reevalúa."
+    },
+    {
+      "type": "step",
+      "id": "approve-human",
+      "agent": "sdlc-conductor",
+      "completion": true,
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: approve-review.\nPide la aprobación de la ejecución con request-approval --what review:<FEATURE_ID> y deja PENDING_HUMAN_COMMAND=node .megafactory/bin/factory.mjs approve --feature <FEATURE_ID> --what review:<FEATURE_ID> --by human:<nombre>. En producción nunca sin ella."
+    },
+    {
+      "type": "step",
+      "id": "gate-decide",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: gate. Fase: decide. Cierra corrida: no.\nSi falla, pausa con razones y opciones; al reanudar reevalúa."
+    },
+    {
+      "type": "step",
+      "id": "execute-human",
+      "agent": "sdlc-conductor",
+      "completion": true,
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: human-step.\nUna persona ejecuta los experimentos aprobados y pega los resultados en el handoff; tú no ejecutas nada."
+    },
+    {
+      "type": "step",
+      "id": "chaos-results",
+      "agent": "sdlc-resilience-engineer",
+      "prompt": "Contexto:\n{{init.output}}\nRol: resilience-engineer. Modo: chaos-results.\nRepublica cada chaos-experiment con results (recordedAt, observaciones y acciones)."
+    },
+    {
+      "type": "step",
+      "id": "sre-resign-results",
+      "agent": "sdlc-sre",
+      "prompt": "Contexto:\n{{init.output}}\nRol: sre. Modo: sign."
+    },
+    {
+      "type": "step",
+      "id": "spawn",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: spawn.\nLee status --feature <FEATURE_ID> --json y crea los ítems de las acciones de los resultados con init --entry <entryType> --link <tipo>:<FEATURE_ID> --action <id>. Si un init falla, detente en esa acción con RESULT=blocked."
+    },
+    {
+      "type": "step",
+      "id": "gate-act",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: gate. Fase: act. Cierra corrida: sí.\nSi falla, pausa con razones y opciones; al reanudar reevalúa. Siempre termina con run finish (ok o failed) y la lección."
+    }
+  ]
+}

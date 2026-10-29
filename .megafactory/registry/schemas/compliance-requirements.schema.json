@@ -1,0 +1,223 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "feature",
+    "dataInventory",
+    "requirements",
+    "pciScope"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "feature": {
+      "type": "string"
+    },
+    "dataInventory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "element",
+          "category",
+          "purpose",
+          "legalBasis",
+          "consent",
+          "retentionDays",
+          "storage",
+          "encryptedAtRest",
+          "internationalTransfer"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^DI-\\d{2}$"
+          },
+          "element": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "identifying",
+              "contact",
+              "sensitive",
+              "financial",
+              "location",
+              "technical",
+              "document"
+            ]
+          },
+          "purpose": {
+            "type": "string"
+          },
+          "legalBasis": {
+            "type": "string",
+            "enum": [
+              "consent",
+              "contract",
+              "legal_obligation",
+              "legitimate_interest"
+            ]
+          },
+          "consent": {
+            "type": "string",
+            "enum": [
+              "none",
+              "explicit",
+              "separate"
+            ]
+          },
+          "retentionDays": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "retentionSource": {
+            "type": "string"
+          },
+          "storage": {
+            "type": "string"
+          },
+          "encryptedAtRest": {
+            "type": "boolean"
+          },
+          "internationalTransfer": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "requirements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "framework",
+          "applicability",
+          "requirement",
+          "control",
+          "ownerRole",
+          "verification"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^CR-\\d{3}$"
+          },
+          "framework": {
+            "type": "string",
+            "pattern": "^[A-Z0-9_]{2,30}$",
+            "enum": [
+              "LEY_1581",
+              "DEC_1377",
+              "LEY_1480",
+              "LEY_2300",
+              "DIAN",
+              "PCI_DSS",
+              "GDPR",
+              "CCPA",
+              "SOC2",
+              "ISO27701",
+              "WCAG22"
+            ]
+          },
+          "applicability": {
+            "type": "string",
+            "enum": [
+              "mandatory",
+              "evaluate",
+              "reference"
+            ]
+          },
+          "reference": {
+            "type": "string"
+          },
+          "requirement": {
+            "type": "string"
+          },
+          "control": {
+            "type": "string",
+            "enum": [
+              "consent",
+              "minimization",
+              "retention",
+              "encryption",
+              "anonymization",
+              "access",
+              "logging",
+              "notice",
+              "arco_rights",
+              "withdrawal_right",
+              "tokenization",
+              "breach_notification",
+              "invoice",
+              "marketing_hours",
+              "rnbd"
+            ]
+          },
+          "dataRefs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "acceptanceCriteria": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "ownerRole": {
+            "type": "string"
+          },
+          "verification": {
+            "type": "string",
+            "enum": [
+              "test",
+              "review",
+              "evidence"
+            ]
+          }
+        }
+      }
+    },
+    "pciScope": {
+      "type": "object",
+      "required": [
+        "tokenizedBy",
+        "cardDataTouches",
+        "targetSaq"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "tokenizedBy": {
+          "type": "string"
+        },
+        "cardDataTouches": {
+          "type": "boolean"
+        },
+        "targetSaq": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "openIssues": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "pendingDecisions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}

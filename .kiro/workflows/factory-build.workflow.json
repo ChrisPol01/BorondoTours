@@ -1,0 +1,96 @@
+{
+  "name": "bt-factory-build",
+  "description": "Fase 3 de la Megafábrica SDLC: implementación (esquemas de validación, dominio, integraciones, backend, frontend, QA de diseño, contenido/SEO y documentación). Es la puerta de Fase 3: requiere la puerta de contracts firmada; si run start sale con 2, el conductor señala error. El campo 'type' de cada nodo y la forma de 'branches' quedan pendientes de validación por el orquestador.",
+  "inputs": {
+    "task": "prompt"
+  },
+  "modelId": "auto",
+  "steps": [
+    {
+      "type": "step",
+      "id": "init",
+      "agent": "sdlc-conductor",
+      "captureOutput": true,
+      "prompt": "Rol: conductor. Modo: init. Receta: build.\nEntrada:\n{{task}}\nPuerta de Fase 3: requiere la puerta contracts firmada. Ejecuta run start; imprime FEATURE_ID, RUN_ID y PHASE. Si run start sale con 2, señala error con las razones (nunca success)."
+    },
+    {
+      "type": "step",
+      "id": "data-modeler-build",
+      "agent": "sdlc-data-modeler",
+      "prompt": "Contexto:\n{{init.output}}\nRol: data-modeler. Modo: build.\nAplica el modelo de datos (migraciones versionadas) y produce su BuildReport."
+    },
+    {
+      "type": "step",
+      "id": "api-contract-zod",
+      "agent": "sdlc-api-contract",
+      "prompt": "Contexto:\n{{init.output}}\nRol: api-contract. Modo: zod.\nGenera o verifica los esquemas de validación del paquete de contratos contra openapi.yaml y produce su BuildReport."
+    },
+    {
+      "type": "parallel",
+      "id": "build",
+      "joinPolicy": "allSettled",
+      "branches": [
+        {
+          "type": "sequence",
+          "id": "build-backend-seq",
+          "steps": [
+            {
+              "type": "step",
+              "id": "domain-rules-build",
+              "agent": "sdlc-domain-rules",
+              "prompt": "Contexto:\n{{init.output}}\nRol: domain-rules. Modo: build.\nImplementa la lógica financiera pura en el paquete de dominio con tests y produce su BuildReport."
+            },
+            {
+              "type": "step",
+              "id": "integrations-build",
+              "agent": "sdlc-integrations",
+              "prompt": "Contexto:\n{{init.output}}\nRol: integrations. Modo: build.\nImplementa los adaptadores de integración y produce su BuildReport."
+            },
+            {
+              "type": "step",
+              "id": "backend-build",
+              "agent": "sdlc-backend",
+              "prompt": "Contexto:\n{{init.output}}\nRol: backend. Modo: build.\nImplementa los routers por dominio con RBAC y tests. Si el contrato no cierra, abre una disputa (dispute_opened) y termina."
+            }
+          ]
+        },
+        {
+          "type": "sequence",
+          "id": "build-frontend-seq",
+          "steps": [
+            {
+              "type": "step",
+              "id": "frontend-build",
+              "agent": "sdlc-frontend",
+              "prompt": "Contexto:\n{{init.output}}\nRol: frontend. Modo: build.\nImplementa las componentes de UI con el kit de componentes del proyecto y produce su BuildReport."
+            },
+            {
+              "type": "step",
+              "id": "uiux-design-qa",
+              "agent": "sdlc-uiux-a11y",
+              "prompt": "Contexto:\n{{init.output}}\nRol: uiux-a11y. Modo: design-qa.\nVerifica el frontend contra DesignTokens y A11yRules y produce su BuildReport."
+            },
+            {
+              "type": "step",
+              "id": "content-seo",
+              "agent": "sdlc-content-seo",
+              "prompt": "Contexto:\n{{init.output}}\nRol: content-seo. Modo: build.\nAgrega claves de i18n, textos y metadatos SEO y produce su BuildReport."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "step",
+      "id": "tech-writer",
+      "agent": "sdlc-tech-writer",
+      "prompt": "Contexto:\n{{init.output}}\nRol: tech-writer. Modo: build.\nActualiza la documentación del vault (Diátaxis, wikilinks) y produce su BuildReport."
+    },
+    {
+      "type": "step",
+      "id": "checkpoint-build",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: checkpoint. Fase: build. Cierra corrida: sí.\nSi hay disputas sin cerrar, pausa; al reanudar con la disputa cerrada ejecuta run finish --result aborted y pide relanzar bt-factory-build. Sin disputas, ejecuta gate --phase build y run finish (ok o failed) y la lección."
+    }
+  ]
+}

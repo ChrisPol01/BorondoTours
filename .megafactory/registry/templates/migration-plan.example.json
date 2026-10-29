@@ -1,0 +1,49 @@
+{
+  "feature": "ejemplo-feature",
+  "workloads": [
+    {
+      "name": "servicio de préstamos",
+      "strategy": "replatform"
+    },
+    {
+      "name": "reportes heredados",
+      "strategy": "retire"
+    }
+  ],
+  "waves": [
+    {
+      "id": "W1",
+      "workloads": [
+        "servicio de préstamos"
+      ],
+      "rollback": "Volver el tráfico al entorno anterior con el cambio de DNS preparado."
+    }
+  ],
+  "actions": [
+    {
+      "id": "W1",
+      "title": "Ola 1: servicio de préstamos",
+      "entryType": "migration-wave",
+      "owner": "platform-engineer",
+      "due": "2027-01-15"
+    }
+  ],
+  "methods": [
+    {
+      "method": "pre-mortem",
+      "trigger": null,
+      "actors": [
+        "solutions-architect"
+      ],
+      "data": {
+        "failureStories": [
+          "Historia de falla 1",
+          "Historia de falla 2",
+          "Historia de falla 3"
+        ]
+      },
+      "lessons": [],
+      "actions": []
+    }
+  ]
+}

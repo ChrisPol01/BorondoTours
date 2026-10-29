@@ -1,0 +1,28 @@
+{
+  "feature": "ejemplo-feature",
+  "gate": "peer",
+  "codeFingerprint": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "tools": [
+    {
+      "name": "lint",
+      "cmd": "pnpm --filter <pkg> run lint",
+      "exitCode": 0,
+      "available": true
+    }
+  ],
+  "findings": [
+    {
+      "id": "F-001",
+      "severity": "low",
+      "file": "services/loans/src/return-loan.ts",
+      "line": 12,
+      "rule": "complexity",
+      "message": "Función algo larga",
+      "suggestion": "Extraer una función auxiliar",
+      "ownerRole": "backend",
+      "status": "open",
+      "refs": []
+    }
+  ],
+  "verdict": "pass"
+}

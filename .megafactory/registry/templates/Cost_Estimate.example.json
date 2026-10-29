@@ -1,0 +1,29 @@
+{
+  "feature": "ejemplo-feature",
+  "region": "us-east-1",
+  "currency": "USD",
+  "pricingSource": "manual",
+  "pricingDate": "2026-10-12",
+  "confidence": "medium",
+  "scenarios": [
+    {
+      "name": "expected",
+      "assumptions": {},
+      "lineItems": [
+        {
+          "service": "cómputo sin servidor",
+          "dimension": "solicitudes",
+          "unit": "millón",
+          "quantity": 1,
+          "unitPriceUsd": 0.2,
+          "monthlyUsd": 0.2
+        }
+      ],
+      "monthlyTotalUsd": 0.2
+    }
+  ],
+  "alternatives": [],
+  "freeTierConsidered": true,
+  "budgetAlarmUsd": 50,
+  "verdict": "within_budget"
+}

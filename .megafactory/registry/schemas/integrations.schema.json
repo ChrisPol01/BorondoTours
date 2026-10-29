@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "feature",
+    "integrations"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "feature": {
+      "type": "string"
+    },
+    "integrations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "provider",
+          "direction",
+          "purpose",
+          "auth",
+          "secretNames",
+          "idempotency",
+          "retries",
+          "timeoutMs",
+          "sourceOfTruth",
+          "sandbox"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "provider": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]{1,40}$",
+            "enum": [
+              "onepay",
+              "siigo",
+              "ses",
+              "mapbox",
+              "google-oauth"
+            ]
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "inbound",
+              "outbound"
+            ]
+          },
+          "purpose": {
+            "type": "string"
+          },
+          "auth": {
+            "type": "string",
+            "enum": [
+              "hmac_signature",
+              "oauth2",
+              "iam",
+              "api_key"
+            ]
+          },
+          "secretNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "idempotency": {
+            "type": "object",
+            "required": [
+              "key",
+              "store"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "type": "string"
+              },
+              "store": {
+                "type": "string"
+              }
+            }
+          },
+          "retries": {
+            "type": "object",
+            "required": [
+              "strategy",
+              "maxAttempts",
+              "dlq"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "strategy": {
+                "type": "string"
+              },
+              "maxAttempts": {
+                "type": "integer"
+              },
+              "dlq": {
+                "type": "string",
+                "enum": [
+                  "sqs",
+                  "none"
+                ]
+              }
+            }
+          },
+          "timeoutMs": {
+            "type": "integer"
+          },
+          "sourceOfTruth": {
+            "type": "string"
+          },
+          "piiSent": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sandbox": {
+            "type": "boolean"
+          },
+          "failureModes": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "pendingDecisions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}

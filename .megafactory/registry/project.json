@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "project": {
+    "name": "BorondoTours",
+    "slug": "borondotours"
+  },
+  "draft": false,
+  "conventions": {
+    "api": {
+      "extensionPrefix": "x-bt",
+      "pathPrefix": "/api/v1/",
+      "openapiVersions": [
+        "3.1"
+      ]
+    },
+    "data": {
+      "namingRegex": "^[a-z][a-z0-9_]*$",
+      "pkType": "uuid",
+      "forbiddenColumns": [
+        "deleted_at",
+        "is_deleted"
+      ],
+      "financialAuditColumn": "created_by",
+      "tenantColumn": "operator_id"
+    },
+    "security": {
+      "forbidCardData": true,
+      "requirePciScope": true
+    },
+    "blockPrefix": "bt",
+    "actors": [
+      "SUPER_ADMIN",
+      "GERENTE",
+      "AGENT",
+      "COORD",
+      "CLIENT",
+      "OPERATOR_ADMIN",
+      "OPERATOR_COORD",
+      "OPERATOR_AGENT",
+      "OPERATOR_GUIDE",
+      "OPERATOR_DRIVER",
+      "ANONYMOUS"
+    ],
+    "docs": {
+      "specRefPattern": "^docs/01-Specs/Spec-[A-L]-[^#]+\\.md(#RF-[A-L]\\d{2}[a-z]?)?$",
+      "specRefExample": "docs/01-Specs/Spec-C-Checkout.md#RF-C06b"
+    },
+    "finance": {
+      "currency": "USD"
+    },
+    "release": {
+      "iacTools": [
+        "sam"
+      ]
+    }
+  },
+  "paths": {
+    "appRoots": [
+      "apps/web/",
+      "apps/erp/",
+      "apps/b2b/",
+      "apps/",
+      "services/",
+      "packages/"
+    ],
+    "iac": [
+      "infra/"
+    ],
+    "fingerprintExclude": [
+      ".astro"
+    ],
+    "docs": "docs/",
+    "runbooks": null
+  },
+  "commands": {
+    "note": "Se leen de package.json; si difieren, manda package.json. NUNCA el script 'test' de apps/web (vitest watch, cuelga): usar 'test:run'. No encadenar; un pnpm --filter por script.",
+    "install": "pnpm install",
+    "build": "pnpm --filter <pkg> run build",
+    "lint": "pnpm --filter <pkg> run lint",
+    "typecheck": "pnpm --filter <pkg> run typecheck",
+    "testRun": "pnpm --filter <pkg> run test:run",
+    "testCoverage": "pnpm --filter <pkg> run test:coverage",
+    "e2e": "pnpm --filter @borondo/web run test:e2e",
+    "webPackage": "@borondo/web",
+    "uiPackage": "@borondo/ui",
+    "verificationNote": "Línea base del producto (comparar antes/después): pnpm typecheck; pnpm --filter @borondo/web run lint; pnpm --filter @borondo/web run test:run; pnpm --filter @borondo/ui run test. NO pnpm lint/test de la raíz (fallan por #27/#28).",
+    "available": {
+      "eslintOutsideWeb": false,
+      "coverageThreshold": false,
+      "drizzleConfig": false
+    },
+    "iac": {
+      "validate": [],
+      "plan": []
+    },
+    "observability": []
+  },
+  "compliance": {
+    "frameworkCodes": [
+      "LEY_1581",
+      "DEC_1377",
+      "LEY_1480",
+      "LEY_2300",
+      "DIAN",
+      "PCI_DSS",
+      "GDPR",
+      "CCPA",
+      "SOC2",
+      "ISO27701",
+      "WCAG22"
+    ],
+    "extraControls": [
+      "invoice",
+      "marketing_hours",
+      "rnbd"
+    ]
+  },
+  "governance": {
+    "prodApprovalWhat": "release-prod",
+    "standardChanges": [],
+    "delegated": [
+      "prioritization",
+      "postmortem",
+      "change",
+      "risk",
+      "pir"
+    ],
+    "delegatedRiskSeverities": [
+      "low",
+      "medium"
+    ]
+  },
+  "operate": {
+    "severityScale": [
+      "SEV1",
+      "SEV2",
+      "SEV3",
+      "SEV4"
+    ],
+    "postmortemRequiredFor": [
+      "SEV1",
+      "SEV2"
+    ]
+  },
+  "security": {
+    "remediationSlaDays": {
+      "critical": 7,
+      "high": 30,
+      "medium": 90,
+      "low": 180
+    }
+  },
+  "integrations": {
+    "providers": [
+      "onepay",
+      "siigo",
+      "ses",
+      "mapbox",
+      "google-oauth"
+    ]
+  },
+  "kit": {
+    "memory": {
+      "retentionDays": {
+        "lesson": 365,
+        "pattern": 365,
+        "proposal": 180,
+        "recurring-error": 365
+      },
+      "maxActivePerScope": 300
+    },
+    "methods": {
+      "enforcement": {},
+      "fmeaActionThreshold": 100
+    },
+    "learning": {
+      "shareToFactory": false,
+      "redactTerms": []
+    }
+  },
+  "limits": {
+    "maxRunMinutes": null
+  },
+  "adapters": {
+    "claude": {
+      "mcpAvailable": []
+    }
+  },
+  "openDecisions": {
+    "note": "No se resuelven en la fábrica; ver docs/DECISIONES-PENDIENTES.md.",
+    "ids": [
+      "#1 Hono vs NestJS",
+      "#2 Astro vs Vite",
+      "#15 SAM vs CDK",
+      "#16-#32 propuestas de la fábrica"
+    ]
+  },
+  "factory": {
+    "driftPolicy": "warn-ahead"
+  },
+  "incompleteFields": [
+    "commands.observability:on-call-engineer",
+    "commands.observability:resilience-engineer",
+    "commands.observability:sre",
+    "paths.runbooks:on-call-engineer",
+    "paths.runbooks:resilience-engineer",
+    "paths.runbooks:sre"
+  ]
+}

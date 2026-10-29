@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+# Envoltorio POSIX (sh, bash, zsh) del lanzador del proyecto: node .megafactory/bin/factory.mjs
+if ! command -v node >/dev/null 2>&1; then
+  echo "Falta node en el PATH: instala Node 22 o superior y revisa con mf doctor." >&2
+  exit 127
+fi
+exec node "$(dirname -- "$0")/factory.mjs" "$@"

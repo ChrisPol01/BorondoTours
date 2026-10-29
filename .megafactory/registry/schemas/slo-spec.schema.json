@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Especificación de SLO (SloSpec.json, §9.1)",
+  "type": "object",
+  "required": [
+    "feature",
+    "slos"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "feature": {
+      "type": "string"
+    },
+    "slos": {
+      "type": "array",
+      "maxItems": 30,
+      "items": {
+        "type": "object",
+        "required": [
+          "service",
+          "sli",
+          "objective",
+          "window",
+          "budgetPolicy",
+          "alerts"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "service": {
+            "type": "string",
+            "maxLength": 60
+          },
+          "sli": {
+            "type": "string",
+            "maxLength": 300
+          },
+          "objective": {
+            "type": "number"
+          },
+          "window": {
+            "type": "string",
+            "maxLength": 40
+          },
+          "budgetPolicy": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "alerts": {
+            "type": "array",
+            "maxItems": 10,
+            "items": {
+              "type": "object",
+              "required": [
+                "burnRate",
+                "window"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "burnRate": {
+                  "type": "number"
+                },
+                "window": {
+                  "type": "string",
+                  "maxLength": 40
+                },
+                "severity": {
+                  "type": "string",
+                  "maxLength": 20
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,255 @@
+{
+  "schemaVersion": 1,
+  "commonGateRules": [
+    "multiple-min-instances",
+    "requests-resolved",
+    "methods-satisfied"
+  ],
+  "lanes": [
+    {
+      "lane": "delivery",
+      "description": "Las 5 fases v0 y las entradas planificadas: funcionalidad, cambio, defecto, cambio estándar, deuda, ola de migración, remediación de auditoría, retiro y experimento.",
+      "terminal": "done",
+      "phases": [
+        {
+          "phase": "discovery",
+          "dir": "01-discovery"
+        },
+        {
+          "phase": "contracts",
+          "dir": "02-contracts"
+        },
+        {
+          "phase": "build",
+          "dir": "03-build"
+        },
+        {
+          "phase": "quality",
+          "dir": "04-quality"
+        },
+        {
+          "phase": "release",
+          "dir": "05-release"
+        }
+      ],
+      "entryTypes": [
+        {
+          "entryType": "feature",
+          "startPhase": "discovery",
+          "initialType": "prd",
+          "pack": "core"
+        },
+        {
+          "entryType": "change",
+          "startPhase": "discovery",
+          "initialType": "prd",
+          "pack": "core"
+        },
+        {
+          "entryType": "defect",
+          "startPhase": "discovery",
+          "initialType": "prd",
+          "pack": "core"
+        },
+        {
+          "entryType": "standard",
+          "startPhase": "discovery",
+          "initialType": "prd",
+          "pack": "core"
+        },
+        {
+          "entryType": "debt",
+          "startPhase": "discovery",
+          "initialType": "prd",
+          "pack": "core"
+        },
+        {
+          "entryType": "migration-wave",
+          "startPhase": "discovery",
+          "initialType": "prd",
+          "pack": "core"
+        },
+        {
+          "entryType": "audit-remediation",
+          "startPhase": "discovery",
+          "initialType": "prd",
+          "pack": "core"
+        },
+        {
+          "entryType": "decommission",
+          "startPhase": "discovery",
+          "initialType": "prd",
+          "pack": "core"
+        },
+        {
+          "entryType": "experiment",
+          "startPhase": "discovery",
+          "initialType": "prd",
+          "pack": "core"
+        }
+      ],
+      "gateRules": {
+        "discovery": [
+          "origin-records-exist"
+        ],
+        "contracts": [
+          "change-approved",
+          "standard-change-preapproved"
+        ],
+        "build": [],
+        "quality": [],
+        "release": [
+          "emergency-requires-pir",
+          "prod-approved"
+        ]
+      }
+    },
+    {
+      "lane": "operate",
+      "description": "Carril día 2: incidentes, problemas y vulnerabilidades, desde la detección hasta la mejora.",
+      "terminal": "done",
+      "phases": [
+        {
+          "phase": "detect",
+          "dir": "01-detect"
+        },
+        {
+          "phase": "respond",
+          "dir": "02-respond"
+        },
+        {
+          "phase": "recover",
+          "dir": "03-recover"
+        },
+        {
+          "phase": "learn",
+          "dir": "04-learn"
+        },
+        {
+          "phase": "improve",
+          "dir": "05-improve"
+        }
+      ],
+      "entryTypes": [
+        {
+          "entryType": "incident",
+          "startPhase": "detect",
+          "initialType": "incident-record",
+          "pack": "ops-day2",
+          "severity": {
+            "required": true,
+            "from": "operate.severityScale"
+          }
+        },
+        {
+          "entryType": "problem",
+          "startPhase": "learn",
+          "initialType": "problem-record",
+          "pack": "ops-day2",
+          "severity": {
+            "required": false,
+            "from": "operate.severityScale"
+          }
+        },
+        {
+          "entryType": "vulnerability",
+          "startPhase": "detect",
+          "initialType": "security-finding",
+          "pack": "core",
+          "severity": {
+            "required": true,
+            "from": "security.remediationSlaDays"
+          }
+        }
+      ],
+      "gateRules": {
+        "detect": [],
+        "respond": [
+          "mitigation-recorded"
+        ],
+        "recover": [
+          "recovered"
+        ],
+        "learn": [
+          "postmortem-accepted",
+          "vulnerability-closed"
+        ],
+        "improve": [
+          "actions-linked"
+        ]
+      }
+    },
+    {
+      "lane": "govern",
+      "description": "Operación y gobernanza: revisiones periódicas, auditoría, simulacros de resiliencia, planes de migración, adopción de código existente e iniciativas de portafolio.",
+      "terminal": "done",
+      "phases": [
+        {
+          "phase": "scope",
+          "dir": "01-scope"
+        },
+        {
+          "phase": "assess",
+          "dir": "02-assess"
+        },
+        {
+          "phase": "decide",
+          "dir": "03-decide"
+        },
+        {
+          "phase": "act",
+          "dir": "04-act"
+        }
+      ],
+      "entryTypes": [
+        {
+          "entryType": "ops-review",
+          "startPhase": "scope",
+          "initialType": "review-scope",
+          "pack": "ops-day2"
+        },
+        {
+          "entryType": "audit",
+          "startPhase": "scope",
+          "initialType": "control-matrix",
+          "pack": "core"
+        },
+        {
+          "entryType": "resilience-drill",
+          "startPhase": "scope",
+          "initialType": "continuity-plan",
+          "pack": "ops-day2"
+        },
+        {
+          "entryType": "migration",
+          "startPhase": "scope",
+          "initialType": "migration-plan",
+          "pack": "core"
+        },
+        {
+          "entryType": "adoption",
+          "startPhase": "scope",
+          "initialType": "system-context",
+          "pack": "core"
+        },
+        {
+          "entryType": "initiative",
+          "startPhase": "scope",
+          "initialType": "initiative-brief",
+          "pack": "enterprise-governance"
+        }
+      ],
+      "gateRules": {
+        "scope": [],
+        "assess": [],
+        "decide": [
+          "decide-approved"
+        ],
+        "act": [
+          "actions-linked",
+          "chaos-results-present"
+        ]
+      }
+    }
+  ]
+}

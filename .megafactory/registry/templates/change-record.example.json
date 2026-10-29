@@ -1,0 +1,18 @@
+{
+  "feature": "ejemplo-feature",
+  "class": "normal",
+  "summary": "Agregar el índice por estado y vencimiento en la tabla de préstamos y desplegar el servicio con la consulta nueva.",
+  "risk": {
+    "level": "medium",
+    "description": "La creación del índice bloquea escrituras si no se hace en línea; se usa creación concurrente."
+  },
+  "implementationWindow": {
+    "start": "2026-11-02T09:00:00Z",
+    "end": "2026-11-02T10:00:00Z"
+  },
+  "rollback": {
+    "plan": "Revertir el despliegue del servicio y borrar el índice nuevo con el comando de migración inversa.",
+    "trigger": "Errores de la consulta por encima del umbral de la alarma durante 10 minutos."
+  },
+  "affectedComponents": ["servicio de préstamos", "base de datos de préstamos"]
+}

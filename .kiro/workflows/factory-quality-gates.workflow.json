@@ -1,0 +1,124 @@
+{
+  "name": "bt-factory-quality-gates",
+  "description": "Fase 4 de la Megafábrica SDLC: correcciones, E2E, revisión de pares y auditoría de seguridad en bucle, con puerta verificable. Requiere la puerta de build. Los fixers corren primero, luego qa-e2e (que puede escribir specs) y recién entonces peer y security en paralelo. El campo 'type' de cada nodo y la forma de 'branches'/'stopCondition' quedan pendientes de validación por el orquestador.",
+  "inputs": {
+    "task": "prompt"
+  },
+  "modelId": "auto",
+  "steps": [
+    {
+      "type": "step",
+      "id": "init",
+      "agent": "sdlc-conductor",
+      "captureOutput": true,
+      "prompt": "Rol: conductor. Modo: init. Receta: quality-gates.\nEntrada:\n{{task}}\nRequiere la puerta build. Ejecuta run start; imprime FEATURE_ID, RUN_ID y PHASE. Si run start sale con 2, señala error con las razones (nunca success)."
+    },
+    {
+      "type": "repeat",
+      "id": "quality-loop",
+      "maxIterations": 3,
+      "onMaxIterations": "pause",
+      "stopCondition": {
+        "fileCheck": {
+          "path": ".megafactory/state/quality.review.json",
+          "jsonPath": "$.loopStatus",
+          "value": "stop"
+        }
+      },
+      "steps": [
+        {
+          "type": "parallel",
+          "id": "fixes",
+          "joinPolicy": "allSettled",
+          "branches": [
+            {
+              "type": "sequence",
+              "id": "fixes-backend-seq",
+              "steps": [
+                {
+                  "type": "step",
+                  "id": "backend-fix",
+                  "agent": "sdlc-backend",
+                  "prompt": "Contexto:\n{{init.output}}\nRol: backend. Modo: fix.\nCorrige los hallazgos del QualityReport asignados a backend."
+                },
+                {
+                  "type": "step",
+                  "id": "integrations-fix",
+                  "agent": "sdlc-integrations",
+                  "prompt": "Contexto:\n{{init.output}}\nRol: integrations. Modo: fix.\nCorrige los hallazgos asignados a integrations."
+                }
+              ]
+            },
+            {
+              "type": "step",
+              "id": "frontend-fix",
+              "agent": "sdlc-frontend",
+              "prompt": "Contexto:\n{{init.output}}\nRol: frontend. Modo: fix.\nCorrige los hallazgos asignados a frontend."
+            },
+            {
+              "type": "step",
+              "id": "domain-rules-fix",
+              "agent": "sdlc-domain-rules",
+              "prompt": "Contexto:\n{{init.output}}\nRol: domain-rules. Modo: fix.\nCorrige los hallazgos asignados a domain-rules."
+            },
+            {
+              "type": "step",
+              "id": "data-modeler-fix",
+              "agent": "sdlc-data-modeler",
+              "prompt": "Contexto:\n{{init.output}}\nRol: data-modeler. Modo: fix.\nCorrige los hallazgos asignados a data-modeler."
+            },
+            {
+              "type": "step",
+              "id": "tech-writer-fix",
+              "agent": "sdlc-tech-writer",
+              "prompt": "Contexto:\n{{init.output}}\nRol: tech-writer. Modo: fix.\nCorrige los hallazgos de documentación."
+            }
+          ]
+        },
+        {
+          "type": "sequence",
+          "id": "gates",
+          "steps": [
+            {
+              "type": "step",
+              "id": "qa-e2e",
+              "agent": "sdlc-qa-e2e",
+              "prompt": "Contexto:\n{{init.output}}\nRol: qa-e2e. Modo: gate.\nEjecuta las specs e2e (etiquetas @EC-xxx) y produce quality-report:qa. Puede escribir specs en la carpeta e2e que permite su perfil de permisos."
+            },
+            {
+              "type": "parallel",
+              "id": "static-gates",
+              "joinPolicy": "allSettled",
+              "branches": [
+                {
+                  "type": "step",
+                  "id": "peer-review",
+                  "agent": "sdlc-peer-reviewer",
+                  "prompt": "Contexto:\n{{init.output}}\nRol: peer-reviewer. Modo: gate.\nRevisa el código y las specs nuevas y produce quality-report:peer. No escribe código."
+                },
+                {
+                  "type": "step",
+                  "id": "security-audit",
+                  "agent": "sdlc-security-auditor",
+                  "prompt": "Contexto:\n{{init.output}}\nRol: security-auditor. Modo: gate.\nAudita OWASP, PII y secretos y produce quality-report:security. No escribe código."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "step",
+          "id": "quality-review",
+          "agent": "sdlc-artifact-reviewer",
+          "prompt": "Contexto:\n{{init.output}}\nRol: artifact-reviewer. Modo: verdict. Bucle: quality.review. Consolida los quality-report, produce QualityVerdict y ejecuta loop verdict."
+        }
+      ]
+    },
+    {
+      "type": "step",
+      "id": "gate-quality",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: gate. Fase: quality. Cierra corrida: sí.\nSi falla, pausa con razones y opciones; al reanudar reevalúa. Siempre termina con run finish (ok o failed) y la lección."
+    }
+  ]
+}

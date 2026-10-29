@@ -1,0 +1,76 @@
+{
+  "feature": "ejemplo-servicio",
+  "decisionClass": "postmortem",
+  "reserved": false,
+  "summary": "El servicio de reservas consumió el 70 % del presupuesto de error en la primera mitad de la ventana; se recomienda aceptar el postmortem del corte de pagos y priorizar dos acciones de confiabilidad.",
+  "options": [
+    {
+      "id": "O1",
+      "title": "Aceptar y priorizar confiabilidad",
+      "pros": [
+        "Recupera margen"
+      ],
+      "cons": [
+        "Retrasa una mejora de producto"
+      ]
+    },
+    {
+      "id": "O2",
+      "title": "Pedir más acciones al SRE",
+      "pros": [
+        "Menor riesgo residual"
+      ],
+      "cons": [
+        "Cierre más lento"
+      ]
+    }
+  ],
+  "recommendation": {
+    "option": "O1",
+    "rationale": "Las acciones cubren la causa contribuyente y el riesgo residual es medio."
+  },
+  "risks": [
+    {
+      "id": "R1",
+      "description": "Una dependencia de pagos compromete menos que el SLA",
+      "likelihood": "medium",
+      "impact": "high",
+      "mitigation": "Documentar exclusión y revisar con quien gestiona el proveedor"
+    }
+  ],
+  "service": "reservas",
+  "catalogEntry": [
+    {
+      "attribute": "horario-soporte",
+      "value": "lunes a domingo, guardia por rol"
+    }
+  ],
+  "slaTargets": [
+    {
+      "indicator": "disponibilidad del checkout",
+      "sloTarget": "99.9 %",
+      "slaTarget": "99.5 %",
+      "window": "30 días"
+    }
+  ],
+  "errorBudgetStatus": "at-risk",
+  "residualRisk": "medium",
+  "improvementOrder": [
+    "A1 reintentos idempotentes hacia pagos",
+    "A2 alerta temprana de latencia"
+  ],
+  "approvalPath": {
+    "approver": "agent:operations-lead",
+    "command": "node .megafactory/bin/factory.mjs delegated-approve --feature ejemplo-servicio --what postmortem:pagos --by agent:operations-lead --role operations-lead --agent sdlc-operations-lead"
+  },
+  "actions": [
+    {
+      "id": "A1",
+      "title": "Reintentos idempotentes hacia pagos",
+      "entryType": "change",
+      "owner": "backend",
+      "due": "2027-01-31",
+      "changeClassHint": "normal"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "feature": "ejemplo-feature",
+  "bia": "La consulta de préstamos es crítica en horario de atención; una hora sin servicio detiene los mostradores.",
+  "services": [
+    {
+      "name": "reference-web",
+      "rtoMinutes": 60,
+      "rpoMinutes": 5,
+      "strategy": "Réplica de la base en otra zona con conmutación automática y respaldos cada 5 minutos."
+    }
+  ],
+  "methods": [
+    {
+      "method": "pre-mortem",
+      "trigger": null,
+      "actors": [
+        "resilience-engineer"
+      ],
+      "data": {
+        "failureStories": [
+          "Historia de falla 1",
+          "Historia de falla 2",
+          "Historia de falla 3"
+        ]
+      },
+      "lessons": [],
+      "actions": []
+    },
+    {
+      "method": "fmea",
+      "trigger": null,
+      "actors": [
+        "resilience-engineer"
+      ],
+      "data": {
+        "rows": [
+          {
+            "mode": "Modo de falla",
+            "effect": "Efecto",
+            "cause": "Causa",
+            "s": 5,
+            "o": 4,
+            "d": 6,
+            "rpn": 120,
+            "action": "Mitigación con dueño"
+          }
+        ]
+      },
+      "lessons": [],
+      "actions": []
+    },
+    {
+      "method": "fault-tree",
+      "trigger": null,
+      "actors": [
+        "resilience-engineer"
+      ],
+      "data": {
+        "topEvent": "El servicio no responde",
+        "mermaid": "graph TD; A[Servicio caído] --> B[Base de datos caída]; A --> C[Despliegue fallido]"
+      },
+      "lessons": [],
+      "actions": []
+    }
+  ]
+}

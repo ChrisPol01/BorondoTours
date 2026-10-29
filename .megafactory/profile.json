@@ -1,0 +1,682 @@
+{
+  "schemaVersion": 2,
+  "profileDoc": "Perfil del proyecto para la fábrica SDLC. Captura TODO lo específico de un repo (stack, rutas, comandos, normativa, steering y MCP) para que el motor de la fábrica (bus, CLI, agentes, recetas) sea neutro y portable. El esquema completo está documentado en .kiro/factory/PORTING.md §Esquema. Para adaptar la fábrica a otro repo, reemplaza este archivo con los valores del repo nuevo (ver ADAPT-PROMPT.md).",
+  "project": {
+    "name": "BorondoTours",
+    "slug": "borondotours",
+    "description": "Marketplace gestionado B2C de tours en Colombia: descubrir, reservar y pagar tours de operadores locales.",
+    "repoKind": "monorepo",
+    "primaryLanguage": "TypeScript",
+    "runtimeNode": ">=22",
+    "packageManager": "pnpm@9.15.0",
+    "monorepoTool": "turborepo",
+    "defaultBranchPrefix": "feat/",
+    "commitConvention": "Conventional Commits"
+  },
+  "packs": [
+    "core",
+    "web-app",
+    "ops-day2"
+  ],
+  "naming": {
+    "recipePrefix": "bt-factory",
+    "steeringFile": "factory-agents.md",
+    "contextSteeringFile": "factory-context.md"
+  },
+  "stack": {
+    "frontend": [
+      "Astro",
+      "@astrojs/react",
+      "React 19",
+      "Tailwind 4",
+      "TanStack Query",
+      "Nanostores",
+      "Mapbox GL",
+      "i18next",
+      "DOMPurify"
+    ],
+    "backend": [
+      "Hono sobre Bun",
+      "Lambda Web Adapter",
+      "Zod"
+    ],
+    "data": [
+      "Drizzle",
+      "PostgreSQL 16",
+      "PostGIS",
+      "pg_trgm",
+      "RDS Proxy",
+      "DynamoDB (chat, contadores TTL)"
+    ],
+    "cloud": [
+      "AWS us-east-1 serverless",
+      "Lambda",
+      "API Gateway",
+      "EventBridge",
+      "SQS",
+      "Step Functions",
+      "S3",
+      "CloudFront",
+      "SES",
+      "Secrets Manager"
+    ],
+    "iac": [
+      "SAM (infra/template.yaml)",
+      "CDK (infra/lib)"
+    ],
+    "payments": [
+      "OnePay.la",
+      "Siigo (F2)"
+    ],
+    "testFrameworks": {
+      "unit": "vitest",
+      "e2e": "Playwright",
+      "factory": "node:test"
+    },
+    "excluded": [
+      "NestJS",
+      "Vite SPA",
+      "ECS",
+      "Kubernetes",
+      "Redis",
+      "BullMQ",
+      "Socket.io"
+    ],
+    "cloudProviders": [
+      "aws"
+    ],
+    "cloudRegions": [
+      "us-east-1"
+    ]
+  },
+  "paths": {
+    "apps": [
+      "apps/web",
+      "apps/erp",
+      "apps/b2b"
+    ],
+    "services": [
+      "services/1-core",
+      "services/2-tours",
+      "services/3-bookings",
+      "services/4-payments",
+      "services/5-operators",
+      "services/6-notifications",
+      "services/7-chat",
+      "services/8-jobs",
+      "services/9-ads"
+    ],
+    "packages": [
+      "packages/contracts",
+      "packages/domain",
+      "packages/db",
+      "packages/ui"
+    ],
+    "infra": [
+      "infra/"
+    ],
+    "docs": "docs/",
+    "specs": ".kiro/specs/",
+    "sharedCodePaths": [
+      "packages/ui/src/",
+      "packages/contracts/src/",
+      "packages/domain/src/"
+    ],
+    "e2eExtras": [
+      "apps/web/e2e/"
+    ],
+    "appRoots": [
+      "apps/web/",
+      "apps/erp/",
+      "apps/b2b/",
+      "apps/",
+      "services/",
+      "packages/"
+    ],
+    "iac": [
+      "infra/"
+    ],
+    "fingerprintExclude": [
+      ".astro"
+    ]
+  },
+  "layers": {
+    "api": {
+      "paths": [
+        "packages/contracts/src/"
+      ]
+    },
+    "data": {
+      "paths": [
+        "packages/db/src/",
+        "packages/db/drizzle/"
+      ]
+    },
+    "domain-finance": {
+      "paths": [
+        "packages/domain/src/"
+      ]
+    },
+    "ui": {
+      "paths": [
+        "packages/ui/src/",
+        "apps/web/e2e/",
+        "apps/web/src/lib/i18n/",
+        "apps/web/src/lib/fig/",
+        "apps/web/src/styles/",
+        "apps/web/src/lib/api/mocks/",
+        "apps/web/test/",
+        "apps/web/tests/"
+      ]
+    },
+    "content-seo": {
+      "paths": [
+        "apps/web/src/lib/i18n/"
+      ]
+    },
+    "integrations": {
+      "paths": []
+    },
+    "infra": {
+      "paths": [
+        "infra/"
+      ]
+    }
+  },
+  "commands": {
+    "note": "Se leen de package.json; si difieren, manda package.json. NUNCA el script 'test' de apps/web (vitest watch, cuelga): usar 'test:run'. No encadenar; un pnpm --filter por script.",
+    "install": "pnpm install",
+    "build": "pnpm --filter <pkg> run build",
+    "lint": "pnpm --filter <pkg> run lint",
+    "typecheck": "pnpm --filter <pkg> run typecheck",
+    "testRun": "pnpm --filter <pkg> run test:run",
+    "testCoverage": "pnpm --filter <pkg> run test:coverage",
+    "e2e": "pnpm --filter @borondo/web run test:e2e",
+    "webPackage": "@borondo/web",
+    "uiPackage": "@borondo/ui",
+    "verificationNote": "Línea base del producto (comparar antes/después): pnpm typecheck; pnpm --filter @borondo/web run lint; pnpm --filter @borondo/web run test:run; pnpm --filter @borondo/ui run test. NO pnpm lint/test de la raíz (fallan por #27/#28).",
+    "available": {
+      "eslintOutsideWeb": false,
+      "coverageThreshold": false,
+      "drizzleConfig": false
+    }
+  },
+  "permissions": {
+    "base": {
+      "shellDenyExtra": [
+        "pnpm factory*",
+        "pnpm run factory*",
+        "pnpm infra:deploy*",
+        "cdk *",
+        "npx cdk*",
+        "pnpm cdk*",
+        "pnpm exec cdk*",
+        "pnpm db:migrate*",
+        "pnpm --filter @borondo/db run migrate*",
+        "pnpm --filter @borondo/db migrate*",
+        "pnpm --filter @borondo/db run seed*",
+        "drizzle-kit push*",
+        "drizzle-kit migrate*"
+      ],
+      "fsWriteDenyExtra": [
+        "pnpm-workspace.yaml",
+        "turbo.json",
+        "docs/.obsidian/**",
+        "docs/02-ADRs/ADR-012*"
+      ]
+    },
+    "contract": {
+      "fsWrite": [
+        "packages/contracts/**"
+      ],
+      "shellAllow": [
+        "pnpm --filter @borondo/contracts run lint",
+        "pnpm --filter @borondo/contracts run typecheck",
+        "pnpm --filter @borondo/contracts run test",
+        "pnpm --filter @borondo/contracts exec vitest run*"
+      ],
+      "shellAsk": [
+        "pnpm add*",
+        "pnpm install*",
+        "pnpm remove*"
+      ]
+    },
+    "developer": {
+      "fsWrite": [
+        "apps/**",
+        "services/**",
+        "packages/**",
+        "docs/**"
+      ],
+      "shellAllow": [
+        "pnpm --filter * run lint",
+        "pnpm --filter * run typecheck",
+        "pnpm --filter * run test",
+        "pnpm --filter * run test:run",
+        "pnpm --filter * run test:coverage",
+        "pnpm --filter * run build",
+        "pnpm --filter @borondo/db run generate",
+        "pnpm --filter * exec vitest run*",
+        "pnpm --filter * exec eslint *",
+        "pnpm audit*",
+        "pnpm --filter @borondo/web run test:e2e*"
+      ],
+      "shellAsk": [
+        "pnpm add*",
+        "pnpm install*",
+        "pnpm remove*",
+        "docker compose*"
+      ],
+      "shellDeny": [
+        "pnpm --filter @borondo/web run test"
+      ]
+    },
+    "writer": {
+      "fsWrite": [
+        "docs/**"
+      ],
+      "fsWriteDeny": [
+        "docs/03-Knowledge/Modelo-Datos-Core.md"
+      ]
+    },
+    "auditor": {
+      "shellAllow": [
+        "pnpm --filter * run lint",
+        "pnpm --filter * run typecheck",
+        "pnpm --filter * run test",
+        "pnpm --filter * run test:run",
+        "pnpm --filter * run test:coverage",
+        "pnpm --filter * exec vitest run*",
+        "pnpm --filter * exec eslint *",
+        "pnpm audit*"
+      ],
+      "shellAsk": [
+        "docker compose*"
+      ],
+      "shellDeny": [
+        "pnpm --filter @borondo/web run test"
+      ]
+    },
+    "ops": {
+      "fsWrite": [
+        "infra/**",
+        "docs/06-Operaciones/**"
+      ],
+      "fsWriteDeny": [
+        "infra/lib/**"
+      ],
+      "shellAllow": [
+        "sam validate*",
+        "sam build*",
+        "pnpm infra:build",
+        "cfn-lint *",
+        "cfn-guard *"
+      ],
+      "shellAsk": [
+        "sam deploy --config-env default --template-file infra/template.yaml --profile AdministratorAccess-232025404765 --no-confirm-changeset",
+        "aws * --profile AdministratorAccess-232025404765*",
+        "aws sso login --profile AdministratorAccess-232025404765"
+      ]
+    }
+  },
+  "conventions": {
+    "api": {
+      "extensionPrefix": "x-bt",
+      "pathPrefix": "/api/v1/",
+      "openapiVersions": [
+        "3.1"
+      ]
+    },
+    "data": {
+      "namingRegex": "^[a-z][a-z0-9_]*$",
+      "pkType": "uuid",
+      "forbiddenColumns": [
+        "deleted_at",
+        "is_deleted"
+      ],
+      "financialAuditColumn": "created_by",
+      "tenantColumn": "operator_id"
+    },
+    "security": {
+      "forbidCardData": true,
+      "requirePciScope": true
+    },
+    "blockPrefix": "bt",
+    "actors": [
+      "SUPER_ADMIN",
+      "GERENTE",
+      "AGENT",
+      "COORD",
+      "CLIENT",
+      "OPERATOR_ADMIN",
+      "OPERATOR_COORD",
+      "OPERATOR_AGENT",
+      "OPERATOR_GUIDE",
+      "OPERATOR_DRIVER",
+      "ANONYMOUS"
+    ],
+    "docs": {
+      "specRefPattern": "^docs/01-Specs/Spec-[A-L]-[^#]+\\.md(#RF-[A-L]\\d{2}[a-z]?)?$",
+      "specRefExample": "docs/01-Specs/Spec-C-Checkout.md#RF-C06b"
+    },
+    "finance": {
+      "currency": "USD"
+    },
+    "release": {
+      "iacTools": [
+        "sam"
+      ]
+    }
+  },
+  "compliance": {
+    "jurisdiction": "Colombia",
+    "frameworks": [
+      {
+        "id": "ley-1581-2012",
+        "name": "Ley 1581 de 2012 (habeas data / protección de datos personales)"
+      },
+      {
+        "id": "decreto-1377-2013",
+        "name": "Decreto 1377 de 2013 (reglamenta la Ley 1581)"
+      },
+      {
+        "id": "ley-1480",
+        "name": "Ley 1480 (Estatuto del Consumidor: retracto)"
+      },
+      {
+        "id": "ley-2300",
+        "name": "Ley 2300 (contacto con el consumidor)"
+      },
+      {
+        "id": "dian",
+        "name": "DIAN / facturación electrónica (Siigo)"
+      },
+      {
+        "id": "pci-dss",
+        "name": "PCI DSS (sin almacenar datos de tarjeta; OnePay.la tokeniza)"
+      },
+      {
+        "id": "wcag-2.2-aa",
+        "name": "Accesibilidad WCAG 2.2 AA (incluye 2.1)"
+      }
+    ],
+    "referenceOnly": [
+      "GDPR",
+      "CCPA",
+      "SOC 2",
+      "ISO 27701"
+    ],
+    "piiRules": "Sin PII ni secretos en logs, URLs, errores ni en el bus. Pasaporte de extranjeros en S3 privado (5 años). HTML del backend solo vía SafeHtml/DOMPurify.",
+    "frameworkCodes": [
+      "LEY_1581",
+      "DEC_1377",
+      "LEY_1480",
+      "LEY_2300",
+      "DIAN",
+      "PCI_DSS",
+      "GDPR",
+      "CCPA",
+      "SOC2",
+      "ISO27701",
+      "WCAG22"
+    ],
+    "extraControls": [
+      "invoice",
+      "marketing_hours",
+      "rnbd"
+    ]
+  },
+  "integrations": {
+    "providers": [
+      "onepay",
+      "siigo",
+      "ses",
+      "mapbox",
+      "google-oauth"
+    ]
+  },
+  "steering": {
+    "common": [
+      "00-documentation-map",
+      "01-project-identity",
+      "02-tech-stack",
+      "03-workflow",
+      "04-coding-standards",
+      "05-business-rules",
+      "06-quality-gates",
+      "16-comandos-y-entorno",
+      "17-estado-del-proyecto",
+      "18-kit-componentes"
+    ],
+    "byRole": {
+      "artifact-reviewer": [
+        "07-legal-compliance"
+      ],
+      "backend": [
+        "07-legal-compliance"
+      ],
+      "business-analyst": [
+        "07-legal-compliance"
+      ],
+      "compliance-officer": [
+        "07-legal-compliance"
+      ],
+      "content-seo": [
+        "12-brand-identity",
+        "15-frontend-ux"
+      ],
+      "data-modeler": [
+        "07-legal-compliance"
+      ],
+      "devops-sre": [
+        "10-aws-multi-account-sso"
+      ],
+      "domain-rules": [
+        "07-legal-compliance"
+      ],
+      "finops": [
+        "10-aws-multi-account-sso",
+        "11-inventario-tecnico-aws"
+      ],
+      "frontend": [
+        "12-brand-identity",
+        "15-frontend-ux"
+      ],
+      "integrations": [
+        "07-legal-compliance",
+        "10-aws-multi-account-sso"
+      ],
+      "peer-reviewer": [
+        "15-frontend-ux"
+      ],
+      "qa-e2e": [
+        "15-frontend-ux"
+      ],
+      "release-manager": [
+        "10-aws-multi-account-sso"
+      ],
+      "security-architect": [
+        "07-legal-compliance",
+        "10-aws-multi-account-sso"
+      ],
+      "security-auditor": [
+        "07-legal-compliance",
+        "10-aws-multi-account-sso"
+      ],
+      "solutions-architect": [
+        "10-aws-multi-account-sso",
+        "11-inventario-tecnico-aws"
+      ],
+      "uiux-a11y": [
+        "12-brand-identity",
+        "13-figma-bridge-safety",
+        "15-frontend-ux"
+      ]
+    }
+  },
+  "skills": {
+    "overlays": {
+      "api-contract": [
+        "bt-api-contract-openapi",
+        "bt-verification-loop"
+      ],
+      "backend": [
+        "bt-hono-backend",
+        "bt-tdd-vitest",
+        "bt-drizzle-postgres",
+        "bt-security-review",
+        "bt-verification-loop",
+        "bt-search-first"
+      ],
+      "content-seo": [
+        "bt-astro-frontend"
+      ],
+      "data-modeler": [
+        "bt-drizzle-postgres",
+        "bt-verification-loop"
+      ],
+      "devops-sre": [
+        "bt-verification-loop"
+      ],
+      "domain-rules": [
+        "bt-tdd-vitest",
+        "bt-verification-loop"
+      ],
+      "frontend": [
+        "bt-astro-frontend",
+        "bt-tdd-vitest",
+        "bt-e2e-playwright",
+        "bt-verification-loop",
+        "bt-search-first",
+        "apple-design"
+      ],
+      "integrations": [
+        "bt-hono-backend",
+        "bt-security-review",
+        "bt-tdd-vitest",
+        "bt-verification-loop"
+      ],
+      "peer-reviewer": [
+        "bt-verification-loop",
+        "bt-hono-backend",
+        "bt-astro-frontend"
+      ],
+      "qa-e2e": [
+        "bt-e2e-playwright",
+        "bt-verification-loop"
+      ],
+      "security-architect": [
+        "bt-threat-modeling-stride",
+        "bt-security-review"
+      ],
+      "security-auditor": [
+        "bt-security-review",
+        "bt-verification-loop"
+      ],
+      "uiux-a11y": [
+        "bt-astro-frontend",
+        "apple-design"
+      ]
+    }
+  },
+  "projectAgents": [
+    {
+      "name": "figma-sync",
+      "noInbox": true,
+      "invokedBy": [
+        "uiux-a11y"
+      ]
+    }
+  ],
+  "mcp": {
+    "providedAvailable": [
+      "figma-bridge",
+      "power-postman-postman",
+      "power-saas-builder-aws-knowledge-mcp-server",
+      "power-saas-builder-awslabs.aws-serverless-mcp",
+      "power-saas-builder-playwright",
+      "power-cloud-architect-awspricing",
+      "power-cloud-architect-awsapi",
+      "power-cloud-architect-context7",
+      "power-aws-agentcore-agentcore-mcp-server",
+      "obsidiandos",
+      "mcp-obsidian"
+    ],
+    "providedExtra": [
+      {
+        "name": "clickup",
+        "capability": null
+      },
+      {
+        "name": "playwright",
+        "capability": null
+      },
+      {
+        "name": "google_workspace-gfourmis",
+        "capability": null
+      },
+      {
+        "name": "github-mcp-servergf",
+        "capability": null
+      },
+      {
+        "name": "aws-mcp",
+        "capability": null
+      }
+    ],
+    "note": "Solo nombres de servidores (de ~/.kiro/settings/mcp.json). Nunca env ni args. 'available' no implica tier B operativo (ver V2)."
+  },
+  "productionGuard": {
+    "note": "Producción solo humana (steering 10). La base de permisos niega perfiles de prod/root y despliegues fuera de dev.",
+    "devCloudProfiles": [
+      "AdministratorAccess-232025404765"
+    ],
+    "deniedAwsAccounts": [
+      "787565887675",
+      "461299757352"
+    ],
+    "humanOnlyCommands": [
+      "approve",
+      "waive",
+      "feature --status",
+      "dispute resolve --by human:",
+      "verify --rechain",
+      "run start --takeover",
+      "pnpm factory*"
+    ]
+  },
+  "openDecisions": {
+    "note": "No se resuelven en la fábrica; ver docs/DECISIONES-PENDIENTES.md.",
+    "ids": [
+      "#1 Hono vs NestJS",
+      "#2 Astro vs Vite",
+      "#15 SAM vs CDK",
+      "#16-#32 propuestas de la fábrica"
+    ]
+  },
+  "factory": {
+    "test": "pnpm factory:test",
+    "typecheck": "pnpm factory:typecheck",
+    "registryCheck": "node .kiro/factory/scripts/factory.mjs registry check",
+    "cli": "node .kiro/factory/scripts/factory.mjs"
+  },
+  "migration": {
+    "from": "v0",
+    "at": "2026-10-28T21:43:52.158Z",
+    "unmapped": {},
+    "droppedResources": [
+      {
+        "resource": "file://.kiro/steering/11-aws-inventario.md",
+        "from": [
+          "sdlc-devops-sre",
+          "sdlc-release-manager"
+        ]
+      }
+    ],
+    "localContextSteering": [
+      "00-documentation-map.md",
+      "17-estado-del-proyecto.md",
+      "20-fabrica-sdlc-contexto.md"
+    ]
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 2,
+  "factory": {
+    "name": "megafabrica-sdlc",
+    "version": "1.0.0",
+    "commit": "dd052c1191818b9a53e9143642b9463fbfc2fabf",
+    "ref": null,
+    "contentHash": "sha256:34f7870b1efb0bb0a4d2d193359be2d27035e4ecf2956bb3abc14c17bcf605d2",
+    "dirty": false,
+    "remote": null
+  },
+  "packs": [
+    "core",
+    "web-app",
+    "ops-day2"
+  ],
+  "tools": [
+    "agents-md",
+    "kiro"
+  ],
+  "profileHash": "sha256:f31e3459bcf056c9af9509e96bdcee0b0251addc45c2f4c405624ba1598234e4",
+  "migratedFrom": "v0-borondotours-2026-10-12",
+  "linkedAt": "2026-10-28T21:43:53.098Z",
+  "updatedAt": "2026-10-28T22:52:35.609Z",
+  "history": [
+    {
+      "at": "2026-10-28T21:43:53.098Z",
+      "action": "migrate",
+      "fromCommit": null,
+      "toCommit": "a57ec5c",
+      "conflicts": 2
+    },
+    {
+      "at": "2026-10-28T22:52:35.609Z",
+      "action": "update",
+      "fromCommit": "a57ec5c",
+      "toCommit": "dd052c1",
+      "conflicts": 0
+    }
+  ]
+}

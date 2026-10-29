@@ -1,0 +1,17 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Factory Test Observer",
+      "description": "Observador de pruebas (brief §12.3): tras cada comando del shell, factory.mjs observe --stdin registra en .megafactory/activities/ el resumen de las verificaciones (tests, lint, typecheck, registry check, verify: comando, exit, conteos e ids de tests fallidos, sin PII) y, si fallan, en .megafactory/findings/; un fallo repetido abre 5 porqués. Nace deshabilitado; se activa con profile.kit.observer.enabled. El nombre del disparador PostToolUse y el formato del stdin de Kiro están NO VERIFICADOS.",
+      "trigger": "PostToolUse",
+      "matcher": "shell",
+      "action": {
+        "type": "command",
+        "command": "node .megafactory/bin/factory.mjs observe --stdin"
+      },
+      "timeout": 10,
+      "enabled": false
+    }
+  ]
+}

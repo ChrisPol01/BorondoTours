@@ -1,0 +1,13 @@
+{
+  "feature": "ejemplo-feature",
+  "period": "2026-11",
+  "services": [
+    "reference-web"
+  ],
+  "checks": [
+    "slo",
+    "cost",
+    "security",
+    "agentops"
+  ]
+}

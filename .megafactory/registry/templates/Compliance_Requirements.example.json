@@ -1,0 +1,43 @@
+{
+  "feature": "ejemplo-feature",
+  "dataInventory": [
+    {
+      "id": "DI-01",
+      "element": "correo de la persona usuaria",
+      "category": "contact",
+      "purpose": "Confirmar la devolución registrada",
+      "legalBasis": "contract",
+      "consent": "none",
+      "retentionDays": 1825,
+      "retentionSource": "Política de datos del proyecto",
+      "storage": "base de datos relacional",
+      "encryptedAtRest": true,
+      "internationalTransfer": false
+    }
+  ],
+  "requirements": [
+    {
+      "id": "CR-001",
+      "framework": "LEY_1581",
+      "applicability": "mandatory",
+      "reference": "Principio de minimización",
+      "requirement": "Guardar solo el correo necesario para confirmar la devolución",
+      "control": "minimization",
+      "dataRefs": [
+        "DI-01"
+      ],
+      "acceptanceCriteria": [
+        "Solo se guarda el correo necesario"
+      ],
+      "ownerRole": "api-contract",
+      "verification": "review"
+    }
+  ],
+  "pciScope": {
+    "tokenizedBy": "onepay",
+    "cardDataTouches": false,
+    "targetSaq": "SAQ-A",
+    "notes": "Sin datos de tarjeta en el sistema"
+  },
+  "openIssues": []
+}

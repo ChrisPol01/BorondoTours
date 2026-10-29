@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Matriz de controles (ControlMatrix.json, §9.1)",
+  "type": "object",
+  "required": [
+    "feature",
+    "framework",
+    "controls"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "feature": {
+      "type": "string"
+    },
+    "framework": {
+      "type": "string",
+      "maxLength": 60
+    },
+    "controls": {
+      "type": "array",
+      "maxItems": 200,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "description",
+          "owner",
+          "evidenceExpected"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 40
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "owner": {
+            "type": "string",
+            "maxLength": 60
+          },
+          "evidenceExpected": {
+            "type": "string",
+            "maxLength": 500
+          }
+        }
+      }
+    }
+  }
+}

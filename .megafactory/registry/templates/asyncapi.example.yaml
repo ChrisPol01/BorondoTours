@@ -1,0 +1,27 @@
+asyncapi: 3.0.0
+info:
+  title: Eventos de préstamos (ejemplo)
+  version: 1.0.0
+  description: Eventos que publica el servicio de préstamos cuando cambia el estado de un préstamo.
+channels:
+  loanReturned:
+    address: loans.returned
+    messages:
+      loanReturned:
+        payload:
+          type: object
+          required:
+            - loanId
+            - returnedAt
+          properties:
+            loanId:
+              type: string
+              format: uuid
+            returnedAt:
+              type: string
+              format: date-time
+operations:
+  publishLoanReturned:
+    action: send
+    channel:
+      $ref: '#/channels/loanReturned'

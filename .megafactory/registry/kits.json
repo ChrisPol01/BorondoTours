@@ -1,0 +1,4688 @@
+{
+  "schemaVersion": 1,
+  "areas": {
+    "architecture": {
+      "lead": "architecture-lead",
+      "level": "team",
+      "members": [
+        "api-contract",
+        "data-modeler",
+        "domain-rules",
+        "integrations",
+        "solutions-architect"
+      ],
+      "mcp": [
+        "m:library-docs",
+        "m:aws-docs"
+      ],
+      "skills": [
+        "sdlc-cloud-foundations",
+        "sdlc-search-first"
+      ],
+      "tools": [
+        "markitdown",
+        "mermaid-cli",
+        "spectral"
+      ],
+      "methods": [
+        "five-whys",
+        "blameless-postmortem",
+        "adr",
+        "pre-mortem",
+        "fmea",
+        "cynefin",
+        "event-storming",
+        "rice-wsjf"
+      ]
+    },
+    "engineering": {
+      "lead": "engineering-lead",
+      "level": "team",
+      "members": [
+        "backend",
+        "content-seo",
+        "engineering-manager",
+        "frontend",
+        "uiux-a11y"
+      ],
+      "mcp": [
+        "m:library-docs"
+      ],
+      "skills": [
+        "sdlc-tdd",
+        "sdlc-verification-loop",
+        "sdlc-search-first"
+      ],
+      "tools": [
+        "gitleaks",
+        "semgrep",
+        "playwright"
+      ],
+      "methods": [
+        "five-whys",
+        "blameless-postmortem",
+        "ishikawa",
+        "kaizen",
+        "retrospective",
+        "definition-ready-done",
+        "event-storming",
+        "lean-wastes"
+      ]
+    },
+    "operations": {
+      "lead": "operations-lead",
+      "level": "team",
+      "members": [
+        "on-call-engineer",
+        "resilience-engineer",
+        "service-desk-l1",
+        "service-owner",
+        "sre",
+        "support-l2"
+      ],
+      "mcp": [
+        "m:cloudwatch",
+        "m:aws-appsignals"
+      ],
+      "skills": [
+        "sdlc-cloud-foundations",
+        "sdlc-incident-problem"
+      ],
+      "tools": [
+        "promtool",
+        "jq"
+      ],
+      "methods": [
+        "blameless-postmortem",
+        "five-whys",
+        "ishikawa",
+        "fault-tree",
+        "fmea",
+        "pdca",
+        "kaizen",
+        "aar"
+      ]
+    },
+    "orchestration": {
+      "lead": null,
+      "level": "high",
+      "members": [
+        "artifact-reviewer",
+        "conductor",
+        "cto"
+      ],
+      "mcp": [],
+      "skills": [],
+      "tools": [
+        "gh",
+        "jq"
+      ],
+      "methods": [
+        "five-whys",
+        "retrospective",
+        "aar",
+        "pdca",
+        "a3",
+        "theory-of-constraints",
+        "cynefin",
+        "definition-ready-done"
+      ]
+    },
+    "platform": {
+      "lead": "platform-lead",
+      "level": "team",
+      "members": [
+        "dba-prod",
+        "devops-sre",
+        "finops",
+        "release-manager"
+      ],
+      "mcp": [
+        "m:aws-iac",
+        "m:cloudwatch",
+        "m:aws-billing-pricing"
+      ],
+      "skills": [
+        "sdlc-cloud-foundations",
+        "sdlc-iac-change"
+      ],
+      "tools": [
+        "tflint",
+        "checkov",
+        "conftest",
+        "cfn-lint",
+        "cfn-guard",
+        "infracost",
+        "actionlint",
+        "kubeconform",
+        "hadolint",
+        "trivy"
+      ],
+      "methods": [
+        "five-whys",
+        "blameless-postmortem",
+        "pre-mortem",
+        "fmea",
+        "pdca",
+        "kaizen",
+        "value-stream-map",
+        "lean-wastes"
+      ]
+    },
+    "product": {
+      "lead": "product-lead",
+      "level": "team",
+      "members": [
+        "business-analyst",
+        "product-manager",
+        "tech-writer"
+      ],
+      "mcp": [
+        "m:obsidian",
+        "m:issue-tracker"
+      ],
+      "skills": [
+        "sdlc-requirements-prd"
+      ],
+      "tools": [
+        "markitdown",
+        "vale"
+      ],
+      "methods": [
+        "five-whys",
+        "blameless-postmortem",
+        "pre-mortem",
+        "a3",
+        "retrospective",
+        "impact-mapping",
+        "rice-wsjf",
+        "design-thinking"
+      ]
+    },
+    "quality": {
+      "lead": "quality-lead",
+      "level": "team",
+      "members": [
+        "peer-reviewer",
+        "qa-e2e"
+      ],
+      "mcp": [
+        "m:playwright",
+        "m:browser-devtools"
+      ],
+      "skills": [
+        "sdlc-verification-loop",
+        "sdlc-edge-cases"
+      ],
+      "tools": [
+        "playwright",
+        "axe-core-cli"
+      ],
+      "methods": [
+        "five-whys",
+        "blameless-postmortem",
+        "ishikawa",
+        "aar",
+        "fmea",
+        "definition-ready-done",
+        "dmaic",
+        "theory-of-constraints"
+      ]
+    },
+    "security": {
+      "lead": "security-lead",
+      "level": "team",
+      "members": [
+        "compliance-officer",
+        "dpo",
+        "security-architect",
+        "security-auditor"
+      ],
+      "mcp": [
+        "m:aws-docs",
+        "m:cloud-posture",
+        "m:aws-wa-security"
+      ],
+      "skills": [
+        "sdlc-cloud-foundations",
+        "sdlc-security-review"
+      ],
+      "tools": [
+        "markitdown",
+        "semgrep",
+        "gitleaks",
+        "osv-scanner",
+        "trivy",
+        "syft",
+        "checkov"
+      ],
+      "methods": [
+        "five-whys",
+        "ishikawa",
+        "fmea",
+        "pre-mortem",
+        "blameless-postmortem",
+        "ooda"
+      ]
+    }
+  },
+  "roles": {
+    "api-contract": {
+      "area": "architecture",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-api-design"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations",
+          "sdlc-search-first",
+          "sdlc-verification-loop"
+        ],
+        "overlays": [
+          "bt-api-contract-openapi",
+          "bt-verification-loop"
+        ]
+      },
+      "mcp": {
+        "own": [
+          "m:aws-appsync",
+          "m:library-docs",
+          "m:openapi",
+          "m:postman"
+        ],
+        "area": [
+          "m:aws-docs"
+        ],
+        "selectors": [
+          "@power-cloud-architect-context7",
+          "@power-postman-postman"
+        ],
+        "areaSelectors": [
+          "@power-saas-builder-aws-knowledge-mcp-server"
+        ],
+        "unresolved": [
+          "m:aws-appsync",
+          "m:openapi"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "asyncapi-cli",
+          "markitdown",
+          "mermaid-cli",
+          "oasdiff",
+          "schemathesis",
+          "spectral"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:api-contract",
+          "area:architecture",
+          "project"
+        ],
+        "write": [
+          "role:api-contract",
+          "area:architecture"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "api-compatibility",
+            "ref": ".megafactory/core/library/skills/sdlc-api-design/references/compatibility-events.md",
+            "purpose": "Detectar cambios incompatibles y diseñar errores y eventos"
+          },
+          {
+            "id": "c4-model",
+            "ref": "https://c4model.com/",
+            "purpose": "Niveles de diagrama al describir la arquitectura de la solución"
+          },
+          {
+            "id": "adr",
+            "ref": "https://adr.github.io/",
+            "purpose": "Formato de las decisiones de arquitectura registradas"
+          },
+          {
+            "id": "openapi",
+            "ref": "https://spec.openapis.org/oas/latest.html",
+            "purpose": "Especificación de los contratos HTTP que se firman"
+          },
+          {
+            "id": "asyncapi",
+            "ref": "https://www.asyncapi.com/docs/reference/specification/latest",
+            "purpose": "Especificación de los contratos de eventos y mensajes"
+          },
+          {
+            "id": "aws-well-architected",
+            "ref": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html",
+            "purpose": "Pilares de buena arquitectura al revisar la solución en la nube"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "data-modeler",
+          "domain-rules",
+          "integrations",
+          "solutions-architect"
+        ],
+        "extraPeers": [
+          "backend",
+          "frontend"
+        ],
+        "escalation": [
+          "architecture-lead",
+          "artifact-reviewer"
+        ],
+        "humans": [],
+        "backup": "backend"
+      },
+      "methods": [
+        "adr",
+        "blameless-postmortem",
+        "cynefin",
+        "event-storming",
+        "five-whys",
+        "fmea",
+        "pre-mortem",
+        "rice-wsjf"
+      ],
+      "triggersOwned": []
+    },
+    "architecture-lead": {
+      "area": "architecture",
+      "level": "lead",
+      "skills": {
+        "own": [
+          "sdlc-architecture-supervision"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations",
+          "sdlc-search-first"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [],
+        "area": [
+          "m:aws-docs",
+          "m:library-docs"
+        ],
+        "selectors": [],
+        "areaSelectors": [
+          "@power-cloud-architect-context7",
+          "@power-saas-builder-aws-knowledge-mcp-server"
+        ],
+        "unresolved": []
+      },
+      "tools": {
+        "ids": [
+          "markitdown",
+          "mermaid-cli",
+          "spectral"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:architecture-lead",
+          "area:architecture",
+          "project"
+        ],
+        "write": [
+          "role:architecture-lead",
+          "area:architecture"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "architecture-supervision-map",
+            "ref": ".megafactory/core/library/skills/sdlc-architecture-supervision/references/coherence-map.md",
+            "purpose": "Mapa de reparto y coherencia del área architecture para el supervisor"
+          },
+          {
+            "id": "c4-model",
+            "ref": "https://c4model.com/",
+            "purpose": "Niveles de diagrama al describir la arquitectura de la solución"
+          },
+          {
+            "id": "adr",
+            "ref": "https://adr.github.io/",
+            "purpose": "Formato de las decisiones de arquitectura registradas"
+          },
+          {
+            "id": "openapi",
+            "ref": "https://spec.openapis.org/oas/latest.html",
+            "purpose": "Especificación de los contratos HTTP que se firman"
+          },
+          {
+            "id": "asyncapi",
+            "ref": "https://www.asyncapi.com/docs/reference/specification/latest",
+            "purpose": "Especificación de los contratos de eventos y mensajes"
+          },
+          {
+            "id": "aws-well-architected",
+            "ref": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html",
+            "purpose": "Pilares de buena arquitectura al revisar la solución en la nube"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [],
+        "extraPeers": [],
+        "escalation": [
+          "artifact-reviewer",
+          "conductor"
+        ],
+        "humans": [],
+        "backup": "conductor"
+      },
+      "methods": [
+        "a3",
+        "aar",
+        "adr",
+        "blameless-postmortem",
+        "cynefin",
+        "event-storming",
+        "five-whys",
+        "fmea",
+        "pre-mortem",
+        "rice-wsjf"
+      ],
+      "triggersOwned": []
+    },
+    "artifact-reviewer": {
+      "area": "orchestration",
+      "level": "high",
+      "skills": {
+        "own": [
+          "sdlc-artifact-review"
+        ],
+        "shared": [],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [],
+        "area": [],
+        "selectors": [],
+        "areaSelectors": [],
+        "unresolved": []
+      },
+      "tools": {
+        "ids": [
+          "gh",
+          "jq"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:artifact-reviewer",
+          "area:orchestration",
+          "project"
+        ],
+        "write": [
+          "role:artifact-reviewer",
+          "area:orchestration",
+          "project"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "review-severity",
+            "ref": ".megafactory/core/library/skills/sdlc-artifact-review/references/severity-guide.md",
+            "purpose": "Escala de severidad y matriz de trazabilidad por fase al escribir hallazgos y veredictos"
+          },
+          {
+            "id": "dora",
+            "ref": "https://dora.dev/",
+            "purpose": "Métricas de entrega al informar el estado del flujo y de AgentOps"
+          },
+          {
+            "id": "semver",
+            "ref": "https://semver.org/",
+            "purpose": "Versionado de artefactos, entregas y de la propia fábrica"
+          },
+          {
+            "id": "conventional-commits",
+            "ref": "https://www.conventionalcommits.org/en/v1.0.0/",
+            "purpose": "Formato de los mensajes de commit que pide el cierre"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "conductor"
+        ],
+        "extraPeers": [],
+        "escalation": [
+          "conductor"
+        ],
+        "humans": [],
+        "backup": "conductor"
+      },
+      "methods": [
+        "a3",
+        "aar",
+        "cynefin",
+        "definition-ready-done",
+        "five-whys",
+        "pdca",
+        "retrospective",
+        "theory-of-constraints"
+      ],
+      "triggersOwned": [
+        "gate-failed-repeated"
+      ]
+    },
+    "backend": {
+      "area": "engineering",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-backend-service"
+        ],
+        "shared": [
+          "sdlc-tdd",
+          "sdlc-verification-loop",
+          "sdlc-search-first",
+          "sdlc-data-modeling",
+          "sdlc-security-review"
+        ],
+        "overlays": [
+          "bt-hono-backend",
+          "bt-tdd-vitest"
+        ]
+      },
+      "mcp": {
+        "own": [
+          "m:aws-serverless",
+          "m:dynamodb",
+          "m:error-tracking",
+          "m:library-docs",
+          "m:static-analysis"
+        ],
+        "area": [],
+        "selectors": [
+          "@power-cloud-architect-context7",
+          "@power-saas-builder-awslabs.aws-serverless-mcp"
+        ],
+        "areaSelectors": [],
+        "unresolved": [
+          "m:dynamodb",
+          "m:error-tracking",
+          "m:static-analysis"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "gitleaks",
+          "playwright",
+          "schemathesis",
+          "semgrep"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:backend",
+          "area:engineering",
+          "project"
+        ],
+        "write": [
+          "role:backend",
+          "area:engineering"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "service-patterns",
+            "ref": ".megafactory/core/library/skills/sdlc-backend-service/references/service-patterns.md",
+            "purpose": "Capas, concurrencia, idempotencia y errores al implementar un servicio"
+          },
+          {
+            "id": "owasp-top10",
+            "ref": "https://owasp.org/Top10/",
+            "purpose": "Riesgos web frecuentes al implementar y revisar código"
+          },
+          {
+            "id": "twelve-factor",
+            "ref": "https://12factor.net/",
+            "purpose": "Configuración y despliegue de servicios portables"
+          },
+          {
+            "id": "wcag22",
+            "ref": "https://www.w3.org/TR/WCAG22/",
+            "purpose": "Criterios de accesibilidad al construir interfaces"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "content-seo",
+          "engineering-manager",
+          "frontend",
+          "uiux-a11y"
+        ],
+        "extraPeers": [
+          "api-contract",
+          "data-modeler",
+          "integrations",
+          "qa-e2e",
+          "support-l2"
+        ],
+        "escalation": [
+          "artifact-reviewer",
+          "engineering-lead"
+        ],
+        "humans": [],
+        "backup": "integrations"
+      },
+      "methods": [
+        "blameless-postmortem",
+        "definition-ready-done",
+        "event-storming",
+        "five-whys",
+        "ishikawa",
+        "kaizen",
+        "lean-wastes",
+        "retrospective"
+      ],
+      "triggersOwned": []
+    },
+    "business-analyst": {
+      "area": "product",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-edge-cases"
+        ],
+        "shared": [
+          "sdlc-requirements-prd"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [
+          "m:issue-tracker",
+          "m:obsidian"
+        ],
+        "area": [],
+        "selectors": [
+          "@mcp-obsidian"
+        ],
+        "areaSelectors": [],
+        "unresolved": [
+          "m:issue-tracker"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "markitdown",
+          "vale"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:business-analyst",
+          "area:product",
+          "project"
+        ],
+        "write": [
+          "role:business-analyst",
+          "area:product"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "edge-techniques",
+            "ref": ".megafactory/core/library/skills/sdlc-edge-cases/references/techniques.md",
+            "purpose": "Técnicas de diseño de pruebas y preguntas guía al escribir los casos borde"
+          },
+          {
+            "id": "wcag22",
+            "ref": "https://www.w3.org/TR/WCAG22/",
+            "purpose": "Criterios de accesibilidad al escribir historias y criterios de aceptación"
+          },
+          {
+            "id": "gherkin",
+            "ref": "https://cucumber.io/docs/gherkin/reference/",
+            "purpose": "Forma de los escenarios Dado-Cuando-Entonces de los casos borde"
+          },
+          {
+            "id": "diataxis",
+            "ref": "https://diataxis.fr/",
+            "purpose": "Tipos de documentación al planificar la guía del producto"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "product-manager",
+          "tech-writer"
+        ],
+        "extraPeers": [],
+        "escalation": [
+          "artifact-reviewer",
+          "product-lead"
+        ],
+        "humans": [],
+        "backup": "product-manager"
+      },
+      "methods": [
+        "a3",
+        "blameless-postmortem",
+        "design-thinking",
+        "five-whys",
+        "impact-mapping",
+        "pre-mortem",
+        "retrospective",
+        "rice-wsjf"
+      ],
+      "triggersOwned": []
+    },
+    "compliance-officer": {
+      "area": "security",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-privacy-compliance"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations",
+          "sdlc-security-review"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [
+          "m:aws-cloudtrail",
+          "m:aws-docs",
+          "m:aws-wa-security",
+          "m:cloud-posture"
+        ],
+        "area": [],
+        "selectors": [
+          "@power-saas-builder-aws-knowledge-mcp-server"
+        ],
+        "areaSelectors": [],
+        "unresolved": [
+          "m:aws-cloudtrail",
+          "m:aws-wa-security",
+          "m:cloud-posture"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "checkov",
+          "gitleaks",
+          "markitdown",
+          "osv-scanner",
+          "prowler",
+          "semgrep",
+          "syft",
+          "trivy"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:compliance-officer",
+          "area:security",
+          "project"
+        ],
+        "write": [
+          "role:compliance-officer",
+          "area:security"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "privacy-inventory",
+            "ref": ".megafactory/core/library/skills/sdlc-privacy-compliance/references/data-inventory.md",
+            "purpose": "Categorías, bases legales, retención y transferencias al escribir el inventario de datos"
+          },
+          {
+            "id": "owasp-asvs",
+            "ref": "https://owasp.org/www-project-application-security-verification-standard/",
+            "purpose": "Niveles y requisitos de verificación al escribir el threat model y al auditar"
+          },
+          {
+            "id": "owasp-api-top10",
+            "ref": "https://owasp.org/API-Security/",
+            "purpose": "Riesgos de API al revisar contratos e implementación"
+          },
+          {
+            "id": "nist-ssdf",
+            "ref": "https://csrc.nist.gov/pubs/sp/800/218/final",
+            "purpose": "Prácticas de desarrollo seguro al revisar el proceso"
+          },
+          {
+            "id": "nist-csf",
+            "ref": "https://www.nist.gov/cyberframework",
+            "purpose": "Funciones del marco de ciberseguridad al mapear controles"
+          },
+          {
+            "id": "owasp-llm-top10",
+            "ref": "https://genai.owasp.org/llm-top-10/",
+            "purpose": "Riesgos de aplicaciones con modelos de lenguaje"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "dpo",
+          "security-architect",
+          "security-auditor"
+        ],
+        "extraPeers": [
+          "product-manager"
+        ],
+        "escalation": [
+          "artifact-reviewer",
+          "security-lead"
+        ],
+        "humans": [],
+        "backup": "security-architect"
+      },
+      "methods": [
+        "blameless-postmortem",
+        "five-whys",
+        "fmea",
+        "ishikawa",
+        "ooda",
+        "pre-mortem"
+      ],
+      "triggersOwned": []
+    },
+    "conductor": {
+      "area": "orchestration",
+      "level": "high",
+      "skills": {
+        "own": [
+          "sdlc-orchestration"
+        ],
+        "shared": [],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [
+          "m:github"
+        ],
+        "area": [],
+        "selectors": [
+          "@mf-github"
+        ],
+        "areaSelectors": [],
+        "unresolved": []
+      },
+      "tools": {
+        "ids": [
+          "gh",
+          "jq"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:conductor",
+          "area:orchestration",
+          "project"
+        ],
+        "write": [
+          "role:conductor",
+          "area:orchestration",
+          "project"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "conductor-modes",
+            "ref": ".megafactory/core/library/skills/sdlc-orchestration/references/modes.md",
+            "purpose": "Pasos y comandos exactos de cada modo del conductor, incluidos chat-run y los pasos humanos"
+          },
+          {
+            "id": "dora",
+            "ref": "https://dora.dev/",
+            "purpose": "Métricas de entrega al informar el estado del flujo y de AgentOps"
+          },
+          {
+            "id": "semver",
+            "ref": "https://semver.org/",
+            "purpose": "Versionado de artefactos, entregas y de la propia fábrica"
+          },
+          {
+            "id": "conventional-commits",
+            "ref": "https://www.conventionalcommits.org/en/v1.0.0/",
+            "purpose": "Formato de los mensajes de commit que pide el cierre"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "artifact-reviewer"
+        ],
+        "extraPeers": [],
+        "escalation": [
+          "artifact-reviewer",
+          "cto"
+        ],
+        "humans": [],
+        "backup": "artifact-reviewer"
+      },
+      "methods": [
+        "a3",
+        "aar",
+        "cynefin",
+        "definition-ready-done",
+        "five-whys",
+        "pdca",
+        "retrospective",
+        "theory-of-constraints"
+      ],
+      "triggersOwned": [
+        "check-failed-repeated",
+        "run-closed",
+        "step-rejected-repeated"
+      ]
+    },
+    "content-seo": {
+      "area": "engineering",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-content-i18n-seo"
+        ],
+        "shared": [
+          "sdlc-tdd",
+          "sdlc-verification-loop",
+          "sdlc-search-first",
+          "sdlc-frontend-web"
+        ],
+        "overlays": [
+          "bt-astro-frontend"
+        ]
+      },
+      "mcp": {
+        "own": [
+          "m:browser-devtools",
+          "m:playwright",
+          "m:tms"
+        ],
+        "area": [
+          "m:library-docs"
+        ],
+        "selectors": [
+          "@power-saas-builder-playwright",
+          "@mf-chrome-devtools"
+        ],
+        "areaSelectors": [
+          "@power-cloud-architect-context7"
+        ],
+        "unresolved": [
+          "m:tms"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "gitleaks",
+          "lighthouse-ci",
+          "lychee",
+          "playwright",
+          "semgrep",
+          "vale"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:content-seo",
+          "area:engineering",
+          "project"
+        ],
+        "write": [
+          "role:content-seo",
+          "area:engineering"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "i18n-seo-guide",
+            "ref": ".megafactory/core/library/skills/sdlc-content-i18n-seo/references/i18n-seo-guide.md",
+            "purpose": "Namespaces, formato de mensajes, metadatos y datos estructurados"
+          },
+          {
+            "id": "owasp-top10",
+            "ref": "https://owasp.org/Top10/",
+            "purpose": "Riesgos web frecuentes al implementar y revisar código"
+          },
+          {
+            "id": "twelve-factor",
+            "ref": "https://12factor.net/",
+            "purpose": "Configuración y despliegue de servicios portables"
+          },
+          {
+            "id": "wcag22",
+            "ref": "https://www.w3.org/TR/WCAG22/",
+            "purpose": "Criterios de accesibilidad al construir interfaces"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "backend",
+          "engineering-manager",
+          "frontend",
+          "uiux-a11y"
+        ],
+        "extraPeers": [],
+        "escalation": [
+          "artifact-reviewer",
+          "engineering-lead"
+        ],
+        "humans": [],
+        "backup": "frontend"
+      },
+      "methods": [
+        "blameless-postmortem",
+        "definition-ready-done",
+        "event-storming",
+        "five-whys",
+        "ishikawa",
+        "kaizen",
+        "lean-wastes",
+        "retrospective"
+      ],
+      "triggersOwned": []
+    },
+    "cto": {
+      "area": "orchestration",
+      "level": "executive",
+      "skills": {
+        "own": [
+          "sdlc-executive-office"
+        ],
+        "shared": [
+          "sdlc-enterprise-governance"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [
+          "m:issue-tracker"
+        ],
+        "area": [],
+        "selectors": [],
+        "areaSelectors": [],
+        "unresolved": [
+          "m:issue-tracker"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "gh",
+          "jq"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:cto",
+          "area:orchestration",
+          "project"
+        ],
+        "write": [
+          "role:cto",
+          "area:orchestration",
+          "project"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "executive-report-guide",
+            "ref": ".megafactory/core/library/skills/sdlc-executive-office/references/management-report.md",
+            "purpose": "Formato gerencial y paquete de decisión para el gerente"
+          },
+          {
+            "id": "dora",
+            "ref": "https://dora.dev/",
+            "purpose": "Métricas de entrega al informar el estado del flujo y de AgentOps"
+          },
+          {
+            "id": "semver",
+            "ref": "https://semver.org/",
+            "purpose": "Versionado de artefactos, entregas y de la propia fábrica"
+          },
+          {
+            "id": "conventional-commits",
+            "ref": "https://www.conventionalcommits.org/en/v1.0.0/",
+            "purpose": "Formato de los mensajes de commit que pide el cierre"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [],
+        "extraPeers": [],
+        "escalation": [],
+        "humans": [
+          "user"
+        ],
+        "backup": "conductor"
+      },
+      "methods": [
+        "a3",
+        "aar",
+        "cynefin",
+        "definition-ready-done",
+        "five-whys",
+        "pdca",
+        "pre-mortem",
+        "retrospective",
+        "theory-of-constraints"
+      ],
+      "triggersOwned": []
+    },
+    "data-modeler": {
+      "area": "architecture",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-data-modeling"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations",
+          "sdlc-search-first",
+          "sdlc-verification-loop"
+        ],
+        "overlays": [
+          "bt-drizzle-postgres",
+          "bt-verification-loop"
+        ]
+      },
+      "mcp": {
+        "own": [
+          "m:dynamodb",
+          "m:library-docs",
+          "m:postgres-readonly"
+        ],
+        "area": [
+          "m:aws-docs"
+        ],
+        "selectors": [
+          "@power-cloud-architect-context7"
+        ],
+        "areaSelectors": [
+          "@power-saas-builder-aws-knowledge-mcp-server"
+        ],
+        "unresolved": [
+          "m:dynamodb",
+          "m:postgres-readonly"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "dbml-cli",
+          "markitdown",
+          "mermaid-cli",
+          "spectral",
+          "sqlfluff"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:data-modeler",
+          "area:architecture",
+          "project"
+        ],
+        "write": [
+          "role:data-modeler",
+          "area:architecture"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "concurrency-migrations",
+            "ref": ".megafactory/core/library/skills/sdlc-data-modeling/references/concurrency-migrations.md",
+            "purpose": "Elegir la estrategia de concurrencia, los índices y migraciones seguras"
+          },
+          {
+            "id": "c4-model",
+            "ref": "https://c4model.com/",
+            "purpose": "Niveles de diagrama al describir la arquitectura de la solución"
+          },
+          {
+            "id": "adr",
+            "ref": "https://adr.github.io/",
+            "purpose": "Formato de las decisiones de arquitectura registradas"
+          },
+          {
+            "id": "openapi",
+            "ref": "https://spec.openapis.org/oas/latest.html",
+            "purpose": "Especificación de los contratos HTTP que se firman"
+          },
+          {
+            "id": "asyncapi",
+            "ref": "https://www.asyncapi.com/docs/reference/specification/latest",
+            "purpose": "Especificación de los contratos de eventos y mensajes"
+          },
+          {
+            "id": "aws-well-architected",
+            "ref": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html",
+            "purpose": "Pilares de buena arquitectura al revisar la solución en la nube"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "api-contract",
+          "domain-rules",
+          "integrations",
+          "solutions-architect"
+        ],
+        "extraPeers": [
+          "backend",
+          "dba-prod"
+        ],
+        "escalation": [
+          "architecture-lead",
+          "artifact-reviewer"
+        ],
+        "humans": [],
+        "backup": "backend"
+      },
+      "methods": [
+        "adr",
+        "blameless-postmortem",
+        "cynefin",
+        "event-storming",
+        "five-whys",
+        "fmea",
+        "pre-mortem",
+        "rice-wsjf"
+      ],
+      "triggersOwned": []
+    },
+    "dba-prod": {
+      "area": "platform",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-database-operations"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations",
+          "sdlc-iac-change"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [
+          "m:dynamodb",
+          "m:mysql-readonly",
+          "m:postgres-readonly"
+        ],
+        "area": [
+          "m:aws-billing-pricing",
+          "m:aws-iac",
+          "m:cloudwatch"
+        ],
+        "selectors": [],
+        "areaSelectors": [
+          "@power-cloud-architect-awspricing"
+        ],
+        "unresolved": [
+          "m:aws-iac",
+          "m:cloudwatch",
+          "m:dynamodb",
+          "m:mysql-readonly",
+          "m:postgres-readonly"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "actionlint",
+          "cfn-guard",
+          "cfn-lint",
+          "checkov",
+          "conftest",
+          "hadolint",
+          "infracost",
+          "jq",
+          "kubeconform",
+          "sqlfluff",
+          "tflint",
+          "trivy"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:dba-prod",
+          "area:platform",
+          "area:architecture",
+          "project"
+        ],
+        "write": [
+          "role:dba-prod",
+          "area:platform"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "migration-safety",
+            "ref": ".megafactory/core/library/skills/sdlc-database-operations/references/migration-safety.md",
+            "purpose": "operaciones con riesgo de bloqueo, patrón expandir y contraer y criterios de respaldo verificado"
+          },
+          {
+            "id": "pg-explicit-locking",
+            "ref": "https://www.postgresql.org/docs/current/explicit-locking.html",
+            "purpose": "Qué bloqueo toma cada comando de PostgreSQL al revisar una migración"
+          },
+          {
+            "id": "pg-continuous-archiving",
+            "ref": "https://www.postgresql.org/docs/current/continuous-archiving.html",
+            "purpose": "Respaldo continuo y recuperación a un punto en el tiempo"
+          },
+          {
+            "id": "aws-well-architected",
+            "ref": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html",
+            "purpose": "Pilares de buena arquitectura al revisar planes de infraestructura"
+          },
+          {
+            "id": "finops-framework",
+            "ref": "https://www.finops.org/framework/",
+            "purpose": "Capacidades FinOps al estimar y revisar costos"
+          },
+          {
+            "id": "sci",
+            "ref": "https://sci.greensoftware.foundation/",
+            "purpose": "Intensidad de carbono del software al revisar consumo"
+          },
+          {
+            "id": "slsa",
+            "ref": "https://slsa.dev/",
+            "purpose": "Niveles de procedencia de la cadena de suministro"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "devops-sre",
+          "finops",
+          "release-manager"
+        ],
+        "extraPeers": [
+          "data-modeler",
+          "sre"
+        ],
+        "escalation": [
+          "artifact-reviewer",
+          "platform-lead"
+        ],
+        "humans": [],
+        "backup": "data-modeler"
+      },
+      "methods": [
+        "blameless-postmortem",
+        "fault-tree",
+        "five-whys",
+        "fmea",
+        "kaizen",
+        "lean-wastes",
+        "pdca",
+        "pre-mortem",
+        "value-stream-map"
+      ],
+      "triggersOwned": []
+    },
+    "devops-sre": {
+      "area": "platform",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-cicd-delivery"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations",
+          "sdlc-iac-change",
+          "sdlc-verification-loop"
+        ],
+        "overlays": [
+          "bt-verification-loop"
+        ]
+      },
+      "mcp": {
+        "own": [
+          "m:aws-api",
+          "m:aws-appsignals",
+          "m:aws-containers",
+          "m:aws-iac",
+          "m:aws-serverless",
+          "m:cloudwatch",
+          "m:kubernetes",
+          "m:terraform"
+        ],
+        "area": [
+          "m:aws-billing-pricing"
+        ],
+        "selectors": [
+          "@power-saas-builder-awslabs.aws-serverless-mcp",
+          "@power-cloud-architect-awsapi",
+          "@mf-kubernetes",
+          "@mf-aws-appsignals"
+        ],
+        "areaSelectors": [
+          "@power-cloud-architect-awspricing"
+        ],
+        "unresolved": [
+          "m:aws-containers",
+          "m:aws-iac",
+          "m:cloudwatch",
+          "m:terraform"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "actionlint",
+          "cfn-guard",
+          "cfn-lint",
+          "checkov",
+          "conftest",
+          "gitleaks",
+          "hadolint",
+          "infracost",
+          "kubeconform",
+          "tflint",
+          "trivy"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:devops-sre",
+          "area:platform",
+          "project"
+        ],
+        "write": [
+          "role:devops-sre",
+          "area:platform"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "pipeline-security",
+            "ref": ".megafactory/core/library/skills/sdlc-cicd-delivery/references/pipeline-security.md",
+            "purpose": "Credenciales federadas, versiones fijadas y promoción entre entornos"
+          },
+          {
+            "id": "aws-well-architected",
+            "ref": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html",
+            "purpose": "Pilares de buena arquitectura al revisar planes de infraestructura"
+          },
+          {
+            "id": "finops-framework",
+            "ref": "https://www.finops.org/framework/",
+            "purpose": "Capacidades FinOps al estimar y revisar costos"
+          },
+          {
+            "id": "sci",
+            "ref": "https://sci.greensoftware.foundation/",
+            "purpose": "Intensidad de carbono del software al revisar consumo"
+          },
+          {
+            "id": "slsa",
+            "ref": "https://slsa.dev/",
+            "purpose": "Niveles de procedencia de la cadena de suministro"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "dba-prod",
+          "finops",
+          "release-manager"
+        ],
+        "extraPeers": [
+          "on-call-engineer",
+          "resilience-engineer",
+          "sre"
+        ],
+        "escalation": [
+          "artifact-reviewer",
+          "platform-lead"
+        ],
+        "humans": [],
+        "backup": "release-manager"
+      },
+      "methods": [
+        "blameless-postmortem",
+        "five-whys",
+        "fmea",
+        "ishikawa",
+        "kaizen",
+        "lean-wastes",
+        "pdca",
+        "pre-mortem",
+        "value-stream-map"
+      ],
+      "triggersOwned": []
+    },
+    "domain-rules": {
+      "area": "architecture",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-domain-logic"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations",
+          "sdlc-search-first",
+          "sdlc-tdd",
+          "sdlc-verification-loop"
+        ],
+        "overlays": [
+          "bt-tdd-vitest",
+          "bt-verification-loop"
+        ]
+      },
+      "mcp": {
+        "own": [],
+        "area": [],
+        "selectors": [],
+        "areaSelectors": [],
+        "unresolved": []
+      },
+      "tools": {
+        "ids": [
+          "markitdown",
+          "mermaid-cli",
+          "spectral"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:domain-rules",
+          "area:architecture",
+          "project"
+        ],
+        "write": [
+          "role:domain-rules",
+          "area:architecture"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "vectors-rounding",
+            "ref": ".megafactory/core/library/skills/sdlc-domain-logic/references/vectors-rounding.md",
+            "purpose": "Elegir vectores de prueba y escribir la regla de redondeo"
+          },
+          {
+            "id": "c4-model",
+            "ref": "https://c4model.com/",
+            "purpose": "Niveles de diagrama al describir la arquitectura de la solución"
+          },
+          {
+            "id": "adr",
+            "ref": "https://adr.github.io/",
+            "purpose": "Formato de las decisiones de arquitectura registradas"
+          },
+          {
+            "id": "openapi",
+            "ref": "https://spec.openapis.org/oas/latest.html",
+            "purpose": "Especificación de los contratos HTTP que se firman"
+          },
+          {
+            "id": "asyncapi",
+            "ref": "https://www.asyncapi.com/docs/reference/specification/latest",
+            "purpose": "Especificación de los contratos de eventos y mensajes"
+          },
+          {
+            "id": "aws-well-architected",
+            "ref": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html",
+            "purpose": "Pilares de buena arquitectura al revisar la solución en la nube"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "api-contract",
+          "data-modeler",
+          "integrations",
+          "solutions-architect"
+        ],
+        "extraPeers": [],
+        "escalation": [
+          "architecture-lead",
+          "artifact-reviewer"
+        ],
+        "humans": [],
+        "backup": "backend"
+      },
+      "methods": [
+        "adr",
+        "blameless-postmortem",
+        "cynefin",
+        "event-storming",
+        "five-whys",
+        "fmea",
+        "pre-mortem",
+        "rice-wsjf"
+      ],
+      "triggersOwned": []
+    },
+    "dpo": {
+      "area": "security",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-data-protection"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations",
+          "sdlc-security-review"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [
+          "m:grc-tool",
+          "m:issue-tracker",
+          "m:knowledge-base"
+        ],
+        "area": [
+          "m:aws-docs",
+          "m:aws-wa-security",
+          "m:cloud-posture"
+        ],
+        "selectors": [],
+        "areaSelectors": [
+          "@power-saas-builder-aws-knowledge-mcp-server"
+        ],
+        "unresolved": [
+          "m:aws-wa-security",
+          "m:cloud-posture",
+          "m:grc-tool",
+          "m:issue-tracker",
+          "m:knowledge-base"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "checkov",
+          "gitleaks",
+          "jq",
+          "markitdown",
+          "osv-scanner",
+          "semgrep",
+          "syft",
+          "trivy"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:dpo",
+          "area:security",
+          "area:data-ai",
+          "project"
+        ],
+        "write": [
+          "role:dpo",
+          "area:security"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "privacy-opinion-guide",
+            "ref": ".megafactory/core/library/skills/sdlc-data-protection/references/privacy-opinion-guide.md",
+            "purpose": "cuándo exigir evaluación de impacto, preguntas de necesidad y proporcionalidad, derechos y reloj de brechas"
+          },
+          {
+            "id": "gdpr-art-35",
+            "ref": "https://gdpr-info.eu/art-35-gdpr/",
+            "purpose": "Evaluación de impacto como referencia cuando la jurisdicción la sigue"
+          },
+          {
+            "id": "edpb-guidelines",
+            "ref": "https://edpb.europa.eu/our-work-tools/our-documents/guidelines_en",
+            "purpose": "Guías de autoridades sobre brechas, derechos y evaluación de impacto"
+          },
+          {
+            "id": "iso-27701",
+            "ref": "https://www.iso.org/standard/85819.html",
+            "purpose": "Gestión de información de privacidad como extensión de ISO/IEC 27001"
+          },
+          {
+            "id": "owasp-asvs",
+            "ref": "https://owasp.org/www-project-application-security-verification-standard/",
+            "purpose": "Niveles y requisitos de verificación al escribir el threat model y al auditar"
+          },
+          {
+            "id": "owasp-api-top10",
+            "ref": "https://owasp.org/API-Security/",
+            "purpose": "Riesgos de API al revisar contratos e implementación"
+          },
+          {
+            "id": "nist-ssdf",
+            "ref": "https://csrc.nist.gov/pubs/sp/800/218/final",
+            "purpose": "Prácticas de desarrollo seguro al revisar el proceso"
+          },
+          {
+            "id": "nist-csf",
+            "ref": "https://www.nist.gov/cyberframework",
+            "purpose": "Funciones del marco de ciberseguridad al mapear controles"
+          },
+          {
+            "id": "owasp-llm-top10",
+            "ref": "https://genai.owasp.org/llm-top-10/",
+            "purpose": "Riesgos de aplicaciones con modelos de lenguaje"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "compliance-officer",
+          "security-architect",
+          "security-auditor"
+        ],
+        "extraPeers": [],
+        "escalation": [
+          "artifact-reviewer",
+          "security-lead"
+        ],
+        "humans": [],
+        "backup": "compliance-officer"
+      },
+      "methods": [
+        "a3",
+        "blameless-postmortem",
+        "five-whys",
+        "fmea",
+        "ishikawa",
+        "ooda",
+        "pdca",
+        "pre-mortem"
+      ],
+      "triggersOwned": []
+    },
+    "engineering-lead": {
+      "area": "engineering",
+      "level": "lead",
+      "skills": {
+        "own": [
+          "sdlc-engineering-supervision"
+        ],
+        "shared": [
+          "sdlc-tdd",
+          "sdlc-verification-loop",
+          "sdlc-search-first"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [],
+        "area": [
+          "m:library-docs"
+        ],
+        "selectors": [],
+        "areaSelectors": [
+          "@power-cloud-architect-context7"
+        ],
+        "unresolved": []
+      },
+      "tools": {
+        "ids": [
+          "gitleaks",
+          "playwright",
+          "semgrep"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:engineering-lead",
+          "area:engineering",
+          "project"
+        ],
+        "write": [
+          "role:engineering-lead",
+          "area:engineering"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "engineering-supervision-map",
+            "ref": ".megafactory/core/library/skills/sdlc-engineering-supervision/references/coherence-map.md",
+            "purpose": "Mapa de reparto y coherencia del área engineering para el supervisor"
+          },
+          {
+            "id": "owasp-top10",
+            "ref": "https://owasp.org/Top10/",
+            "purpose": "Riesgos web frecuentes al implementar y revisar código"
+          },
+          {
+            "id": "twelve-factor",
+            "ref": "https://12factor.net/",
+            "purpose": "Configuración y despliegue de servicios portables"
+          },
+          {
+            "id": "wcag22",
+            "ref": "https://www.w3.org/TR/WCAG22/",
+            "purpose": "Criterios de accesibilidad al construir interfaces"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [],
+        "extraPeers": [],
+        "escalation": [
+          "artifact-reviewer",
+          "conductor"
+        ],
+        "humans": [],
+        "backup": "conductor"
+      },
+      "methods": [
+        "a3",
+        "aar",
+        "blameless-postmortem",
+        "definition-ready-done",
+        "event-storming",
+        "five-whys",
+        "ishikawa",
+        "kaizen",
+        "lean-wastes",
+        "retrospective"
+      ],
+      "triggersOwned": []
+    },
+    "engineering-manager": {
+      "area": "engineering",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-engineering-management"
+        ],
+        "shared": [
+          "sdlc-tdd",
+          "sdlc-verification-loop",
+          "sdlc-search-first"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [
+          "m:github",
+          "m:issue-tracker",
+          "m:pagerduty"
+        ],
+        "area": [
+          "m:library-docs"
+        ],
+        "selectors": [
+          "@mf-github",
+          "@mf-pagerduty"
+        ],
+        "areaSelectors": [
+          "@power-cloud-architect-context7"
+        ],
+        "unresolved": [
+          "m:issue-tracker"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "gh",
+          "gitleaks",
+          "jq",
+          "playwright",
+          "semgrep"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:engineering-manager",
+          "area:engineering",
+          "area:operations",
+          "area:product",
+          "project"
+        ],
+        "write": [
+          "role:engineering-manager",
+          "area:engineering"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "capacity-guide",
+            "ref": ".megafactory/core/library/skills/sdlc-engineering-management/references/capacity-planning-guide.md",
+            "purpose": "cómo calcular la capacidad real, contar guardias y deuda y aplicar la política de error budget"
+          },
+          {
+            "id": "team-topologies",
+            "ref": "https://teamtopologies.com/key-concepts",
+            "purpose": "Tipos de equipo, carga cognitiva y plataforma como producto"
+          },
+          {
+            "id": "error-budget-policy",
+            "ref": "https://sre.google/workbook/error-budget-policy/",
+            "purpose": "Forma de una política de error budget"
+          },
+          {
+            "id": "dora-research",
+            "ref": "https://dora.dev/",
+            "purpose": "Capacidades que mejoran el rendimiento de entrega"
+          },
+          {
+            "id": "owasp-top10",
+            "ref": "https://owasp.org/Top10/",
+            "purpose": "Riesgos web frecuentes al implementar y revisar código"
+          },
+          {
+            "id": "twelve-factor",
+            "ref": "https://12factor.net/",
+            "purpose": "Configuración y despliegue de servicios portables"
+          },
+          {
+            "id": "wcag22",
+            "ref": "https://www.w3.org/TR/WCAG22/",
+            "purpose": "Criterios de accesibilidad al construir interfaces"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "backend",
+          "content-seo",
+          "frontend",
+          "uiux-a11y"
+        ],
+        "extraPeers": [
+          "sre"
+        ],
+        "escalation": [
+          "artifact-reviewer",
+          "engineering-lead"
+        ],
+        "humans": [],
+        "backup": null
+      },
+      "methods": [
+        "a3",
+        "blameless-postmortem",
+        "definition-ready-done",
+        "event-storming",
+        "five-whys",
+        "ishikawa",
+        "kaizen",
+        "lean-wastes",
+        "pdca",
+        "retrospective"
+      ],
+      "triggersOwned": []
+    },
+    "finops": {
+      "area": "platform",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-finops-cost"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations",
+          "sdlc-iac-change"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [
+          "m:aws-billing-pricing",
+          "m:cloud-inventory"
+        ],
+        "area": [
+          "m:aws-iac",
+          "m:cloudwatch"
+        ],
+        "selectors": [
+          "@power-cloud-architect-awspricing"
+        ],
+        "areaSelectors": [],
+        "unresolved": [
+          "m:aws-iac",
+          "m:cloud-inventory",
+          "m:cloudwatch"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "actionlint",
+          "cfn-guard",
+          "cfn-lint",
+          "checkov",
+          "conftest",
+          "hadolint",
+          "infracost",
+          "kubeconform",
+          "tflint",
+          "trivy"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:finops",
+          "area:platform",
+          "project"
+        ],
+        "write": [
+          "role:finops",
+          "area:platform"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "cost-assumptions-sci",
+            "ref": ".megafactory/core/library/skills/sdlc-finops-cost/references/cost-assumptions-sci.md",
+            "purpose": "Derivar cantidades del PRD y estimar la sección carbon con SCI"
+          },
+          {
+            "id": "aws-well-architected",
+            "ref": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html",
+            "purpose": "Pilares de buena arquitectura al revisar planes de infraestructura"
+          },
+          {
+            "id": "finops-framework",
+            "ref": "https://www.finops.org/framework/",
+            "purpose": "Capacidades FinOps al estimar y revisar costos"
+          },
+          {
+            "id": "sci",
+            "ref": "https://sci.greensoftware.foundation/",
+            "purpose": "Intensidad de carbono del software al revisar consumo"
+          },
+          {
+            "id": "slsa",
+            "ref": "https://slsa.dev/",
+            "purpose": "Niveles de procedencia de la cadena de suministro"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "dba-prod",
+          "devops-sre",
+          "release-manager"
+        ],
+        "extraPeers": [
+          "service-owner",
+          "solutions-architect"
+        ],
+        "escalation": [
+          "artifact-reviewer",
+          "platform-lead"
+        ],
+        "humans": [],
+        "backup": "solutions-architect"
+      },
+      "methods": [
+        "blameless-postmortem",
+        "five-whys",
+        "fmea",
+        "kaizen",
+        "lean-wastes",
+        "pdca",
+        "pre-mortem",
+        "value-stream-map"
+      ],
+      "triggersOwned": []
+    },
+    "frontend": {
+      "area": "engineering",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-frontend-web"
+        ],
+        "shared": [
+          "sdlc-tdd",
+          "sdlc-verification-loop",
+          "sdlc-search-first",
+          "sdlc-e2e-testing"
+        ],
+        "overlays": [
+          "bt-astro-frontend",
+          "bt-tdd-vitest",
+          "bt-e2e-playwright"
+        ]
+      },
+      "mcp": {
+        "own": [
+          "m:browser-devtools",
+          "m:error-tracking",
+          "m:figma",
+          "m:library-docs",
+          "m:playwright"
+        ],
+        "area": [],
+        "selectors": [
+          "@power-cloud-architect-context7",
+          "@power-saas-builder-playwright",
+          "@figma-bridge",
+          "@mf-chrome-devtools"
+        ],
+        "areaSelectors": [],
+        "unresolved": [
+          "m:error-tracking"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "axe-core-cli",
+          "gitleaks",
+          "lighthouse-ci",
+          "playwright",
+          "semgrep"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:frontend",
+          "area:engineering",
+          "project"
+        ],
+        "write": [
+          "role:frontend",
+          "area:engineering"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "web-patterns",
+            "ref": ".megafactory/core/library/skills/sdlc-frontend-web/references/web-patterns.md",
+            "purpose": "Datos remotos, HTML seguro, accesibilidad y presupuestos al implementar la interfaz"
+          },
+          {
+            "id": "owasp-top10",
+            "ref": "https://owasp.org/Top10/",
+            "purpose": "Riesgos web frecuentes al implementar y revisar código"
+          },
+          {
+            "id": "twelve-factor",
+            "ref": "https://12factor.net/",
+            "purpose": "Configuración y despliegue de servicios portables"
+          },
+          {
+            "id": "wcag22",
+            "ref": "https://www.w3.org/TR/WCAG22/",
+            "purpose": "Criterios de accesibilidad al construir interfaces"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "backend",
+          "content-seo",
+          "engineering-manager",
+          "uiux-a11y"
+        ],
+        "extraPeers": [
+          "api-contract",
+          "qa-e2e",
+          "support-l2"
+        ],
+        "escalation": [
+          "artifact-reviewer",
+          "engineering-lead"
+        ],
+        "humans": [],
+        "backup": "content-seo"
+      },
+      "methods": [
+        "blameless-postmortem",
+        "definition-ready-done",
+        "event-storming",
+        "five-whys",
+        "ishikawa",
+        "kaizen",
+        "lean-wastes",
+        "retrospective"
+      ],
+      "triggersOwned": []
+    },
+    "integrations": {
+      "area": "architecture",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-integration-patterns"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations",
+          "sdlc-search-first",
+          "sdlc-backend-service",
+          "sdlc-security-review",
+          "sdlc-tdd",
+          "sdlc-verification-loop"
+        ],
+        "overlays": [
+          "bt-hono-backend"
+        ]
+      },
+      "mcp": {
+        "own": [
+          "m:aws-docs",
+          "m:aws-messaging",
+          "m:aws-sfn",
+          "m:library-docs",
+          "m:openapi",
+          "m:postman",
+          "m:stripe"
+        ],
+        "area": [],
+        "selectors": [
+          "@power-cloud-architect-context7",
+          "@power-saas-builder-aws-knowledge-mcp-server",
+          "@power-postman-postman"
+        ],
+        "areaSelectors": [],
+        "unresolved": [
+          "m:aws-messaging",
+          "m:aws-sfn",
+          "m:openapi",
+          "m:stripe"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "markitdown",
+          "mermaid-cli",
+          "schemathesis",
+          "spectral"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:integrations",
+          "area:architecture",
+          "project"
+        ],
+        "write": [
+          "role:integrations",
+          "area:architecture"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "outbox-saga",
+            "ref": ".megafactory/core/library/skills/sdlc-integration-patterns/references/outbox-saga-reconciliation.md",
+            "purpose": "Aplicar outbox, saga, consumidor idempotente y conciliación"
+          },
+          {
+            "id": "c4-model",
+            "ref": "https://c4model.com/",
+            "purpose": "Niveles de diagrama al describir la arquitectura de la solución"
+          },
+          {
+            "id": "adr",
+            "ref": "https://adr.github.io/",
+            "purpose": "Formato de las decisiones de arquitectura registradas"
+          },
+          {
+            "id": "openapi",
+            "ref": "https://spec.openapis.org/oas/latest.html",
+            "purpose": "Especificación de los contratos HTTP que se firman"
+          },
+          {
+            "id": "asyncapi",
+            "ref": "https://www.asyncapi.com/docs/reference/specification/latest",
+            "purpose": "Especificación de los contratos de eventos y mensajes"
+          },
+          {
+            "id": "aws-well-architected",
+            "ref": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html",
+            "purpose": "Pilares de buena arquitectura al revisar la solución en la nube"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "api-contract",
+          "data-modeler",
+          "domain-rules",
+          "solutions-architect"
+        ],
+        "extraPeers": [
+          "backend"
+        ],
+        "escalation": [
+          "architecture-lead",
+          "artifact-reviewer"
+        ],
+        "humans": [],
+        "backup": "backend"
+      },
+      "methods": [
+        "adr",
+        "blameless-postmortem",
+        "cynefin",
+        "event-storming",
+        "five-whys",
+        "fmea",
+        "pre-mortem",
+        "rice-wsjf"
+      ],
+      "triggersOwned": []
+    },
+    "on-call-engineer": {
+      "area": "operations",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-on-call-execution"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations",
+          "sdlc-incident-problem"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [
+          "m:grafana",
+          "m:issue-tracker",
+          "m:pagerduty"
+        ],
+        "area": [
+          "m:aws-appsignals",
+          "m:cloudwatch"
+        ],
+        "selectors": [
+          "@mf-pagerduty"
+        ],
+        "areaSelectors": [
+          "@mf-aws-appsignals"
+        ],
+        "unresolved": [
+          "m:cloudwatch",
+          "m:grafana",
+          "m:issue-tracker"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "gh",
+          "jq",
+          "promtool"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:on-call-engineer",
+          "area:operations",
+          "area:platform",
+          "project"
+        ],
+        "write": [
+          "role:on-call-engineer",
+          "area:operations"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "execution-package-guide",
+            "ref": ".megafactory/core/library/skills/sdlc-on-call-execution/references/execution-package-guide.md",
+            "purpose": "forma de cada paso, criterios de aborto, reversa y verificación, y contenido del relevo de turno"
+          },
+          {
+            "id": "being-on-call",
+            "ref": "https://sre.google/sre-book/being-on-call/",
+            "purpose": "Carga sostenible de guardia y procedimientos claros para el humano"
+          },
+          {
+            "id": "incident-response-docs",
+            "ref": "https://response.pagerduty.com/",
+            "purpose": "Roles de respuesta, relevo de turno y comunicación durante incidentes"
+          },
+          {
+            "id": "sre-book",
+            "ref": "https://sre.google/sre-book/table-of-contents/",
+            "purpose": "Prácticas de confiabilidad al definir SLO y respuesta"
+          },
+          {
+            "id": "sre-workbook",
+            "ref": "https://sre.google/workbook/table-of-contents/",
+            "purpose": "Ejemplos prácticos de SLO, alertas y postmortem"
+          },
+          {
+            "id": "opentelemetry",
+            "ref": "https://opentelemetry.io/docs/",
+            "purpose": "Señales y convenciones de telemetría del servicio"
+          },
+          {
+            "id": "principles-of-chaos",
+            "ref": "https://principlesofchaos.org/",
+            "purpose": "Principios de los experimentos de caos y simulacros"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "resilience-engineer",
+          "service-desk-l1",
+          "service-owner",
+          "sre",
+          "support-l2"
+        ],
+        "extraPeers": [
+          "devops-sre",
+          "release-manager"
+        ],
+        "escalation": [
+          "artifact-reviewer",
+          "operations-lead"
+        ],
+        "humans": [],
+        "backup": "devops-sre"
+      },
+      "methods": [
+        "aar",
+        "blameless-postmortem",
+        "fault-tree",
+        "five-whys",
+        "fmea",
+        "ishikawa",
+        "kaizen",
+        "pdca",
+        "pre-mortem"
+      ],
+      "triggersOwned": []
+    },
+    "operations-lead": {
+      "area": "operations",
+      "level": "lead",
+      "skills": {
+        "own": [
+          "sdlc-operations-supervision"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations",
+          "sdlc-incident-problem"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [],
+        "area": [
+          "m:aws-appsignals",
+          "m:cloudwatch"
+        ],
+        "selectors": [],
+        "areaSelectors": [
+          "@mf-aws-appsignals"
+        ],
+        "unresolved": [
+          "m:cloudwatch"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "jq",
+          "promtool"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:operations-lead",
+          "area:operations",
+          "project"
+        ],
+        "write": [
+          "role:operations-lead",
+          "area:operations"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "operations-supervision-map",
+            "ref": ".megafactory/core/library/skills/sdlc-operations-supervision/references/coherence-map.md",
+            "purpose": "Mapa de reparto y coherencia del área operations para el supervisor"
+          },
+          {
+            "id": "sre-book",
+            "ref": "https://sre.google/sre-book/table-of-contents/",
+            "purpose": "Prácticas de confiabilidad al definir SLO y respuesta"
+          },
+          {
+            "id": "sre-workbook",
+            "ref": "https://sre.google/workbook/table-of-contents/",
+            "purpose": "Ejemplos prácticos de SLO, alertas y postmortem"
+          },
+          {
+            "id": "opentelemetry",
+            "ref": "https://opentelemetry.io/docs/",
+            "purpose": "Señales y convenciones de telemetría del servicio"
+          },
+          {
+            "id": "principles-of-chaos",
+            "ref": "https://principlesofchaos.org/",
+            "purpose": "Principios de los experimentos de caos y simulacros"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [],
+        "extraPeers": [],
+        "escalation": [
+          "artifact-reviewer",
+          "conductor"
+        ],
+        "humans": [],
+        "backup": "conductor"
+      },
+      "methods": [
+        "a3",
+        "aar",
+        "blameless-postmortem",
+        "fault-tree",
+        "five-whys",
+        "fmea",
+        "ishikawa",
+        "kaizen",
+        "pdca"
+      ],
+      "triggersOwned": []
+    },
+    "peer-reviewer": {
+      "area": "quality",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-code-review"
+        ],
+        "shared": [
+          "sdlc-verification-loop",
+          "sdlc-edge-cases",
+          "sdlc-backend-service",
+          "sdlc-frontend-web"
+        ],
+        "overlays": [
+          "bt-verification-loop",
+          "bt-hono-backend",
+          "bt-astro-frontend"
+        ]
+      },
+      "mcp": {
+        "own": [
+          "m:github",
+          "m:static-analysis"
+        ],
+        "area": [
+          "m:browser-devtools",
+          "m:playwright"
+        ],
+        "selectors": [
+          "@mf-github"
+        ],
+        "areaSelectors": [
+          "@power-saas-builder-playwright",
+          "@mf-chrome-devtools"
+        ],
+        "unresolved": [
+          "m:static-analysis"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "axe-core-cli",
+          "gitleaks",
+          "playwright",
+          "semgrep"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:peer-reviewer",
+          "area:quality",
+          "project"
+        ],
+        "write": [
+          "role:peer-reviewer",
+          "area:quality"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "severity-guide",
+            "ref": ".megafactory/core/library/skills/sdlc-code-review/references/severity-guide.md",
+            "purpose": "Clasificar la severidad de cada hallazgo antes de fijar el veredicto"
+          },
+          {
+            "id": "wcag22",
+            "ref": "https://www.w3.org/TR/WCAG22/",
+            "purpose": "Criterios de accesibilidad en la batería de pruebas"
+          },
+          {
+            "id": "web-vitals",
+            "ref": "https://web.dev/articles/vitals",
+            "purpose": "Métricas de experiencia al fijar presupuestos de rendimiento"
+          },
+          {
+            "id": "owasp-wstg",
+            "ref": "https://owasp.org/www-project-web-security-testing-guide/",
+            "purpose": "Casos de prueba de seguridad web en la batería e2e"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "qa-e2e"
+        ],
+        "extraPeers": [
+          "security-auditor"
+        ],
+        "escalation": [
+          "artifact-reviewer",
+          "quality-lead"
+        ],
+        "humans": [],
+        "backup": "security-auditor"
+      },
+      "methods": [
+        "aar",
+        "blameless-postmortem",
+        "definition-ready-done",
+        "dmaic",
+        "five-whys",
+        "fmea",
+        "ishikawa",
+        "theory-of-constraints"
+      ],
+      "triggersOwned": [
+        "defect-escaped"
+      ]
+    },
+    "platform-lead": {
+      "area": "platform",
+      "level": "lead",
+      "skills": {
+        "own": [
+          "sdlc-platform-supervision"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations",
+          "sdlc-iac-change"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [],
+        "area": [
+          "m:aws-billing-pricing",
+          "m:aws-iac",
+          "m:cloudwatch"
+        ],
+        "selectors": [],
+        "areaSelectors": [
+          "@power-cloud-architect-awspricing"
+        ],
+        "unresolved": [
+          "m:aws-iac",
+          "m:cloudwatch"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "actionlint",
+          "cfn-guard",
+          "cfn-lint",
+          "checkov",
+          "conftest",
+          "hadolint",
+          "infracost",
+          "kubeconform",
+          "tflint",
+          "trivy"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:platform-lead",
+          "area:platform",
+          "project"
+        ],
+        "write": [
+          "role:platform-lead",
+          "area:platform"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "platform-supervision-map",
+            "ref": ".megafactory/core/library/skills/sdlc-platform-supervision/references/coherence-map.md",
+            "purpose": "Mapa de reparto y coherencia del área platform para el supervisor"
+          },
+          {
+            "id": "aws-well-architected",
+            "ref": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html",
+            "purpose": "Pilares de buena arquitectura al revisar planes de infraestructura"
+          },
+          {
+            "id": "finops-framework",
+            "ref": "https://www.finops.org/framework/",
+            "purpose": "Capacidades FinOps al estimar y revisar costos"
+          },
+          {
+            "id": "sci",
+            "ref": "https://sci.greensoftware.foundation/",
+            "purpose": "Intensidad de carbono del software al revisar consumo"
+          },
+          {
+            "id": "slsa",
+            "ref": "https://slsa.dev/",
+            "purpose": "Niveles de procedencia de la cadena de suministro"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [],
+        "extraPeers": [],
+        "escalation": [
+          "artifact-reviewer",
+          "conductor"
+        ],
+        "humans": [],
+        "backup": "conductor"
+      },
+      "methods": [
+        "a3",
+        "aar",
+        "blameless-postmortem",
+        "five-whys",
+        "fmea",
+        "kaizen",
+        "lean-wastes",
+        "pdca",
+        "pre-mortem",
+        "value-stream-map"
+      ],
+      "triggersOwned": []
+    },
+    "product-lead": {
+      "area": "product",
+      "level": "lead",
+      "skills": {
+        "own": [
+          "sdlc-product-supervision"
+        ],
+        "shared": [
+          "sdlc-requirements-prd"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [],
+        "area": [
+          "m:issue-tracker",
+          "m:obsidian"
+        ],
+        "selectors": [],
+        "areaSelectors": [
+          "@mcp-obsidian"
+        ],
+        "unresolved": [
+          "m:issue-tracker"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "markitdown",
+          "vale"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:product-lead",
+          "area:product",
+          "project"
+        ],
+        "write": [
+          "role:product-lead",
+          "area:product"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "product-supervision-map",
+            "ref": ".megafactory/core/library/skills/sdlc-product-supervision/references/coherence-map.md",
+            "purpose": "Mapa de reparto y coherencia del área product para el supervisor"
+          },
+          {
+            "id": "wcag22",
+            "ref": "https://www.w3.org/TR/WCAG22/",
+            "purpose": "Criterios de accesibilidad al escribir historias y criterios de aceptación"
+          },
+          {
+            "id": "gherkin",
+            "ref": "https://cucumber.io/docs/gherkin/reference/",
+            "purpose": "Forma de los escenarios Dado-Cuando-Entonces de los casos borde"
+          },
+          {
+            "id": "diataxis",
+            "ref": "https://diataxis.fr/",
+            "purpose": "Tipos de documentación al planificar la guía del producto"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [],
+        "extraPeers": [],
+        "escalation": [
+          "artifact-reviewer",
+          "conductor"
+        ],
+        "humans": [],
+        "backup": "conductor"
+      },
+      "methods": [
+        "a3",
+        "aar",
+        "blameless-postmortem",
+        "design-thinking",
+        "five-whys",
+        "impact-mapping",
+        "pre-mortem",
+        "retrospective",
+        "rice-wsjf"
+      ],
+      "triggersOwned": []
+    },
+    "product-manager": {
+      "area": "product",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-requirements-prd"
+        ],
+        "shared": [],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [
+          "m:issue-tracker",
+          "m:obsidian"
+        ],
+        "area": [],
+        "selectors": [
+          "@mcp-obsidian"
+        ],
+        "areaSelectors": [],
+        "unresolved": [
+          "m:issue-tracker"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "markitdown",
+          "vale"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:product-manager",
+          "area:product",
+          "project"
+        ],
+        "write": [
+          "role:product-manager",
+          "area:product"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "prd-guide",
+            "ref": ".megafactory/core/library/skills/sdlc-requirements-prd/references/prd-guide.md",
+            "purpose": "Partición de historias, criterios observables y NFR medibles al redactar el PRD"
+          },
+          {
+            "id": "wcag22",
+            "ref": "https://www.w3.org/TR/WCAG22/",
+            "purpose": "Criterios de accesibilidad al escribir historias y criterios de aceptación"
+          },
+          {
+            "id": "gherkin",
+            "ref": "https://cucumber.io/docs/gherkin/reference/",
+            "purpose": "Forma de los escenarios Dado-Cuando-Entonces de los casos borde"
+          },
+          {
+            "id": "diataxis",
+            "ref": "https://diataxis.fr/",
+            "purpose": "Tipos de documentación al planificar la guía del producto"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "business-analyst",
+          "tech-writer"
+        ],
+        "extraPeers": [
+          "compliance-officer",
+          "service-owner"
+        ],
+        "escalation": [
+          "artifact-reviewer",
+          "product-lead"
+        ],
+        "humans": [],
+        "backup": "business-analyst"
+      },
+      "methods": [
+        "a3",
+        "blameless-postmortem",
+        "design-thinking",
+        "five-whys",
+        "impact-mapping",
+        "pre-mortem",
+        "retrospective",
+        "rice-wsjf"
+      ],
+      "triggersOwned": []
+    },
+    "qa-e2e": {
+      "area": "quality",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-e2e-testing"
+        ],
+        "shared": [
+          "sdlc-verification-loop",
+          "sdlc-edge-cases"
+        ],
+        "overlays": [
+          "bt-e2e-playwright",
+          "bt-verification-loop"
+        ]
+      },
+      "mcp": {
+        "own": [
+          "m:browser-devtools",
+          "m:mobile-devices",
+          "m:playwright"
+        ],
+        "area": [],
+        "selectors": [
+          "@power-saas-builder-playwright",
+          "@mf-chrome-devtools"
+        ],
+        "areaSelectors": [],
+        "unresolved": [
+          "m:mobile-devices"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "axe-core-cli",
+          "maestro",
+          "playwright",
+          "schemathesis"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:qa-e2e",
+          "area:quality",
+          "project"
+        ],
+        "write": [
+          "role:qa-e2e",
+          "area:quality"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "playwright-patterns",
+            "ref": ".megafactory/core/library/skills/sdlc-e2e-testing/references/playwright-patterns.md",
+            "purpose": "Objetos de página, preparación por API e inestabilidad en la suite e2e"
+          },
+          {
+            "id": "wcag22",
+            "ref": "https://www.w3.org/TR/WCAG22/",
+            "purpose": "Criterios de accesibilidad en la batería de pruebas"
+          },
+          {
+            "id": "web-vitals",
+            "ref": "https://web.dev/articles/vitals",
+            "purpose": "Métricas de experiencia al fijar presupuestos de rendimiento"
+          },
+          {
+            "id": "owasp-wstg",
+            "ref": "https://owasp.org/www-project-web-security-testing-guide/",
+            "purpose": "Casos de prueba de seguridad web en la batería e2e"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "peer-reviewer"
+        ],
+        "extraPeers": [
+          "backend",
+          "frontend"
+        ],
+        "escalation": [
+          "artifact-reviewer",
+          "quality-lead"
+        ],
+        "humans": [],
+        "backup": "frontend"
+      },
+      "methods": [
+        "aar",
+        "blameless-postmortem",
+        "definition-ready-done",
+        "dmaic",
+        "five-whys",
+        "fmea",
+        "ishikawa",
+        "theory-of-constraints"
+      ],
+      "triggersOwned": []
+    },
+    "quality-lead": {
+      "area": "quality",
+      "level": "lead",
+      "skills": {
+        "own": [
+          "sdlc-quality-supervision"
+        ],
+        "shared": [
+          "sdlc-verification-loop",
+          "sdlc-edge-cases"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [],
+        "area": [
+          "m:browser-devtools",
+          "m:playwright"
+        ],
+        "selectors": [],
+        "areaSelectors": [
+          "@power-saas-builder-playwright",
+          "@mf-chrome-devtools"
+        ],
+        "unresolved": []
+      },
+      "tools": {
+        "ids": [
+          "axe-core-cli",
+          "playwright"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:quality-lead",
+          "area:quality",
+          "project"
+        ],
+        "write": [
+          "role:quality-lead",
+          "area:quality"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "quality-supervision-map",
+            "ref": ".megafactory/core/library/skills/sdlc-quality-supervision/references/coherence-map.md",
+            "purpose": "Mapa de reparto y coherencia del área quality para el supervisor"
+          },
+          {
+            "id": "wcag22",
+            "ref": "https://www.w3.org/TR/WCAG22/",
+            "purpose": "Criterios de accesibilidad en la batería de pruebas"
+          },
+          {
+            "id": "web-vitals",
+            "ref": "https://web.dev/articles/vitals",
+            "purpose": "Métricas de experiencia al fijar presupuestos de rendimiento"
+          },
+          {
+            "id": "owasp-wstg",
+            "ref": "https://owasp.org/www-project-web-security-testing-guide/",
+            "purpose": "Casos de prueba de seguridad web en la batería e2e"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [],
+        "extraPeers": [],
+        "escalation": [
+          "artifact-reviewer",
+          "conductor"
+        ],
+        "humans": [],
+        "backup": "conductor"
+      },
+      "methods": [
+        "a3",
+        "aar",
+        "blameless-postmortem",
+        "definition-ready-done",
+        "dmaic",
+        "five-whys",
+        "fmea",
+        "ishikawa",
+        "theory-of-constraints"
+      ],
+      "triggersOwned": []
+    },
+    "release-manager": {
+      "area": "platform",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-release-change"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations",
+          "sdlc-iac-change"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [
+          "m:aws-docs",
+          "m:aws-iac",
+          "m:aws-serverless",
+          "m:cloudwatch",
+          "m:github",
+          "m:issue-tracker"
+        ],
+        "area": [
+          "m:aws-billing-pricing"
+        ],
+        "selectors": [
+          "@power-saas-builder-aws-knowledge-mcp-server",
+          "@power-saas-builder-awslabs.aws-serverless-mcp",
+          "@mf-github"
+        ],
+        "areaSelectors": [
+          "@power-cloud-architect-awspricing"
+        ],
+        "unresolved": [
+          "m:aws-iac",
+          "m:cloudwatch",
+          "m:issue-tracker"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "actionlint",
+          "cfn-guard",
+          "cfn-lint",
+          "checkov",
+          "conftest",
+          "gh",
+          "hadolint",
+          "infracost",
+          "kubeconform",
+          "syft",
+          "tflint",
+          "trivy"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:release-manager",
+          "area:platform",
+          "project"
+        ],
+        "write": [
+          "role:release-manager",
+          "area:platform"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "change-classes",
+            "ref": ".megafactory/core/library/skills/sdlc-release-change/references/change-classes-decommission.md",
+            "purpose": "Elegir la clase de cambio, los criterios de reversión y la limpieza de un retiro"
+          },
+          {
+            "id": "aws-well-architected",
+            "ref": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html",
+            "purpose": "Pilares de buena arquitectura al revisar planes de infraestructura"
+          },
+          {
+            "id": "finops-framework",
+            "ref": "https://www.finops.org/framework/",
+            "purpose": "Capacidades FinOps al estimar y revisar costos"
+          },
+          {
+            "id": "sci",
+            "ref": "https://sci.greensoftware.foundation/",
+            "purpose": "Intensidad de carbono del software al revisar consumo"
+          },
+          {
+            "id": "slsa",
+            "ref": "https://slsa.dev/",
+            "purpose": "Niveles de procedencia de la cadena de suministro"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "dba-prod",
+          "devops-sre",
+          "finops"
+        ],
+        "extraPeers": [
+          "on-call-engineer",
+          "sre"
+        ],
+        "escalation": [
+          "artifact-reviewer",
+          "platform-lead"
+        ],
+        "humans": [],
+        "backup": "devops-sre"
+      },
+      "methods": [
+        "blameless-postmortem",
+        "five-whys",
+        "fmea",
+        "kaizen",
+        "lean-wastes",
+        "pdca",
+        "pre-mortem",
+        "value-stream-map"
+      ],
+      "triggersOwned": []
+    },
+    "resilience-engineer": {
+      "area": "operations",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-resilience-dr"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations",
+          "sdlc-incident-problem"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [
+          "m:aws-api",
+          "m:aws-appsignals",
+          "m:cloudwatch"
+        ],
+        "area": [],
+        "selectors": [
+          "@power-cloud-architect-awsapi",
+          "@mf-aws-appsignals"
+        ],
+        "areaSelectors": [],
+        "unresolved": [
+          "m:cloudwatch"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "chaostoolkit",
+          "jq",
+          "promtool"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:resilience-engineer",
+          "area:operations",
+          "project"
+        ],
+        "write": [
+          "role:resilience-engineer",
+          "area:operations"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "dr-strategies",
+            "ref": ".megafactory/core/library/skills/sdlc-resilience-dr/references/dr-strategies-and-chaos.md",
+            "purpose": "Estrategias de recuperación y diseño de experimentos al planificar un simulacro"
+          },
+          {
+            "id": "sre-book",
+            "ref": "https://sre.google/sre-book/table-of-contents/",
+            "purpose": "Prácticas de confiabilidad al definir SLO y respuesta"
+          },
+          {
+            "id": "sre-workbook",
+            "ref": "https://sre.google/workbook/table-of-contents/",
+            "purpose": "Ejemplos prácticos de SLO, alertas y postmortem"
+          },
+          {
+            "id": "opentelemetry",
+            "ref": "https://opentelemetry.io/docs/",
+            "purpose": "Señales y convenciones de telemetría del servicio"
+          },
+          {
+            "id": "principles-of-chaos",
+            "ref": "https://principlesofchaos.org/",
+            "purpose": "Principios de los experimentos de caos y simulacros"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "on-call-engineer",
+          "service-desk-l1",
+          "service-owner",
+          "sre",
+          "support-l2"
+        ],
+        "extraPeers": [
+          "devops-sre"
+        ],
+        "escalation": [
+          "artifact-reviewer",
+          "operations-lead"
+        ],
+        "humans": [],
+        "backup": "sre"
+      },
+      "methods": [
+        "aar",
+        "blameless-postmortem",
+        "fault-tree",
+        "five-whys",
+        "fmea",
+        "ishikawa",
+        "kaizen",
+        "pdca",
+        "pre-mortem"
+      ],
+      "triggersOwned": [
+        "drill-completed"
+      ]
+    },
+    "security-architect": {
+      "area": "security",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-threat-modeling"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations",
+          "sdlc-security-review"
+        ],
+        "overlays": [
+          "bt-threat-modeling-stride",
+          "bt-security-review"
+        ]
+      },
+      "mcp": {
+        "own": [
+          "m:aws-docs",
+          "m:aws-iam",
+          "m:aws-wa-security"
+        ],
+        "area": [
+          "m:cloud-posture"
+        ],
+        "selectors": [
+          "@power-saas-builder-aws-knowledge-mcp-server"
+        ],
+        "areaSelectors": [],
+        "unresolved": [
+          "m:aws-iam",
+          "m:aws-wa-security",
+          "m:cloud-posture"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "checkov",
+          "conftest",
+          "gitleaks",
+          "markitdown",
+          "osv-scanner",
+          "semgrep",
+          "syft",
+          "trivy"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:security-architect",
+          "area:security",
+          "project"
+        ],
+        "write": [
+          "role:security-architect",
+          "area:security"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "stride-catalog",
+            "ref": ".megafactory/core/library/skills/sdlc-threat-modeling/references/stride-catalog.md",
+            "purpose": "Amenazas STRIDE por tipo de elemento, incluidos agentes y modelos de lenguaje, con mitigación base"
+          },
+          {
+            "id": "owasp-asvs",
+            "ref": "https://owasp.org/www-project-application-security-verification-standard/",
+            "purpose": "Niveles y requisitos de verificación al escribir el threat model y al auditar"
+          },
+          {
+            "id": "owasp-api-top10",
+            "ref": "https://owasp.org/API-Security/",
+            "purpose": "Riesgos de API al revisar contratos e implementación"
+          },
+          {
+            "id": "nist-ssdf",
+            "ref": "https://csrc.nist.gov/pubs/sp/800/218/final",
+            "purpose": "Prácticas de desarrollo seguro al revisar el proceso"
+          },
+          {
+            "id": "nist-csf",
+            "ref": "https://www.nist.gov/cyberframework",
+            "purpose": "Funciones del marco de ciberseguridad al mapear controles"
+          },
+          {
+            "id": "owasp-llm-top10",
+            "ref": "https://genai.owasp.org/llm-top-10/",
+            "purpose": "Riesgos de aplicaciones con modelos de lenguaje"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "compliance-officer",
+          "dpo",
+          "security-auditor"
+        ],
+        "extraPeers": [],
+        "escalation": [
+          "artifact-reviewer",
+          "security-lead"
+        ],
+        "humans": [],
+        "backup": "security-auditor"
+      },
+      "methods": [
+        "blameless-postmortem",
+        "five-whys",
+        "fmea",
+        "ishikawa",
+        "ooda",
+        "pre-mortem"
+      ],
+      "triggersOwned": []
+    },
+    "security-auditor": {
+      "area": "security",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-security-review"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations",
+          "sdlc-verification-loop"
+        ],
+        "overlays": [
+          "bt-security-review",
+          "bt-verification-loop"
+        ]
+      },
+      "mcp": {
+        "own": [
+          "m:aws-cloudtrail",
+          "m:aws-docs",
+          "m:cloud-posture",
+          "m:github",
+          "m:security-scanners",
+          "m:static-analysis"
+        ],
+        "area": [
+          "m:aws-wa-security"
+        ],
+        "selectors": [
+          "@power-saas-builder-aws-knowledge-mcp-server",
+          "@mf-github"
+        ],
+        "areaSelectors": [],
+        "unresolved": [
+          "m:aws-cloudtrail",
+          "m:aws-wa-security",
+          "m:cloud-posture",
+          "m:security-scanners",
+          "m:static-analysis"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "cfn-guard",
+          "checkov",
+          "gitleaks",
+          "markitdown",
+          "osv-scanner",
+          "prowler",
+          "semgrep",
+          "syft",
+          "trivy",
+          "zap"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:security-auditor",
+          "area:security",
+          "project"
+        ],
+        "write": [
+          "role:security-auditor",
+          "area:security"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "security-traceability",
+            "ref": ".megafactory/core/library/skills/sdlc-security-review/references/security-traceability.md",
+            "purpose": "Tabla protección de la fábrica a CWE, OWASP, ASVS, LLM Top 10 y NIST al auditar y reportar"
+          },
+          {
+            "id": "owasp-asvs",
+            "ref": "https://owasp.org/www-project-application-security-verification-standard/",
+            "purpose": "Niveles y requisitos de verificación al escribir el threat model y al auditar"
+          },
+          {
+            "id": "owasp-api-top10",
+            "ref": "https://owasp.org/API-Security/",
+            "purpose": "Riesgos de API al revisar contratos e implementación"
+          },
+          {
+            "id": "nist-ssdf",
+            "ref": "https://csrc.nist.gov/pubs/sp/800/218/final",
+            "purpose": "Prácticas de desarrollo seguro al revisar el proceso"
+          },
+          {
+            "id": "nist-csf",
+            "ref": "https://www.nist.gov/cyberframework",
+            "purpose": "Funciones del marco de ciberseguridad al mapear controles"
+          },
+          {
+            "id": "owasp-llm-top10",
+            "ref": "https://genai.owasp.org/llm-top-10/",
+            "purpose": "Riesgos de aplicaciones con modelos de lenguaje"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "compliance-officer",
+          "dpo",
+          "security-architect"
+        ],
+        "extraPeers": [
+          "peer-reviewer"
+        ],
+        "escalation": [
+          "artifact-reviewer",
+          "security-lead"
+        ],
+        "humans": [],
+        "backup": "peer-reviewer"
+      },
+      "methods": [
+        "blameless-postmortem",
+        "five-whys",
+        "fmea",
+        "ishikawa",
+        "ooda",
+        "pre-mortem"
+      ],
+      "triggersOwned": []
+    },
+    "security-lead": {
+      "area": "security",
+      "level": "lead",
+      "skills": {
+        "own": [
+          "sdlc-security-supervision"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations",
+          "sdlc-security-review"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [],
+        "area": [
+          "m:aws-docs",
+          "m:aws-wa-security",
+          "m:cloud-posture"
+        ],
+        "selectors": [],
+        "areaSelectors": [
+          "@power-saas-builder-aws-knowledge-mcp-server"
+        ],
+        "unresolved": [
+          "m:aws-wa-security",
+          "m:cloud-posture"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "checkov",
+          "gitleaks",
+          "markitdown",
+          "osv-scanner",
+          "semgrep",
+          "syft",
+          "trivy"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:security-lead",
+          "area:security",
+          "project"
+        ],
+        "write": [
+          "role:security-lead",
+          "area:security"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "security-supervision-map",
+            "ref": ".megafactory/core/library/skills/sdlc-security-supervision/references/coherence-map.md",
+            "purpose": "Mapa de reparto y coherencia del área security para el supervisor"
+          },
+          {
+            "id": "owasp-asvs",
+            "ref": "https://owasp.org/www-project-application-security-verification-standard/",
+            "purpose": "Niveles y requisitos de verificación al escribir el threat model y al auditar"
+          },
+          {
+            "id": "owasp-api-top10",
+            "ref": "https://owasp.org/API-Security/",
+            "purpose": "Riesgos de API al revisar contratos e implementación"
+          },
+          {
+            "id": "nist-ssdf",
+            "ref": "https://csrc.nist.gov/pubs/sp/800/218/final",
+            "purpose": "Prácticas de desarrollo seguro al revisar el proceso"
+          },
+          {
+            "id": "nist-csf",
+            "ref": "https://www.nist.gov/cyberframework",
+            "purpose": "Funciones del marco de ciberseguridad al mapear controles"
+          },
+          {
+            "id": "owasp-llm-top10",
+            "ref": "https://genai.owasp.org/llm-top-10/",
+            "purpose": "Riesgos de aplicaciones con modelos de lenguaje"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [],
+        "extraPeers": [],
+        "escalation": [
+          "artifact-reviewer",
+          "conductor"
+        ],
+        "humans": [],
+        "backup": "conductor"
+      },
+      "methods": [
+        "a3",
+        "aar",
+        "blameless-postmortem",
+        "five-whys",
+        "fmea",
+        "ishikawa",
+        "ooda",
+        "pre-mortem"
+      ],
+      "triggersOwned": []
+    },
+    "service-desk-l1": {
+      "area": "operations",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-service-desk"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations",
+          "sdlc-incident-problem"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [
+          "m:issue-tracker",
+          "m:knowledge-base"
+        ],
+        "area": [
+          "m:aws-appsignals",
+          "m:cloudwatch"
+        ],
+        "selectors": [],
+        "areaSelectors": [
+          "@mf-aws-appsignals"
+        ],
+        "unresolved": [
+          "m:cloudwatch",
+          "m:issue-tracker",
+          "m:knowledge-base"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "jq",
+          "markitdown",
+          "promtool"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:service-desk-l1",
+          "area:operations",
+          "project"
+        ],
+        "write": [
+          "role:service-desk-l1",
+          "area:operations"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "triage-matrix",
+            "ref": ".megafactory/core/library/skills/sdlc-service-desk/references/triage-matrix.md",
+            "purpose": "matriz impacto por urgencia, señales de incidente y paquete mínimo de derivación"
+          },
+          {
+            "id": "kcs-practice",
+            "ref": "https://en.wikipedia.org/wiki/Knowledge-centered_support",
+            "purpose": "Práctica de soporte centrado en conocimiento: capturar y mejorar artículos al resolver"
+          },
+          {
+            "id": "itil-incident-priority",
+            "ref": "https://en.wikipedia.org/wiki/Incident_management_(ITSM)",
+            "purpose": "Prioridad por impacto y urgencia y escalamiento funcional en gestión de incidentes"
+          },
+          {
+            "id": "sre-book",
+            "ref": "https://sre.google/sre-book/table-of-contents/",
+            "purpose": "Prácticas de confiabilidad al definir SLO y respuesta"
+          },
+          {
+            "id": "sre-workbook",
+            "ref": "https://sre.google/workbook/table-of-contents/",
+            "purpose": "Ejemplos prácticos de SLO, alertas y postmortem"
+          },
+          {
+            "id": "opentelemetry",
+            "ref": "https://opentelemetry.io/docs/",
+            "purpose": "Señales y convenciones de telemetría del servicio"
+          },
+          {
+            "id": "principles-of-chaos",
+            "ref": "https://principlesofchaos.org/",
+            "purpose": "Principios de los experimentos de caos y simulacros"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "on-call-engineer",
+          "resilience-engineer",
+          "service-owner",
+          "sre",
+          "support-l2"
+        ],
+        "extraPeers": [
+          "tech-writer"
+        ],
+        "escalation": [
+          "artifact-reviewer",
+          "operations-lead"
+        ],
+        "humans": [],
+        "backup": "support-l2"
+      },
+      "methods": [
+        "aar",
+        "blameless-postmortem",
+        "fault-tree",
+        "five-whys",
+        "fmea",
+        "ishikawa",
+        "kaizen",
+        "pdca",
+        "retrospective"
+      ],
+      "triggersOwned": []
+    },
+    "service-owner": {
+      "area": "operations",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-service-ownership"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations",
+          "sdlc-incident-problem"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [
+          "m:grafana",
+          "m:issue-tracker",
+          "m:knowledge-base",
+          "m:service-catalog"
+        ],
+        "area": [
+          "m:aws-appsignals",
+          "m:cloudwatch"
+        ],
+        "selectors": [],
+        "areaSelectors": [
+          "@mf-aws-appsignals"
+        ],
+        "unresolved": [
+          "m:cloudwatch",
+          "m:grafana",
+          "m:issue-tracker",
+          "m:knowledge-base",
+          "m:service-catalog"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "jq",
+          "markitdown",
+          "promtool"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:service-owner",
+          "area:operations",
+          "area:platform",
+          "project"
+        ],
+        "write": [
+          "role:service-owner",
+          "area:operations"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "service-catalog-guide",
+            "ref": ".megafactory/core/library/skills/sdlc-service-ownership/references/service-catalog-guide.md",
+            "purpose": "campos mínimos de la ficha de catálogo, relación SLO-SLA y política de presupuesto de error"
+          },
+          {
+            "id": "implementing-slos",
+            "ref": "https://sre.google/workbook/implementing-slos/",
+            "purpose": "Cómo derivar SLO y presupuestos de error antes de proponer un SLA"
+          },
+          {
+            "id": "sla-concept",
+            "ref": "https://en.wikipedia.org/wiki/Service-level_agreement",
+            "purpose": "Partes de un acuerdo de nivel de servicio: alcance, metas, exclusiones y remedios"
+          },
+          {
+            "id": "sre-book",
+            "ref": "https://sre.google/sre-book/table-of-contents/",
+            "purpose": "Prácticas de confiabilidad al definir SLO y respuesta"
+          },
+          {
+            "id": "sre-workbook",
+            "ref": "https://sre.google/workbook/table-of-contents/",
+            "purpose": "Ejemplos prácticos de SLO, alertas y postmortem"
+          },
+          {
+            "id": "opentelemetry",
+            "ref": "https://opentelemetry.io/docs/",
+            "purpose": "Señales y convenciones de telemetría del servicio"
+          },
+          {
+            "id": "principles-of-chaos",
+            "ref": "https://principlesofchaos.org/",
+            "purpose": "Principios de los experimentos de caos y simulacros"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "on-call-engineer",
+          "resilience-engineer",
+          "service-desk-l1",
+          "sre",
+          "support-l2"
+        ],
+        "extraPeers": [
+          "finops",
+          "product-manager"
+        ],
+        "escalation": [
+          "artifact-reviewer",
+          "operations-lead"
+        ],
+        "humans": [],
+        "backup": null
+      },
+      "methods": [
+        "a3",
+        "aar",
+        "blameless-postmortem",
+        "fault-tree",
+        "five-whys",
+        "fmea",
+        "ishikawa",
+        "kaizen",
+        "pdca",
+        "value-stream-map"
+      ],
+      "triggersOwned": []
+    },
+    "solutions-architect": {
+      "area": "architecture",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-solution-architecture"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations",
+          "sdlc-search-first"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [
+          "m:aws-billing-pricing",
+          "m:aws-docs",
+          "m:aws-iac",
+          "m:aws-transform",
+          "m:library-docs",
+          "m:multicloud",
+          "m:terraform"
+        ],
+        "area": [],
+        "selectors": [
+          "@power-saas-builder-aws-knowledge-mcp-server",
+          "@power-cloud-architect-context7",
+          "@power-cloud-architect-awspricing"
+        ],
+        "areaSelectors": [],
+        "unresolved": [
+          "m:aws-iac",
+          "m:aws-transform",
+          "m:multicloud",
+          "m:terraform"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "markitdown",
+          "mermaid-cli",
+          "spectral"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:solutions-architect",
+          "area:architecture",
+          "project"
+        ],
+        "write": [
+          "role:solutions-architect",
+          "area:architecture"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "architecture-decisions",
+            "ref": ".megafactory/core/library/skills/sdlc-solution-architecture/references/decisions.md",
+            "purpose": "Niveles C4, cuándo escribir un ADR, estrategias 6R y registro de deuda al diseñar"
+          },
+          {
+            "id": "c4-model",
+            "ref": "https://c4model.com/",
+            "purpose": "Niveles de diagrama al describir la arquitectura de la solución"
+          },
+          {
+            "id": "adr",
+            "ref": "https://adr.github.io/",
+            "purpose": "Formato de las decisiones de arquitectura registradas"
+          },
+          {
+            "id": "openapi",
+            "ref": "https://spec.openapis.org/oas/latest.html",
+            "purpose": "Especificación de los contratos HTTP que se firman"
+          },
+          {
+            "id": "asyncapi",
+            "ref": "https://www.asyncapi.com/docs/reference/specification/latest",
+            "purpose": "Especificación de los contratos de eventos y mensajes"
+          },
+          {
+            "id": "aws-well-architected",
+            "ref": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html",
+            "purpose": "Pilares de buena arquitectura al revisar la solución en la nube"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "api-contract",
+          "data-modeler",
+          "domain-rules",
+          "integrations"
+        ],
+        "extraPeers": [
+          "finops",
+          "tech-writer"
+        ],
+        "escalation": [
+          "architecture-lead",
+          "artifact-reviewer"
+        ],
+        "humans": [],
+        "backup": "security-architect"
+      },
+      "methods": [
+        "adr",
+        "blameless-postmortem",
+        "cynefin",
+        "event-storming",
+        "five-whys",
+        "fmea",
+        "pre-mortem",
+        "rice-wsjf"
+      ],
+      "triggersOwned": []
+    },
+    "sre": {
+      "area": "operations",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-incident-problem",
+          "sdlc-slo-observability"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [
+          "m:aws-appsignals",
+          "m:aws-prometheus",
+          "m:aws-support",
+          "m:cloudwatch",
+          "m:datadog",
+          "m:error-tracking",
+          "m:grafana",
+          "m:issue-tracker",
+          "m:pagerduty"
+        ],
+        "area": [],
+        "selectors": [
+          "@mf-pagerduty",
+          "@mf-aws-appsignals"
+        ],
+        "areaSelectors": [],
+        "unresolved": [
+          "m:aws-prometheus",
+          "m:aws-support",
+          "m:cloudwatch",
+          "m:datadog",
+          "m:error-tracking",
+          "m:grafana",
+          "m:issue-tracker"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "jq",
+          "promtool"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:sre",
+          "area:operations",
+          "project"
+        ],
+        "write": [
+          "role:sre",
+          "area:operations"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "incident-timeline",
+            "ref": ".megafactory/core/library/skills/sdlc-incident-problem/references/incident-roles-and-timeline.md",
+            "purpose": "Roles, cronología y paso a problema al conducir un incidente"
+          },
+          {
+            "id": "slo-burn-rate",
+            "ref": ".megafactory/core/library/skills/sdlc-slo-observability/references/burn-rate-alerts.md",
+            "purpose": "Elección de SLI y alertas por tasa de consumo al revisar SLO"
+          },
+          {
+            "id": "sre-book",
+            "ref": "https://sre.google/sre-book/table-of-contents/",
+            "purpose": "Prácticas de confiabilidad al definir SLO y respuesta"
+          },
+          {
+            "id": "sre-workbook",
+            "ref": "https://sre.google/workbook/table-of-contents/",
+            "purpose": "Ejemplos prácticos de SLO, alertas y postmortem"
+          },
+          {
+            "id": "opentelemetry",
+            "ref": "https://opentelemetry.io/docs/",
+            "purpose": "Señales y convenciones de telemetría del servicio"
+          },
+          {
+            "id": "principles-of-chaos",
+            "ref": "https://principlesofchaos.org/",
+            "purpose": "Principios de los experimentos de caos y simulacros"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "on-call-engineer",
+          "resilience-engineer",
+          "service-desk-l1",
+          "service-owner",
+          "support-l2"
+        ],
+        "extraPeers": [
+          "dba-prod",
+          "devops-sre",
+          "engineering-manager",
+          "release-manager"
+        ],
+        "escalation": [
+          "artifact-reviewer",
+          "operations-lead"
+        ],
+        "humans": [],
+        "backup": "devops-sre"
+      },
+      "methods": [
+        "aar",
+        "blameless-postmortem",
+        "fault-tree",
+        "five-whys",
+        "fmea",
+        "ishikawa",
+        "kaizen",
+        "pdca"
+      ],
+      "triggersOwned": [
+        "incident-major",
+        "incident-opened",
+        "ops-review-act"
+      ]
+    },
+    "support-l2": {
+      "area": "operations",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-technical-support"
+        ],
+        "shared": [
+          "sdlc-cloud-foundations",
+          "sdlc-incident-problem"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [
+          "m:error-tracking",
+          "m:issue-tracker",
+          "m:knowledge-base"
+        ],
+        "area": [
+          "m:aws-appsignals",
+          "m:cloudwatch"
+        ],
+        "selectors": [],
+        "areaSelectors": [
+          "@mf-aws-appsignals"
+        ],
+        "unresolved": [
+          "m:cloudwatch",
+          "m:error-tracking",
+          "m:issue-tracker",
+          "m:knowledge-base"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "gh",
+          "jq",
+          "promtool"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:support-l2",
+          "area:operations",
+          "area:engineering",
+          "project"
+        ],
+        "write": [
+          "role:support-l2",
+          "area:operations"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "diagnosis-playbook",
+            "ref": ".megafactory/core/library/skills/sdlc-technical-support/references/diagnosis-playbook.md",
+            "purpose": "ciclo de hipótesis, fuentes de evidencia de solo lectura y criterios de defecto frente a configuración o uso"
+          },
+          {
+            "id": "effective-troubleshooting",
+            "ref": "https://sre.google/sre-book/effective-troubleshooting/",
+            "purpose": "Diagnóstico sistemático: triage, examinar, diagnosticar, probar y tratar"
+          },
+          {
+            "id": "root-cause-analysis",
+            "ref": "https://en.wikipedia.org/wiki/Root_cause_analysis",
+            "purpose": "Técnicas de análisis de causa raíz al cerrar un diagnóstico"
+          },
+          {
+            "id": "sre-book",
+            "ref": "https://sre.google/sre-book/table-of-contents/",
+            "purpose": "Prácticas de confiabilidad al definir SLO y respuesta"
+          },
+          {
+            "id": "sre-workbook",
+            "ref": "https://sre.google/workbook/table-of-contents/",
+            "purpose": "Ejemplos prácticos de SLO, alertas y postmortem"
+          },
+          {
+            "id": "opentelemetry",
+            "ref": "https://opentelemetry.io/docs/",
+            "purpose": "Señales y convenciones de telemetría del servicio"
+          },
+          {
+            "id": "principles-of-chaos",
+            "ref": "https://principlesofchaos.org/",
+            "purpose": "Principios de los experimentos de caos y simulacros"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "on-call-engineer",
+          "resilience-engineer",
+          "service-desk-l1",
+          "service-owner",
+          "sre"
+        ],
+        "extraPeers": [
+          "backend",
+          "frontend"
+        ],
+        "escalation": [
+          "artifact-reviewer",
+          "operations-lead"
+        ],
+        "humans": [],
+        "backup": null
+      },
+      "methods": [
+        "a3",
+        "aar",
+        "blameless-postmortem",
+        "fault-tree",
+        "five-whys",
+        "fmea",
+        "ishikawa",
+        "kaizen",
+        "pdca"
+      ],
+      "triggersOwned": []
+    },
+    "tech-writer": {
+      "area": "product",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-docs-knowledge"
+        ],
+        "shared": [
+          "sdlc-requirements-prd"
+        ],
+        "overlays": []
+      },
+      "mcp": {
+        "own": [
+          "m:knowledge-base",
+          "m:library-docs",
+          "m:obsidian"
+        ],
+        "area": [
+          "m:issue-tracker"
+        ],
+        "selectors": [
+          "@mcp-obsidian",
+          "@power-cloud-architect-context7"
+        ],
+        "areaSelectors": [],
+        "unresolved": [
+          "m:issue-tracker",
+          "m:knowledge-base"
+        ]
+      },
+      "tools": {
+        "ids": [
+          "lychee",
+          "markdownlint-cli2",
+          "markitdown",
+          "mermaid-cli",
+          "pandoc",
+          "vale"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:tech-writer",
+          "area:product",
+          "project"
+        ],
+        "write": [
+          "role:tech-writer",
+          "area:product"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "diataxis-adr",
+            "ref": ".megafactory/core/library/skills/sdlc-docs-knowledge/references/diataxis-adr.md",
+            "purpose": "Clasificar páginas con Diátaxis y promover ADR aprobados"
+          },
+          {
+            "id": "wcag22",
+            "ref": "https://www.w3.org/TR/WCAG22/",
+            "purpose": "Criterios de accesibilidad al escribir historias y criterios de aceptación"
+          },
+          {
+            "id": "gherkin",
+            "ref": "https://cucumber.io/docs/gherkin/reference/",
+            "purpose": "Forma de los escenarios Dado-Cuando-Entonces de los casos borde"
+          },
+          {
+            "id": "diataxis",
+            "ref": "https://diataxis.fr/",
+            "purpose": "Tipos de documentación al planificar la guía del producto"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "business-analyst",
+          "product-manager"
+        ],
+        "extraPeers": [
+          "service-desk-l1",
+          "solutions-architect"
+        ],
+        "escalation": [
+          "artifact-reviewer",
+          "product-lead"
+        ],
+        "humans": [],
+        "backup": "content-seo"
+      },
+      "methods": [
+        "a3",
+        "blameless-postmortem",
+        "design-thinking",
+        "five-whys",
+        "impact-mapping",
+        "pre-mortem",
+        "retrospective",
+        "rice-wsjf"
+      ],
+      "triggersOwned": []
+    },
+    "uiux-a11y": {
+      "area": "engineering",
+      "level": "member",
+      "skills": {
+        "own": [
+          "sdlc-uiux-accessibility"
+        ],
+        "shared": [
+          "sdlc-tdd",
+          "sdlc-verification-loop",
+          "sdlc-search-first",
+          "sdlc-frontend-web"
+        ],
+        "overlays": [
+          "bt-astro-frontend",
+          "apple-design"
+        ]
+      },
+      "mcp": {
+        "own": [
+          "m:browser-devtools",
+          "m:figma",
+          "m:playwright"
+        ],
+        "area": [
+          "m:library-docs"
+        ],
+        "selectors": [
+          "@figma-bridge",
+          "@power-saas-builder-playwright",
+          "@mf-chrome-devtools"
+        ],
+        "areaSelectors": [
+          "@power-cloud-architect-context7"
+        ],
+        "unresolved": []
+      },
+      "tools": {
+        "ids": [
+          "axe-core-cli",
+          "gitleaks",
+          "playwright",
+          "semgrep"
+        ],
+        "agentInvocation": []
+      },
+      "memory": {
+        "read": [
+          "role:uiux-a11y",
+          "area:engineering",
+          "project"
+        ],
+        "write": [
+          "role:uiux-a11y",
+          "area:engineering"
+        ]
+      },
+      "docs": {
+        "start": [],
+        "onDemand": [
+          {
+            "id": "wcag22-checklist",
+            "ref": ".megafactory/core/library/skills/sdlc-uiux-accessibility/references/wcag22-checklist.md",
+            "purpose": "Criterios WCAG 2.2 AA y recorridos manuales al redactar a11y-rules"
+          },
+          {
+            "id": "owasp-top10",
+            "ref": "https://owasp.org/Top10/",
+            "purpose": "Riesgos web frecuentes al implementar y revisar código"
+          },
+          {
+            "id": "twelve-factor",
+            "ref": "https://12factor.net/",
+            "purpose": "Configuración y despliegue de servicios portables"
+          },
+          {
+            "id": "wcag22",
+            "ref": "https://www.w3.org/TR/WCAG22/",
+            "purpose": "Criterios de accesibilidad al construir interfaces"
+          }
+        ]
+      },
+      "connections": {
+        "peers": [
+          "backend",
+          "content-seo",
+          "engineering-manager",
+          "frontend"
+        ],
+        "extraPeers": [],
+        "escalation": [
+          "artifact-reviewer",
+          "engineering-lead"
+        ],
+        "humans": [],
+        "backup": "frontend"
+      },
+      "methods": [
+        "blameless-postmortem",
+        "definition-ready-done",
+        "event-storming",
+        "five-whys",
+        "ishikawa",
+        "kaizen",
+        "lean-wastes",
+        "retrospective"
+      ],
+      "triggersOwned": []
+    }
+  }
+}

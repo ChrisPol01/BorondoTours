@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Registro de deuda técnica (TechDebt.<slug>.json, §9.1)",
+  "type": "object",
+  "required": ["feature", "title", "component", "debtType", "impact", "evidence", "proposal", "effort", "priority"],
+  "additionalProperties": false,
+  "properties": {
+    "feature": { "type": "string" },
+    "title": { "type": "string", "minLength": 3, "maxLength": 160 },
+    "component": { "type": "string", "minLength": 1, "maxLength": 160 },
+    "debtType": { "enum": ["architecture", "design", "code", "test", "infra", "docs", "dependency"] },
+    "impact": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "interest": { "type": "string", "maxLength": 2000 },
+    "evidence": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "required": ["kind", "ref"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": { "enum": ["metric", "incident", "review", "code", "audit"] },
+          "ref": { "type": "string", "maxLength": 300 },
+          "note": { "type": "string", "maxLength": 500 }
+        }
+      }
+    },
+    "proposal": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "effort": { "enum": ["S", "M", "L", "XL"] },
+    "priority": { "enum": ["low", "medium", "high", "critical"] }
+  }
+}

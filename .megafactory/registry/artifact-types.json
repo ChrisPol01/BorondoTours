@@ -1,0 +1,1919 @@
+{
+  "schemaVersion": 1,
+  "types": [
+    {
+      "type": "method-record",
+      "file": "methods/MethodRecord-<slug>.md",
+      "multiple": true,
+      "format": "md",
+      "phase": null,
+      "anyPhase": true,
+      "producerAny": true,
+      "signable": false,
+      "producerRole": null,
+      "cosigners": [],
+      "subscribers": [],
+      "applicableWhen": {
+        "optional": true
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "schema": null,
+      "requiredBlocks": [
+        "json bt-method"
+      ],
+      "rules": [
+        "method-record-block"
+      ],
+      "actionsFrom": "json bt-method#/actions"
+    },
+    {
+      "type": "area-report",
+      "file": "areas/AreaReport.<slug>.json",
+      "multiple": true,
+      "format": "json",
+      "phase": null,
+      "anyPhase": true,
+      "signable": false,
+      "producerBySlug": {
+        "architecture": "architecture-lead",
+        "engineering": "engineering-lead",
+        "operations": "operations-lead",
+        "platform": "platform-lead",
+        "product": "product-lead",
+        "quality": "quality-lead",
+        "security": "security-lead"
+      },
+      "cosigners": [],
+      "subscribers": [
+        "conductor"
+      ],
+      "applicableWhen": {
+        "optional": true
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "schema": "area-report.schema.json",
+      "rules": [],
+      "actionsFrom": "/actions"
+    },
+    {
+      "type": "executive-report",
+      "file": "00-executive/ExecutiveReport.json",
+      "multiple": false,
+      "format": "json",
+      "phase": null,
+      "anyPhase": true,
+      "signable": false,
+      "producerRole": "cto",
+      "cosigners": [],
+      "subscribers": [
+        "conductor"
+      ],
+      "applicableWhen": {
+        "optional": true
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "schema": "executive-report.schema.json",
+      "rules": [],
+      "lane": "govern",
+      "actionsFrom": "/actions"
+    },
+    {
+      "type": "prd",
+      "file": "01-discovery/PRD.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "discovery",
+      "signable": true,
+      "producerRole": "product-manager",
+      "cosigners": [
+        "business-analyst",
+        "compliance-officer",
+        "solutions-architect"
+      ],
+      "subscribers": [
+        "business-analyst",
+        "compliance-officer",
+        "solutions-architect",
+        "api-contract",
+        "data-modeler",
+        "uiux-a11y",
+        "domain-rules",
+        "tech-writer",
+        "content-seo"
+      ],
+      "applicableWhen": {
+        "always": true
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [
+        "edge-cases",
+        "compliance-requirements"
+      ],
+      "schema": "prd.schema.json",
+      "rules": [
+        "prd-no-blocking-open-questions",
+        "prd-ac-per-story"
+      ],
+      "lane": "delivery"
+    },
+    {
+      "type": "edge-cases",
+      "file": "01-discovery/EdgeCases.yml",
+      "multiple": false,
+      "format": "yaml",
+      "phase": "discovery",
+      "signable": true,
+      "producerRole": "business-analyst",
+      "cosigners": [
+        "product-manager",
+        "solutions-architect"
+      ],
+      "subscribers": [
+        "product-manager",
+        "solutions-architect",
+        "api-contract",
+        "qa-e2e",
+        "domain-rules",
+        "backend"
+      ],
+      "applicableWhen": {
+        "always": true
+      },
+      "dependsOnTypes": [
+        "prd"
+      ],
+      "feedbackFrom": [],
+      "schema": null,
+      "yaml": "canonical-edgecases",
+      "requiredTopLevelKeys": [
+        "feature",
+        "stateMachines",
+        "edgeCases"
+      ],
+      "rules": [
+        "edge-case-ids",
+        "edge-case-fields",
+        "e2e-requires-ui"
+      ],
+      "lane": "delivery"
+    },
+    {
+      "type": "compliance-requirements",
+      "file": "01-discovery/Compliance_Requirements.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "discovery",
+      "signable": true,
+      "producerRole": "compliance-officer",
+      "cosigners": [
+        "product-manager",
+        "solutions-architect"
+      ],
+      "subscribers": [
+        "product-manager",
+        "solutions-architect",
+        "api-contract",
+        "data-modeler",
+        "security-architect",
+        "security-auditor"
+      ],
+      "applicableWhen": {
+        "always": true
+      },
+      "dependsOnTypes": [
+        "prd",
+        "edge-cases"
+      ],
+      "feedbackFrom": [],
+      "schema": "compliance-requirements.schema.json",
+      "rules": [
+        "inventory-coverage",
+        "sensitive-separate-consent",
+        "cr-owner-applicable"
+      ],
+      "lane": "delivery"
+    },
+    {
+      "type": "tech-debt-record",
+      "file": "01-discovery/TechDebt.<slug>.json",
+      "multiple": true,
+      "format": "json",
+      "phase": "discovery",
+      "signable": true,
+      "producerRole": "solutions-architect",
+      "cosigners": [
+        "product-manager"
+      ],
+      "subscribers": [
+        "product-manager"
+      ],
+      "applicableWhen": {
+        "entryTypesAny": [
+          "debt"
+        ]
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "schema": "tech-debt-record.schema.json",
+      "rules": [
+        "debt-has-evidence"
+      ],
+      "lane": "delivery",
+      "minInstances": 1
+    },
+    {
+      "type": "c4-model",
+      "file": "02-contracts/C4-Model.md",
+      "multiple": false,
+      "format": "md",
+      "phase": "contracts",
+      "signable": true,
+      "producerRole": "solutions-architect",
+      "cosigners": [
+        "security-architect",
+        "finops"
+      ],
+      "subscribers": [
+        "security-architect",
+        "finops",
+        "api-contract",
+        "data-modeler",
+        "integrations",
+        "tech-writer"
+      ],
+      "applicableWhen": {
+        "always": true
+      },
+      "dependsOnTypes": [
+        "prd",
+        "edge-cases",
+        "compliance-requirements"
+      ],
+      "feedbackFrom": [
+        "cost-estimate",
+        "threat-model"
+      ],
+      "schema": null,
+      "requiredHeadings": [
+        "## Contexto (C4-1)",
+        "## Contenedores (C4-2)",
+        "## Componentes (C4-3)",
+        "## Requisitos no funcionales",
+        "## Well-Architected",
+        "## Decisiones pendientes afectadas"
+      ],
+      "requiredBlocks": [
+        "mermaid",
+        "json bt-pending-decisions"
+      ],
+      "rules": [
+        "pending-decision-reason"
+      ],
+      "lane": "delivery"
+    },
+    {
+      "type": "adr-draft",
+      "file": "02-contracts/adr-drafts/ADR-DRAFT-<slug>.md",
+      "multiple": true,
+      "format": "md",
+      "phase": "contracts",
+      "signable": true,
+      "producerRole": "solutions-architect",
+      "cosigners": [
+        "security-architect"
+      ],
+      "subscribers": [
+        "security-architect",
+        "tech-writer"
+      ],
+      "applicableWhen": {
+        "optional": true
+      },
+      "dependsOnTypes": [
+        "c4-model"
+      ],
+      "feedbackFrom": [
+        "threat-model"
+      ],
+      "schema": null,
+      "requiredHeadings": [
+        "## Estado",
+        "## Contexto",
+        "## Decisión",
+        "## Consecuencias"
+      ],
+      "rules": [
+        "adr-no-number"
+      ],
+      "lane": "delivery"
+    },
+    {
+      "type": "cost-estimate",
+      "file": "02-contracts/Cost_Estimate.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "contracts",
+      "signable": true,
+      "producerRole": "finops",
+      "cosigners": [
+        "solutions-architect"
+      ],
+      "subscribers": [
+        "solutions-architect",
+        "devops-sre"
+      ],
+      "applicableWhen": {
+        "always": true
+      },
+      "dependsOnTypes": [
+        "c4-model",
+        "data-model"
+      ],
+      "feedbackFrom": [],
+      "schema": "cost-estimate.schema.json",
+      "rules": [],
+      "lane": "delivery"
+    },
+    {
+      "type": "threat-model",
+      "file": "02-contracts/ThreatModel.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "contracts",
+      "signable": true,
+      "producerRole": "security-architect",
+      "cosigners": [
+        "solutions-architect",
+        "compliance-officer"
+      ],
+      "subscribers": [
+        "solutions-architect",
+        "compliance-officer",
+        "backend",
+        "security-auditor"
+      ],
+      "applicableWhen": {
+        "always": true
+      },
+      "dependsOnTypes": [
+        "c4-model",
+        "openapi",
+        "data-model",
+        "integrations"
+      ],
+      "feedbackFrom": [],
+      "schema": "threat-model.schema.json",
+      "rules": [
+        "stride-coverage",
+        "mitigation-owner-applicable"
+      ],
+      "lane": "delivery"
+    },
+    {
+      "type": "decommission-plan",
+      "file": "02-contracts/DecommissionPlan.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "contracts",
+      "signable": true,
+      "producerRole": "release-manager",
+      "cosigners": [
+        "solutions-architect",
+        "security-architect",
+        "finops"
+      ],
+      "subscribers": [
+        "solutions-architect",
+        "security-architect",
+        "finops"
+      ],
+      "applicableWhen": {
+        "entryTypesAny": [
+          "decommission"
+        ]
+      },
+      "dependsOnTypes": [
+        "prd"
+      ],
+      "feedbackFrom": [],
+      "schema": "decommission-plan.schema.json",
+      "rules": [
+        "decommission-cleanup-complete"
+      ],
+      "lane": "delivery"
+    },
+    {
+      "type": "change-record",
+      "file": "02-contracts/ChangeRecord.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "contracts",
+      "signable": true,
+      "producerRole": "release-manager",
+      "cosigners": [
+        "security-architect",
+        "devops-sre"
+      ],
+      "subscribers": [
+        "security-architect",
+        "devops-sre"
+      ],
+      "applicableWhen": {
+        "entryTypesAny": [
+          "change",
+          "defect",
+          "standard",
+          "debt",
+          "migration-wave",
+          "audit-remediation",
+          "decommission",
+          "experiment"
+        ]
+      },
+      "dependsOnTypes": [
+        "prd"
+      ],
+      "feedbackFrom": [],
+      "schema": "change-record.schema.json",
+      "rules": [
+        "change-class-valid",
+        "rollback-present",
+        "implementation-window-present",
+        "class-deviation-justified"
+      ],
+      "lane": "delivery",
+      "extract": {
+        "changeClass": "/class",
+        "standardChangeId": "/standardChangeId"
+      }
+    },
+    {
+      "type": "openapi",
+      "file": "02-contracts/openapi.yaml",
+      "multiple": false,
+      "format": "yaml",
+      "phase": "contracts",
+      "signable": true,
+      "producerRole": "api-contract",
+      "cosigners": [
+        "data-modeler",
+        "security-architect",
+        "backend",
+        "frontend"
+      ],
+      "subscribers": [
+        "backend",
+        "frontend",
+        "qa-e2e",
+        "tech-writer",
+        "security-auditor",
+        "security-architect"
+      ],
+      "applicableWhen": {
+        "layersAny": [
+          "api"
+        ]
+      },
+      "dependsOnTypes": [
+        "prd",
+        "edge-cases",
+        "compliance-requirements",
+        "c4-model"
+      ],
+      "feedbackFrom": [
+        "data-model",
+        "threat-model"
+      ],
+      "disputeParties": [
+        "api-contract",
+        "data-modeler",
+        "backend"
+      ],
+      "schema": null,
+      "yaml": "canonical-openapi",
+      "requiredTopLevelKeys": [
+        "openapi",
+        "info",
+        "paths",
+        "components"
+      ],
+      "rules": [
+        "openapi-version",
+        "api-path-prefix",
+        "no-quoted-path-keys",
+        "rbac-per-operation",
+        "compliance-per-operation",
+        "no-card-data"
+      ],
+      "lane": "delivery"
+    },
+    {
+      "type": "asyncapi",
+      "file": "02-contracts/asyncapi.yaml",
+      "multiple": false,
+      "format": "yaml",
+      "phase": "contracts",
+      "signable": true,
+      "producerRole": "api-contract",
+      "cosigners": [
+        "backend",
+        "security-architect"
+      ],
+      "subscribers": [
+        "backend",
+        "integrations",
+        "security-architect"
+      ],
+      "applicableWhen": {
+        "layersAny": [
+          "events"
+        ]
+      },
+      "dependsOnTypes": [
+        "prd",
+        "c4-model"
+      ],
+      "feedbackFrom": [
+        "threat-model"
+      ],
+      "schema": null,
+      "requiredTopLevelKeys": [
+        "asyncapi",
+        "info",
+        "channels",
+        "operations"
+      ],
+      "rules": [
+        "asyncapi-version-3"
+      ],
+      "lane": "delivery"
+    },
+    {
+      "type": "data-model",
+      "file": "02-contracts/DataModel.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "contracts",
+      "signable": true,
+      "producerRole": "data-modeler",
+      "cosigners": [
+        "api-contract",
+        "security-architect",
+        "backend"
+      ],
+      "subscribers": [
+        "api-contract",
+        "security-architect",
+        "backend",
+        "finops"
+      ],
+      "applicableWhen": {
+        "layersAny": [
+          "data"
+        ]
+      },
+      "dependsOnTypes": [
+        "prd",
+        "compliance-requirements",
+        "c4-model",
+        "openapi"
+      ],
+      "feedbackFrom": [
+        "threat-model"
+      ],
+      "disputeParties": [
+        "api-contract",
+        "data-modeler",
+        "backend"
+      ],
+      "schema": "data-model.schema.json",
+      "rules": [
+        "snake-case",
+        "uuid-pk",
+        "no-soft-delete",
+        "financial-created-by",
+        "tenant-column",
+        "no-card-data"
+      ],
+      "lane": "delivery"
+    },
+    {
+      "type": "dbml-view",
+      "file": "02-contracts/schema.dbml",
+      "multiple": false,
+      "format": "text",
+      "phase": "contracts",
+      "signable": false,
+      "producerRole": "data-modeler",
+      "cosigners": [],
+      "subscribers": [
+        "tech-writer"
+      ],
+      "applicableWhen": {
+        "optional": true
+      },
+      "dependsOnTypes": [
+        "data-model"
+      ],
+      "feedbackFrom": [],
+      "schema": null,
+      "rules": [],
+      "lane": "delivery"
+    },
+    {
+      "type": "design-tokens",
+      "file": "02-contracts/DesignTokens.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "contracts",
+      "signable": true,
+      "producerRole": "uiux-a11y",
+      "cosigners": [
+        "frontend"
+      ],
+      "subscribers": [
+        "frontend",
+        "content-seo"
+      ],
+      "applicableWhen": {
+        "layersAny": [
+          "ui"
+        ]
+      },
+      "dependsOnTypes": [
+        "prd",
+        "compliance-requirements"
+      ],
+      "feedbackFrom": [],
+      "schema": "design-tokens.schema.json",
+      "rules": [
+        "tokens-exist"
+      ],
+      "lane": "delivery",
+      "fallbackCosigners": [
+        "solutions-architect"
+      ]
+    },
+    {
+      "type": "a11y-rules",
+      "file": "02-contracts/a11y_rules.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "contracts",
+      "signable": true,
+      "producerRole": "uiux-a11y",
+      "cosigners": [
+        "frontend"
+      ],
+      "subscribers": [
+        "frontend",
+        "qa-e2e"
+      ],
+      "applicableWhen": {
+        "layersAny": [
+          "ui"
+        ]
+      },
+      "dependsOnTypes": [
+        "prd",
+        "compliance-requirements"
+      ],
+      "feedbackFrom": [],
+      "schema": "a11y-rules.schema.json",
+      "rules": [],
+      "lane": "delivery",
+      "fallbackCosigners": [
+        "solutions-architect"
+      ]
+    },
+    {
+      "type": "domain-rules",
+      "file": "02-contracts/DomainRules.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "contracts",
+      "signable": true,
+      "producerRole": "domain-rules",
+      "cosigners": [
+        "backend",
+        "solutions-architect"
+      ],
+      "subscribers": [
+        "backend",
+        "solutions-architect"
+      ],
+      "applicableWhen": {
+        "layersAny": [
+          "domain-finance"
+        ]
+      },
+      "dependsOnTypes": [
+        "prd",
+        "edge-cases",
+        "compliance-requirements"
+      ],
+      "feedbackFrom": [],
+      "schema": "domain-rules.schema.json",
+      "rules": [
+        "test-vectors-per-rule"
+      ],
+      "lane": "delivery"
+    },
+    {
+      "type": "integrations",
+      "file": "02-contracts/Integrations.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "contracts",
+      "signable": true,
+      "producerRole": "integrations",
+      "cosigners": [
+        "security-architect",
+        "backend"
+      ],
+      "subscribers": [
+        "security-architect",
+        "backend"
+      ],
+      "applicableWhen": {
+        "layersAny": [
+          "integrations"
+        ]
+      },
+      "dependsOnTypes": [
+        "c4-model",
+        "openapi"
+      ],
+      "feedbackFrom": [
+        "threat-model"
+      ],
+      "schema": "integrations.schema.json",
+      "rules": [
+        "no-secret-values"
+      ],
+      "lane": "delivery"
+    },
+    {
+      "type": "build-report",
+      "file": "03-build/BuildReport.<slug>.json",
+      "multiple": true,
+      "format": "json",
+      "phase": "build",
+      "signable": false,
+      "producerBySlug": {
+        "data-modeler": "data-modeler",
+        "api-contract": "api-contract",
+        "domain-rules": "domain-rules",
+        "integrations": "integrations",
+        "backend": "backend",
+        "frontend": "frontend",
+        "uiux-a11y": "uiux-a11y",
+        "content-seo": "content-seo",
+        "tech-writer": "tech-writer"
+      },
+      "cosigners": [],
+      "subscribers": [],
+      "applicableWhen": {
+        "optional": true
+      },
+      "dependsOnTypesBySlug": {
+        "data-modeler": [
+          "data-model"
+        ],
+        "api-contract": [
+          "openapi"
+        ],
+        "domain-rules": [
+          "domain-rules"
+        ],
+        "integrations": [
+          "integrations",
+          "openapi"
+        ],
+        "backend": [
+          "openapi",
+          "data-model",
+          "threat-model",
+          "domain-rules",
+          "integrations"
+        ],
+        "frontend": [
+          "openapi",
+          "design-tokens",
+          "a11y-rules"
+        ],
+        "uiux-a11y": [
+          "openapi",
+          "design-tokens",
+          "a11y-rules"
+        ],
+        "content-seo": [
+          "prd",
+          "design-tokens"
+        ],
+        "tech-writer": [
+          "prd",
+          "c4-model",
+          "openapi",
+          "data-model"
+        ]
+      },
+      "feedbackFrom": [],
+      "schema": "build-report.schema.json",
+      "rules": [],
+      "lane": "delivery",
+      "requiredSlugs": [
+        {
+          "slug": "tech-writer",
+          "producerRole": "tech-writer",
+          "when": {
+            "always": true
+          }
+        },
+        {
+          "slug": "data-modeler",
+          "producerRole": "data-modeler",
+          "when": {
+            "layersAny": [
+              "data"
+            ]
+          }
+        },
+        {
+          "slug": "api-contract",
+          "producerRole": "api-contract",
+          "when": {
+            "layersAny": [
+              "api"
+            ]
+          }
+        },
+        {
+          "slug": "backend",
+          "producerRole": "backend",
+          "when": {
+            "layersAny": [
+              "api",
+              "auth-rbac"
+            ]
+          }
+        },
+        {
+          "slug": "frontend",
+          "producerRole": "frontend",
+          "when": {
+            "layersAny": [
+              "ui"
+            ]
+          }
+        },
+        {
+          "slug": "uiux-a11y",
+          "producerRole": "uiux-a11y",
+          "when": {
+            "layersAny": [
+              "ui"
+            ]
+          }
+        },
+        {
+          "slug": "domain-rules",
+          "producerRole": "domain-rules",
+          "when": {
+            "layersAny": [
+              "domain-finance"
+            ]
+          }
+        },
+        {
+          "slug": "integrations",
+          "producerRole": "integrations",
+          "when": {
+            "layersAny": [
+              "integrations"
+            ]
+          }
+        },
+        {
+          "slug": "content-seo",
+          "producerRole": "content-seo",
+          "when": {
+            "layersAny": [
+              "content-seo"
+            ]
+          }
+        }
+      ],
+      "extract": {
+        "reportStatus": "/status"
+      }
+    },
+    {
+      "type": "quality-report",
+      "file": "04-quality/QualityReport.<slug>.json",
+      "multiple": true,
+      "format": "json",
+      "phase": "quality",
+      "signable": false,
+      "producerBySlug": {
+        "peer": "peer-reviewer",
+        "security": "security-auditor",
+        "qa": "qa-e2e"
+      },
+      "cosigners": [],
+      "subscribers": [
+        "artifact-reviewer"
+      ],
+      "applicableWhen": {
+        "always": true
+      },
+      "dependsOnTypesBySlug": {
+        "peer": [],
+        "security": [
+          "threat-model",
+          "compliance-requirements"
+        ],
+        "qa": [
+          "edge-cases",
+          "a11y-rules"
+        ]
+      },
+      "feedbackFrom": [],
+      "schema": "quality-report.schema.json",
+      "rules": [
+        "quality-report-verdict"
+      ],
+      "lane": "delivery",
+      "requiredSlugs": [
+        {
+          "slug": "peer",
+          "producerRole": "peer-reviewer",
+          "when": {
+            "always": true
+          }
+        },
+        {
+          "slug": "security",
+          "producerRole": "security-auditor",
+          "when": {
+            "always": true
+          }
+        },
+        {
+          "slug": "qa",
+          "producerRole": "qa-e2e",
+          "when": {
+            "always": true
+          }
+        }
+      ],
+      "extract": {
+        "verdict": "/verdict",
+        "codeFingerprint": "/codeFingerprint"
+      }
+    },
+    {
+      "type": "quality-verdict",
+      "file": "04-quality/QualityVerdict.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "quality",
+      "signable": false,
+      "producerRole": "artifact-reviewer",
+      "cosigners": [],
+      "subscribers": [
+        "devops-sre",
+        "release-manager"
+      ],
+      "applicableWhen": {
+        "always": true
+      },
+      "dependsOnTypes": [
+        "quality-report"
+      ],
+      "feedbackFrom": [],
+      "schema": "quality-verdict.schema.json",
+      "rules": [
+        "quality-verdict-consistent"
+      ],
+      "lane": "delivery"
+    },
+    {
+      "type": "release-plan",
+      "file": "05-release/ReleasePlan.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "release",
+      "signable": true,
+      "producerRole": "release-manager",
+      "cosigners": [
+        "devops-sre"
+      ],
+      "subscribers": [
+        "devops-sre"
+      ],
+      "applicableWhen": {
+        "always": true
+      },
+      "dependsOnTypes": [
+        "ops-plan",
+        "quality-verdict"
+      ],
+      "feedbackFrom": [],
+      "schema": "release-plan.schema.json",
+      "rules": [],
+      "lane": "delivery",
+      "fallbackCosigners": [
+        "solutions-architect"
+      ]
+    },
+    {
+      "type": "release-report",
+      "file": "05-release/ReleaseReport.<slug>.json",
+      "multiple": true,
+      "format": "json",
+      "phase": "release",
+      "signable": false,
+      "producerBySlug": {
+        "dev": "devops-sre",
+        "prod": "release-manager"
+      },
+      "cosigners": [],
+      "subscribers": [],
+      "applicableWhen": {
+        "always": true
+      },
+      "dependsOnTypesBySlug": {
+        "dev": [
+          "ops-plan",
+          "release-plan"
+        ],
+        "prod": [
+          "release-plan",
+          "release-report:dev"
+        ]
+      },
+      "feedbackFrom": [],
+      "schema": "release-report.schema.json",
+      "rules": [],
+      "lane": "delivery",
+      "requiredSlugs": [
+        {
+          "slug": "dev",
+          "producerRole": "devops-sre",
+          "when": {
+            "always": true
+          }
+        },
+        {
+          "slug": "prod",
+          "producerRole": "release-manager",
+          "when": {
+            "always": true
+          }
+        }
+      ],
+      "extract": {
+        "deployStatus": "/deploy/status",
+        "deployedAt": "/deploy/deployedAt",
+        "decision": "/decision",
+        "commit": "/commit"
+      }
+    },
+    {
+      "type": "ops-plan",
+      "file": "05-release/OpsPlan.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "release",
+      "signable": true,
+      "producerRole": "devops-sre",
+      "cosigners": [
+        "release-manager"
+      ],
+      "subscribers": [
+        "release-manager"
+      ],
+      "applicableWhen": {
+        "always": true
+      },
+      "dependsOnTypes": [
+        "c4-model",
+        "cost-estimate",
+        "threat-model",
+        "quality-verdict"
+      ],
+      "feedbackFrom": [],
+      "schema": "ops-plan.schema.json",
+      "rules": [
+        "iac-requires-infra-layer",
+        "iac-fingerprint-current"
+      ],
+      "lane": "delivery"
+    },
+    {
+      "type": "db-change-review",
+      "file": "05-release/DbChangeReview.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "release",
+      "signable": false,
+      "producerRole": "dba-prod",
+      "cosigners": [],
+      "subscribers": [
+        "release-manager",
+        "data-modeler",
+        "backend"
+      ],
+      "applicableWhen": {
+        "optional": true
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "readsTypes": [
+        "data-model",
+        "release-plan"
+      ],
+      "schema": "db-change-review.schema.json",
+      "rules": [],
+      "lane": "delivery",
+      "actionsFrom": "/actions"
+    },
+    {
+      "type": "security-finding",
+      "file": "01-detect/SecurityFinding.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "detect",
+      "signable": true,
+      "producerRole": "security-auditor",
+      "cosigners": [
+        "security-architect"
+      ],
+      "subscribers": [
+        "security-architect",
+        "release-manager"
+      ],
+      "applicableWhen": {
+        "entryTypesAny": [
+          "vulnerability"
+        ]
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "schema": "security-finding.schema.json",
+      "rules": [
+        "finding-status-monotonic",
+        "deadline-by-severity",
+        "risk-acceptance-human",
+        "verified-at-when-remediated",
+        "finding-actions-present",
+        "action-ids-unique",
+        "hint-entry",
+        "owner-unknown"
+      ],
+      "lane": "operate",
+      "extract": {
+        "findingStatus": "/status",
+        "severity": "/severity",
+        "deadline": "/deadline",
+        "verifiedAt": "/verifiedAt"
+      },
+      "actionsFrom": "/actions"
+    },
+    {
+      "type": "incident-record",
+      "file": "01-detect/IncidentRecord.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "detect",
+      "signable": false,
+      "producerRole": "sre",
+      "cosigners": [],
+      "subscribers": [
+        "security-auditor",
+        "release-manager"
+      ],
+      "applicableWhen": {
+        "entryTypesAny": [
+          "incident"
+        ]
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "schema": "incident-record.schema.json",
+      "rules": [
+        "incident-status-monotonic",
+        "prod-commands-human",
+        "caused-by-exists",
+        "incident-no-pii"
+      ],
+      "lane": "operate",
+      "extract": {
+        "incidentStatus": "/status",
+        "severity": "/severity",
+        "detectedAt": "/detectedAt",
+        "mitigatedAt": "/mitigatedAt",
+        "resolvedAt": "/resolvedAt",
+        "causedByRelease": "/causedByRelease"
+      }
+    },
+    {
+      "type": "ticket-triage",
+      "file": "01-detect/TicketTriage.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "detect",
+      "signable": false,
+      "producerRole": "service-desk-l1",
+      "cosigners": [],
+      "subscribers": [
+        "support-l2",
+        "sre",
+        "service-owner"
+      ],
+      "applicableWhen": {
+        "optional": true
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "readsTypes": [
+        "problem-record",
+        "runbook"
+      ],
+      "schema": "ticket-triage.schema.json",
+      "rules": [],
+      "lane": "operate",
+      "actionsFrom": "/actions"
+    },
+    {
+      "type": "support-diagnosis",
+      "file": "02-respond/SupportDiagnosis.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "respond",
+      "signable": false,
+      "producerRole": "support-l2",
+      "cosigners": [],
+      "subscribers": [
+        "service-desk-l1",
+        "sre",
+        "backend",
+        "frontend"
+      ],
+      "applicableWhen": {
+        "optional": true
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "readsTypes": [
+        "ticket-triage",
+        "runbook"
+      ],
+      "schema": "support-diagnosis.schema.json",
+      "rules": [],
+      "lane": "operate",
+      "actionsFrom": "/actions"
+    },
+    {
+      "type": "execution-package",
+      "file": "02-respond/ExecutionPackage.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "respond",
+      "signable": false,
+      "producerRole": "on-call-engineer",
+      "cosigners": [],
+      "subscribers": [
+        "sre",
+        "release-manager",
+        "devops-sre"
+      ],
+      "applicableWhen": {
+        "optional": true
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "readsTypes": [
+        "runbook",
+        "incident-record",
+        "change-record"
+      ],
+      "schema": "execution-package.schema.json",
+      "rules": [],
+      "lane": "operate",
+      "actionsFrom": "/actions"
+    },
+    {
+      "type": "postmortem",
+      "file": "04-learn/Postmortem.md",
+      "multiple": false,
+      "format": "md",
+      "phase": "learn",
+      "signable": true,
+      "producerRole": "sre",
+      "cosigners": [
+        "solutions-architect",
+        "release-manager"
+      ],
+      "subscribers": [
+        "solutions-architect",
+        "release-manager"
+      ],
+      "applicableWhen": {
+        "entryTypesAny": [
+          "incident"
+        ],
+        "severityAny": [
+          "SEV1",
+          "SEV2"
+        ]
+      },
+      "dependsOnTypes": [
+        "incident-record"
+      ],
+      "feedbackFrom": [],
+      "schema": null,
+      "requiredHeadings": [
+        "## Resumen",
+        "## Impacto",
+        "## Línea de tiempo",
+        "## Causas contribuyentes",
+        "## Qué funcionó",
+        "## Qué no funcionó",
+        "## Acciones"
+      ],
+      "requiredBlocks": [
+        "json bt-actions"
+      ],
+      "rules": [
+        "postmortem-headings",
+        "actions-have-owner-due"
+      ],
+      "lane": "operate",
+      "actionsFrom": "json bt-actions"
+    },
+    {
+      "type": "problem-record",
+      "file": "04-learn/ProblemRecord.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "learn",
+      "signable": false,
+      "producerRole": "sre",
+      "cosigners": [],
+      "subscribers": [
+        "solutions-architect",
+        "release-manager"
+      ],
+      "applicableWhen": {
+        "entryTypesAny": [
+          "problem"
+        ]
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "schema": "problem-record.schema.json",
+      "rules": [
+        "known-error-or-fix",
+        "action-ids-unique",
+        "hint-entry",
+        "owner-unknown"
+      ],
+      "lane": "operate",
+      "actionsFrom": "/actions"
+    },
+    {
+      "type": "control-matrix",
+      "file": "01-scope/ControlMatrix.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "scope",
+      "signable": true,
+      "producerRole": "compliance-officer",
+      "cosigners": [
+        "security-architect"
+      ],
+      "subscribers": [
+        "security-architect"
+      ],
+      "applicableWhen": {
+        "entryTypesAny": [
+          "audit"
+        ]
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "schema": "control-matrix.schema.json",
+      "rules": [
+        "framework-known"
+      ],
+      "lane": "govern"
+    },
+    {
+      "type": "migration-plan",
+      "file": "01-scope/MigrationPlan.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "scope",
+      "signable": true,
+      "producerRole": "solutions-architect",
+      "cosigners": [
+        "finops",
+        "security-architect"
+      ],
+      "subscribers": [
+        "finops",
+        "security-architect"
+      ],
+      "applicableWhen": {
+        "entryTypesAny": [
+          "migration"
+        ]
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "schema": "migration-plan.schema.json",
+      "rules": [
+        "strategy-per-workload",
+        "rollback-per-wave"
+      ],
+      "lane": "govern",
+      "actionsFrom": "/actions"
+    },
+    {
+      "type": "system-context",
+      "file": "01-scope/SystemContext.md",
+      "multiple": false,
+      "format": "md",
+      "phase": "scope",
+      "signable": true,
+      "producerRole": "solutions-architect",
+      "cosigners": [
+        "security-architect",
+        "tech-writer"
+      ],
+      "subscribers": [
+        "security-architect",
+        "tech-writer"
+      ],
+      "applicableWhen": {
+        "entryTypesAny": [
+          "adoption"
+        ]
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "schema": null,
+      "requiredHeadings": [
+        "## Contexto as-is",
+        "## Contenedores",
+        "## Componentes",
+        "## Despliegue",
+        "## Datos",
+        "## Seguridad observada",
+        "## Deuda observada",
+        "## Preguntas"
+      ],
+      "requiredBlocks": [
+        "mermaid",
+        "json bt-actions"
+      ],
+      "rules": [
+        "system-context-headings",
+        "actions-have-owner-due"
+      ],
+      "lane": "govern",
+      "actionsFrom": "json bt-actions"
+    },
+    {
+      "type": "team-capacity-plan",
+      "file": "01-scope/TeamCapacityPlan.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "scope",
+      "signable": true,
+      "producerRole": "engineering-manager",
+      "cosigners": [
+        "artifact-reviewer"
+      ],
+      "fallbackCosigners": [
+        "artifact-reviewer"
+      ],
+      "subscribers": [
+        "sre"
+      ],
+      "applicableWhen": {
+        "optional": true
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "readsTypes": [
+        "portfolio-prioritization",
+        "slo-spec"
+      ],
+      "schema": "team-capacity-plan.schema.json",
+      "rules": [],
+      "lane": "govern",
+      "actionsFrom": "/actions"
+    },
+    {
+      "type": "review-scope",
+      "file": "01-scope/ReviewScope.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "scope",
+      "signable": false,
+      "producerRole": "sre",
+      "cosigners": [],
+      "subscribers": [
+        "finops",
+        "security-auditor"
+      ],
+      "applicableWhen": {
+        "entryTypesAny": [
+          "ops-review"
+        ]
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "schema": "review-scope.schema.json",
+      "rules": [
+        "checks-known"
+      ],
+      "lane": "govern",
+      "extract": {
+        "checks": "/checks"
+      }
+    },
+    {
+      "type": "continuity-plan",
+      "file": "01-scope/ContinuityPlan.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "scope",
+      "signable": true,
+      "producerRole": "resilience-engineer",
+      "cosigners": [
+        "sre",
+        "solutions-architect"
+      ],
+      "subscribers": [
+        "sre",
+        "solutions-architect"
+      ],
+      "applicableWhen": {
+        "entryTypesAny": [
+          "resilience-drill"
+        ]
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "schema": "continuity-plan.schema.json",
+      "rules": [
+        "rto-rpo-present"
+      ],
+      "lane": "govern"
+    },
+    {
+      "type": "agentops-report",
+      "file": "02-assess/AgentOpsReport.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "assess",
+      "signable": false,
+      "producerRole": "conductor",
+      "cosigners": [],
+      "subscribers": [
+        "sre",
+        "finops"
+      ],
+      "applicableWhen": {
+        "entryTypesAny": [
+          "ops-review"
+        ],
+        "checksAny": [
+          "agentops"
+        ]
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "schema": "agentops-report.schema.json",
+      "rules": [
+        "agentops-no-ranking",
+        "space-min-dimensions"
+      ],
+      "lane": "govern"
+    },
+    {
+      "type": "cost-review",
+      "file": "02-assess/CostReview.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "assess",
+      "signable": false,
+      "producerRole": "finops",
+      "cosigners": [],
+      "subscribers": [
+        "solutions-architect"
+      ],
+      "applicableWhen": {
+        "anyOf": [
+          {
+            "entryTypesAny": [
+              "ops-review"
+            ],
+            "checksAny": [
+              "cost"
+            ]
+          },
+          {
+            "entryTypesAny": [
+              "adoption"
+            ]
+          }
+        ]
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "schema": "cost-review.schema.json",
+      "rules": [
+        "untagged-share-present",
+        "carbon-section"
+      ],
+      "lane": "govern",
+      "actionsFrom": "/actions"
+    },
+    {
+      "type": "security-posture-review",
+      "file": "02-assess/SecurityPostureReview.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "assess",
+      "signable": false,
+      "producerRole": "security-auditor",
+      "cosigners": [],
+      "subscribers": [
+        "security-architect"
+      ],
+      "applicableWhen": {
+        "anyOf": [
+          {
+            "entryTypesAny": [
+              "ops-review"
+            ],
+            "checksAny": [
+              "security"
+            ]
+          },
+          {
+            "entryTypesAny": [
+              "adoption"
+            ]
+          }
+        ]
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "schema": "security-posture-review.schema.json",
+      "rules": [
+        "sbom-ref-present",
+        "access-review-roles-only"
+      ],
+      "lane": "govern",
+      "actionsFrom": "/actions"
+    },
+    {
+      "type": "audit-evidence-map",
+      "file": "02-assess/AuditEvidenceMap.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "assess",
+      "signable": true,
+      "producerRole": "compliance-officer",
+      "cosigners": [
+        "security-auditor"
+      ],
+      "subscribers": [
+        "security-auditor"
+      ],
+      "applicableWhen": {
+        "entryTypesAny": [
+          "audit"
+        ]
+      },
+      "dependsOnTypes": [
+        "control-matrix"
+      ],
+      "feedbackFrom": [],
+      "schema": "audit-evidence-map.schema.json",
+      "rules": [
+        "evidence-refs-exist"
+      ],
+      "lane": "govern"
+    },
+    {
+      "type": "privacy-opinion",
+      "file": "02-assess/PrivacyOpinion.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "assess",
+      "signable": true,
+      "producerRole": "dpo",
+      "cosigners": [
+        "artifact-reviewer"
+      ],
+      "fallbackCosigners": [
+        "artifact-reviewer"
+      ],
+      "subscribers": [
+        "compliance-officer",
+        "security-architect",
+        "product-manager"
+      ],
+      "applicableWhen": {
+        "optional": true
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "readsTypes": [
+        "compliance-requirements",
+        "data-model"
+      ],
+      "schema": "privacy-opinion.schema.json",
+      "rules": [],
+      "lane": "govern",
+      "actionsFrom": "/actions"
+    },
+    {
+      "type": "slo-spec",
+      "file": "02-assess/SloSpec.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "assess",
+      "signable": true,
+      "producerRole": "sre",
+      "cosigners": [
+        "release-manager",
+        "solutions-architect"
+      ],
+      "subscribers": [
+        "release-manager",
+        "solutions-architect"
+      ],
+      "applicableWhen": {
+        "entryTypesAny": [
+          "ops-review"
+        ],
+        "checksAny": [
+          "slo"
+        ]
+      },
+      "dependsOnTypes": [
+        "review-scope"
+      ],
+      "feedbackFrom": [],
+      "schema": "slo-spec.schema.json",
+      "rules": [
+        "slo-has-budget-policy",
+        "alerts-on-burn-rate"
+      ],
+      "lane": "govern"
+    },
+    {
+      "type": "chaos-experiment",
+      "file": "02-assess/ChaosExperiment.<slug>.json",
+      "multiple": true,
+      "format": "json",
+      "phase": "assess",
+      "signable": true,
+      "producerRole": "resilience-engineer",
+      "cosigners": [
+        "sre"
+      ],
+      "fallbackCosigners": [
+        "solutions-architect"
+      ],
+      "subscribers": [
+        "sre"
+      ],
+      "applicableWhen": {
+        "entryTypesAny": [
+          "resilience-drill"
+        ]
+      },
+      "dependsOnTypes": [
+        "continuity-plan"
+      ],
+      "feedbackFrom": [],
+      "schema": "chaos-experiment.schema.json",
+      "rules": [
+        "abort-criteria-present",
+        "prod-requires-approval"
+      ],
+      "lane": "govern",
+      "extract": {
+        "environment": "/environment",
+        "resultsRecordedAt": "/results/recordedAt"
+      },
+      "actionsFrom": "/results/actions",
+      "minInstances": 1
+    },
+    {
+      "type": "service-review",
+      "file": "02-assess/ServiceReview.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "assess",
+      "signable": false,
+      "producerRole": "service-owner",
+      "cosigners": [],
+      "subscribers": [
+        "sre",
+        "release-manager",
+        "product-manager"
+      ],
+      "applicableWhen": {
+        "optional": true
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "readsTypes": [
+        "slo-spec",
+        "postmortem",
+        "problem-record"
+      ],
+      "schema": "service-review.schema.json",
+      "rules": [],
+      "lane": "govern",
+      "actionsFrom": "/actions"
+    },
+    {
+      "type": "audit-finding",
+      "file": "03-decide/AuditFinding.<slug>.json",
+      "multiple": true,
+      "format": "json",
+      "phase": "decide",
+      "signable": false,
+      "producerRole": "compliance-officer",
+      "cosigners": [],
+      "subscribers": [
+        "security-auditor"
+      ],
+      "applicableWhen": {
+        "entryTypesAny": [
+          "audit"
+        ]
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "schema": "audit-finding.schema.json",
+      "rules": [
+        "finding-fields"
+      ],
+      "lane": "govern",
+      "actionsFrom": "/actions",
+      "minInstances": 1
+    },
+    {
+      "type": "runbook",
+      "file": "04-act/Runbook.<slug>.md",
+      "multiple": true,
+      "format": "md",
+      "phase": "act",
+      "signable": false,
+      "producerRole": "sre",
+      "cosigners": [],
+      "subscribers": [
+        "devops-sre"
+      ],
+      "applicableWhen": {
+        "entryTypesAny": [
+          "ops-review"
+        ],
+        "checksAny": [
+          "slo"
+        ]
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "schema": null,
+      "requiredHeadings": [
+        "## Síntoma",
+        "## Diagnóstico",
+        "## Mitigación",
+        "## Verificación",
+        "## Escalamiento",
+        "## Riesgos"
+      ],
+      "rules": [
+        "runbook-headings"
+      ],
+      "lane": "govern",
+      "minInstances": 1
+    }
+  ]
+}

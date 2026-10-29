@@ -1,0 +1,1031 @@
+{
+  "schemaVersion": 1,
+  "tools": [
+    {
+      "id": "actionlint",
+      "category": "role-tool",
+      "repo": "https://github.com/rhysd/actionlint",
+      "purpose": "Linter de flujos de GitHub Actions: sintaxis, expresiones, permisos y acciones inexistentes.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "actionlint",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "actionlint <ruta-del-workflow>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": {
+        "allow": [
+          "actionlint *"
+        ],
+        "ask": [],
+        "denyArgs": [
+          "actionlint -*",
+          "actionlint * -*",
+          "actionlint *<*",
+          "actionlint *.env*",
+          "actionlint *.pem*",
+          "actionlint *.key*"
+        ]
+      },
+      "status": "documented"
+    },
+    {
+      "id": "asyncapi-cli",
+      "category": "role-tool",
+      "repo": "https://github.com/asyncapi/cli",
+      "purpose": "Valida y documenta contratos AsyncAPI de eventos y mensajes para que productores y consumidores firmen la misma versión.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "node",
+        "min": "22"
+      },
+      "check": {
+        "bin": "asyncapi",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "asyncapi validate <asyncapi.yaml>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "axe-core-cli",
+      "category": "role-tool",
+      "repo": "https://github.com/dequelabs/axe-core-npm",
+      "purpose": "Pruebas automáticas de accesibilidad con el motor axe contra páginas renderizadas.",
+      "license": "MPL-2.0",
+      "licenseClass": "weak-copyleft",
+      "licenseStatus": "declared",
+      "licenseNote": "MPL: la fábrica no redistribuye la herramienta; cambios a sus archivos fuente quedarían bajo MPL.",
+      "kind": "cli",
+      "runtime": {
+        "kind": "node",
+        "min": "22"
+      },
+      "check": {
+        "bin": "axe",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "axe <url-de-dev>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "cfn-guard",
+      "category": "role-tool",
+      "repo": "https://github.com/aws-cloudformation/cloudformation-guard",
+      "purpose": "Evalúa plantillas y planes contra reglas de política como código escritas en el lenguaje de Guard.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "cfn-guard",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "cfn-guard validate -d <plantilla.yaml> -r <reglas.guard>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "cfn-lint",
+      "category": "role-tool",
+      "repo": "https://github.com/aws-cloudformation/cfn-lint",
+      "purpose": "Valida plantillas de CloudFormation y SAM contra la especificación de recursos y reglas de buenas prácticas.",
+      "license": "MIT-0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "python",
+        "min": "3.10"
+      },
+      "check": {
+        "bin": "cfn-lint",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "cfn-lint <plantilla.yaml>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": {
+        "allow": [
+          "cfn-lint *"
+        ],
+        "ask": [],
+        "denyArgs": [
+          "cfn-lint -*",
+          "cfn-lint * -*",
+          "cfn-lint *<*",
+          "cfn-lint *.env*",
+          "cfn-lint *.pem*",
+          "cfn-lint *.key*"
+        ]
+      },
+      "status": "documented"
+    },
+    {
+      "id": "chaostoolkit",
+      "category": "role-tool",
+      "repo": "https://github.com/chaostoolkit/chaostoolkit",
+      "purpose": "Ejecuta experimentos de caos declarativos con hipótesis de estado estable; solo contra dev y con aprobación.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "python",
+        "min": "3.10"
+      },
+      "check": {
+        "bin": "chaos",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "chaos run <experimento.json>",
+      "network": true,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "checkov",
+      "category": "role-tool",
+      "repo": "https://github.com/bridgecrewio/checkov",
+      "purpose": "Análisis estático de infraestructura como código (Terraform, CloudFormation, Kubernetes) contra políticas de seguridad y buenas prácticas.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "python",
+        "min": "3.10"
+      },
+      "check": {
+        "bin": "checkov",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "checkov -d <ruta-iac>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "conftest",
+      "category": "role-tool",
+      "repo": "https://github.com/open-policy-agent/conftest",
+      "purpose": "Prueba archivos de configuración y planes de IaC contra políticas Rego de Open Policy Agent.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "conftest",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "conftest test <archivo> -p <carpeta-de-políticas>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "dbml-cli",
+      "category": "role-tool",
+      "repo": "https://github.com/holistics/dbml",
+      "purpose": "Convierte el modelo de datos en DBML a SQL y al revés para revisar el esquema propuesto antes de firmarlo.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "node",
+        "min": "22"
+      },
+      "check": {
+        "bin": "dbml2sql",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "dbml2sql <schema.dbml> --postgres",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "gh",
+      "category": "role-tool",
+      "repo": "https://github.com/cli/cli",
+      "purpose": "CLI oficial de GitHub para leer issues, pull requests y ejecuciones de CI; las escrituras son humanas.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "gh",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "gh pr view <número>",
+      "network": true,
+      "requiresEnv": [
+        {
+          "name": "GH_TOKEN",
+          "purpose": "Token de GitHub con permisos mínimos; vive en las variables del usuario."
+        }
+      ],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "gitleaks",
+      "category": "role-tool",
+      "repo": "https://github.com/gitleaks/gitleaks",
+      "purpose": "Detecta secretos en el repositorio y en el historial de git antes de publicar artefactos, abrir un cambio o entregar.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "gitleaks",
+        "args": [
+          "version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "gitleaks detect --source <ruta> --no-banner",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "hadolint",
+      "category": "role-tool",
+      "repo": "https://github.com/hadolint/hadolint",
+      "purpose": "Linter de Dockerfile que revisa buenas prácticas de construcción de imágenes y las instrucciones de shell que contienen.",
+      "license": "GPL-3.0-only",
+      "licenseClass": "copyleft",
+      "licenseStatus": "declared",
+      "licenseNote": "GPL: la fábrica no redistribuye la herramienta; se instala aparte y solo se invoca como programa externo.",
+      "kind": "cli",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "hadolint",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "hadolint <Dockerfile>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": {
+        "allow": [
+          "hadolint *"
+        ],
+        "ask": [],
+        "denyArgs": [
+          "hadolint -*",
+          "hadolint * -*",
+          "hadolint *<*",
+          "hadolint *.env*",
+          "hadolint *.pem*",
+          "hadolint *.key*"
+        ]
+      },
+      "status": "documented"
+    },
+    {
+      "id": "infracost",
+      "category": "role-tool",
+      "repo": "https://github.com/infracost/infracost",
+      "purpose": "Estima el costo mensual de un plan de Terraform y la diferencia de costo de un cambio antes de aprobarlo.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "infracost",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "infracost breakdown --path <ruta-terraform>",
+      "network": true,
+      "requiresEnv": [
+        {
+          "name": "INFRACOST_API_KEY",
+          "purpose": "Clave de la API de precios de Infracost; vive en las variables del usuario."
+        }
+      ],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "jq",
+      "category": "role-tool",
+      "repo": "https://github.com/jqlang/jq",
+      "purpose": "Procesador de JSON en la línea de comandos para filtrar y resumir salidas de otros comandos y registros.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "jq",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "jq '.campo' <archivo.json>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "kubeconform",
+      "category": "role-tool",
+      "repo": "https://github.com/yannh/kubeconform",
+      "purpose": "Valida manifiestos de Kubernetes contra los esquemas de la versión del clúster antes de desplegarlos.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "kubeconform",
+        "args": [
+          "-v"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "kubeconform <manifiesto.yaml>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "lighthouse-ci",
+      "category": "role-tool",
+      "repo": "https://github.com/GoogleChrome/lighthouse-ci",
+      "purpose": "Mide rendimiento, accesibilidad y SEO de páginas web con Lighthouse y compara contra presupuestos.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "node",
+        "min": "22"
+      },
+      "check": {
+        "bin": "lhci",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "lhci autorun --collect.url=<url-de-dev>",
+      "network": true,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "lychee",
+      "category": "role-tool",
+      "repo": "https://github.com/lycheeverse/lychee",
+      "purpose": "Verificador de enlaces rotos en Markdown, HTML y texto; detecta URL que ya no responden antes de publicar documentación o contenido.",
+      "license": "Apache-2.0 OR MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "lychee",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "lychee <ruta-o-patrón>",
+      "network": true,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "maestro",
+      "category": "role-tool",
+      "repo": "https://github.com/mobile-dev-inc/maestro",
+      "purpose": "Pruebas de interfaz de aplicaciones móviles con flujos en YAML sobre emuladores y dispositivos.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "java",
+        "min": "17"
+      },
+      "check": {
+        "bin": "maestro",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "maestro test <flujo.yaml>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "markdownlint-cli2",
+      "category": "role-tool",
+      "repo": "https://github.com/DavidAnson/markdownlint-cli2",
+      "purpose": "Linter de Markdown que revisa encabezados, listas, enlaces y formato de los documentos antes de publicarlos en el repositorio.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "node",
+        "min": "22"
+      },
+      "check": {
+        "bin": "markdownlint-cli2",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "markdownlint-cli2 <ruta-o-patrón>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": {
+        "allow": [
+          "markdownlint-cli2 *"
+        ],
+        "ask": [],
+        "denyArgs": [
+          "markdownlint-cli2 -*",
+          "markdownlint-cli2 * -*",
+          "markdownlint-cli2 *<*",
+          "markdownlint-cli2 *.env*",
+          "markdownlint-cli2 *.pem*",
+          "markdownlint-cli2 *.key*"
+        ]
+      },
+      "status": "documented"
+    },
+    {
+      "id": "markitdown",
+      "category": "role-tool",
+      "repo": "https://github.com/microsoft/markitdown",
+      "purpose": "Convierte PDF, DOCX, XLSX, PPTX, HTML, CSV, JSON, XML y otros formatos a Markdown para que los roles que ingieren documentos los lean sin copiar texto a mano.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "verified",
+      "kind": "cli",
+      "runtime": {
+        "kind": "python",
+        "min": "3.10"
+      },
+      "check": {
+        "bin": "markitdown",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "markitdown <ruta-del-documento>   (Markdown por la salida estándar)",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": {
+        "allow": [
+          "markitdown *"
+        ],
+        "ask": [],
+        "denyArgs": [
+          "markitdown -*",
+          "markitdown * -*",
+          "markitdown *<*",
+          "markitdown *.env*",
+          "markitdown *.pem*",
+          "markitdown *.key*",
+          "markitdown *http:*",
+          "markitdown *https:*"
+        ]
+      },
+      "status": "documented",
+      "licenseVerifiedAt": "2026-10-24",
+      "licenseFile": "LICENSE",
+      "dataHandling": "Salida con posibles datos personales. (a) markitdown <ruta> por stdout; (b) escribirla en bus/<ítem>/sources/<slug>.md (cuarentena local ignorada por git); (c) factory.mjs scan --strict --feature <ítem> --paths <esa ruta>; (d) con cualquier hallazgo, también low, redactar y reescanear, o vaciar y pedir borrado humano; (e) citar solo fuentes con escaneo limpio. Sin nube ni plugins."
+    },
+    {
+      "id": "mermaid-cli",
+      "category": "role-tool",
+      "repo": "https://github.com/mermaid-js/mermaid-cli",
+      "purpose": "Renderiza diagramas Mermaid a SVG o PNG para los modelos C4, flujos y árboles de fallas que viven en Markdown.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "node",
+        "min": "22"
+      },
+      "check": {
+        "bin": "mmdc",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "mmdc -i <diagrama.mmd> -o <salida.svg>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "oasdiff",
+      "category": "role-tool",
+      "repo": "https://github.com/oasdiff/oasdiff",
+      "purpose": "Compara dos versiones de un contrato OpenAPI y señala los cambios incompatibles antes de firmar una nueva versión.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "oasdiff",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "oasdiff breaking <base.yaml> <nuevo.yaml>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "osv-scanner",
+      "category": "role-tool",
+      "repo": "https://github.com/google/osv-scanner",
+      "purpose": "Busca vulnerabilidades conocidas de las dependencias del proyecto en la base abierta de OSV y deja el resultado por la salida estándar.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "osv-scanner",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "osv-scanner scan --lockfile <ruta-del-lockfile>",
+      "network": true,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "pandoc",
+      "category": "role-tool",
+      "repo": "https://github.com/jgm/pandoc",
+      "purpose": "Conversor universal de documentos entre Markdown, HTML, DOCX, PDF y otros formatos para publicar la documentación del producto.",
+      "license": "GPL-2.0-or-later",
+      "licenseClass": "copyleft",
+      "licenseStatus": "declared",
+      "licenseNote": "GPL: la fábrica no redistribuye la herramienta; se instala aparte y solo se invoca como programa externo.",
+      "kind": "cli",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "pandoc",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "pandoc <entrada.md> -o <salida.docx>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "dataHandling": "Convierte documentos del proyecto; la salida se trata como fuente: cuarentena en sources/ y scan --strict antes de citarla."
+    },
+    {
+      "id": "playwright",
+      "category": "role-tool",
+      "repo": "https://github.com/microsoft/playwright",
+      "purpose": "Automatización de navegadores para pruebas de punta a punta en Chromium, Firefox y WebKit.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "node",
+        "min": "22"
+      },
+      "check": {
+        "bin": "playwright",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "playwright test <ruta-de-pruebas>",
+      "network": true,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "promtool",
+      "category": "role-tool",
+      "repo": "https://github.com/prometheus/prometheus",
+      "purpose": "Valida reglas de alertas y de grabación de Prometheus y las prueba con series sintéticas.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "promtool",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "promtool check rules <reglas.yml>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "prowler",
+      "category": "role-tool",
+      "repo": "https://github.com/prowler-cloud/prowler",
+      "purpose": "Evaluación de postura de seguridad y cumplimiento de cuentas en la nube con un perfil de solo lectura.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "python",
+        "min": "3.10"
+      },
+      "check": {
+        "bin": "prowler",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "prowler aws --profile <perfil-solo-lectura>",
+      "network": true,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "dataHandling": "Lee configuración de la cuenta con un perfil de solo lectura de dev; el informe puede nombrar recursos y se escanea antes de citarlo."
+    },
+    {
+      "id": "schemathesis",
+      "category": "role-tool",
+      "repo": "https://github.com/schemathesis/schemathesis",
+      "purpose": "Pruebas basadas en propiedades contra una API a partir de su contrato OpenAPI; solo se ejecuta contra el entorno de desarrollo.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "python",
+        "min": "3.10"
+      },
+      "check": {
+        "bin": "schemathesis",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "schemathesis run <openapi.yaml> --url <url-de-dev>",
+      "network": true,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "dataHandling": "Envía datos generados a la API de dev; nunca contra producción ni con datos reales de usuarios."
+    },
+    {
+      "id": "semgrep",
+      "category": "role-tool",
+      "repo": "https://github.com/semgrep/semgrep",
+      "purpose": "Análisis estático por reglas del código del proyecto; se usa con reglas locales y sin descargar configuraciones de la red.",
+      "license": "LGPL-2.1-only",
+      "licenseClass": "weak-copyleft",
+      "licenseStatus": "declared",
+      "licenseNote": "LGPL: la fábrica no redistribuye la herramienta; las reglas de terceros tienen licencia propia y se revisan antes de usarlas.",
+      "kind": "cli",
+      "runtime": {
+        "kind": "python",
+        "min": "3.10"
+      },
+      "check": {
+        "bin": "semgrep",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "semgrep scan --config <reglas-locales> <ruta>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "spectral",
+      "category": "role-tool",
+      "repo": "https://github.com/stoplightio/spectral",
+      "purpose": "Linter de contratos OpenAPI y AsyncAPI con reglas configurables para revisar nombres, versionado y seguridad del contrato.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "node",
+        "min": "22"
+      },
+      "check": {
+        "bin": "spectral",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "spectral lint <openapi.yaml>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "sqlfluff",
+      "category": "role-tool",
+      "repo": "https://github.com/sqlfluff/sqlfluff",
+      "purpose": "Linter y formateador de SQL con dialectos; revisa migraciones, modelos dbt y consultas antes de publicarlos.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "python",
+        "min": "3.10"
+      },
+      "check": {
+        "bin": "sqlfluff",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "sqlfluff lint <ruta.sql> --dialect <dialecto>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "syft",
+      "category": "role-tool",
+      "repo": "https://github.com/anchore/syft",
+      "purpose": "Genera el inventario de componentes de software (SBOM) de un directorio o una imagen para la entrega y la auditoría.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "syft",
+        "args": [
+          "version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "syft dir:<ruta> -o cyclonedx-json",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "tflint",
+      "category": "role-tool",
+      "repo": "https://github.com/terraform-linters/tflint",
+      "purpose": "Linter de Terraform que detecta errores de proveedor, variables sin usar y malas prácticas antes del plan.",
+      "license": "MPL-2.0",
+      "licenseClass": "weak-copyleft",
+      "licenseStatus": "declared",
+      "licenseNote": "MPL: la fábrica no redistribuye la herramienta; cambios a sus archivos fuente quedarían bajo MPL.",
+      "kind": "cli",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "tflint",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "tflint --chdir <ruta-terraform>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "trivy",
+      "category": "role-tool",
+      "repo": "https://github.com/aquasecurity/trivy",
+      "purpose": "Escáner de vulnerabilidades y configuración insegura en imágenes, sistemas de archivos, IaC y dependencias.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "trivy",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "trivy fs <ruta>",
+      "network": true,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    },
+    {
+      "id": "vale",
+      "category": "role-tool",
+      "repo": "https://github.com/errata-ai/vale",
+      "purpose": "Linter de prosa con guías de estilo configurables para revisar la claridad y la terminología de la documentación y del contenido.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "vale",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "vale <ruta-del-documento>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": {
+        "allow": [
+          "vale *"
+        ],
+        "ask": [],
+        "denyArgs": [
+          "vale -*",
+          "vale * -*",
+          "vale *<*",
+          "vale *.env*",
+          "vale *.pem*",
+          "vale *.key*"
+        ]
+      },
+      "status": "documented"
+    },
+    {
+      "id": "zap",
+      "category": "role-tool",
+      "repo": "https://github.com/zaproxy/zaproxy",
+      "purpose": "Escáner dinámico de seguridad de aplicaciones web; solo se ejecuta contra el entorno de desarrollo y con autorización del dueño.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "service-cli",
+      "runtime": {
+        "kind": "docker"
+      },
+      "check": {
+        "binByOs": {
+          "win32": [
+            "zap"
+          ],
+          "darwin": [
+            "zap.sh"
+          ],
+          "linux": [
+            "zap.sh"
+          ]
+        },
+        "args": []
+      },
+      "pinnedVersion": null,
+      "usage": "docker run zaproxy/zap-stable zap-baseline.py -t <url-de-dev>",
+      "network": true,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented"
+    }
+  ]
+}

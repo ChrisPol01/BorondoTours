@@ -1,0 +1,93 @@
+{
+  "name": "bt-factory-discovery",
+  "description": "Fase 1 de la Megafábrica SDLC: PRD, casos borde y requisitos de cumplimiento con revisión en bucle, firmas cruzadas y puerta verificable. El campo 'type' de cada nodo y la forma de 'branches'/'stopCondition' quedan pendientes de validación por el orquestador.",
+  "inputs": {
+    "task": "prompt"
+  },
+  "modelId": "auto",
+  "steps": [
+    {
+      "type": "step",
+      "id": "init",
+      "agent": "sdlc-conductor",
+      "captureOutput": true,
+      "prompt": "Rol: conductor. Modo: init. Receta: discovery.\nEntrada:\n{{task}}\nEjecuta init y run start; imprime FEATURE_ID, RUN_ID y PHASE. Si run start sale con 2, señala error con las razones (nunca success)."
+    },
+    {
+      "type": "repeat",
+      "id": "discovery-loop",
+      "maxIterations": 3,
+      "onMaxIterations": "pause",
+      "stopCondition": {
+        "fileCheck": {
+          "path": ".megafactory/state/discovery.review.json",
+          "jsonPath": "$.loopStatus",
+          "value": "stop"
+        }
+      },
+      "steps": [
+        {
+          "type": "step",
+          "id": "pm",
+          "agent": "sdlc-product-manager",
+          "prompt": "Contexto:\n{{init.output}}\nRol: product-manager. Modo: contract. Bucle: discovery.review.\nRequerimiento:\n{{task}}\nProduce o corrige PRD.json según inbox."
+        },
+        {
+          "type": "step",
+          "id": "ba",
+          "agent": "sdlc-business-analyst",
+          "prompt": "Contexto:\n{{init.output}}\nRol: business-analyst. Modo: contract. Bucle: discovery.review.\nProduce o corrige EdgeCases.yml según inbox."
+        },
+        {
+          "type": "step",
+          "id": "compliance",
+          "agent": "sdlc-compliance-officer",
+          "prompt": "Contexto:\n{{init.output}}\nRol: compliance-officer. Modo: contract. Bucle: discovery.review.\nProduce o corrige Compliance_Requirements.json según inbox."
+        },
+        {
+          "type": "step",
+          "id": "discovery-review",
+          "agent": "sdlc-artifact-reviewer",
+          "prompt": "Contexto:\n{{init.output}}\nRol: artifact-reviewer. Modo: review. Bucle: discovery.review. Revisa prd, edge-cases y compliance-requirements y ejecuta loop verdict."
+        }
+      ]
+    },
+    {
+      "type": "parallel",
+      "id": "discovery-signoff",
+      "joinPolicy": "allSettled",
+      "branches": [
+        {
+          "type": "step",
+          "id": "ba-sign",
+          "agent": "sdlc-business-analyst",
+          "prompt": "Contexto:\n{{init.output}}\nRol: business-analyst. Modo: sign."
+        },
+        {
+          "type": "step",
+          "id": "compliance-sign",
+          "agent": "sdlc-compliance-officer",
+          "prompt": "Contexto:\n{{init.output}}\nRol: compliance-officer. Modo: sign."
+        },
+        {
+          "type": "step",
+          "id": "architect-sign",
+          "agent": "sdlc-solutions-architect",
+          "prompt": "Contexto:\n{{init.output}}\nRol: solutions-architect. Modo: sign. Rechaza con categoría ambiguity cualquier historia ambigua."
+        },
+        {
+          "type": "step",
+          "id": "pm-sign",
+          "agent": "sdlc-product-manager",
+          "prompt": "Contexto:\n{{init.output}}\nRol: product-manager. Modo: sign."
+        }
+      ]
+    },
+    {
+      "type": "step",
+      "id": "gate-discovery",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: gate. Fase: discovery. Cierra corrida: sí.\nSi falla, pausa con razones y opciones; al reanudar reevalúa. Siempre termina con run finish (ok o failed) y la lección."
+    }
+  ]
+}

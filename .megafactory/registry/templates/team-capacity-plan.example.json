@@ -1,0 +1,80 @@
+{
+  "feature": "ejemplo-capacidad-t1",
+  "decisionClass": "prioritization",
+  "reserved": false,
+  "summary": "Capacidad del trimestre: el equipo de reservas compromete 70 % de lo disponible tras descontar guardia y deuda; el de plataforma reserva capacidad de confiabilidad por error budget agotado.",
+  "options": [
+    {
+      "id": "O1",
+      "title": "Compromiso al 70 % con reserva de confiabilidad",
+      "pros": [
+        "Margen para imprevistos"
+      ],
+      "cons": [
+        "Una iniciativa diferida"
+      ]
+    },
+    {
+      "id": "O2",
+      "title": "Compromiso al 100 %",
+      "pros": [
+        "Todo el portafolio"
+      ],
+      "cons": [
+        "Sin margen y con error budget agotado"
+      ]
+    }
+  ],
+  "recommendation": {
+    "option": "O1",
+    "rationale": "El error budget agotado obliga a confiabilidad y el histórico muestra 15 % de trabajo no planificado."
+  },
+  "risks": [
+    {
+      "id": "R1",
+      "description": "La guardia sigue alta y consume la reserva",
+      "likelihood": "medium",
+      "impact": "medium",
+      "mitigation": "Revisión a mitad del trimestre con el SRE"
+    }
+  ],
+  "period": "2027-T1",
+  "capacity": [
+    {
+      "team": "Reservas",
+      "availableUnits": 20,
+      "committedUnits": 14,
+      "onCallLoad": "Media: dos interrupciones por semana"
+    },
+    {
+      "team": "Plataforma",
+      "availableUnits": 16,
+      "committedUnits": 10,
+      "onCallLoad": "Alta"
+    }
+  ],
+  "errorBudgetPolicy": "Con 100 % consumido, la capacidad del equipo pasa a confiabilidad hasta recuperar el objetivo durante 14 días; excepción solo para cambios urgentes de seguridad, aprobada por un líder distinto.",
+  "skillGaps": [
+    "Observabilidad de colas en el equipo de reservas"
+  ],
+  "sustainability": [
+    "Toil de plataforma en 40 %; reducirlo a 30 % con automatización"
+  ],
+  "staffingOptions": [
+    "Capacitar a dos roles del equipo de reservas en observabilidad"
+  ],
+  "approvalPath": {
+    "approver": "agent:engineering-lead",
+    "command": "node .megafactory/bin/factory.mjs delegated-approve --feature ejemplo-capacidad-t1 --what prioritization:capacity --by agent:engineering-lead --role engineering-lead --agent sdlc-engineering-lead"
+  },
+  "actions": [
+    {
+      "id": "A1",
+      "title": "Automatizar la rotación de certificados",
+      "entryType": "change",
+      "owner": "platform-engineer",
+      "due": "2027-02-15",
+      "changeClassHint": "normal"
+    }
+  ]
+}

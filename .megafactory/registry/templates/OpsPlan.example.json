@@ -1,0 +1,27 @@
+{
+  "feature": "ejemplo-feature",
+  "iac": {
+    "tool": "sam",
+    "changes": [],
+    "iacFingerprint": null,
+    "validations": []
+  },
+  "pipeline": {
+    "status": "proposal",
+    "notes": "Pipeline propuesto; su activación la decide y la aplica un humano"
+  },
+  "observability": {
+    "logging": "estructurado, sin PII",
+    "metrics": [],
+    "alarms": [],
+    "slos": []
+  },
+  "environments": [
+    "dev"
+  ],
+  "costAlarmUsd": 50,
+  "runbookRefs": [],
+  "clickOpsFree": true,
+  "clickOpsExceptions": [],
+  "inventoryUpdated": true
+}

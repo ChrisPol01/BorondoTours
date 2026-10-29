@@ -1,0 +1,64 @@
+{
+  "feature": "FEAT-0001",
+  "area": "product",
+  "lead": "product-lead",
+  "delegation": {
+    "from": "conductor",
+    "requestId": "req-0001",
+    "scope": "Entregables del área para la funcionalidad de ejemplo"
+  },
+  "assignments": [
+    {
+      "role": "api-product-manager",
+      "task": "Primer entregable del área",
+      "requestId": "req-0002",
+      "dependsOn": [],
+      "status": "answered",
+      "artifacts": [
+        "specialist-review@v1"
+      ]
+    },
+    {
+      "role": "business-analyst",
+      "task": "Segundo entregable, después del primero",
+      "requestId": "req-0003",
+      "dependsOn": [
+        "api-product-manager"
+      ],
+      "status": "answered",
+      "artifacts": []
+    }
+  ],
+  "coherence": [
+    {
+      "check": "Los entregables del área usan el mismo glosario y las mismas versiones de entrada",
+      "result": "pass",
+      "evidence": "Versiones citadas en ambos artefactos coinciden"
+    }
+  ],
+  "blockers": [
+    {
+      "id": "blk-1",
+      "description": "Discrepancia de criterio entre dos roles del área",
+      "raisedBy": "business-analyst",
+      "resolution": "decided",
+      "note": "Decidido por la fuente vigente; razón en decisions"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "dec-1",
+      "class": "conflict",
+      "delegable": true,
+      "decision": "Gana la definición del artefacto vigente",
+      "rationale": "La fuente de verdad del área es el artefacto publicado más reciente",
+      "approver": "none"
+    }
+  ],
+  "escalations": [],
+  "result": {
+    "status": "ok",
+    "summary": "Entregables del área vigentes y coherentes; sin pendientes reservados."
+  },
+  "actions": []
+}

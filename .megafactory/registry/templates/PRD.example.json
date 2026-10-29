@@ -1,0 +1,84 @@
+{
+  "feature": "ejemplo-feature",
+  "title": "Devolución de préstamos en línea",
+  "problem": "Las personas usuarias solo pueden registrar la devolución de un préstamo en el mostrador, lo que genera filas y préstamos que figuran vencidos aunque ya se devolvieron.",
+  "goals": [
+    "Registrar la devolución en línea con confirmación inmediata"
+  ],
+  "nonGoals": [
+    "No incluye el cálculo de multas por retraso"
+  ],
+  "kpis": [
+    "Porcentaje de devoluciones registradas en línea"
+  ],
+  "specRefs": [
+    "docs/01-Specs/Spec-C-Checkout.md#RF-C06b"
+  ],
+  "scope": {
+    "apps": [
+      "apps/web"
+    ],
+    "services": [
+      "services/loans"
+    ],
+    "packages": [
+      "packages/contracts"
+    ],
+    "layers": [
+      "api"
+    ],
+    "scopePaths": [
+      "services/loans/src/"
+    ]
+  },
+  "stories": [
+    {
+      "id": "US-001",
+      "asA": "SUPER_ADMIN",
+      "iWant": "registrar la devolución de mi préstamo en línea",
+      "soThat": "el préstamo deje de figurar como vencido",
+      "invest": {
+        "independent": true,
+        "negotiable": true,
+        "valuable": true,
+        "estimable": true,
+        "small": true,
+        "testable": true,
+        "notes": ""
+      },
+      "acceptanceCriteria": [
+        {
+          "id": "AC-001-1",
+          "given": "un préstamo activo de la persona usuaria",
+          "when": "registra la devolución",
+          "then": "el préstamo queda en estado devuelto"
+        }
+      ],
+      "priority": "must",
+      "size": "M",
+      "dependsOn": [],
+      "dataElements": [
+        "correo de la persona usuaria"
+      ]
+    }
+  ],
+  "nfr": [
+    {
+      "id": "NFR-01",
+      "category": "security",
+      "statement": "Solo la persona dueña del préstamo puede registrar su devolución",
+      "target": "100 % de las operaciones autorizadas"
+    }
+  ],
+  "assumptions": [
+    "El servicio de préstamos ya expone la consulta del préstamo"
+  ],
+  "openQuestions": [
+    {
+      "id": "Q-01",
+      "question": "¿Se notifica por correo la devolución registrada?",
+      "blocking": false
+    }
+  ],
+  "pendingDecisions": []
+}

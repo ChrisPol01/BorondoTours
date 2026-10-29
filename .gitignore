@@ -138,3 +138,20 @@ temp/
 
 # Archivos temporales de configuracion AWS (trabajo local)
 tmp-*.json
+
+# ─── Fábrica SDLC (.kiro/factory) ───────────────────────────
+.kiro/factory/state/
+.kiro/factory/bus/**/.lock
+.kiro/factory/**/*.tmp-*
+.aws-sam/
+
+# >>> megafactory (administrado por mf link; no editar dentro del bloque)
+/.megafactory/core
+/.megafactory/local.json
+/.megafactory/state/
+/.megafactory/views/
+/.megafactory/adapters/
+/.megafactory/bus/*/sources/
+/.megafactory/bus/**/.lock
+/.megafactory/**/*.tmp-*
+# <<< megafactory

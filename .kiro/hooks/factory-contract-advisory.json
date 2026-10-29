@@ -1,0 +1,17 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Factory Contract Advisory",
+      "description": "Aviso no bloqueante: si se edita código dentro del alcance de una feature activa de la fábrica cuyos contratos de Fase 2 no están firmados, lo informa. Nunca bloquea ni modifica archivos. Nace deshabilitado; se activa tras V3.",
+      "trigger": "PostFileSave",
+      "matcher": ".*[\\\\/](apps|services|packages|infra)[\\\\/].*",
+      "action": {
+        "type": "command",
+        "command": "node .megafactory/bin/factory.mjs advise"
+      },
+      "timeout": 10,
+      "enabled": false
+    }
+  ]
+}

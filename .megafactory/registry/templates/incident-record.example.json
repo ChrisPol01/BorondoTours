@@ -1,0 +1,26 @@
+{
+  "feature": "ejemplo-feature",
+  "service": "reference-web",
+  "severity": "SEV2",
+  "status": "detected",
+  "detectedAt": "2026-11-02T10:00:00Z",
+  "summary": "Errores 5xx en la consulta de préstamos vencidos por encima del umbral de la alarma.",
+  "impact": "Una parte de los miembros no puede ver sus préstamos vencidos.",
+  "hypotheses": [
+    "El último despliegue cambió la consulta y perdió el índice."
+  ],
+  "timeline": [
+    {
+      "at": "2026-11-02T10:00:00Z",
+      "event": "Se dispara la alarma de errores del servicio.",
+      "by": "on-call-engineer"
+    }
+  ],
+  "commands": [
+    {
+      "command": "consulta de solo lectura de los logs del servicio en dev",
+      "purpose": "confirmar la hipótesis",
+      "executedBy": "human"
+    }
+  ]
+}

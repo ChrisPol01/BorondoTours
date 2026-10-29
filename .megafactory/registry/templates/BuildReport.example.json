@@ -1,0 +1,50 @@
+{
+  "feature": "ejemplo-feature",
+  "role": "backend",
+  "mode": "build",
+  "status": "complete",
+  "ownFingerprint": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "codeFingerprint": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "filesChanged": [
+    {
+      "path": "services/loans/src/return-loan.ts"
+    }
+  ],
+  "testsAdded": [
+    {
+      "file": "services/loans/src/return-loan.test.ts",
+      "covers": [
+        "AC-001-1"
+      ]
+    }
+  ],
+  "commands": [
+    {
+      "cmd": "pnpm --filter <pkg> run typecheck",
+      "exitCode": 0,
+      "available": true,
+      "summary": "ok"
+    }
+  ],
+  "coverage": {
+    "available": true,
+    "lines": 85,
+    "threshold": 80,
+    "met": true
+  },
+  "contractCompliance": [
+    {
+      "ref": "returnLoan",
+      "status": "implemented",
+      "note": ""
+    }
+  ],
+  "complianceCovered": [
+    "CR-001"
+  ],
+  "threatMitigations": [
+    "M-001"
+  ],
+  "disputes": [],
+  "notes": "Implementación del flujo principal de devolución"
+}

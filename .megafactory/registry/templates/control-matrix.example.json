@@ -1,0 +1,12 @@
+{
+  "feature": "ejemplo-feature",
+  "framework": "SOC2",
+  "controls": [
+    {
+      "id": "C1",
+      "description": "Los accesos a datos personales se revisan cada trimestre.",
+      "owner": "compliance-officer",
+      "evidenceExpected": "Matriz de accesos firmada y su revisión."
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "feature": "ejemplo-guardia",
+  "decisionClass": "production",
+  "reserved": true,
+  "summary": "Mitigar la saturación de conexiones del servicio de reservas aumentando el límite del pool en la configuración y reiniciando de forma escalonada; reversa probada en staging.",
+  "options": [
+    {
+      "id": "O1",
+      "title": "Subir límite del pool y reinicio escalonado",
+      "pros": [
+        "Reversible",
+        "Probado en staging"
+      ],
+      "cons": [
+        "Más conexiones a la base"
+      ]
+    },
+    {
+      "id": "O2",
+      "title": "Esperar a la corrección del defecto",
+      "pros": [
+        "Sin cambio en producción"
+      ],
+      "cons": [
+        "El incidente sigue"
+      ]
+    }
+  ],
+  "recommendation": {
+    "option": "O1",
+    "rationale": "Reduce el impacto mientras se corrige el defecto y tiene reversa probada."
+  },
+  "risks": [
+    {
+      "id": "R1",
+      "description": "La base alcanza su máximo de conexiones",
+      "likelihood": "low",
+      "impact": "high",
+      "mitigation": "Precondición con margen de conexiones medido"
+    }
+  ],
+  "target": "servicio de reservas, región principal del perfil",
+  "preconditions": [
+    "Margen de conexiones de la base mayor a 30 % medido en el tablero",
+    "Versión desplegada igual a la del release-plan"
+  ],
+  "steps": [
+    {
+      "id": "S1",
+      "command": "<comando del perfil para actualizar el parámetro del pool a 40>",
+      "expected": "Parámetro actualizado, versión nueva de configuración",
+      "abortIf": "Error de permisos o versión distinta"
+    }
+  ],
+  "rollback": [
+    "Restaurar el parámetro anterior con el mismo comando y valor 20"
+  ],
+  "verification": [
+    "Tasa de errores del checkout bajo el umbral del SLO durante 15 minutos"
+  ],
+  "executionLog": [],
+  "approvalPath": {
+    "approver": "user",
+    "command": "node .megafactory/bin/factory.mjs approve --feature ejemplo-guardia --what production:pool-limit --by human:<nombre>"
+  },
+  "actions": [
+    {
+      "id": "A1",
+      "title": "Corregir fuga de conexiones",
+      "entryType": "defect",
+      "owner": "backend",
+      "due": "2027-01-10"
+    }
+  ]
+}

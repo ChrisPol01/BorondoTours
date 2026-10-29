@@ -1,0 +1,9 @@
+// Vista documental DBML derivada de DataModel.json (no es fuente de verdad).
+Table loan_return {
+  id uuid [pk]
+  operator_id uuid [not null]
+  created_by uuid [not null]
+  Indexes {
+    operator_id [name: 'ix_loan_return_tenant']
+  }
+}

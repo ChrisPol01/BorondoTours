@@ -1,0 +1,61 @@
+{
+  "loop": "discovery.review",
+  "feature": "b2c-funcional-con-datos-simulados-y",
+  "iteration": 2,
+  "verdict": "changes_requested",
+  "reviewed": [
+    { "artifact": "prd", "version": 2, "hash": "sha256:d653115c5008358a8356b320d9d30cd7f68a04ced274b342d29cf0ece5ca0959" },
+    { "artifact": "edge-cases", "version": 2, "hash": "sha256:a5ecbca7a998e3f1cd19ca5dace3f60dc7655cb9114c492844253678d782c8f1" },
+    { "artifact": "compliance-requirements", "version": 2, "hash": "sha256:5ec455b41ce3ceb987a8628e9dce406e18434a93e491dd3b389013d43f16f533" }
+  ],
+  "previousFindings": {
+    "R1-01": "resuelto: 7 máquinas por dimensión con los nombres de packages/contracts, bookingTabs y EC-006/EC-051 ajustados",
+    "R1-02": "resuelto: split-participant individual, EC-030/EC-031/EC-032 reescritos, EC-081..EC-083 nuevos",
+    "R1-03": "resuelto: US-009 AC-009-1..AC-009-8 con el modelo de RF-C06/RF-C06b",
+    "R1-04": "resuelto: balance_due_date_passed (EC-075/EC-076) y reschedule-request con máximo 2, booking nuevo y 48 h (EC-077..EC-079)",
+    "R1-05": "resuelto: EC-038 determinista con PENDING_REVIEW y LEGAL-03 en notas",
+    "R1-06": "resuelto: conventions.daysBeforeTour en fechas calendario America/Bogota; EC-018..EC-020 con fechas",
+    "R1-07": "resuelto: AC-013-5 referencia las dimensiones de contracts; US-017 con AC-017-4 y AC-017-5",
+    "R1-08": "resuelto: scope.scopePaths igual al manifiesto",
+    "R1-09": "resuelto: CR-003, CR-019..CR-022 y CR-025 trazados en los AC",
+    "R1-10": "resuelto: CR-011 con ownerRole frontend y verificación review"
+  },
+  "findings": [
+    {
+      "id": "R2-01",
+      "artifact": "edge-cases@v2",
+      "severity": "medium",
+      "location": "stateMachines[split-participant].terminal; stateMachines[booking-payment] transiciones desde PARTIAL_PAID; EC-081, EC-083",
+      "issue": "La máquina se contradice con sus propios casos borde. (a) split-participant declara SLOT_RELEASED como terminal pero define SLOT_RELEASED→PENDING_RESERVATION (participant_new_link). (b) EC-081 dice que al generar un enlace nuevo la fase HOLD_GROUP se reabre con payment_status IN_PAID, pero en EC-031 el booking ya pasó a PARTIAL_PAID y booking-payment no tiene ninguna transición PARTIAL_PAID→IN_PAID. (c) EC-083 lleva el booking a CONFIRMED cuando todos los vigentes están en BALANCE_PAID, pero la única transición PARTIAL_PAID→CONFIRMED (balance_paid) exige 'saldo pendiente igual a cero' sin decir que los participantes FORFEITED o SLOT_RELEASED quedan fuera del saldo. AC-013-5 y EC-051 piden un test por cada transición válida e inválida de la máquina, así que los tests derivados de ella fallarían contra EC-081 y EC-083 o se escribirían adivinando.",
+      "requiredChange": "Quitar SLOT_RELEASED de terminal en split-participant (o declararlo terminal y modelar el enlace nuevo como un participante nuevo, y reescribir EC-081). Decidir una de dos opciones y dejarla en la máquina: agregar a booking-payment la transición PARTIAL_PAID→IN_PAID con evento split_participant_reopened, guard y idempotencyKey, o mantener el booking en PARTIAL_PAID con el participante reabierto pendiente y corregir EC-081. Agregar a booking-payment un evento split_all_balances_paid (PARTIAL_PAID→CONFIRMED) cuyo guard cuente solo a los participantes vigentes, o precisar en el guard de balance_paid que el saldo pendiente excluye a FORFEITED y SLOT_RELEASED. Añadir las invalidTransitions correspondientes.",
+      "ownerRole": "business-analyst"
+    },
+    {
+      "id": "R2-02",
+      "artifact": "edge-cases@v2",
+      "severity": "low",
+      "location": "bookingTabs; EC-080",
+      "issue": "bookingTabs no cubre algunas combinaciones alcanzables: PAYMENT_FAILED o IN_PAID con la fecha del tour pasada (por-pagar exige daysBeforeTour ≥ 0 y canceladas solo toma EXPIRED_PAID pasada), y CONFIRMED o SETTLED con operational PENDING y fecha pasada cuando la semilla no la marcó TOUR_COMPLETED ni NO_ASSISTED. EC-080 exige que cada reserva aparezca en exactamente una pestaña.",
+      "requiredChange": "Asignar esas combinaciones a una pestaña (p. ej. Canceladas con etiqueta Vencida para las no pagadas con fecha pasada y Completadas para las pagadas con fecha pasada) o declararlas inalcanzables en la semilla con su razón, e incluirlas en EC-080.",
+      "ownerRole": "business-analyst"
+    },
+    {
+      "id": "R2-03",
+      "artifact": "prd@v2",
+      "severity": "low",
+      "location": "US-009 AC-009-6",
+      "issue": "AC-009-6 dice que la reserva 'queda confirmada' y a la vez aparece en Por pagar. En EdgeCases ese momento es PARTIAL_PAID y la etiqueta acordada es 'Reserva confirmada con saldo pendiente' (OQ-EC-02). Un lector puede entender payment_status CONFIRMED, que en bookingTabs va a Próximas.",
+      "requiredChange": "Redactar AC-009-6 como: la reserva pasa a PARTIAL_PAID, se muestra la etiqueta Reserva confirmada con saldo pendiente y aparece en Por pagar; al pagarse todos los saldos de los vigentes pasa a CONFIRMED y a Próximas.",
+      "ownerRole": "product-manager"
+    }
+  ],
+  "debt": [
+    "LEGAL-01..LEGAL-13 de Compliance requieren revisión legal humana; LEGAL-01 (aviso sin Coins), LEGAL-04 (redacción de las condiciones de pérdida) y LEGAL-11 (norma de la exención de IVA) condicionan textos visibles.",
+    "dep:qrcode pendiente de aprobación humana; el voucher sale con el respaldo de AC-015-3.",
+    "Los estados de split-participant y reschedule-request no existen en packages/contracts; data-modeler y api-contract deben formalizarlos en la fase contracts.",
+    "OQ-EC-01..OQ-EC-04 (no bloqueantes) quedan para confirmación de product-manager y domain-rules; OQ-EC-03 se aparta de Maquina-Estados-Booking §7 y conviene actualizar ese doc cuando se confirme.",
+    "Motor: loop verdict valida la revisión pero no escribe state/discovery.review.json (sigue en iteration 0, loopStatus continue). Cuando una iteración salga approved, la receta no se detendrá por stopCondition y llegará a maxIterations=3 (pausa). Propuesta para el motor, fuera del alcance de esta feature.",
+    "Motor: status --mode contract devolvió skippable:true para compliance-officer con dependsOn obsoleto y un hallazgo abierto (observado en su handoff)."
+  ],
+  "summary": "Iteración 2 de discovery.review sobre prd@v2, edge-cases@v2 y compliance-requirements@v2. Los diez hallazgos de la iteración 1 están resueltos: el booking ya usa las dimensiones de packages/contracts, Divide tu cuenta sigue el modelo individual de RF-C06/RF-C06b en el PRD y en EdgeCases, el vencimiento del abono y la reprogramación siguen Maquina-Estados-Booking y RF-D08b, EC-038 es determinista y Compliance quedó realineado con trazas a los AC nuevos. Queda un hallazgo medium: la máquina de Divide tu cuenta se contradice con EC-081 y EC-083 (SLOT_RELEASED terminal con salida, falta PARTIAL_PAID→IN_PAID y el guard de CONFIRMED no excluye a los participantes que salieron), y eso rompe los tests de transición que exigen AC-013-5 y EC-051 (R2-01). Hay dos low: pestañas sin regla para fechas pasadas (R2-02) y la redacción de AC-009-6 (R2-03). Compliance no tiene hallazgos nuevos. Veredicto changes_requested; la corrección es acotada a business-analyst y a una línea del PRD."
+}

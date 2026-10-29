@@ -18,6 +18,7 @@ Toda la documentación vive en `docs/` (vault Obsidian, config en `docs/.obsidia
 | `docs/04-Tech-Design/Mapa-Repositorio.md` | Árbol real, comandos, ownership, integraciones |
 | `.kiro/specs/` | Specs de features B2C y planificación operativa |
 | `.kiro/hooks/` | Hooks de agente (calidad, PII, RBAC, a11y) |
+| `.kiro/factory/` | Fábrica SDLC multi-agente: Context Bus, registro de agentes sdlc-*, esquemas y CLI; recetas en .kiro/workflows/ (steering 19) |
 | `.claude/` | Plantillas claude-flow; no son fuente de verdad |
 | `otros/design/` | Diseño, marca y herramientas Figma; fuera del producto |
 
@@ -25,3 +26,5 @@ Fuentes de verdad: datos = `03-Knowledge/Modelo-Datos-Core.md`; infra/stack = AD
 
 Regla: antes de implementar, lee el Spec/doc relevante bajo demanda; no asumas ni cargues docs completos. Si hay conflicto, consulta `docs/DECISIONES-PENDIENTES.md` y pregunta al usuario.
 Comandos de build/test/lint: steering 16. Qué existe en código vs sólo en docs: steering 17. Mapa del repo: Mapa-Repositorio.
+
+> ⚠️ **Ruta canónica de documentación: `docs/`** (relativa a la raíz del repo). NO existe ni debe crearse `.obsidian/docs/`: `.obsidian/` es solo configuración de Obsidian, no contenido. Al crear o editar documentos (incluida la doc contable en `docs/03-Knowledge/`), escribe siempre bajo `docs/`. Un error histórico asumió `.obsidian/docs/` como destino; no repetirlo.

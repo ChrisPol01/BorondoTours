@@ -1,0 +1,77 @@
+{
+  "feature": "ejemplo-soporte",
+  "decisionClass": "none",
+  "reserved": false,
+  "summary": "El error al descargar facturas solo ocurre con nombres de archivo con tildes desde la última salida; es un defecto de codificación; la solución temporal es descargar desde el historial.",
+  "options": [
+    {
+      "id": "O1",
+      "title": "Proponer defecto y solución temporal",
+      "pros": [
+        "Corrige la causa"
+      ],
+      "cons": [
+        "Requiere una salida"
+      ]
+    },
+    {
+      "id": "O2",
+      "title": "Solo documentar la solución temporal",
+      "pros": [
+        "Inmediato"
+      ],
+      "cons": [
+        "El defecto sigue"
+      ]
+    }
+  ],
+  "recommendation": {
+    "option": "O1",
+    "rationale": "La causa está confirmada por dos evidencias y la solución temporal es reversible."
+  },
+  "risks": [
+    {
+      "id": "R1",
+      "description": "Otros documentos con tildes fallan igual",
+      "likelihood": "medium",
+      "impact": "medium",
+      "mitigation": "Incluir prueba con caracteres no ASCII en el defecto"
+    }
+  ],
+  "symptom": "Error al descargar facturas con tildes en el nombre desde la versión anterior",
+  "reproduction": [
+    "Crear factura de prueba con tilde en staging",
+    "Descargar desde el detalle",
+    "Observar error 500"
+  ],
+  "hypotheses": [
+    {
+      "id": "H1",
+      "statement": "Codificación del nombre en la cabecera de descarga",
+      "evidence": "Traza con excepción de codificación en la ruta de descarga",
+      "status": "confirmed"
+    },
+    {
+      "id": "H2",
+      "statement": "Permisos del almacenamiento",
+      "evidence": "Descarga sin tilde funciona con el mismo permiso",
+      "status": "refuted"
+    }
+  ],
+  "probableCause": "defect",
+  "workaround": "Descargar desde el historial, que usa un nombre sin tildes",
+  "defectProposal": "Esperado: descarga con cualquier nombre válido. Obtenido: error 500 con tildes. Alcance: desde la última salida, todas las regiones.",
+  "approvalPath": {
+    "approver": "agent:operations-lead",
+    "command": "sin aprobación: el conductor abre el defecto"
+  },
+  "actions": [
+    {
+      "id": "A1",
+      "title": "Corregir codificación de nombres en descargas",
+      "entryType": "defect",
+      "owner": "backend",
+      "due": "2027-01-20"
+    }
+  ]
+}

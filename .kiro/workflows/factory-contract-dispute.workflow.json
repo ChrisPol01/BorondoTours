@@ -1,0 +1,166 @@
+{
+  "name": "bt-factory-contract-dispute",
+  "description": "Protocolo de renegociación de contrato de la Megafábrica SDLC: negociación en bucle con árbitro, actualización del contrato y del modelo de datos, refresco de dependientes, re-firma de los 8 cofirmantes de contracts y re-puerta. No tiene pasos de código (los rehace el relanzamiento de bt-factory-build). El campo 'type' de cada nodo y la forma de 'branches'/'stopCondition' quedan pendientes de validación por el orquestador.",
+  "inputs": {
+    "task": "prompt"
+  },
+  "modelId": "auto",
+  "steps": [
+    {
+      "type": "step",
+      "id": "init",
+      "agent": "sdlc-conductor",
+      "captureOutput": true,
+      "prompt": "Rol: conductor. Modo: init. Receta: contract-dispute.\nEntrada:\n{{task}}\nEjecuta run start --recipe contract-dispute --feature <id> --dispute <dsp>; imprime FEATURE_ID, RUN_ID, DISPUTE_ID y PHASE. Si run start sale con 2, señala error con las razones (nunca success)."
+    },
+    {
+      "type": "repeat",
+      "id": "negotiation",
+      "maxIterations": 3,
+      "onMaxIterations": "pause",
+      "stopCondition": {
+        "fileCheck": {
+          "path": ".megafactory/state/dispute.negotiation.json",
+          "jsonPath": "$.loopStatus",
+          "value": "stop"
+        }
+      },
+      "steps": [
+        {
+          "type": "step",
+          "id": "api-proposal",
+          "agent": "sdlc-api-contract",
+          "prompt": "Contexto:\n{{init.output}}\nRol: api-contract. Modo: dispute. Bucle: dispute.negotiation.\nPresenta tu posición de la ronda actual."
+        },
+        {
+          "type": "step",
+          "id": "dba-position",
+          "agent": "sdlc-data-modeler",
+          "prompt": "Contexto:\n{{init.output}}\nRol: data-modeler. Modo: dispute. Bucle: dispute.negotiation.\nPresenta tu posición de la ronda actual."
+        },
+        {
+          "type": "step",
+          "id": "backend-position",
+          "agent": "sdlc-backend",
+          "prompt": "Contexto:\n{{init.output}}\nRol: backend. Modo: dispute. Bucle: dispute.negotiation.\nPresenta tu posición de la ronda actual."
+        },
+        {
+          "type": "step",
+          "id": "arbiter-review",
+          "agent": "sdlc-artifact-reviewer",
+          "prompt": "Contexto:\n{{init.output}}\nRol: artifact-reviewer. Modo: arbiter. Bucle: dispute.negotiation.\nResuelve la ronda: continue para abrir otra, o agreed|rejected|escalated para cerrar. Escribe la resolución en .megafactory/bus/<id>/disputes/<DISPUTE_ID>/resolution-<n>.md (n = ronda) y ejecuta dispute resolve --feature <id> --id <DISPUTE_ID> --verdict continue|agreed|rejected|escalated [--changes <ids>] --resolution-file .megafactory/bus/<id>/disputes/<DISPUTE_ID>/resolution-<n>.md; nunca loop verdict en este bucle."
+        }
+      ]
+    },
+    {
+      "type": "step",
+      "id": "contract-update",
+      "agent": "sdlc-api-contract",
+      "prompt": "Contexto:\n{{init.output}}\nRol: api-contract. Modo: contract.\nSi openapi está en changes, aplica el acuerdo (CONTRACT_UPDATED); si no, responde skipped."
+    },
+    {
+      "type": "step",
+      "id": "datamodel-update",
+      "agent": "sdlc-data-modeler",
+      "prompt": "Contexto:\n{{init.output}}\nRol: data-modeler. Modo: contract.\nCambia data-model si está en changes, o lo refresca si quedó obsoleto; también dbml-view si existe."
+    },
+    {
+      "type": "sequence",
+      "id": "refresh-dependents",
+      "steps": [
+        {
+          "type": "step",
+          "id": "integrations-refresh",
+          "agent": "sdlc-integrations",
+          "prompt": "Contexto:\n{{init.output}}\nRol: integrations. Modo: contract.\nRepublica o refresca Integrations.json en el orden del grafo si quedó obsoleto."
+        },
+        {
+          "type": "parallel",
+          "id": "assess-refresh",
+          "joinPolicy": "allSettled",
+          "branches": [
+            {
+              "type": "step",
+              "id": "finops-refresh",
+              "agent": "sdlc-finops",
+              "prompt": "Contexto:\n{{init.output}}\nRol: finops. Modo: contract.\nRefresca cost-estimate si quedó obsoleto."
+            },
+            {
+              "type": "step",
+              "id": "security-architect-refresh",
+              "agent": "sdlc-security-architect",
+              "prompt": "Contexto:\n{{init.output}}\nRol: security-architect. Modo: contract.\nRefresca threat-model y authorizationMatrix si cambió un operationId."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "parallel",
+      "id": "re-sign",
+      "joinPolicy": "allSettled",
+      "branches": [
+        {
+          "type": "step",
+          "id": "security-architect-sign",
+          "agent": "sdlc-security-architect",
+          "prompt": "Contexto:\n{{init.output}}\nRol: security-architect. Modo: sign."
+        },
+        {
+          "type": "step",
+          "id": "finops-sign",
+          "agent": "sdlc-finops",
+          "prompt": "Contexto:\n{{init.output}}\nRol: finops. Modo: sign."
+        },
+        {
+          "type": "step",
+          "id": "architect-sign",
+          "agent": "sdlc-solutions-architect",
+          "prompt": "Contexto:\n{{init.output}}\nRol: solutions-architect. Modo: sign."
+        },
+        {
+          "type": "step",
+          "id": "data-modeler-sign",
+          "agent": "sdlc-data-modeler",
+          "prompt": "Contexto:\n{{init.output}}\nRol: data-modeler. Modo: sign."
+        },
+        {
+          "type": "step",
+          "id": "backend-sign",
+          "agent": "sdlc-backend",
+          "prompt": "Contexto:\n{{init.output}}\nRol: backend. Modo: sign."
+        },
+        {
+          "type": "step",
+          "id": "frontend-sign",
+          "agent": "sdlc-frontend",
+          "prompt": "Contexto:\n{{init.output}}\nRol: frontend. Modo: sign."
+        },
+        {
+          "type": "step",
+          "id": "api-contract-sign",
+          "agent": "sdlc-api-contract",
+          "prompt": "Contexto:\n{{init.output}}\nRol: api-contract. Modo: sign."
+        },
+        {
+          "type": "step",
+          "id": "compliance-sign",
+          "agent": "sdlc-compliance-officer",
+          "prompt": "Contexto:\n{{init.output}}\nRol: compliance-officer. Modo: sign."
+        }
+      ]
+    },
+    {
+      "type": "step",
+      "id": "regate",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: gate. Fase: contracts. Cierra corrida: no.\nEjecuta gate --phase contracts; si no pasa, usa staleClosure de status para explicar qué falta y pausa."
+    },
+    {
+      "type": "step",
+      "id": "close",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: close. Cierra corrida: sí.\nEjecuta dispute close y run finish, escribe la lección y deja el NEXT según la corrida principal pausada."
+    }
+  ]
+}

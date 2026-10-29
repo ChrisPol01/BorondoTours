@@ -1,0 +1,24 @@
+{
+  "feature": "ejemplo-feature",
+  "period": "2026-11",
+  "totals": {
+    "currency": "USD",
+    "amount": 1830
+  },
+  "untaggedShare": 0.12,
+  "carbon": {
+    "sciEstimate": 0.42,
+    "unit": "gCO2e por consulta",
+    "method": "Estimación SCI con la energía publicada por la región del proveedor."
+  },
+  "actions": [
+    {
+      "id": "CR1",
+      "title": "Etiquetar los recursos sin dueño del entorno de dev",
+      "entryType": "change",
+      "owner": "devops-sre",
+      "due": "2026-12-05",
+      "changeClassHint": "standard"
+    }
+  ]
+}

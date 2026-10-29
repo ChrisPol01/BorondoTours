@@ -1,0 +1,15 @@
+{
+  "feature": "ejemplo-feature",
+  "title": "Consultas de préstamos sin índice por estado",
+  "component": "servicio de préstamos",
+  "debtType": "design",
+  "impact": "La búsqueda de préstamos vencidos recorre la tabla completa y supera el presupuesto de latencia en horas pico.",
+  "interest": "Cada semana se suman reintentos manuales del equipo de soporte.",
+  "evidence": [
+    { "kind": "metric", "ref": "p95 de la consulta de vencidos por encima del objetivo durante tres semanas", "note": "Panel de latencia del servicio." },
+    { "kind": "review", "ref": "Revisión de código del módulo de préstamos" }
+  ],
+  "proposal": "Agregar un índice compuesto por estado y fecha de vencimiento y cubrirlo con una prueba de rendimiento.",
+  "effort": "S",
+  "priority": "high"
+}

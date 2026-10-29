@@ -1,0 +1,18 @@
+openapi: 3.1.0
+info:
+  title: API de ejemplo
+  version: 1.0.0
+paths:
+  /api/v1/loans/{id}/return:
+    post:
+      operationId: returnLoan
+      x-bt-rbac: {roles: [ SUPER_ADMIN ], tenantScope: owner_self}
+      x-bt-compliance: [CR-001]
+      responses:
+        '200':
+          description: Devolución registrada
+components:
+  schemas:
+    LoanReturn:
+      type: object
+      x-bt-zod: LoanReturnSchema

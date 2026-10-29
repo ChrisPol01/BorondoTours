@@ -1,0 +1,412 @@
+{
+  "schemaVersion": 1,
+  "base": {
+    "fs_read": {
+      "allow": [
+        "**"
+      ],
+      "deny": [
+        ".env",
+        ".env.*",
+        "**/.env",
+        "**/.env.*",
+        "**/*.pem",
+        "**/*.key"
+      ],
+      "denyExclude": [
+        ".env.example",
+        "**/.env.example"
+      ]
+    },
+    "fs_write": {
+      "deny": [
+        ".megafactory/bus/**/manifest.json",
+        ".megafactory/bus/**/events.jsonl",
+        ".megafactory/bus/**/inbox/**",
+        ".megafactory/bus/**/disputes/*.json",
+        ".megafactory/bus/**/.lock",
+        ".megafactory/state/**",
+        ".megafactory/registry/**",
+        ".megafactory/schemas/**",
+        ".megafactory/scripts/**",
+        ".megafactory/roles/**",
+        ".megafactory/templates/**",
+        ".megafactory/*.md",
+        ".kiro/agents/**",
+        ".kiro/hooks/**",
+        ".kiro/steering/**",
+        ".kiro/workflows/**",
+        ".kiro/skills/**",
+        ".kiro/settings/**",
+        ".github/**",
+        ".git/**",
+        "**/package.json",
+        "pnpm-lock.yaml",
+        ".env",
+        ".env.*",
+        "**/.env*",
+        "**/*.pem",
+        "**/*.key",
+        ".megafactory/*.json",
+        ".megafactory/bin/**",
+        ".megafactory/views/**",
+        "**/pnpm-lock.yaml",
+        "**/package-lock.json",
+        "**/yarn.lock",
+        "**/pyproject.toml",
+        "**/poetry.lock",
+        "**/requirements*.txt",
+        "**/go.mod",
+        "**/go.sum",
+        "**/Cargo.toml",
+        "**/Cargo.lock",
+        "**/*.tfstate*",
+        "**/.terraform/**",
+        "**/.terraform.lock.hcl",
+        ".megafactory/memory/**",
+        ".megafactory/core/**",
+        ".megafactory/adapters/**",
+        ".megafactory/findings/**",
+        ".megafactory/activities/**",
+        ".claude/**",
+        ".codex/**",
+        ".agents/skills/**",
+        ".agents/agents/**",
+        ".cursor/**",
+        "AGENTS.md",
+        "CLAUDE.md",
+        ".megafactory/learning/**",
+        "pnpm-workspace.yaml",
+        "turbo.json",
+        "docs/.obsidian/**",
+        "docs/02-ADRs/ADR-012*"
+      ],
+      "denyExclude": [
+        ".env.example"
+      ]
+    },
+    "shell": {
+      "allow": [
+        "node .megafactory/bin/factory.mjs *",
+        "git status*",
+        "git diff*",
+        "git log*",
+        "git show*",
+        "git rev-parse*",
+        "git ls-files*"
+      ],
+      "cloudDeny": [
+        "aws *",
+        "az *",
+        "gcloud *"
+      ],
+      "deny": [
+        "*--by human:*",
+        "*factory.mjs approve*",
+        "*factory.mjs waive*",
+        "*factory.mjs feature *",
+        "*factory.mjs verify*--rechain*",
+        "*factory.mjs run start*--takeover*",
+        "*;*",
+        "*&&*",
+        "*||*",
+        "*|*",
+        "*$(*",
+        "*`*",
+        "git commit*",
+        "git push*",
+        "git reset*",
+        "git clean*",
+        "git checkout*",
+        "git switch*",
+        "git restore*",
+        "git rebase*",
+        "git merge*",
+        "git stash*",
+        "git tag*",
+        "git worktree*",
+        "git config*",
+        "sam deploy*",
+        "sam delete*",
+        "sam sync*",
+        "*--config-env prod*",
+        "*--config-env staging*",
+        "aws cloudformation delete-stack*",
+        "rm -r*",
+        "Remove-Item*-Recurse*",
+        "rmdir /s*",
+        "del /s*",
+        "curl *",
+        "wget *",
+        "Invoke-WebRequest*",
+        "Invoke-RestMethod*",
+        "iwr *",
+        "irm *",
+        "*factory.cmd*",
+        "*factory.ps1*",
+        "*bin/factory",
+        "*bin/factory *",
+        "*bin\\factory*",
+        "*factory.mjs self*",
+        "*factory.mjs render*",
+        "*factory.mjs feedback*",
+        "*mf.mjs*",
+        "cdk deploy*",
+        "cdk destroy*",
+        "terraform apply*",
+        "terraform destroy*",
+        "terraform import*",
+        "terraform state *",
+        "pulumi up*",
+        "pulumi destroy*",
+        "kubectl apply*",
+        "kubectl delete*",
+        "helm install*",
+        "helm upgrade*",
+        "helm uninstall*",
+        "docker push*",
+        "npm publish*",
+        "pnpm publish*",
+        "gh pr merge*",
+        "gh release*",
+        "*factory.mjs memory prune*",
+        "*factory.mjs memory import*",
+        "*factory.mjs request resolve*",
+        "*>*",
+        "*engine/scripts/factory.mjs*",
+        "*engine\\scripts\\factory.mjs*",
+        "*--root*",
+        "*factory.mjs delegated-approve*",
+        "*787565887675*",
+        "*461299757352*",
+        "pnpm factory*",
+        "pnpm run factory*",
+        "pnpm infra:deploy*",
+        "cdk *",
+        "npx cdk*",
+        "pnpm cdk*",
+        "pnpm exec cdk*",
+        "pnpm db:migrate*",
+        "pnpm --filter @borondo/db run migrate*",
+        "pnpm --filter @borondo/db migrate*",
+        "pnpm --filter @borondo/db run seed*",
+        "drizzle-kit push*",
+        "drizzle-kit migrate*"
+      ]
+    },
+    "web": {
+      "deny": [
+        "*"
+      ]
+    },
+    "subagent": {
+      "deny": [
+        "*"
+      ]
+    }
+  },
+  "profiles": {
+    "conductor": {
+      "tools": [
+        "read",
+        "write",
+        "shell",
+        "subagent"
+      ],
+      "fsWrite": [
+        ".megafactory/bus/**"
+      ],
+      "shellAllow": [],
+      "shellAsk": [],
+      "backups": [
+        "conductor",
+        "analyst"
+      ],
+      "shellDenyRemove": [
+        "*factory.mjs delegated-approve*"
+      ]
+    },
+    "analyst": {
+      "tools": [
+        "read",
+        "write",
+        "shell"
+      ],
+      "fsWrite": [
+        ".megafactory/bus/**"
+      ],
+      "shellAllow": [],
+      "shellAsk": [],
+      "backups": [
+        "conductor",
+        "analyst",
+        "contract",
+        "developer",
+        "writer",
+        "auditor",
+        "ops"
+      ]
+    },
+    "contract": {
+      "tools": [
+        "read",
+        "write",
+        "shell"
+      ],
+      "fsWrite": [
+        ".megafactory/bus/**",
+        "packages/contracts/**"
+      ],
+      "shellAllow": [
+        "pnpm --filter @borondo/contracts run lint",
+        "pnpm --filter @borondo/contracts run typecheck",
+        "pnpm --filter @borondo/contracts run test",
+        "pnpm --filter @borondo/contracts exec vitest run*"
+      ],
+      "shellAsk": [
+        "pnpm add*",
+        "pnpm install*",
+        "pnpm remove*"
+      ],
+      "backups": [
+        "contract",
+        "developer"
+      ]
+    },
+    "developer": {
+      "tools": [
+        "read",
+        "write",
+        "shell"
+      ],
+      "fsWrite": [
+        ".megafactory/bus/**",
+        "apps/**",
+        "services/**",
+        "packages/**",
+        "docs/**"
+      ],
+      "shellAllow": [
+        "pnpm --filter * run lint",
+        "pnpm --filter * run typecheck",
+        "pnpm --filter * run test",
+        "pnpm --filter * run test:run",
+        "pnpm --filter * run test:coverage",
+        "pnpm --filter * run build",
+        "pnpm --filter @borondo/db run generate",
+        "pnpm --filter * exec vitest run*",
+        "pnpm --filter * exec eslint *",
+        "pnpm audit*",
+        "pnpm --filter @borondo/web run test:e2e*"
+      ],
+      "shellAsk": [
+        "pnpm add*",
+        "pnpm install*",
+        "pnpm remove*",
+        "docker compose*"
+      ],
+      "shellDeny": [
+        "pnpm --filter @borondo/web run test"
+      ],
+      "backups": [
+        "developer"
+      ]
+    },
+    "writer": {
+      "tools": [
+        "read",
+        "write",
+        "shell"
+      ],
+      "fsWrite": [
+        ".megafactory/bus/**",
+        "docs/**"
+      ],
+      "fsWriteDeny": [
+        "docs/03-Knowledge/Modelo-Datos-Core.md"
+      ],
+      "shellAllow": [],
+      "shellAsk": [],
+      "backups": [
+        "writer",
+        "developer"
+      ]
+    },
+    "auditor": {
+      "tools": [
+        "read",
+        "write",
+        "shell"
+      ],
+      "fsWrite": [
+        ".megafactory/bus/**"
+      ],
+      "shellAllow": [
+        "pnpm --filter * run lint",
+        "pnpm --filter * run typecheck",
+        "pnpm --filter * run test",
+        "pnpm --filter * run test:run",
+        "pnpm --filter * run test:coverage",
+        "pnpm --filter * exec vitest run*",
+        "pnpm --filter * exec eslint *",
+        "pnpm audit*"
+      ],
+      "shellAsk": [
+        "docker compose*"
+      ],
+      "shellDeny": [
+        "pnpm --filter @borondo/web run test"
+      ],
+      "backups": [
+        "auditor",
+        "developer"
+      ]
+    },
+    "ops": {
+      "tools": [
+        "read",
+        "write",
+        "shell"
+      ],
+      "fsWrite": [
+        ".megafactory/bus/**",
+        "infra/**",
+        "docs/06-Operaciones/**"
+      ],
+      "fsWriteDeny": [
+        "infra/lib/**"
+      ],
+      "shellAllow": [
+        "sam validate*",
+        "sam build*",
+        "pnpm infra:build",
+        "cfn-lint *",
+        "cfn-guard *"
+      ],
+      "shellAsk": [
+        "sam deploy --config-env default --template-file infra/template.yaml --profile AdministratorAccess-232025404765 --no-confirm-changeset",
+        "aws * --profile AdministratorAccess-232025404765*",
+        "aws sso login --profile AdministratorAccess-232025404765"
+      ],
+      "backups": [
+        "ops"
+      ]
+    },
+    "sre": {
+      "tools": [
+        "read",
+        "write",
+        "shell"
+      ],
+      "fsWrite": [
+        ".megafactory/bus/**"
+      ],
+      "shellAllow": [],
+      "shellAsk": [],
+      "backups": [
+        "sre",
+        "ops"
+      ]
+    }
+  }
+}

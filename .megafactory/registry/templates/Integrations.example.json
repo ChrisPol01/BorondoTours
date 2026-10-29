@@ -1,0 +1,33 @@
+{
+  "feature": "ejemplo-feature",
+  "integrations": [
+    {
+      "provider": "onepay",
+      "direction": "inbound",
+      "purpose": "Recibir la confirmación del proveedor externo",
+      "auth": "hmac_signature",
+      "secretNames": [
+        "PROVIDER_WEBHOOK_SECRET"
+      ],
+      "idempotency": {
+        "key": "event_id",
+        "store": "tabla de eventos procesados"
+      },
+      "retries": {
+        "strategy": "exponential",
+        "maxAttempts": 3,
+        "dlq": "sqs"
+      },
+      "timeoutMs": 5000,
+      "sourceOfTruth": "webhook",
+      "piiSent": [],
+      "sandbox": true,
+      "failureModes": [
+        {
+          "mode": "firma inválida",
+          "behavior": "rechazar con 401"
+        }
+      ]
+    }
+  ]
+}

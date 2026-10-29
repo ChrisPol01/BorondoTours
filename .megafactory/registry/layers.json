@@ -1,0 +1,216 @@
+{
+  "schemaVersion": 1,
+  "layers": [
+    {
+      "layer": "ui",
+      "description": "Interfaz de usuario web: componentes, estilos, accesibilidad e internacionalización.",
+      "requiresRoles": [
+        "frontend",
+        "uiux-a11y"
+      ],
+      "packs": [
+        "web-app",
+        "mobile"
+      ],
+      "active": true,
+      "paths": [
+        "packages/ui/src/",
+        "apps/web/e2e/",
+        "apps/web/src/lib/i18n/",
+        "apps/web/src/lib/fig/",
+        "apps/web/src/styles/",
+        "apps/web/src/lib/api/mocks/",
+        "apps/web/test/",
+        "apps/web/tests/"
+      ]
+    },
+    {
+      "layer": "api",
+      "description": "Contrato y servicios de la API (OpenAPI, validación, controladores).",
+      "requiresRoles": [
+        "api-contract",
+        "backend"
+      ],
+      "packs": [
+        "web-app",
+        "mobile"
+      ],
+      "active": true,
+      "paths": [
+        "packages/contracts/src/"
+      ]
+    },
+    {
+      "layer": "data",
+      "description": "Modelo de datos relacional, migraciones e índices.",
+      "requiresRoles": [
+        "data-modeler"
+      ],
+      "packs": [
+        "web-app",
+        "data-ml"
+      ],
+      "active": true,
+      "paths": [
+        "packages/db/src/",
+        "packages/db/drizzle/"
+      ]
+    },
+    {
+      "layer": "domain-finance",
+      "description": "Reglas de negocio puras con vectores de prueba (cálculos, máquinas de estado).",
+      "requiresRoles": [
+        "domain-rules"
+      ],
+      "packs": [
+        "web-app"
+      ],
+      "active": true,
+      "paths": [
+        "packages/domain/src/"
+      ]
+    },
+    {
+      "layer": "integrations",
+      "description": "Integraciones con proveedores externos (webhooks, adaptadores, idempotencia).",
+      "requiresRoles": [
+        "integrations"
+      ],
+      "packs": [
+        "web-app"
+      ],
+      "active": true,
+      "paths": []
+    },
+    {
+      "layer": "infra",
+      "description": "Infraestructura como código, pipeline y observabilidad de la entrega.",
+      "requiresRoles": [
+        "devops-sre",
+        "platform-engineer"
+      ],
+      "packs": [
+        "web-app",
+        "infra-iac",
+        "iot-edge"
+      ],
+      "active": true,
+      "paths": [
+        "infra/"
+      ]
+    },
+    {
+      "layer": "content-seo",
+      "description": "Contenido, textos traducibles y SEO técnico.",
+      "requiresRoles": [
+        "content-seo"
+      ],
+      "packs": [
+        "web-app"
+      ],
+      "active": true,
+      "paths": [
+        "apps/web/src/lib/i18n/"
+      ]
+    },
+    {
+      "layer": "auth-rbac",
+      "description": "Autenticación, autorización por roles y aislamiento entre inquilinos.",
+      "requiresRoles": [
+        "backend"
+      ],
+      "packs": [
+        "web-app",
+        "mobile"
+      ],
+      "active": true,
+      "paths": []
+    },
+    {
+      "layer": "mobile",
+      "description": "Aplicación móvil (clientes nativos o multiplataforma).",
+      "requiresRoles": [
+        "mobile-developer"
+      ],
+      "packs": [
+        "mobile"
+      ],
+      "active": false,
+      "paths": []
+    },
+    {
+      "layer": "events",
+      "description": "Contratos de eventos y mensajería asíncrona (AsyncAPI).",
+      "requiresRoles": [
+        "api-contract"
+      ],
+      "packs": [
+        "web-app",
+        "mobile"
+      ],
+      "active": true,
+      "paths": []
+    },
+    {
+      "layer": "data-pipeline",
+      "description": "Pipelines de datos: ingesta, transformación y calidad de datos.",
+      "requiresRoles": [
+        "data-engineer"
+      ],
+      "packs": [
+        "data-ml"
+      ],
+      "active": false,
+      "paths": []
+    },
+    {
+      "layer": "analytics",
+      "description": "Analítica de producto: eventos de medición, experimentos y tableros.",
+      "requiresRoles": [
+        "product-analyst"
+      ],
+      "packs": [
+        "data-ml",
+        "web-app"
+      ],
+      "active": false,
+      "paths": []
+    },
+    {
+      "layer": "ml",
+      "description": "Modelos de aprendizaje automático: entrenamiento, evaluación y despliegue.",
+      "requiresRoles": [
+        "ml-engineer"
+      ],
+      "packs": [
+        "data-ml"
+      ],
+      "active": false,
+      "paths": []
+    },
+    {
+      "layer": "llm",
+      "description": "Funciones con modelos de lenguaje: prompts, evaluaciones y barreras.",
+      "requiresRoles": [
+        "ai-engineer"
+      ],
+      "packs": [
+        "ai-llm"
+      ],
+      "active": false,
+      "paths": []
+    },
+    {
+      "layer": "iot",
+      "description": "Dispositivos y borde: firmware, telemetría y actualizaciones remotas.",
+      "requiresRoles": [
+        "iot-edge-engineer"
+      ],
+      "packs": [
+        "iot-edge"
+      ],
+      "active": false,
+      "paths": []
+    }
+  ]
+}

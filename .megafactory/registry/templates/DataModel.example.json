@@ -1,0 +1,72 @@
+{
+  "feature": "ejemplo-feature",
+  "coreRefs": [
+    "loans"
+  ],
+  "tables": [
+    {
+      "name": "loan_return",
+      "ownerService": "services/loans",
+      "purpose": "Registrar la devolución de un préstamo",
+      "financial": true,
+      "tenantScoped": true,
+      "complianceRefs": [
+        "CR-001"
+      ],
+      "columns": [
+        {
+          "name": "id",
+          "pgType": "uuid",
+          "nullable": false,
+          "pii": "none",
+          "encrypted": false
+        },
+        {
+          "name": "operator_id",
+          "pgType": "uuid",
+          "nullable": false,
+          "pii": "none",
+          "encrypted": false
+        },
+        {
+          "name": "created_by",
+          "pgType": "uuid",
+          "nullable": false,
+          "pii": "none",
+          "encrypted": false
+        }
+      ],
+      "primaryKey": [
+        "id"
+      ],
+      "indexes": [
+        {
+          "name": "ix_loan_return_tenant",
+          "columns": [
+            "operator_id"
+          ],
+          "unique": false,
+          "method": "btree",
+          "rationale": "aislamiento entre inquilinos"
+        }
+      ],
+      "constraints": [],
+      "retention": {
+        "policy": "legal",
+        "days": 1825
+      }
+    }
+  ],
+  "migrations": [],
+  "concurrency": [
+    {
+      "operation": "return",
+      "strategy": "select_for_update",
+      "rationale": "evitar dos devoluciones del mismo préstamo"
+    }
+  ],
+  "normalization": {
+    "form": "3NF",
+    "denormalizations": []
+  }
+}

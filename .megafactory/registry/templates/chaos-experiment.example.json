@@ -1,0 +1,12 @@
+{
+  "feature": "ejemplo-feature",
+  "hypothesis": "Si cae la base principal, la réplica toma el control en menos de 60 segundos sin perder consultas confirmadas.",
+  "environment": "dev",
+  "steadyState": "p95 bajo 400 ms y tasa de errores bajo 0,5 %.",
+  "method": "Detener la instancia principal de la base en dev.",
+  "abortCriteria": [
+    "Errores por encima del 5 % durante 2 minutos",
+    "Sin conmutación a los 3 minutos"
+  ],
+  "blastRadius": "Solo el entorno de dev del servicio de préstamos."
+}

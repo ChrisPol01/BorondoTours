@@ -1,0 +1,10 @@
+{
+  "feature": "ejemplo-feature",
+  "evidence": [
+    {
+      "controlId": "C1",
+      "ref": "ejemplo-feature/prd@v1",
+      "note": "PRD firmado con los requisitos de privacidad."
+    }
+  ]
+}

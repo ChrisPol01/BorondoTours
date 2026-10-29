@@ -1,0 +1,29 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Factory Bus Guard",
+      "description": "Aviso no bloqueante al guardar un archivo del Context Bus: avisa si el hash de un artefacto firmado cambió (las firmas se invalidarán al republicar) y ejecuta scan de secretos y PII sobre el archivo (ruta:línea patrón, nunca el valor). Nace deshabilitado; se activa tras V3.",
+      "trigger": "PostFileSave",
+      "matcher": ".*[\\\\/]\\.megafactory[\\\\/]bus[\\\\/].*",
+      "action": {
+        "type": "command",
+        "command": "node .megafactory/bin/factory.mjs guard-bus"
+      },
+      "timeout": 10,
+      "enabled": false
+    },
+    {
+      "name": "Factory Registry Guard",
+      "description": "Aviso no bloqueante al guardar un agente, workflow, skill o registro: ejecuta registry check --advisory e imprime incoherencias (agente sin ficha, campo hooks en un agente, permisos distintos del render, paso de workflow con agente inexistente, más de 50 pasos, ciclo en dependsOnTypes). Nace deshabilitado; se activa tras V3.",
+      "trigger": "PostFileSave",
+      "matcher": ".*[\\\\/](\\.kiro[\\\\/](agents|workflows|skills)|\\.megafactory[\\\\/]registry)[\\\\/].*",
+      "action": {
+        "type": "command",
+        "command": "node .megafactory/bin/factory.mjs registry check --advisory"
+      },
+      "timeout": 10,
+      "enabled": false
+    }
+  ]
+}

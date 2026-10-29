@@ -1,0 +1,73 @@
+{
+  "feature": "ejemplo-mesa",
+  "decisionClass": "none",
+  "reserved": false,
+  "summary": "Cinco reportes de error al pagar en el checkout en veinte minutos; se marca posible incidente y se avisa al SRE; dos reportes de contraseña se resuelven con el artículo vigente.",
+  "options": [
+    {
+      "id": "O1",
+      "title": "Avisar posible incidente",
+      "pros": [
+        "Respuesta temprana"
+      ],
+      "cons": [
+        "Puede ser falsa alarma"
+      ]
+    },
+    {
+      "id": "O2",
+      "title": "Derivar uno por uno a L2",
+      "pros": [
+        "Menos ruido"
+      ],
+      "cons": [
+        "Retrasa la detección"
+      ]
+    }
+  ],
+  "recommendation": {
+    "option": "O1",
+    "rationale": "Cinco reportes del mismo síntoma en una ventana corta cumplen la señal de incidente."
+  },
+  "risks": [
+    {
+      "id": "R1",
+      "description": "Usuarios adjuntaron capturas con datos de tarjeta",
+      "likelihood": "medium",
+      "impact": "high",
+      "mitigation": "Pedir al gestor ocultar adjuntos y avisar a seguridad"
+    }
+  ],
+  "tickets": [
+    {
+      "ref": "T-<ref>",
+      "category": "pagos",
+      "impact": "high",
+      "urgency": "high",
+      "priority": "P1",
+      "service": "checkout"
+    }
+  ],
+  "knownErrorMatches": [
+    "KE-12 restablecer contraseña"
+  ],
+  "workaroundsApplied": [
+    "Artículo de restablecimiento vigente"
+  ],
+  "routing": "possible-incident",
+  "clusterSignal": "Cinco reportes de error al pagar en veinte minutos",
+  "approvalPath": {
+    "approver": "agent:operations-lead",
+    "command": "sin aprobación: aviso operativo al SRE por el bus"
+  },
+  "actions": [
+    {
+      "id": "A1",
+      "title": "Revisar artículo de errores de pago",
+      "entryType": "change",
+      "owner": "tech-writer",
+      "due": "2027-01-15",
+      "changeClassHint": "standard"
+    }
+  ]
+}

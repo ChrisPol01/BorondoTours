@@ -1,0 +1,13 @@
+.kiro/factory/** text eol=lf
+
+# >>> megafactory (administrado por mf link; no editar dentro del bloque)
+/.megafactory/** text eol=lf
+/.megafactory/activities/*.jsonl merge=union
+/.kiro/agents/sdlc-*.json text eol=lf
+/.kiro/workflows/factory-*.workflow.json text eol=lf
+/.kiro/hooks/factory-*.json text eol=lf
+/.kiro/steering/factory-*.md text eol=lf
+/.kiro/skills/sdlc-*/** text eol=lf
+/.megafactory/bin/*.cmd text eol=crlf
+/.megafactory/bin/*.ps1 text eol=crlf
+# <<< megafactory

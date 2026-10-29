@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "feature",
+    "env",
+    "commit",
+    "codeFingerprint",
+    "deploy",
+    "decision",
+    "source"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "feature": {
+      "type": "string"
+    },
+    "env": {
+      "type": "string",
+      "enum": [
+        "dev",
+        "prod"
+      ]
+    },
+    "commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{7,64}$"
+    },
+    "codeFingerprint": {
+      "type": "string"
+    },
+    "iacFingerprint": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "deploy": {
+      "type": "object",
+      "required": [
+        "status",
+        "commands"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "deployed",
+            "skipped",
+            "blocked"
+          ]
+        },
+        "deployedAt": {
+          "type": "string"
+        },
+        "commands": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "pendingHumanCommand": {
+          "type": "string"
+        }
+      }
+    },
+    "metrics": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "alarmsFired": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "decision": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "promote",
+        "rollback",
+        "skipped",
+        "blocked"
+      ]
+    },
+    "skipReason": {
+      "type": "string",
+      "enum": [
+        "no_deployable_changes",
+        "other"
+      ]
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "agent",
+        "human_paste"
+      ]
+    },
+    "pendingDecisions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}

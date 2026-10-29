@@ -1,0 +1,16 @@
+{
+  "feature": "ejemplo-feature",
+  "target": "servicio de notificaciones heredado",
+  "reason": "Las notificaciones pasaron al servicio nuevo y el heredado no tiene consumidores desde hace dos ciclos.",
+  "dataDisposition": "Los registros de envío se archivan en almacenamiento frío y se borran al vencer su plazo de retención.",
+  "cutoverDate": "2026-12-01",
+  "consumers": [],
+  "cleanup": {
+    "dns": { "status": "planned", "items": ["registro del subdominio del servicio heredado"] },
+    "certificates": { "status": "planned", "items": ["certificado del subdominio"] },
+    "iam": { "status": "planned", "items": ["rol de ejecución del servicio", "política de envío de correo"] },
+    "secretNames": { "status": "planned", "items": ["nombre del secreto SMTP del servicio heredado"] },
+    "monitors": { "status": "planned", "items": ["alarma de errores del servicio heredado"] },
+    "licenses": { "status": "not-applicable", "items": [], "note": "El servicio no usa licencias de terceros." }
+  }
+}

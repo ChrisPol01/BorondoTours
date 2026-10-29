@@ -1,0 +1,791 @@
+{
+  "schemaVersion": 1,
+  "methods": [
+    {
+      "id": "a3",
+      "family": "root-cause",
+      "requiredHeadings": [
+        "Contexto",
+        "Situación actual",
+        "Objetivo",
+        "Análisis de causa raíz",
+        "Contramedidas",
+        "Plan",
+        "Seguimiento"
+      ],
+      "hosts": [
+        {
+          "type": "method-record"
+        }
+      ]
+    },
+    {
+      "id": "aar",
+      "family": "learning",
+      "requiredHeadings": [
+        "Qué se planeó",
+        "Qué pasó",
+        "Por qué hubo diferencia",
+        "Qué mantener y qué cambiar"
+      ],
+      "hosts": [
+        {
+          "type": "method-record"
+        }
+      ]
+    },
+    {
+      "id": "adr",
+      "family": "decision",
+      "requiredHeadings": [
+        "Estado",
+        "Contexto",
+        "Decisión",
+        "Consecuencias"
+      ],
+      "hosts": [
+        {
+          "type": "adr-draft"
+        }
+      ]
+    },
+    {
+      "id": "blameless-postmortem",
+      "family": "learning",
+      "requiredHeadings": [
+        "Resumen",
+        "Impacto",
+        "Línea de tiempo",
+        "Causas contribuyentes",
+        "Qué funcionó y qué no",
+        "Acciones"
+      ],
+      "hosts": [
+        {
+          "type": "postmortem"
+        },
+        {
+          "type": "method-record"
+        }
+      ]
+    },
+    {
+      "id": "cynefin",
+      "family": "decision",
+      "requiredHeadings": [
+        "Situación",
+        "Dominio",
+        "Evidencia",
+        "Enfoque",
+        "Método elegido"
+      ],
+      "hosts": [
+        {
+          "type": "method-record"
+        }
+      ]
+    },
+    {
+      "id": "definition-ready-done",
+      "family": "decision",
+      "requiredHeadings": [
+        "Ítem",
+        "Definition of Ready",
+        "Definition of Done",
+        "Brechas",
+        "Decisión"
+      ],
+      "hosts": [
+        {
+          "type": "method-record"
+        }
+      ]
+    },
+    {
+      "id": "design-thinking",
+      "family": "learning",
+      "requiredHeadings": [
+        "Empatizar",
+        "Definir",
+        "Idear",
+        "Prototipar",
+        "Probar"
+      ],
+      "hosts": [
+        {
+          "type": "method-record"
+        }
+      ]
+    },
+    {
+      "id": "dmaic",
+      "family": "improvement",
+      "requiredHeadings": [
+        "Definir",
+        "Medir",
+        "Analizar",
+        "Mejorar",
+        "Controlar"
+      ],
+      "hosts": [
+        {
+          "type": "method-record"
+        }
+      ]
+    },
+    {
+      "id": "event-storming",
+      "family": "learning",
+      "requiredHeadings": [
+        "Alcance",
+        "Eventos de dominio",
+        "Comandos y actores",
+        "Políticas y reglas",
+        "Agregados y límites",
+        "Puntos calientes"
+      ],
+      "hosts": [
+        {
+          "type": "method-record"
+        }
+      ]
+    },
+    {
+      "id": "fault-tree",
+      "family": "risk",
+      "requiredHeadings": [
+        "Evento tope",
+        "Árbol",
+        "Cortes mínimos",
+        "Mitigaciones"
+      ],
+      "hosts": [
+        {
+          "type": "method-record"
+        },
+        {
+          "type": "continuity-plan"
+        }
+      ]
+    },
+    {
+      "id": "five-whys",
+      "family": "root-cause",
+      "requiredHeadings": [
+        "Problema",
+        "Porqués",
+        "Causa raíz",
+        "Contramedidas",
+        "Lecciones"
+      ],
+      "hosts": [
+        {
+          "type": "method-record"
+        },
+        {
+          "type": "postmortem",
+          "section": "### 5 porqués"
+        }
+      ]
+    },
+    {
+      "id": "fmea",
+      "family": "risk",
+      "requiredHeadings": [
+        "Alcance",
+        "Modos de falla",
+        "Acciones"
+      ],
+      "hosts": [
+        {
+          "type": "method-record"
+        },
+        {
+          "type": "infra-change-plan"
+        },
+        {
+          "type": "continuity-plan"
+        }
+      ]
+    },
+    {
+      "id": "impact-mapping",
+      "family": "decision",
+      "requiredHeadings": [
+        "Meta",
+        "Actores",
+        "Impactos",
+        "Entregables",
+        "Métricas"
+      ],
+      "hosts": [
+        {
+          "type": "method-record"
+        }
+      ]
+    },
+    {
+      "id": "ishikawa",
+      "family": "root-cause",
+      "requiredHeadings": [
+        "Efecto",
+        "Categorías",
+        "Causas priorizadas",
+        "Lecciones"
+      ],
+      "hosts": [
+        {
+          "type": "method-record"
+        },
+        {
+          "type": "postmortem",
+          "section": "### Ishikawa"
+        }
+      ]
+    },
+    {
+      "id": "kaizen",
+      "family": "improvement",
+      "requiredHeadings": [
+        "Mejora propuesta",
+        "Estado actual medido",
+        "Experimento",
+        "Resultado",
+        "Estandarizar"
+      ],
+      "hosts": [
+        {
+          "type": "method-record"
+        }
+      ]
+    },
+    {
+      "id": "lean-wastes",
+      "family": "improvement",
+      "requiredHeadings": [
+        "Flujo observado",
+        "Desperdicios",
+        "Prioridad",
+        "Acciones"
+      ],
+      "hosts": [
+        {
+          "type": "method-record"
+        }
+      ]
+    },
+    {
+      "id": "ooda",
+      "family": "decision",
+      "requiredHeadings": [
+        "Observar",
+        "Orientar",
+        "Decidir",
+        "Actuar",
+        "Siguiente ciclo"
+      ],
+      "hosts": [
+        {
+          "type": "method-record"
+        }
+      ]
+    },
+    {
+      "id": "pdca",
+      "family": "improvement",
+      "requiredHeadings": [
+        "Planificar",
+        "Hacer",
+        "Verificar",
+        "Actuar"
+      ],
+      "hosts": [
+        {
+          "type": "method-record"
+        }
+      ]
+    },
+    {
+      "id": "pre-mortem",
+      "family": "risk",
+      "requiredHeadings": [
+        "Supongamos que falló",
+        "Causas imaginadas",
+        "Señales tempranas",
+        "Mitigaciones"
+      ],
+      "hosts": [
+        {
+          "type": "method-record"
+        },
+        {
+          "type": "infra-change-plan"
+        },
+        {
+          "type": "migration-plan"
+        },
+        {
+          "type": "initiative-brief"
+        },
+        {
+          "type": "continuity-plan"
+        }
+      ]
+    },
+    {
+      "id": "retrospective",
+      "family": "learning",
+      "requiredHeadings": [
+        "Qué salió bien",
+        "Qué no",
+        "Qué intentaremos",
+        "Acciones"
+      ],
+      "hosts": [
+        {
+          "type": "method-record"
+        }
+      ]
+    },
+    {
+      "id": "rice-wsjf",
+      "family": "decision",
+      "requiredHeadings": [
+        "Candidatos",
+        "Puntuación",
+        "Orden",
+        "Decisión"
+      ],
+      "hosts": [
+        {
+          "type": "method-record"
+        }
+      ]
+    },
+    {
+      "id": "theory-of-constraints",
+      "family": "improvement",
+      "requiredHeadings": [
+        "Meta y métrica de flujo",
+        "Restricción",
+        "Explotar",
+        "Subordinar",
+        "Elevar",
+        "Repetir"
+      ],
+      "hosts": [
+        {
+          "type": "method-record"
+        }
+      ]
+    },
+    {
+      "id": "value-stream-map",
+      "family": "improvement",
+      "requiredHeadings": [
+        "Flujo actual",
+        "Esperas",
+        "Flujo objetivo",
+        "Acciones"
+      ],
+      "hosts": [
+        {
+          "type": "method-record"
+        }
+      ]
+    }
+  ],
+  "triggers": [
+    {
+      "id": "incident-opened",
+      "evaluator": "incident-opened",
+      "methods": [
+        "five-whys",
+        "blameless-postmortem"
+      ],
+      "owners": [
+        "sre",
+        "devops-sre"
+      ],
+      "hosts": {
+        "five-whys": {
+          "kind": "method-record"
+        },
+        "blameless-postmortem": {
+          "kind": "method-record"
+        }
+      },
+      "enforcement": "gate",
+      "enforcementFixed": false,
+      "requiredAt": {
+        "lane": "operate",
+        "phase": "learn"
+      },
+      "dedupScope": "incident-instance",
+      "appliesTo": [
+        "incident"
+      ],
+      "libraryEnforcement": "gate",
+      "enforcementSource": "library"
+    },
+    {
+      "id": "incident-major",
+      "evaluator": "incident-major",
+      "methods": [
+        "ishikawa"
+      ],
+      "owners": [
+        "sre",
+        "devops-sre"
+      ],
+      "hosts": {
+        "ishikawa": {
+          "kind": "section",
+          "type": "postmortem",
+          "section": "### Ishikawa"
+        }
+      },
+      "enforcement": "gate",
+      "enforcementFixed": false,
+      "requiredAt": {
+        "lane": "operate",
+        "phase": "learn"
+      },
+      "dedupScope": "incident-instance",
+      "appliesTo": [
+        "incident"
+      ],
+      "libraryEnforcement": "gate",
+      "enforcementSource": "library"
+    },
+    {
+      "id": "defect-escaped",
+      "evaluator": "defect-escaped",
+      "methods": [
+        "five-whys",
+        "blameless-postmortem"
+      ],
+      "owners": [
+        "peer-reviewer",
+        "qa-e2e"
+      ],
+      "hosts": {
+        "five-whys": {
+          "kind": "method-record"
+        },
+        "blameless-postmortem": {
+          "kind": "method-record"
+        }
+      },
+      "enforcement": "gate",
+      "enforcementFixed": false,
+      "requiredAt": {
+        "lane": "delivery",
+        "phase": "quality"
+      },
+      "dedupScope": "caused-by-item",
+      "appliesTo": [
+        "defect"
+      ],
+      "libraryEnforcement": "gate",
+      "enforcementSource": "library"
+    },
+    {
+      "id": "rejection-repeated",
+      "evaluator": "rejection-repeated",
+      "methods": [
+        "five-whys",
+        "blameless-postmortem"
+      ],
+      "owners": [
+        "$producer"
+      ],
+      "hosts": {
+        "five-whys": {
+          "kind": "method-record"
+        },
+        "blameless-postmortem": {
+          "kind": "method-record"
+        }
+      },
+      "enforcement": "advisory",
+      "enforcementFixed": false,
+      "requiredAt": {
+        "phase": "$artifact-phase"
+      },
+      "dedupScope": "artifact",
+      "libraryEnforcement": "advisory",
+      "enforcementSource": "library"
+    },
+    {
+      "id": "loop-changes-repeated",
+      "evaluator": "loop-changes-repeated",
+      "methods": [
+        "five-whys"
+      ],
+      "owners": [
+        "$ownerRole"
+      ],
+      "hosts": {
+        "five-whys": {
+          "kind": "method-record"
+        }
+      },
+      "enforcement": "advisory",
+      "enforcementFixed": false,
+      "requiredAt": null,
+      "dedupScope": "loop-run-owner",
+      "libraryEnforcement": "advisory",
+      "enforcementSource": "library"
+    },
+    {
+      "id": "gate-failed-repeated",
+      "evaluator": "gate-failed-repeated",
+      "methods": [
+        "a3"
+      ],
+      "owners": [
+        "artifact-reviewer"
+      ],
+      "hosts": {
+        "a3": {
+          "kind": "method-record"
+        }
+      },
+      "enforcement": "advisory",
+      "enforcementFixed": false,
+      "requiredAt": {
+        "phase": "$failed-phase"
+      },
+      "dedupScope": "lane-phase",
+      "libraryEnforcement": "advisory",
+      "enforcementSource": "library"
+    },
+    {
+      "id": "high-risk-plan-infra",
+      "evaluator": "high-risk-plan",
+      "methods": [
+        "pre-mortem",
+        "fmea"
+      ],
+      "owners": [
+        "$producer"
+      ],
+      "hosts": {
+        "pre-mortem": {
+          "kind": "property",
+          "type": "infra-change-plan"
+        },
+        "fmea": {
+          "kind": "property",
+          "type": "infra-change-plan"
+        }
+      },
+      "enforcement": "publish",
+      "enforcementFixed": true,
+      "requiredAt": null,
+      "dedupScope": "host-artifact",
+      "libraryEnforcement": "publish",
+      "enforcementSource": "library"
+    },
+    {
+      "id": "high-risk-plan-migration",
+      "evaluator": "high-risk-plan",
+      "methods": [
+        "pre-mortem"
+      ],
+      "owners": [
+        "$producer"
+      ],
+      "hosts": {
+        "pre-mortem": {
+          "kind": "property",
+          "type": "migration-plan"
+        }
+      },
+      "enforcement": "publish",
+      "enforcementFixed": true,
+      "requiredAt": null,
+      "dedupScope": "host-artifact",
+      "libraryEnforcement": "publish",
+      "enforcementSource": "library"
+    },
+    {
+      "id": "high-risk-plan-continuity",
+      "evaluator": "high-risk-plan",
+      "methods": [
+        "pre-mortem",
+        "fmea",
+        "fault-tree"
+      ],
+      "owners": [
+        "$producer"
+      ],
+      "hosts": {
+        "pre-mortem": {
+          "kind": "property",
+          "type": "continuity-plan"
+        },
+        "fmea": {
+          "kind": "property",
+          "type": "continuity-plan"
+        },
+        "fault-tree": {
+          "kind": "property",
+          "type": "continuity-plan"
+        }
+      },
+      "enforcement": "publish",
+      "enforcementFixed": true,
+      "requiredAt": null,
+      "dedupScope": "host-artifact",
+      "libraryEnforcement": "publish",
+      "enforcementSource": "library"
+    },
+    {
+      "id": "high-risk-plan-initiative",
+      "evaluator": "high-risk-plan",
+      "methods": [
+        "pre-mortem"
+      ],
+      "owners": [
+        "$producer"
+      ],
+      "hosts": {
+        "pre-mortem": {
+          "kind": "property",
+          "type": "initiative-brief"
+        }
+      },
+      "enforcement": "publish",
+      "enforcementFixed": true,
+      "requiredAt": null,
+      "dedupScope": "host-artifact",
+      "libraryEnforcement": "publish",
+      "enforcementSource": "library"
+    },
+    {
+      "id": "drill-completed",
+      "evaluator": "drill-completed",
+      "methods": [
+        "aar"
+      ],
+      "owners": [
+        "resilience-engineer"
+      ],
+      "hosts": {
+        "aar": {
+          "kind": "method-record"
+        }
+      },
+      "enforcement": "gate",
+      "enforcementFixed": false,
+      "requiredAt": {
+        "lane": "govern",
+        "phase": "act"
+      },
+      "dedupScope": "chaos-instance",
+      "appliesTo": [
+        "resilience-drill"
+      ],
+      "libraryEnforcement": "gate",
+      "enforcementSource": "library"
+    },
+    {
+      "id": "ops-review-act",
+      "evaluator": "ops-review-act",
+      "methods": [
+        "pdca",
+        "kaizen"
+      ],
+      "owners": [
+        "sre",
+        "devops-sre"
+      ],
+      "hosts": {
+        "pdca": {
+          "kind": "method-record"
+        },
+        "kaizen": {
+          "kind": "method-record"
+        }
+      },
+      "enforcement": "gate",
+      "enforcementFixed": false,
+      "requiredAt": {
+        "lane": "govern",
+        "phase": "act"
+      },
+      "dedupScope": "lane-act",
+      "appliesTo": [
+        "ops-review"
+      ],
+      "libraryEnforcement": "gate",
+      "enforcementSource": "library"
+    },
+    {
+      "id": "run-closed",
+      "evaluator": "run-closed",
+      "methods": [
+        "aar"
+      ],
+      "owners": [
+        "conductor"
+      ],
+      "hosts": {
+        "aar": {
+          "kind": "memory"
+        }
+      },
+      "enforcement": "advisory",
+      "enforcementFixed": false,
+      "requiredAt": null,
+      "dedupScope": "run",
+      "libraryEnforcement": "advisory",
+      "enforcementSource": "library"
+    },
+    {
+      "id": "check-failed-repeated",
+      "evaluator": "check-failed-repeated",
+      "methods": [
+        "five-whys"
+      ],
+      "owners": [
+        "$checkRole",
+        "conductor"
+      ],
+      "hosts": {
+        "five-whys": {
+          "kind": "method-record"
+        }
+      },
+      "enforcement": "advisory",
+      "enforcementFixed": false,
+      "requiredAt": null,
+      "dedupScope": "check-signature",
+      "libraryEnforcement": "advisory",
+      "enforcementSource": "library"
+    },
+    {
+      "id": "step-rejected-repeated",
+      "evaluator": "step-rejected-repeated",
+      "methods": [
+        "a3"
+      ],
+      "owners": [
+        "conductor"
+      ],
+      "hosts": {
+        "a3": {
+          "kind": "method-record"
+        }
+      },
+      "enforcement": "advisory",
+      "enforcementFixed": false,
+      "requiredAt": null,
+      "dedupScope": "loop-run",
+      "libraryEnforcement": "advisory",
+      "enforcementSource": "library"
+    }
+  ]
+}

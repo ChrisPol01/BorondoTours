@@ -1,0 +1,107 @@
+{
+  "feature": "FEAT-0001",
+  "audience": "gerente",
+  "objective": {
+    "business": "Reducir el tiempo de alta de un cliente nuevo para el MVP",
+    "outcomes": [
+      {
+        "metric": "Minutos promedio de alta",
+        "target": 5,
+        "by": "2026-12-31"
+      }
+    ]
+  },
+  "result": {
+    "status": "at-risk",
+    "summary": "Contratos y modelo vigentes; la construcción del frontend va un ciclo atrás por un hallazgo bloqueante de accesibilidad."
+  },
+  "progress": {
+    "percent": 55,
+    "milestones": [
+      {
+        "name": "Discovery",
+        "status": "done"
+      },
+      {
+        "name": "Contratos",
+        "status": "done"
+      },
+      {
+        "name": "Construcción",
+        "status": "in-progress"
+      },
+      {
+        "name": "Entrega",
+        "status": "pending"
+      }
+    ]
+  },
+  "risks": [
+    {
+      "id": "r-1",
+      "description": "El ciclo extra de frontend corre la entrega una semana",
+      "likelihood": "medium",
+      "impact": "medium",
+      "mitigation": "Paralelizar pruebas de punta a punta con la corrección",
+      "owner": "engineering-lead"
+    }
+  ],
+  "cost": {
+    "currency": "USD",
+    "estimate": 120,
+    "actual": 95,
+    "budget": 150,
+    "notes": "Nube estimada por finops; uso de modelos según AgentOps del periodo."
+  },
+  "decisions": [
+    {
+      "id": "d-1",
+      "class": "production",
+      "reserved": true,
+      "question": "¿Desplegar a producción el viernes o el lunes?",
+      "options": [
+        {
+          "id": "o-1",
+          "title": "Viernes",
+          "pros": [
+            "Llega antes a usuarios"
+          ],
+          "cons": [
+            "Menos guardia disponible"
+          ]
+        },
+        {
+          "id": "o-2",
+          "title": "Lunes",
+          "pros": [
+            "Guardia completa"
+          ],
+          "cons": [
+            "Tres días después"
+          ]
+        }
+      ],
+      "recommendation": {
+        "option": "o-2",
+        "rationale": "El riesgo de un incidente sin guardia completa supera el beneficio de tres días."
+      },
+      "preApproved": true,
+      "command": "node .megafactory/bin/factory.mjs approve --feature FEAT-0001 --what release-prod:FEAT-0001 --by human:<nombre>"
+    }
+  ],
+  "priorities": [
+    {
+      "id": "p-1",
+      "title": "Alta de cliente",
+      "method": "wsjf",
+      "score": 8.5,
+      "rationale": "Mayor costo de la demora y menor tamaño del lote"
+    }
+  ],
+  "sources": [
+    "agentops-report@v1",
+    "quality-verdict@v2",
+    "cost-review@v1"
+  ],
+  "actions": []
+}

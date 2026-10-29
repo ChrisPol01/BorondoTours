@@ -1,0 +1,713 @@
+{
+  "feature": "b2c-funcional-con-datos-simulados-y",
+  "title": "B2C funcional con datos simulados y responsive",
+  "problem": "El informe QA del B2C (.agents/tasks/qa-b2c-2026-10/informe.md, 216 funciones) marca 63 FALLA, 14 PARCIAL y 24 NO IMPLEMENTADO. Lo público funciona, pero desde el detalle del tour hacia adelante casi todo es diseño estático de Figma: el checkout ignora el tour elegido y no es editable, el área privada tiene casi todos sus botones sin efecto, no hay cierre de sesión desde la navegación, el inglés queda a medias en checkout y área privada, y el móvil es el lienzo de 1440 px reducido al 27 %. El dueño necesita el B2C funcional con datos simulados en el frontend, con la capa de datos lista para cambiar a la API /api/v1, como paso previo a conectar el backend y desplegar.",
+  "goals": [
+    "Todas las funciones del alcance que el informe QA marca FALLA, PARCIAL o NO IMPLEMENTADO pasan a OK al re-ejecutar el mismo recorrido, en los 3 temas (Colorido, Claro, Oscuro), es/en, escritorio 1440x900 y móvil 390x844.",
+    "Flujo de reserva completo y coherente con el tour elegido: detalle, checkout de 3 pasos editable, procesando, confirmación, estados de error y Divide tu cuenta.",
+    "Las reservas creadas en el checkout aparecen en Mis reservas y todas sus acciones (detalle, voucher, calendario, cancelar, reprogramar, calificar, reembolso) funcionan con persistencia simulada en el navegador.",
+    "Capa de datos del frontend detrás de una interfaz única por dominio (tours, disponibilidad, reservas, pagos, perfil, notificaciones, mensajes), con implementación simulada hoy y reemplazable por la API /api/v1 sin tocar pantallas.",
+    "Versión móvil real a 390 px basada en los frames móviles de Figma, con menú móvil y objetivos táctiles de 44 px; sirve de base para la app móvil futura.",
+    "typecheck, lint, test:run y build de @borondo/web (y typecheck/test de @borondo/ui si se toca) en verde."
+  ],
+  "nonGoals": [
+    "Backend, servicios, base de datos, despliegue y pagos reales con OnePay.la (la capa de datos queda preparada, no conectada).",
+    "La sección de confianza p0_126 / bt-trust-band del Home (la rehace otro agente en paralelo); no se toca su código ni su CSS.",
+    "apps/gestion, apps/erp y apps/b2b.",
+    "Borondo Coins y niveles (Spec-E en pausa): no se muestran en ningún lugar; el saldo por cancelación se presenta como Saldo a favor.",
+    "OAuth real de Google (sigue simulado; requiere backend, RF-F03).",
+    "Pedir sesión antes de llegar a Pagar: el Auth Gate en Pagar es el comportamiento acordado (RF-A10, decisión 2026-09-29).",
+    "Correos transaccionales: los envía el backend (RF-D14); el frontend solo muestra la vista y el aviso in-app.",
+    "La app móvil Expo (Fase 3); aquí solo se entrega el diseño responsive del B2C web."
+  ],
+  "kpis": [
+    "Funciones del alcance en OK en el re-recorrido QA: 100 % (hoy 0 de las 101 FALLA/PARCIAL/NO IMPLEMENTADO).",
+    "Frases en español residuales en modo en dentro de checkout y área privada: 0 (hoy 15-31 por página).",
+    "Textos bajo contraste AA en los 3 temas: 0 (hoy hasta 8 por página en tema claro).",
+    "Objetivos táctiles menores de 44x44 px a 390 px de ancho: 0 (hoy ~12 px).",
+    "Desborde horizontal a 390 y 1440 px: 0 px en todas las páginas.",
+    "pageerror en el recorrido: 0 (se mantiene)."
+  ],
+  "specRefs": [
+    "docs/01-Specs/Spec-A-Discovery.md#RF-A05",
+    "docs/01-Specs/Spec-A-Discovery.md#RF-A06",
+    "docs/01-Specs/Spec-A-Discovery.md#RF-A09",
+    "docs/01-Specs/Spec-A-Discovery.md#RF-A10",
+    "docs/01-Specs/Spec-A-Discovery.md#RF-A12",
+    "docs/01-Specs/Spec-B-Tour-Detail.md#RF-B01",
+    "docs/01-Specs/Spec-B-Tour-Detail.md#RF-B02",
+    "docs/01-Specs/Spec-B-Tour-Detail.md#RF-B03",
+    "docs/01-Specs/Spec-B-Tour-Detail.md#RF-B05",
+    "docs/01-Specs/Spec-B-Tour-Detail.md#RF-B05b",
+    "docs/01-Specs/Spec-B-Tour-Detail.md#RF-B07",
+    "docs/01-Specs/Spec-B-Tour-Detail.md#RF-B08",
+    "docs/01-Specs/Spec-C-Checkout.md#RF-C02",
+    "docs/01-Specs/Spec-C-Checkout.md#RF-C04",
+    "docs/01-Specs/Spec-C-Checkout.md#RF-C06",
+    "docs/01-Specs/Spec-C-Checkout.md#RF-C08",
+    "docs/01-Specs/Spec-C-Checkout.md#RF-C09",
+    "docs/01-Specs/Spec-C-Checkout.md#RF-C11",
+    "docs/01-Specs/Spec-C-Checkout.md#RF-C12",
+    "docs/01-Specs/Spec-C-Checkout.md#RF-C15",
+    "docs/01-Specs/Spec-C-Checkout.md#RF-C16",
+    "docs/01-Specs/Spec-D-Client-Portal.md#RF-D06",
+    "docs/01-Specs/Spec-D-Client-Portal.md#RF-D07",
+    "docs/01-Specs/Spec-D-Client-Portal.md#RF-D08",
+    "docs/01-Specs/Spec-D-Client-Portal.md#RF-D08b",
+    "docs/01-Specs/Spec-D-Client-Portal.md#RF-D09",
+    "docs/01-Specs/Spec-D-Client-Portal.md#RF-D11",
+    "docs/01-Specs/Spec-D-Client-Portal.md#RF-D12",
+    "docs/01-Specs/Spec-D-Client-Portal.md#RF-D13",
+    "docs/01-Specs/Spec-D-Client-Portal.md#RF-D14",
+    "docs/01-Specs/Spec-F-Auth.md#RF-F05",
+    "docs/01-Specs/Spec-F-Auth.md#RF-F06"
+  ],
+  "scope": {
+    "apps": ["apps/web"],
+    "services": [],
+    "packages": ["packages/ui"],
+    "layers": ["ui", "content-seo"],
+    "scopePaths": [
+      "apps/web/e2e/",
+      "apps/web/public/",
+      "apps/web/src/assets/",
+      "apps/web/src/components/",
+      "apps/web/src/islands/",
+      "apps/web/src/layouts/",
+      "apps/web/src/lib/",
+      "apps/web/src/pages/",
+      "apps/web/src/stores/",
+      "apps/web/src/styles/",
+      "apps/web/test/",
+      "apps/web/tests/",
+      "packages/ui/src/"
+    ]
+  },
+  "stories": [
+    {
+      "id": "US-001",
+      "asA": "ANONYMOUS",
+      "iWant": "que el detalle del tour muestre los datos del tour elegido (precio, itinerario, incluye, punto de encuentro, valoración, galería, video, cómo llegar, reseñas, favorito y compartir)",
+      "soThat": "decida la compra con información real y no con la de otro tour",
+      "invest": { "independent": true, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "Lee el tour desde la capa de datos (US-013). RF-B01, RF-B02, RF-B03, RF-B08." },
+      "acceptanceCriteria": [
+        { "id": "AC-001-1", "given": "el catálogo simulado donde Isla de San Andrés 4 días vale Desde $1.680.000", "when": "abro /tour?tour=isla-de-san-andres-4-dias", "then": "el precio, el itinerario, lo que incluye y el punto de encuentro son los de ese tour y ninguna sección muestra textos de Valle del Cocora (Salento, Parque Olaya Herrera)" },
+        { "id": "AC-001-2", "given": "un tour con valoración y número de reseñas en el catálogo", "when": "se pinta el detalle", "then": "el H1 es el nombre del tour y el promedio y el número de reseñas son el mismo valor en la cabecera, en el bloque de reseñas y en el botón Ver las N reseñas" },
+        { "id": "AC-001-3", "given": "el detalle de cualquier tour", "when": "pulso Ver N fotos", "then": "se abre una galería modal con foco atrapado, navegación con flechas y teclado, contador de foto y cierre con Escape que devuelve el foco al botón" },
+        { "id": "AC-001-4", "given": "el detalle de un tour con video", "when": "pulso Ver video en TikTok o Cómo llegar", "then": "se abre en pestaña nueva el enlace del video o una búsqueda de mapas con las coordenadas del punto de encuentro (rel=noopener)" },
+        { "id": "AC-001-5", "given": "el detalle de un tour", "when": "pulso Ver las N reseñas", "then": "se despliega la lista de reseñas del tour con paginación o carga incremental" },
+        { "id": "AC-001-6", "given": "el detalle de un tour", "when": "pulso el corazón del tour principal sin sesión, con sesión, o pulso Compartir", "then": "sin sesión redirige a /iniciar-sesion?next=…; con sesión alterna aria-pressed y aparece en /favoritos; Compartir usa navigator.share o copia el enlace y avisa con un toast role=status" }
+      ],
+      "priority": "must",
+      "size": "M",
+      "dependsOn": ["US-013"],
+      "dataElements": []
+    },
+    {
+      "id": "US-002",
+      "asA": "ANONYMOUS",
+      "iWant": "elegir fecha en el calendario semáforo y cantidad de viajeros con +/− en el detalle",
+      "soThat": "llegue al checkout con mi selección y el precio correcto",
+      "invest": { "independent": false, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "RF-B05, RF-B07. Reutiliza lib/calendar.ts y lib/availability.ts existentes." },
+      "acceptanceCriteria": [
+        { "id": "AC-002-1", "given": "el calendario de un tour con días verdes, amarillos y rojos", "when": "hago clic o pulso Enter sobre un día verde o amarillo", "then": "el día queda seleccionado (aria-selected=true), se muestra la fecha elegida y los cupos restantes, y el total se actualiza" },
+        { "id": "AC-002-2", "given": "el calendario", "when": "intento elegir un día pasado o rojo", "then": "no se selecciona; el día rojo ofrece la acción de lista de espera (US-003)" },
+        { "id": "AC-002-3", "given": "un tour con regla de pax por edad", "when": "uso los botones + y − de adulto, niño y bebé", "then": "el subtotal se recalcula en vivo, no baja de 1 adulto, no supera los cupos de la fecha elegida y los botones deshabilitados lo anuncian" },
+        { "id": "AC-002-4", "given": "una fecha y viajeros elegidos", "when": "pulso Reservar ahora", "then": "el estado del checkout guarda tour, fecha y viajeros y /checkout los muestra precargados" }
+      ],
+      "priority": "must",
+      "size": "M",
+      "dependsOn": ["US-001"],
+      "dataElements": []
+    },
+    {
+      "id": "US-003",
+      "asA": "ANONYMOUS",
+      "iWant": "inscribirme a la lista de espera o ver otras fechas cuando la fecha está agotada",
+      "soThat": "no pierda la opción de viajar si se libera un cupo",
+      "invest": { "independent": false, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "RF-B05b. Hoy solo existen como URLs fijas /estados/tour-…" },
+      "acceptanceCriteria": [
+        { "id": "AC-003-1", "given": "un día rojo seleccionado o un tour agotado (Tayrona)", "when": "se muestra el estado Fecha agotada", "then": "aparece integrado en el detalle (no solo por URL) con Avísame si se abre un cupo y Ver otras fechas" },
+        { "id": "AC-003-2", "given": "el estado Fecha agotada", "when": "pulso Ver otras fechas", "then": "el foco va al calendario y se resalta la siguiente fecha disponible" },
+        { "id": "AC-003-3", "given": "el estado Fecha agotada con sesión", "when": "pulso Unirme a la lista de espera o Avísame", "then": "se registra la inscripción simulada, se muestra Lista de espera confirmada y aparece una notificación en la bandeja; sin sesión pide login con ?next" }
+      ],
+      "priority": "must",
+      "size": "S",
+      "dependsOn": ["US-002"],
+      "dataElements": ["correo de la cuenta (ya en sesión, no se pide de nuevo)"]
+    },
+    {
+      "id": "US-004",
+      "asA": "ANONYMOUS",
+      "iWant": "revisar y editar en el paso 1 del checkout la fecha, los viajeros y la modalidad de pago del tour que elegí",
+      "soThat": "pague exactamente lo que quiero reservar",
+      "invest": { "independent": false, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "RF-C02, RF-C12, RF-C15. La política de abono sale del product_type del tour simulado." },
+      "acceptanceCriteria": [
+        { "id": "AC-004-1", "given": "el carrito con Isla de San Andrés 4 días", "when": "abro /checkout, /checkout/viajeros y /checkout/pago", "then": "las 3 pantallas muestran ese tour, su imagen y su total, nunca Valle del Cocora ni $660.000" },
+        { "id": "AC-004-2", "given": "el paso 1", "when": "pulso Cambiar fecha", "then": "se abre el calendario semáforo del tour y al elegir otra fecha el resumen y el total se actualizan" },
+        { "id": "AC-004-3", "given": "el paso 1", "when": "cambio viajeros con + y −", "then": "el subtotal se recalcula con las mismas reglas de AC-002-3" },
+        { "id": "AC-004-4", "given": "un tour cuyo product_type admite abono", "when": "elijo Pago completo, Abono o Divide tu cuenta", "then": "la opción queda seleccionada (radio accesible), el resumen muestra el monto a pagar hoy, el saldo y su fecha límite según RF-C12, y Divide tu cuenta lleva a US-009" },
+        { "id": "AC-004-5", "given": "el checkout sin carrito", "when": "abro /checkout", "then": "se muestra un estado vacío con CTA Explorar tours en lugar de un tour de muestra" }
+      ],
+      "priority": "must",
+      "size": "M",
+      "dependsOn": ["US-002", "US-013"],
+      "dataElements": []
+    },
+    {
+      "id": "US-005",
+      "asA": "ANONYMOUS",
+      "iWant": "escribir los datos del pasajero, indicar si soy residente o extranjero y cargar el pasaporte en el paso 2",
+      "soThat": "el operador tenga el manifiesto y se aplique la regla de IVA que me corresponde",
+      "invest": { "independent": false, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "RF-C08, RF-C04, RF-C15. Decisión Q-01: el total visible no cambia; la exención (Decreto 297/2016) solo anula el IVA del margen de BorondoTours, que BT absorbe (Domain-Financiero.md §3 y §11)." },
+      "acceptanceCriteria": [
+        { "id": "AC-005-1", "given": "el paso 2", "when": "lo abro", "then": "hay campos reales con label para tipo de documento (CC, CE, PASSPORT), número, teléfono con indicativo, contacto de emergencia (nombre y teléfono), condiciones médicas (opcional, con consentimiento separado no premarcado) y punto de recogida (opcional); con sesión se precargan desde el perfil" },
+        { "id": "AC-005-2", "given": "campos obligatorios vacíos o inválidos", "when": "pulso Continuar", "then": "no avanza, cada campo muestra su error con aria-invalid y el foco va al primero inválido" },
+        { "id": "AC-005-3", "given": "la pregunta ¿Residente fiscal en Colombia?", "when": "elijo No", "then": "se muestra el texto legal de exención y un consentimiento separado no premarcado con la finalidad (exención de IVA) y el aviso de conservación (CR-003); solo al marcarlo se habilita Subir pasaporte, un input type=file real (imagen o PDF, tamaño máximo definido), y el botón de pago queda deshabilitado hasta cargarlo" },
+        { "id": "AC-005-6", "given": "el paso 2 y cualquier formulario con datos personales en modo demostración", "when": "lo abro", "then": "se ve un aviso de modo demostración (no ingresar datos reales) con acceso a Restablecer datos de demostración (CR-019), y cada consentimiento otorgado (datos médicos, pasaporte) queda registrado en la capa de datos con tipo, versión del texto y fecha (CR-022)" },
+        { "id": "AC-005-4", "given": "extranjero no residente con pasaporte cargado", "when": "vuelvo al resumen", "then": "el total visible es el mismo que para un residente (precio único con Impuestos incluidos), el resumen de los pasos 2 y 3 y la confirmación muestran la línea Exento de IVA (no residente) y el botón de pago se habilita; sin pasaporte la línea no aparece y el pago sigue bloqueado" },
+        { "id": "AC-005-5", "given": "un pasaporte cargado en la simulación", "when": "reviso localStorage, sessionStorage, la URL y la consola", "then": "no se guarda el archivo, su contenido ni su nombre; solo un indicador de carga y el tamaño" }
+      ],
+      "priority": "must",
+      "size": "M",
+      "dependsOn": ["US-004"],
+      "dataElements": ["tipo y número de documento", "teléfono", "contacto de emergencia", "condiciones médicas (sensible)", "pasaporte (sensible, no se persiste en la simulación)", "residencia fiscal"]
+    },
+    {
+      "id": "US-006",
+      "asA": "ANONYMOUS",
+      "iWant": "elegir el método de pago en el paso 3 y ver su costo sumado al total",
+      "soThat": "sepa cuánto pagaré antes de confirmar",
+      "invest": { "independent": false, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "RF-C15. Tarifas leídas de configuración (no escritas en componentes). Bold no aparece como método." },
+      "acceptanceCriteria": [
+        { "id": "AC-006-1", "given": "el paso 3", "when": "lo abro", "then": "los métodos PSE, Nequi, Daviplata, Bancolombia y Tarjeta aparecen como un radiogroup ordenado del menor al mayor costo, cada uno con su etiqueta de costo (p. ej. Costo fijo $2.200, 2,5 % + $800) leída de configuración" },
+        { "id": "AC-006-2", "given": "el paso 3", "when": "elijo otro método con clic o flechas", "then": "la selección cambia, el costo del método se suma en el resumen y el botón dice Pagar con el monto nuevo" },
+        { "id": "AC-006-3", "given": "el precio del tour", "when": "se muestra en cualquier paso", "then": "se presenta como un solo valor con la etiqueta Impuestos incluidos y las condiciones de cancelación son visibles antes de pagar (Ley 1480)" },
+        { "id": "AC-006-4", "given": "sin sesión", "when": "pulso Pagar", "then": "se conserva el comportamiento actual: login con ?next y regreso al pago con todo precargado" }
+      ],
+      "priority": "must",
+      "size": "S",
+      "dependsOn": ["US-005"],
+      "dataElements": []
+    },
+    {
+      "id": "US-007",
+      "asA": "CLIENT",
+      "iWant": "que Procesando avance solo y la confirmación muestre mi compra, con Agregar al calendario y Compartir con los viajeros",
+      "soThat": "tenga constancia de lo que reservé",
+      "invest": { "independent": false, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "RF-D14 (vista y aviso in-app), RF-D06." },
+      "acceptanceCriteria": [
+        { "id": "AC-007-1", "given": "pago simulado exitoso", "when": "llego a /checkout/procesando", "then": "en 5 s o menos avanza solo a la confirmación, con un indicador de progreso anunciado a lectores de pantalla y respetando prefers-reduced-motion" },
+        { "id": "AC-007-2", "given": "la confirmación", "when": "se pinta", "then": "muestra el tour, la fecha, los viajeros, el total pagado, el saldo pendiente y la referencia de la reserva creada, y el correo de la cuenta en sesión (no andres.gil@correo.com)" },
+        { "id": "AC-007-3", "given": "la confirmación", "when": "pulso Agregar al calendario", "then": "se descarga un archivo .ics válido con título del tour, fecha, hora y punto de encuentro" },
+        { "id": "AC-007-4", "given": "la confirmación", "when": "pulso Compartir con los viajeros, Ver oferta o Conocer", "then": "Compartir abre navigator.share o WhatsApp con un mensaje sin datos personales; Ver oferta y Conocer navegan a su destino" },
+        { "id": "AC-007-5", "given": "la reserva confirmada", "when": "aparece la confirmación", "then": "se muestra un toast Reserva confirmada y una entrada en la bandeja de notificaciones (US-022)" }
+      ],
+      "priority": "must",
+      "size": "M",
+      "dependsOn": ["US-006", "US-013"],
+      "dataElements": ["correo de la cuenta"]
+    },
+    {
+      "id": "US-008",
+      "asA": "CLIENT",
+      "iWant": "ver y resolver los estados de pago rechazado, enlace vencido y cupo agotado",
+      "soThat": "pueda reintentar o elegir otra opción sin perder mi reserva",
+      "invest": { "independent": false, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "RF-C16. El adaptador de pago simulado permite elegir el resultado en modo demo para que los estados sean alcanzables desde el flujo." },
+      "acceptanceCriteria": [
+        { "id": "AC-008-1", "given": "el adaptador de pago simulado con un selector de escenario visible solo en modo demo", "when": "elijo rechazado, enlace vencido o cupo agotado y pulso Pagar", "then": "tras Procesando se muestra el estado correspondiente dentro del flujo, no solo por URL" },
+        { "id": "AC-008-2", "given": "pago rechazado", "when": "pulso Intentar de nuevo o Cambiar método de pago", "then": "vuelvo al paso 3 con los datos conservados, el método anterior seleccionado o la lista para elegir, y el aviso de que el cupo sigue apartado 15 minutos" },
+        { "id": "AC-008-3", "given": "enlace vencido", "when": "pulso Generar nuevo enlace o Elegir otra fecha", "then": "con cupo, vuelve al pago con un intento nuevo; sin cupo o al elegir otra fecha, abre el calendario del tour" },
+        { "id": "AC-008-4", "given": "cupo agotado al pagar", "when": "pulso Ver otras fechas o Avísame si se libera", "then": "abre el calendario del tour o inscribe en la lista de espera (US-003)" },
+        { "id": "AC-008-5", "given": "cualquier estado de error", "when": "se muestra", "then": "se crea la notificación correspondiente y la reserva queda en Por pagar cuando aplica (RF-D14)" }
+      ],
+      "priority": "must",
+      "size": "M",
+      "dependsOn": ["US-007"],
+      "dataElements": []
+    },
+    {
+      "id": "US-009",
+      "asA": "CLIENT",
+      "iWant": "dividir el pago entre los viajeros invitándolos y ver quién ha pagado",
+      "soThat": "cada uno pague su parte y responda por su propio cupo",
+      "invest": { "independent": false, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "Modelo individual de Spec-C RF-C06 y RF-C06b (responsabilidad individual por cupo), RF-C16 (Divide tu cuenta activo). Spec-C prevalece sobre el resumen del steering 05 ('HOLD_GROUP hasta 100 % pagado'): HOLD_GROUP se lee como 'pendiente de que todos los participantes vigentes paguen su % de reserva'. Estados y nombres según EdgeCases (máquina por dimensiones de packages/contracts, R1-01/R1-02). Enlaces simulados; el % de reserva por persona sale de la configuración simulada del tour. Datos de terceros: solo nombre (CR-018)." },
+      "acceptanceCriteria": [
+        { "id": "AC-009-1", "given": "la modalidad Divide tu cuenta en el paso 1 o el botón en el paso 3", "when": "la elijo", "then": "llego a /checkout/divide-tu-cuenta con N partes (N ≥ 2, igual al número de viajeros) y un campo real con label para el nombre de cada participante; no se pide correo ni documento (CR-018)" },
+        { "id": "AC-009-2", "given": "un tour simulado con % de reserva por persona (p. ej. 30 %) y N participantes", "when": "se muestran las partes", "then": "cada parte cobra hoy (total/N) × %_reserva, se muestra también el saldo individual pendiente y su fecha, y la suma de las partes y los saldos es exactamente el total, sin pérdida ni sobra de pesos (el redondeo lo fija domain-rules)" },
+        { "id": "AC-009-3", "given": "participantes registrados", "when": "pulso Compartir enlaces por WhatsApp", "then": "se abre WhatsApp o navigator.share con el enlace de pago simulado de cada parte, con su vigencia (p. ej. 48 h) y sin datos personales en la URL ni en el mensaje (CR-005)" },
+        { "id": "AC-009-4", "given": "una reserva dividida", "when": "abro su estado", "then": "veo cada participante como Pagado, Pendiente (con horas restantes) o Cupo liberado, puedo reenviar el enlace de un pendiente y leo que la cuota de reserva no es reembolsable si después no se paga el saldo (RF-C06b)" },
+        { "id": "AC-009-5", "given": "un participante cuyo enlace venció sin pago (simulado)", "when": "se actualiza el estado", "then": "solo se libera su cupo y se marca Cupo liberado; los demás conservan el suyo, el total de la reserva se recalcula para los participantes vigentes y se puede generar un enlace nuevo para esa persona si aún hay cupo" },
+        { "id": "AC-009-6", "given": "todos los participantes vigentes pagaron su % de reserva", "when": "se registra el último pago simulado", "then": "la reserva pasa a payment_status PARTIAL_PAID, se muestra la etiqueta 'Reserva confirmada con saldo pendiente' y en Mis reservas aparece en Por pagar con el saldo pendiente por participante; cuando todos los participantes vigentes (sin contar FORFEITED ni SLOT_RELEASED) pagan su saldo, pasa a CONFIRMED y a Próximas sin saldo" },
+        { "id": "AC-009-7", "given": "una reserva dividida con algún participante sin pagar su % de reserva", "when": "consulto Mis reservas", "then": "aparece en Por pagar con el detalle por participante (no como un grupo retenido hasta el 100 % del total)" },
+        { "id": "AC-009-8", "given": "un participante que pagó la reserva pero no el saldo dentro del plazo simulado", "when": "vence el plazo", "then": "se cancela solo su cupo, su cuota de reserva figura como no reembolsable (sin Saldo a favor) y los demás participantes no se afectan" }
+      ],
+      "priority": "must",
+      "size": "M",
+      "dependsOn": ["US-004", "US-013"],
+      "dataElements": ["nombre de cada participante"]
+    },
+    {
+      "id": "US-010",
+      "asA": "ANONYMOUS",
+      "iWant": "buscar desde el hero del Home por destino, fechas y viajeros",
+      "soThat": "llegue a Explorar con los resultados ya filtrados",
+      "invest": { "independent": true, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "RF-A05, RF-A06. Reutiliza lib/queryParams.ts y searchRequest.ts. No toca p0_126." },
+      "acceptanceCriteria": [
+        { "id": "AC-010-1", "given": "el hero del Home", "when": "lo abro", "then": "Destino, Fechas y Viajeros son controles reales con label: destino con sugerencias de regiones y tours, fechas con selector de rango y viajeros con +/−" },
+        { "id": "AC-010-2", "given": "criterios escritos", "when": "pulso Buscar aventura o Enter", "then": "navego a /explorar con los criterios en la URL y el catálogo muestra solo los tours que cumplen destino, disponibilidad en el rango y cupo para los viajeros" },
+        { "id": "AC-010-3", "given": "sin criterios", "when": "pulso Buscar aventura", "then": "navego a /explorar sin filtros, como hoy" }
+      ],
+      "priority": "must",
+      "size": "S",
+      "dependsOn": [],
+      "dataElements": []
+    },
+    {
+      "id": "US-011",
+      "asA": "ANONYMOUS",
+      "iWant": "que las tarjetas de categoría del Home, Experiencias y Destinos me lleven al catálogo filtrado",
+      "soThat": "vea solo los tours del tipo o región que me interesa",
+      "invest": { "independent": true, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "Hoy el Home envía ?category= y el catálogo lee ?categoria=." },
+      "acceptanceCriteria": [
+        { "id": "AC-011-1", "given": "la tarjeta Sol y playa de ¿Qué quieres vivir?", "when": "la pulso", "then": "navego a /explorar?categoria=SOL_Y_PLAYA y el contador muestra los mismos tours que el filtro de categoría (3, no 15); /explorar?category= se acepta como alias" },
+        { "id": "AC-011-2", "given": "/experiencias", "when": "pulso otra categoría o Ver los N tours de la categoría", "then": "cambian el título y las tarjetas a esa categoría, N es el conteo real del catálogo y el enlace va a /explorar?categoria=…" },
+        { "id": "AC-011-3", "given": "/destinos", "when": "pulso un chip de departamento o elijo otra región", "then": "las tarjetas se filtran por ese departamento o región y la región elegida queda en la URL" }
+      ],
+      "priority": "must",
+      "size": "S",
+      "dependsOn": [],
+      "dataElements": []
+    },
+    {
+      "id": "US-012",
+      "asA": "ANONYMOUS",
+      "iWant": "ver el catálogo en mapa y gestionar los filtros activos con chips",
+      "soThat": "encuentre tours por ubicación y entienda qué filtros tengo puestos",
+      "invest": { "independent": true, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "RF-A09. Mapbox GL ya está en el stack; sin PUBLIC_MAPBOX_TOKEN se usa el mapa SVG de lib/colombiaMap.ts (Q-05)." },
+      "acceptanceCriteria": [
+        { "id": "AC-012-1", "given": "/explorar", "when": "pulso Mapa", "then": "navego a /explorar/mapa conservando los filtros de la URL" },
+        { "id": "AC-012-2", "given": "/explorar/mapa", "when": "lo abro", "then": "veo un mapa interactivo con un pin por tour filtrado; al pulsar un pin se abre la tarjeta lateral del tour y Lista vuelve a /explorar con los mismos filtros" },
+        { "id": "AC-012-3", "given": "filtros activos (p. ej. Caribe y Naturaleza)", "when": "se pinta el catálogo", "then": "aparece un chip por filtro activo con botón de quitar accesible; sin filtros no se muestran los chips estáticos del diseño" },
+        { "id": "AC-012-4", "given": "un resultado de 1 tour", "when": "se muestra el contador", "then": "dice 1 tour (singular) en todos los idiomas" }
+      ],
+      "priority": "must",
+      "size": "M",
+      "dependsOn": [],
+      "dataElements": []
+    },
+    {
+      "id": "US-013",
+      "asA": "CLIENT",
+      "iWant": "que las reservas que hago en el checkout queden guardadas y aparezcan en Mis reservas",
+      "soThat": "pueda gestionarlas después aunque todavía no exista el backend",
+      "invest": { "independent": true, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "Habilitador. Interfaz por dominio en apps/web/src/lib/api, implementación simulada en lib/api/mocks con persistencia en el navegador. Las formas de datos siguen packages/contracts y los endpoints /api/v1 de los Specs; el mecanismo exacto lo define el arquitecto." },
+      "acceptanceCriteria": [
+        { "id": "AC-013-1", "given": "la capa de datos", "when": "una pantalla necesita tours, disponibilidad, reservas, pagos, perfil, notificaciones o mensajes", "then": "los obtiene solo a través de la interfaz del dominio; ninguna pantalla lee localStorage ni datos de muestra directamente" },
+        { "id": "AC-013-2", "given": "una configuración de entorno que elige la implementación", "when": "se cambia de simulada a API", "then": "las pantallas no cambian; existe un test que ejecuta la misma batería de contrato sobre la implementación simulada" },
+        { "id": "AC-013-3", "given": "un pago simulado exitoso", "when": "abro Mis reservas", "then": "la reserva nueva aparece en Próximas (o Por pagar si quedó saldo) con tour, fecha, viajeros, montos y referencia, y sobrevive a recargar la página" },
+        { "id": "AC-013-4", "given": "la persistencia simulada", "when": "cierro sesión o pulso Restablecer datos de demostración", "then": "los datos de la cuenta quedan aislados por usuario demo y se pueden restablecer; no se guardan documentos completos, datos médicos ni archivos" },
+        { "id": "AC-013-5", "given": "los cálculos de total, abono, costo del método, penalidad y diferencia de reprogramación", "when": "se ejecuta test:run", "then": "tienen tests unitarios con cobertura de al menos 80 %, y las transiciones válidas e inválidas de cada dimensión de estado de la reserva definidas en packages/contracts (PAYMENT_STATUS, LIFECYCLE_STATUS y lo necesario de OPERATIONAL_STATUS) según la máquina de EdgeCases tienen tests; las pestañas de Mis reservas se derivan de esas dimensiones con el mapeo de EdgeCases, sin un enum de estados propio del frontend" }
+      ],
+      "priority": "must",
+      "size": "L",
+      "dependsOn": [],
+      "dataElements": ["reservas del usuario demo", "preferencias del perfil"]
+    },
+    {
+      "id": "US-014",
+      "asA": "CLIENT",
+      "iWant": "usar las pestañas, el buscador y el detalle de Mis reservas",
+      "soThat": "encuentre cada reserva y sus acciones",
+      "invest": { "independent": false, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "RF-D12." },
+      "acceptanceCriteria": [
+        { "id": "AC-014-1", "given": "/mis-reservas", "when": "pulso Próximas, Por pagar, Completadas o Canceladas", "then": "es un tablist accesible (role=tab, flechas), cada pestaña muestra su contador y sus reservas, y la URL refleja la pestaña" },
+        { "id": "AC-014-2", "given": "una pestaña sin reservas", "when": "se muestra", "then": "aparece el estado vacío con CTA Explorar tours" },
+        { "id": "AC-014-3", "given": "reservas listadas", "when": "escribo en Buscar por tour o referencia", "then": "la lista se filtra por nombre de tour o referencia" },
+        { "id": "AC-014-4", "given": "una reserva", "when": "pulso Ver detalle", "then": "se abre el panel lateral de 480 px de esa reserva (pantalla completa en móvil) con QR, datos, pagos (Impuestos incluidos), reprogramaciones restantes y acciones; se cierra con Escape o el botón cerrar y el foco vuelve" },
+        { "id": "AC-014-5", "given": "cualquier reserva confirmada", "when": "pulso Voucher o Pagar saldo", "then": "abre el voucher o /pago/saldo de esa reserva y no de una fija" }
+      ],
+      "priority": "must",
+      "size": "M",
+      "dependsOn": ["US-013"],
+      "dataElements": []
+    },
+    {
+      "id": "US-015",
+      "asA": "CLIENT",
+      "iWant": "descargar el voucher y agregar el tour a mi calendario",
+      "soThat": "lo presente el día del tour y no lo olvide",
+      "invest": { "independent": false, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "RF-D06. El PDF definitivo es server-side; aquí se entrega vista imprimible. Decisión Q-02: QR generado en el cliente con solo el número de confirmación; una librería nueva queda pendiente de aprobación humana y existe respaldo sin ella." },
+      "acceptanceCriteria": [
+        { "id": "AC-015-1", "given": "el voucher de una reserva", "when": "pulso Descargar PDF", "then": "se abre el diálogo de impresión con una hoja de estilos de impresión que deja solo el voucher (Guardar como PDF), con tour, fecha, punto de encuentro, viajeros, referencia y QR" },
+        { "id": "AC-015-2", "given": "el voucher", "when": "pulso Agregar al calendario", "then": "se descarga un .ics válido de esa reserva" },
+        { "id": "AC-015-3", "given": "el voucher de una reserva", "when": "se pinta", "then": "la referencia BT-AAAA-NNNNN es la de esa reserva y el QR, generado en el cliente, codifica solo esa referencia (sin PII); si la librería de QR no está aprobada o falla, se muestra el respaldo (referencia legible en grande con un QR ilustrativo marcado como tal) y el voucher sigue siendo imprimible" }
+      ],
+      "priority": "must",
+      "size": "S",
+      "dependsOn": ["US-014"],
+      "dataElements": []
+    },
+    {
+      "id": "US-016",
+      "asA": "CLIENT",
+      "iWant": "cancelar una reserva viendo la franja que aplica, el motivo y confirmando con un código",
+      "soThat": "sepa cuánto queda a mi favor antes de decidir",
+      "invest": { "independent": false, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "RF-D07, RF-C11, RF-D12, RF-F06, ADR-007. Saldo a favor como crédito interno, sin Coins." },
+      "acceptanceCriteria": [
+        { "id": "AC-016-1", "given": "una reserva a 10 o más días", "when": "abro Cancelar desde la lista o el detalle", "then": "el diálogo muestra las 3 franjas resaltando la que aplica, el resumen (pagado, penalidad 40 %, saldo a favor 60 %) y ofrece Reprogramar como alternativa" },
+        { "id": "AC-016-2", "given": "una reserva a 5-9 días o a menos de 5 días", "when": "abro Cancelar", "then": "a 5-9 días la penalidad es 60 %; a menos de 5 días el botón está deshabilitado con el texto Sin reembolso por cancelación tardía, penalidad 100 %" },
+        { "id": "AC-016-3", "given": "el diálogo de cancelación", "when": "elijo un motivo (lista real) y opcionalmente marco fuerza mayor", "then": "fuerza mayor muestra un consentimiento separado no premarcado para el soporte (CR-025), luego un input type=file para cargarlo y el aviso de que la reducción se aplica tras revisión; el soporte no se persiste" },
+        { "id": "AC-016-4", "given": "el motivo elegido", "when": "pulso Confirmar cancelación", "then": "se pide un código OTP simulado (mostrado en pantalla como en el registro); con el código correcto la reserva pasa a Canceladas con fecha, penalidad y Saldo a favor, se ve /cancelacion-confirmada y llega una notificación; con código incorrecto se informan los intentos restantes" },
+        { "id": "AC-016-5", "given": "la cancelación confirmada", "when": "pulso Ver otras fechas o Ir a mis reservas", "then": "navego al detalle del tour o a la pestaña Canceladas; en ningún texto aparece Borondo Coins" }
+      ],
+      "priority": "must",
+      "size": "M",
+      "dependsOn": ["US-014"],
+      "dataElements": ["motivo de cancelación", "soporte de fuerza mayor (sensible, no se persiste)"]
+    },
+    {
+      "id": "US-017",
+      "asA": "CLIENT",
+      "iWant": "reprogramar mi reserva eligiendo otra fecha del mismo tour",
+      "soThat": "viaje en otra fecha sin cancelar",
+      "invest": { "independent": false, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "RF-D08b, RF-D12, Maquina-Estados-Booking §7: máximo 2 reprogramaciones, también desde PARTIAL_PAID; booking nuevo y original RESCHEDULED." },
+      "acceptanceCriteria": [
+        { "id": "AC-017-1", "given": "una reserva activa a 5 o más días, con abono o pago completo (PARTIAL_PAID, CONFIRMED o SETTLED) y menos de 2 reprogramaciones", "when": "abro Reprogramar", "then": "veo las fechas del mismo tour con semáforo de disponibilidad, seleccionables con clic y teclado; a menos de 5 días la opción está deshabilitada con su motivo" },
+        { "id": "AC-017-4", "given": "una reserva que ya usó sus 2 reprogramaciones", "when": "veo la lista o el detalle", "then": "el botón Reprogramar está deshabilitado (aria-disabled) con el texto de que se alcanzó el máximo de 2, y el detalle muestra 0 reprogramaciones restantes" },
+        { "id": "AC-017-5", "given": "una reprogramación con diferencia a pagar", "when": "pasan 48 h simuladas sin pagarla", "then": "la solicitud se cancela, la reserva conserva su fecha original y llega una notificación (RF-D08b)" },
+        { "id": "AC-017-2", "given": "una fecha nueva elegida", "when": "se calcula la diferencia", "then": "si cuesta más, el botón dice Reprogramar y pagar con el monto exacto; si cuesta menos, avisa que la diferencia no se reembolsa" },
+        { "id": "AC-017-3", "given": "la diferencia aceptada", "when": "pulso el botón", "then": "con diferencia a pagar pasa por el pago simulado; al terminar, Mis reservas muestra la reserva con la nueva fecha (booking nuevo que hereda el estado de pago; el original queda RESCHEDULED y no aparece como reserva activa duplicada), descuenta una reprogramación restante y llega una notificación" }
+      ],
+      "priority": "must",
+      "size": "M",
+      "dependsOn": ["US-014"],
+      "dataElements": []
+    },
+    {
+      "id": "US-018",
+      "asA": "CLIENT",
+      "iWant": "calificar un tour completado con estrellas y comentario",
+      "soThat": "otros viajeros conozcan mi experiencia",
+      "invest": { "independent": false, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "RF-D09, RF-D12. El comentario se muestra como texto plano." },
+      "acceptanceCriteria": [
+        { "id": "AC-018-1", "given": "una reserva completada sin reseña", "when": "abro Calificar", "then": "hay un grupo de 5 estrellas operable con teclado (radiogroup) para el tour y otro para el guía, un textarea con límite de caracteres y contador, y un aviso de que la reseña será pública y con qué nombre se mostrará (CR-020)" },
+        { "id": "AC-018-2", "given": "sin estrellas elegidas", "when": "pulso Enviar calificación", "then": "no envía y muestra el error junto al grupo" },
+        { "id": "AC-018-3", "given": "calificación válida", "when": "pulso Enviar calificación", "then": "la reserva en Completadas muestra la calificación y Reservar de nuevo en lugar de Calificar" }
+      ],
+      "priority": "must",
+      "size": "S",
+      "dependsOn": ["US-014"],
+      "dataElements": ["comentario de reseña"]
+    },
+    {
+      "id": "US-019",
+      "asA": "CLIENT",
+      "iWant": "solicitar el reembolso bancario cuando aplica retracto o fuerza mayor del operador",
+      "soThat": "ejerza mi derecho de la Ley 1480",
+      "invest": { "independent": false, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "RF-C09. La solicitud queda PENDING_REVIEW simulada." },
+      "acceptanceCriteria": [
+        { "id": "AC-019-1", "given": "una reserva comprada hace 5 días hábiles o menos, o cancelada por el operador", "when": "abro Solicitar reembolso", "then": "hay campos reales para la causal (retracto, fuerza mayor del operador, orden judicial), una descripción y el soporte opcional con input type=file precedido de su consentimiento separado no premarcado (CR-025); el retracto se ofrece dentro del plazo aunque el tour empiece en menos de 5 días y queda PENDING_REVIEW para revisión humana (RF-C09, EC-038)" },
+        { "id": "AC-019-2", "given": "una reserva fuera de esas causales", "when": "busco la opción", "then": "no se ofrece y se explica que el saldo a favor queda como crédito interno" },
+        { "id": "AC-019-3", "given": "la solicitud completa", "when": "pulso Enviar solicitud", "then": "queda registrada en revisión con número de referencia visible en el detalle de la reserva y una notificación" }
+      ],
+      "priority": "should",
+      "size": "S",
+      "dependsOn": ["US-014"],
+      "dataElements": ["causal y descripción del reembolso", "soporte (no se persiste)"]
+    },
+    {
+      "id": "US-020",
+      "asA": "CLIENT",
+      "iWant": "abrir el menú de cuenta desde el sidebar y cerrar sesión",
+      "soThat": "controle mi sesión desde cualquier pantalla privada",
+      "invest": { "independent": true, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "RF-D13, RF-F05. Comportamiento de / con sesión según Q-04." },
+      "acceptanceCriteria": [
+        { "id": "AC-020-1", "given": "una pantalla con sidebar y sesión", "when": "pulso el avatar o el nombre", "then": "se abre el popover de 280 px (hoja inferior en móvil) con Editar perfil, Tema, Idioma, Recomendar, Cotiza con un asesor, Configuración, Nosotros y Cerrar sesión; aria-expanded refleja el estado y Escape lo cierra" },
+        { "id": "AC-020-2", "given": "el menú de cuenta", "when": "pulso Cerrar sesión", "then": "se borra la sesión demo, se limpian los datos de sesión en memoria y navego a /; las rutas privadas vuelven a pedir login" },
+        { "id": "AC-020-3", "given": "una sesión iniciada", "when": "abro / o pulso el logo", "then": "se aplica la regla acordada en Q-04 de forma consistente en escritorio y móvil" }
+      ],
+      "priority": "must",
+      "size": "S",
+      "dependsOn": [],
+      "dataElements": []
+    },
+    {
+      "id": "US-021",
+      "asA": "CLIENT",
+      "iWant": "editar mi perfil, mis preferencias y solicitar la eliminación de mis datos",
+      "soThat": "mantenga mi información al día y ejerza mis derechos de la Ley 1581",
+      "invest": { "independent": false, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "Ley 1581 (ARCO). El documento no se puede cambiar (regla de pantalla existente)." },
+      "acceptanceCriteria": [
+        { "id": "AC-021-1", "given": "/perfil", "when": "lo abro", "then": "nombre, teléfono, fecha de nacimiento y punto de recogida habitual son campos reales con label y validación; el documento se muestra como solo lectura con su explicación" },
+        { "id": "AC-021-2", "given": "cambios válidos", "when": "pulso Guardar cambios", "then": "se guardan en la capa de datos, se confirma con un toast y el nombre se actualiza en el sidebar y la navbar" },
+        { "id": "AC-021-3", "given": "/perfil", "when": "pulso Cambiar foto", "then": "se abre un input type=file de imagen y la vista previa reemplaza el avatar en la sesión simulada" },
+        { "id": "AC-021-4", "given": "las secciones de notificaciones y apariencia", "when": "uso los interruptores", "then": "son role=switch reales; las notificaciones transaccionales no se pueden desactivar y las comerciales son opt-in no premarcado; apariencia cambia el tema" },
+        { "id": "AC-021-5", "given": "/perfil", "when": "pulso Solicitar eliminación de mis datos", "then": "un diálogo explica el alcance (anonimización por trazabilidad fiscal), pide confirmación y registra la solicitud con número de referencia" }
+      ],
+      "priority": "must",
+      "size": "M",
+      "dependsOn": ["US-013"],
+      "dataElements": ["nombre", "teléfono", "fecha de nacimiento", "foto de perfil (no se persiste fuera de la sesión)"]
+    },
+    {
+      "id": "US-022",
+      "asA": "CLIENT",
+      "iWant": "ver mis notificaciones desde una campana y recibir avisos de lo que pasa con mis reservas",
+      "soThat": "me entere de pagos, cambios y cupos sin revisar cada pantalla",
+      "invest": { "independent": false, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "RF-D13, RF-D14." },
+      "acceptanceCriteria": [
+        { "id": "AC-022-1", "given": "una pantalla con sesión", "when": "pulso la campana del sidebar o de la navbar móvil", "then": "se abre la bandeja (popover 380 px, pantalla completa en móvil) con contador de no leídas, enlace profundo a la vista de cada aviso y marcar como leídas" },
+        { "id": "AC-022-2", "given": "eventos simulados (reserva confirmada, pago rechazado, cancelación, cupo liberado)", "when": "ocurren", "then": "aparece un toast role=status (abajo a la derecha en escritorio, arriba a ancho completo en móvil) y una entrada en la bandeja, con tope de 50 avisos o 90 días" },
+        { "id": "AC-022-3", "given": "/notificaciones", "when": "lo abro", "then": "muestra el centro de notificaciones completo y no solo las preferencias del perfil" },
+        { "id": "AC-022-4", "given": "cualquier aviso", "when": "se lee su texto", "then": "no contiene documento completo, datos médicos ni datos de pago" }
+      ],
+      "priority": "must",
+      "size": "M",
+      "dependsOn": ["US-013"],
+      "dataElements": []
+    },
+    {
+      "id": "US-023",
+      "asA": "CLIENT",
+      "iWant": "escribir en el chat del tour, cambiar de conversación y abrir soporte",
+      "soThat": "resuelva dudas con el guía o con BorondoTours",
+      "invest": { "independent": false, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "RF-D08, RF-D13. Mensajes simulados y renderizados como texto plano." },
+      "acceptanceCriteria": [
+        { "id": "AC-023-1", "given": "/mensajes", "when": "escribo en el campo y pulso Enviar o Enter", "then": "el mensaje aparece en la conversación con hora, el campo se limpia y el foco se mantiene; mensajes vacíos no se envían; el chat y /soporte muestran el aviso de que la conversación queda registrada y de no compartir documentos ni datos de salud (CR-021)" },
+        { "id": "AC-023-2", "given": "varias conversaciones", "when": "pulso otra en la lista", "then": "cambia el hilo mostrado y Ver mi reserva abre el detalle de esa reserva" },
+        { "id": "AC-023-3", "given": "el detalle de una reserva confirmada", "when": "pulso Chat del tour", "then": "abre /mensajes en la conversación de ese tour (o el aviso de que se habilita 24 h antes)" },
+        { "id": "AC-023-4", "given": "/soporte", "when": "lo abro o pulso Escribir por WhatsApp", "then": "se ve como panel lateral de 480 px (pantalla completa en móvil) y WhatsApp abre en pestaña nueva con mensaje sin datos personales" },
+        { "id": "AC-023-5", "given": "/error", "when": "pulso Contactar soporte", "then": "navego a /soporte o /contacto" }
+      ],
+      "priority": "should",
+      "size": "M",
+      "dependsOn": ["US-013"],
+      "dataElements": ["texto de mensajes de chat"]
+    },
+    {
+      "id": "US-024",
+      "asA": "CLIENT",
+      "iWant": "ver mis tours realizados con sus kilómetros y compartir mi mapa",
+      "soThat": "lleve el registro de mis viajes",
+      "invest": { "independent": true, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "RF-D04/RF-D05 sin Coins ni niveles." },
+      "acceptanceCriteria": [
+        { "id": "AC-024-1", "given": "reservas completadas en la capa de datos", "when": "abro /mis-tours", "then": "los km recorridos se calculan a partir de los tours completados (no — km) y el mapa resalta sus departamentos" },
+        { "id": "AC-024-2", "given": "/mis-tours", "when": "pulso Compartir mi mapa", "then": "usa navigator.share o copia un enlace y lo confirma con un toast" }
+      ],
+      "priority": "could",
+      "size": "S",
+      "dependsOn": ["US-013"],
+      "dataElements": []
+    },
+    {
+      "id": "US-025",
+      "asA": "ANONYMOUS",
+      "iWant": "escribir mi mensaje en el formulario de contacto",
+      "soThat": "BorondoTours sepa en qué me puede ayudar",
+      "invest": { "independent": true, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "Ley 2300 no aplica (contacto iniciado por el usuario)." },
+      "acceptanceCriteria": [
+        { "id": "AC-025-1", "given": "/contacto", "when": "lo abro", "then": "el mensaje es un textarea real con label, mínimo de caracteres y contador, igual que en Nosotros" },
+        { "id": "AC-025-2", "given": "un envío válido", "when": "se confirma", "then": "nombre, correo, mensaje y consentimiento se limpian" },
+        { "id": "AC-025-3", "given": "un segundo envío antes de 30 s", "when": "pulso Enviar", "then": "se muestra un aviso visible de espera y no se envía" }
+      ],
+      "priority": "must",
+      "size": "S",
+      "dependsOn": [],
+      "dataElements": ["nombre", "correo", "mensaje de contacto"]
+    },
+    {
+      "id": "US-026",
+      "asA": "ANONYMOUS",
+      "iWant": "ver el banner de cookies en mi primera visita y decidir sobre las opcionales",
+      "soThat": "se respete mi consentimiento según la Ley 1581",
+      "invest": { "independent": true, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "Reutiliza la lógica de /estados/cookies que ya guarda borondo.cookies." },
+      "acceptanceCriteria": [
+        { "id": "AC-026-1", "given": "un navegador sin la preferencia de cookies", "when": "abro cualquier página pública", "then": "aparece el banner no modal, anunciado a lectores de pantalla, con Aceptar todas, Rechazar opcionales y Configurar en igual jerarquía visual, sin casillas premarcadas" },
+        { "id": "AC-026-2", "given": "el banner", "when": "elijo una opción", "then": "se guarda la preferencia y queda registrada como consentimiento con tipo, versión del texto y fecha (CR-022); el banner no vuelve a salir y puede cambiarse desde el pie o Configuración" }
+      ],
+      "priority": "must",
+      "size": "S",
+      "dependsOn": [],
+      "dataElements": ["preferencia de cookies"]
+    },
+    {
+      "id": "US-027",
+      "asA": "ANONYMOUS",
+      "iWant": "filtrar el blog por categoría, leer el artículo que elegí y suscribirme al boletín",
+      "soThat": "encuentre contenido útil para mi viaje",
+      "invest": { "independent": true, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "Suscripción comercial: opt-in explícito (Ley 1581)." },
+      "acceptanceCriteria": [
+        { "id": "AC-027-1", "given": "/blog", "when": "pulso un chip de categoría", "then": "solo se listan los artículos de esa categoría y el chip queda aria-pressed=true" },
+        { "id": "AC-027-2", "given": "/blog/articulo?art=<slug>", "when": "lo abro", "then": "se muestra el artículo de ese slug, no siempre el del páramo" },
+        { "id": "AC-027-3", "given": "el bloque de boletín", "when": "escribo un correo válido, acepto el consentimiento y pulso Suscribirme", "then": "se confirma la suscripción simulada; con correo inválido o sin consentimiento muestra el error" }
+      ],
+      "priority": "should",
+      "size": "S",
+      "dependsOn": [],
+      "dataElements": ["correo para el boletín"]
+    },
+    {
+      "id": "US-028",
+      "asA": "ANONYMOUS",
+      "iWant": "buscar en las preguntas frecuentes y desplegar respuestas y secciones legales",
+      "soThat": "resuelva mis dudas sin contactar a nadie",
+      "invest": { "independent": true, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "Reutiliza el patrón de acordeón del centro legal de Nosotros." },
+      "acceptanceCriteria": [
+        { "id": "AC-028-1", "given": "/preguntas-frecuentes", "when": "escribo en el buscador", "then": "las preguntas se filtran por texto y, sin resultados, aparece el estado vacío con enlace a contacto" },
+        { "id": "AC-028-2", "given": "una pregunta", "when": "la pulso o uso Enter/Espacio", "then": "se despliega su respuesta con aria-expanded y aria-controls" },
+        { "id": "AC-028-3", "given": "/legal", "when": "pulso una sección", "then": "se despliega como acordeón con el mismo patrón" }
+      ],
+      "priority": "should",
+      "size": "S",
+      "dependsOn": [],
+      "dataElements": []
+    },
+    {
+      "id": "US-029",
+      "asA": "ANONYMOUS",
+      "iWant": "usar el checkout, el área privada, los estados, el detalle, legal y FAQ completamente en el idioma que elegí",
+      "soThat": "entienda todo lo que compro y gestiono",
+      "invest": { "independent": true, "negotiable": true, "valuable": true, "estimable": true, "small": false, "testable": true, "notes": "Decisión Q-03: 6 idiomas, español base + en, fr, pt, zh, ja (los mismos de apps/web/src/lib/fig/i18n-content.ts). Textos vía t('ns:key')." },
+      "acceptanceCriteria": [
+        { "id": "AC-029-1", "given": "el idioma en", "when": "recorro checkout, procesando, confirmación, Mis reservas y sus diálogos, perfil, mensajes, notificaciones, soporte, legal, FAQ, estados y detalle del tour", "then": "no queda ninguna frase en español detectada por la lista de palabras del informe QA" },
+        { "id": "AC-029-2", "given": "cualquier idioma", "when": "se muestran plazos, duraciones y conteos", "then": "no hay mezclas como 5 days hábiles o 1 day; se usan plurales del idioma (1 tour, 2 tours)" },
+        { "id": "AC-029-3", "given": "nombres propios de lugares y tours", "when": "cambio de idioma", "then": "no se traducen (Guatapé y El Peñol se mantiene)" },
+        { "id": "AC-029-4", "given": "el código del frontend", "when": "se revisa", "then": "no hay strings visibles sueltos en componentes nuevos o modificados; todos vienen del sistema i18n con claves en los idiomas acordados" }
+      ],
+      "priority": "must",
+      "size": "L",
+      "dependsOn": [],
+      "dataElements": []
+    },
+    {
+      "id": "US-030",
+      "asA": "ANONYMOUS",
+      "iWant": "navegar el sitio en mi teléfono con un diseño hecho para 390 px y un menú móvil",
+      "soThat": "pueda leer y tocar todo sin hacer zoom",
+      "invest": { "independent": true, "negotiable": true, "valuable": true, "estimable": true, "small": false, "testable": true, "notes": "Mecanismo (frames móviles de Figma por ancho u otro) lo propone el arquitecto. Cubre chrome: navbar, menú móvil, sidebar, FAB, riel de redes, pie, modales como hojas inferiores." },
+      "acceptanceCriteria": [
+        { "id": "AC-030-1", "given": "un viewport de 390x844", "when": "abro cualquier página", "then": "no se aplica la reducción del lienzo de 1440 px; el texto de cuerpo mide al menos 16 px y no hay desborde horizontal" },
+        { "id": "AC-030-2", "given": "un viewport de 390x844", "when": "pulso el botón de menú", "then": "se abre un menú móvil con foco atrapado, Escape y botón cerrar, que da acceso a Explorar, idioma, tema, cuenta y, con sesión, a las secciones del sidebar" },
+        { "id": "AC-030-3", "given": "un viewport de 390x844", "when": "mido los controles interactivos", "then": "todos tienen un área táctil de al menos 44x44 px" },
+        { "id": "AC-030-4", "given": "un viewport de 390x844", "when": "abro diálogos (cancelar, reprogramar, calificar), el detalle de reserva, soporte, la bandeja o el menú de cuenta", "then": "se muestran como hoja inferior o pantalla completa según RF-D12/RF-D13" },
+        { "id": "AC-030-5", "given": "una pieza móvil nueva o variante que no exista en Figma", "when": "se termina el cambio", "then": "queda replicada en Figma (sección 00 y pantallas afectadas) mediante figma-sync" }
+      ],
+      "priority": "must",
+      "size": "L",
+      "dependsOn": [],
+      "dataElements": []
+    },
+    {
+      "id": "US-031",
+      "asA": "ANONYMOUS",
+      "iWant": "usar en móvil las pantallas públicas y de acceso (Home, Explorar, mapa, detalle, Destinos, Experiencias, Blog, Nosotros, FAQ, legal, contacto, login, registro, código, recuperar, bienvenida, errores)",
+      "soThat": "descubra y elija tours desde el teléfono",
+      "invest": { "independent": false, "negotiable": true, "valuable": true, "estimable": true, "small": false, "testable": true, "notes": "Filtros de Explorar en drawer lateral en móvil (RF-A06). La sección p0_126 del Home queda fuera." },
+      "acceptanceCriteria": [
+        { "id": "AC-031-1", "given": "390x844", "when": "recorro esas pantallas", "then": "cada una usa su versión móvil, todas sus funciones del informe QA están en OK y se cumplen AC-030-1 y AC-030-3" },
+        { "id": "AC-031-2", "given": "/explorar a 390 px", "when": "pulso Filtros", "then": "los filtros se abren en un drawer sin colapsar el catálogo y la lista va a 1 columna" }
+      ],
+      "priority": "must",
+      "size": "L",
+      "dependsOn": ["US-030"],
+      "dataElements": []
+    },
+    {
+      "id": "US-032",
+      "asA": "CLIENT",
+      "iWant": "completar el checkout y gestionar mi área privada desde el teléfono",
+      "soThat": "reserve y administre mis viajes sin computador",
+      "invest": { "independent": false, "negotiable": true, "valuable": true, "estimable": true, "small": false, "testable": true, "notes": "Checkout 3 pasos, procesando, confirmación, estados de error, Divide tu cuenta, pago de saldo y de participante, Mis reservas y diálogos, voucher, perfil, notificaciones, mensajes, soporte, favoritos, mis tours." },
+      "acceptanceCriteria": [
+        { "id": "AC-032-1", "given": "390x844 con sesión", "when": "hago una reserva completa y luego la cancelo, reprogramo y califico", "then": "todo el flujo funciona en la versión móvil y se cumplen AC-030-1, AC-030-3 y AC-030-4" },
+        { "id": "AC-032-2", "given": "el checkout a 390 px", "when": "avanzo por los pasos", "then": "el resumen del total y el botón principal quedan visibles (barra fija inferior) sin tapar campos con el teclado abierto" }
+      ],
+      "priority": "must",
+      "size": "L",
+      "dependsOn": ["US-030"],
+      "dataElements": []
+    },
+    {
+      "id": "US-033",
+      "asA": "ANONYMOUS",
+      "iWant": "leer todos los textos con contraste suficiente en los 3 temas",
+      "soThat": "pueda usar el sitio con baja visión o con luz fuerte",
+      "invest": { "independent": true, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "Ajuste por tokens semánticos, sin hex sueltos; cambios de token se replican en Figma con figma-sync." },
+      "acceptanceCriteria": [
+        { "id": "AC-033-1", "given": "los temas Colorido, Claro y Oscuro", "when": "se mide el contraste como en el informe QA", "then": "todo texto cumple 4,5:1 (3:1 si es grande), incluidos el gris secundario del tema claro, las insignias del oscuro, el sello Agotado, los precios de los pines del mapa, la etiqueta de Mis tours y las iniciales de avatares y reseñas" }
+      ],
+      "priority": "must",
+      "size": "M",
+      "dependsOn": [],
+      "dataElements": []
+    },
+    {
+      "id": "US-034",
+      "asA": "CLIENT",
+      "iWant": "avanzar o saltar la bienvenida después de crear la cuenta",
+      "soThat": "empiece a usar la plataforma",
+      "invest": { "independent": true, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "RF-D11." },
+      "acceptanceCriteria": [
+        { "id": "AC-034-1", "given": "/bienvenida", "when": "pulso Siguiente", "then": "avanza al siguiente paso con indicador de progreso; en el último paso lleva al destino de la cuenta" },
+        { "id": "AC-034-2", "given": "/bienvenida", "when": "pulso Saltar", "then": "se marca la bienvenida como vista y no vuelve a mostrarse" }
+      ],
+      "priority": "should",
+      "size": "S",
+      "dependsOn": [],
+      "dataElements": []
+    },
+    {
+      "id": "US-035",
+      "asA": "ANONYMOUS",
+      "iWant": "que los enlaces antiguos /tours/:slug y /discovery me lleven a las páginas vigentes",
+      "soThat": "no llegue a un 404 o a un error de API",
+      "invest": { "independent": true, "negotiable": true, "valuable": true, "estimable": true, "small": true, "testable": true, "notes": "No resuelve el formato de URL canónica de RF-A11; solo evita el 404 en modo simulado." },
+      "acceptanceCriteria": [
+        { "id": "AC-035-1", "given": "/tours/isla-de-san-andres-4-dias", "when": "lo abro", "then": "muestro el detalle de ese tour (o redirijo a /tour?tour=…) sin 404 ni console.error" },
+        { "id": "AC-035-2", "given": "/discovery", "when": "lo abro", "then": "no llamo a /api/v1/tours/search en modo simulado y redirijo o muestro el catálogo de /explorar" }
+      ],
+      "priority": "could",
+      "size": "S",
+      "dependsOn": ["US-013"],
+      "dataElements": []
+    }
+  ],
+  "nfr": [
+    { "id": "NFR-01", "category": "a11y", "statement": "WCAG 2.2 AA en todas las pantallas del alcance: labels, foco visible, foco atrapado en modales y hojas, teclado completo, roles ARIA correctos, prefers-reduced-motion.", "target": "0 violaciones serias o críticas de axe en el recorrido; contraste ≥4,5:1 en 3 temas" },
+    { "id": "NFR-02", "category": "a11y", "statement": "Objetivos táctiles en móvil.", "target": "≥44x44 px a 390 px de ancho" },
+    { "id": "NFR-03", "category": "i18n", "statement": "Todo texto visible sale de i18n (t('ns:key')) en los 6 idiomas (es base, en, fr, pt, zh, ja); nombres propios sin traducir; plurales del idioma.", "target": "0 claves faltantes en los 6 idiomas; 0 strings sueltos nuevos; 0 frases en español en modo en" },
+    { "id": "NFR-04", "category": "performance", "statement": "Presupuesto de carga en móvil (RF-A12).", "target": "LCP < 2,5 s en Home, Explorar y detalle con perfil móvil de Playwright" },
+    { "id": "NFR-05", "category": "privacy", "statement": "Ley 1581: sin PII en URLs, logs ni consola; pasaporte, soportes y fotos no se persisten; datos médicos con consentimiento separado no premarcado; sin datos de tarjeta en ningún lugar (PCI DSS).", "target": "0 hallazgos en revisión de seguridad y en inspección de storage/URL/consola" },
+    { "id": "NFR-06", "category": "security", "statement": "HTML del backend o de usuario solo vía SafeHtml; comentarios y mensajes como texto plano; enlaces externos con rel=noopener; token de acceso en memoria cuando exista; sin dependencias nuevas sin aprobación.", "target": "0 usos de innerHTML sin SafeHtml; pnpm audit sin altas nuevas" },
+    { "id": "NFR-07", "category": "observability", "statement": "Calidad del código del frontend.", "target": "typecheck, lint, test:run y build de @borondo/web en verde; sin any ni console.log nuevos; cobertura ≥80 % en la lógica nueva de lib/api" }
+  ],
+  "assumptions": [
+    "No hay backend en esta feature: todo corre en modo demostración con la capa de datos simulada y persistencia en el navegador, como hoy (borondo.demo.*).",
+    "La capa de datos sigue las formas de packages/contracts y los endpoints /api/v1 descritos en los Specs; si falta un esquema en contracts, se define localmente en apps/web y se registra para que api-contract lo formalice en la feature del backend.",
+    "Los cálculos financieros de la simulación replican Domain-Financiero.md y ADR-007; apps/web no depende hoy de @borondo/domain. Si el arquitecto quiere consumirlo, agregar la dependencia de workspace requiere ampliar el alcance a apps/web/package.json con aprobación.",
+    "Tarifas de métodos de pago (RF-C15) y políticas de abono por product_type (RF-C12) se leen de un archivo de configuración simulado, no de componentes.",
+    "El OTP de cancelación y la verificación de código se simulan mostrando el código en pantalla, como el registro actual.",
+    "El voucher PDF definitivo es server-side (RF-D06); aquí se entrega la vista imprimible.",
+    "Existen frames móviles de 390 px en Figma para las pantallas principales; donde falten, el arquitecto propone la versión móvil con el kit y figma-sync la replica en Figma.",
+    "Los .astro generados desde Figma no se editan a mano: se sobrescriben con el runtime (apps/web/src/lib/fig/runtime) o CSS de mayor especificidad.",
+    "Varios agentes trabajan en paralelo: los archivos compartidos (fig-runtime.css, ui-kit.ts, i18n) se editan en cambios pequeños y localizados.",
+    "El saldo a favor por cancelación es crédito interno sin nombrar Borondo Coins (RF-D12, decisión 2026-09-29).",
+    "Supuesto revisable (Q-04): con sesión, / muestra el Home; el login sigue llevando a /mis-reservas.",
+    "Supuesto revisable (Q-05): sin PUBLIC_MAPBOX_TOKEN la vista mapa usa el mapa SVG de lib/colombiaMap.ts con pines interactivos; con token usa Mapbox GL.",
+    "Supuesto revisable (Q-06): las pantallas sin frame móvil en Figma se diseñan con el kit y figma-sync las crea en Figma al terminar."
+  ],
+  "openQuestions": [
+    { "id": "Q-01", "question": "IVA del extranjero: el requerimiento pide 'IVA 0 % recalculado' y el informe QA espera que el total cambie, pero Domain-Financiero.md §5 y calculateBookingTotal dicen que el cliente paga el mismo precio ('Impuestos incluidos') y que la exención solo elimina el IVA del margen de BorondoTours (lo absorbe BT). ¿El total del extranjero debe bajar (¿en cuánto: el IVA del margen o el 19 % del precio?) o se mantiene igual y solo cambia el texto/factura?", "blocking": true, "answer": "El total visible no cambia: precio único con Impuestos incluidos (RF-C15). El IVA 19 % solo grava el margen de BorondoTours y BT lo absorbe (Domain-Financiero.md §3 y §11); para no residente con pasaporte cargado ese IVA es 0 % (Decreto 297/2016). El resumen muestra la línea Exento de IVA (no residente) y el pago se bloquea hasta cargar el pasaporte (RF-C04). El informe QA que esperaba un total distinto se corrige con este criterio (AC-005-4).", "answeredBy": "orquestador (sdlc-conductor), basado en Spec-C y Domain-Financiero" },
+    { "id": "Q-02", "question": "QR del voucher: no hay librería de QR en el stack. ¿Se aprueba agregar una (p. ej. qrcode), se implementa un generador propio pequeño, o se acepta mantener el QR ilustrativo con la referencia de la reserva hasta el backend?", "blocking": true, "answer": "Generar el QR en el cliente codificando solo el número de confirmación BT-AAAA-NNNNN, sin PII. Si requiere una dependencia nueva (p. ej. qrcode), queda pendiente de aprobación humana (pnpm add es ask) y se deja un respaldo que no dependa de ella (AC-015-3).", "answeredBy": "orquestador (sdlc-conductor)" },
+    { "id": "Q-03", "question": "i18n: el requerimiento dice 5 idiomas, pero el selector ofrece 6 (es, en, fr, pt, zh, ja). ¿Se completan los 6, o cuáles 5 (y se retira uno del selector)?", "blocking": true, "answer": "6 idiomas: español base + en, fr, pt, zh, ja, los mismos de apps/web/src/lib/fig/i18n-content.ts. El selector no cambia.", "answeredBy": "orquestador (sdlc-conductor)" },
+    { "id": "Q-04", "question": "Con sesión, hoy / redirige a /mis-reservas (PARCIAL). Propuesta por defecto: / muestra el Home también con sesión y el login sigue llevando a /mis-reservas. ¿De acuerdo?", "blocking": false, "answer": "Se acepta la propuesta por defecto como supuesto revisable.", "answeredBy": "orquestador (sdlc-conductor)" },
+    { "id": "Q-05", "question": "Vista mapa: si no hay PUBLIC_MAPBOX_TOKEN en el entorno local, se usa el mapa SVG de lib/colombiaMap.ts con pines interactivos. ¿Hay token de Mapbox para dev?", "blocking": false, "answer": "Se acepta el respaldo SVG sin token como supuesto revisable.", "answeredBy": "orquestador (sdlc-conductor)" },
+    { "id": "Q-06", "question": "Pantallas sin frame móvil en Figma: se diseñan con el kit y figma-sync las crea en Figma al terminar. ¿De acuerdo?", "blocking": false, "answer": "Se acepta como supuesto revisable.", "answeredBy": "orquestador (sdlc-conductor)" }
+  ],
+  "pendingDecisions": [
+    { "ref": "dep:qrcode", "blocking": false, "reason": "Una librería de QR (p. ej. qrcode) no está en el stack; agregarla requiere aprobación humana (pnpm add es ask). Hasta entonces el voucher usa el respaldo sin dependencia (AC-015-3)." },
+    { "ref": "#2", "blocking": false, "reason": "Se construye sobre Astro + islas React ya presentes en apps/web; no se cambia el mecanismo de routing." },
+    { "ref": "#1", "blocking": false, "reason": "La capa de datos apunta a /api/v1 de forma neutral al framework de backend; no se escribe código de servicios." }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "name": "bt-factory-adopt-brownfield",
+  "description": "Carril govern de la Megafábrica SDLC: adopción de código existente: contexto del sistema, postura de seguridad y costo, validación humana del contexto e ítems de deuda y cambio. El campo type de cada nodo queda pendiente de validación por el orquestador.",
+  "inputs": {
+    "task": "prompt"
+  },
+  "modelId": "auto",
+  "steps": [
+    {
+      "type": "step",
+      "id": "init",
+      "agent": "sdlc-conductor",
+      "captureOutput": true,
+      "prompt": "Rol: conductor. Modo: init. Receta: adopt-brownfield.\nEntrada:\n{{task}}\nUsa init --entry adoption. Ejecuta init y run start; imprime FEATURE_ID, RUN_ID y PHASE. Si run start sale con 2, señala error con las razones (nunca success)."
+    },
+    {
+      "type": "repeat",
+      "id": "adoption-scope-loop",
+      "maxIterations": 3,
+      "onMaxIterations": "pause",
+      "stopCondition": {
+        "fileCheck": {
+          "path": ".megafactory/state/adoption.scope.json",
+          "jsonPath": "$.loopStatus",
+          "value": "stop"
+        }
+      },
+      "steps": [
+        {
+          "type": "step",
+          "id": "system-context",
+          "agent": "sdlc-solutions-architect",
+          "prompt": "Contexto:\n{{init.output}}\nRol: solutions-architect. Modo: system-context. Bucle: adoption.scope.\nProduce o corrige SystemContext.md con el diagrama mermaid y el bloque de acciones."
+        },
+        {
+          "type": "step",
+          "id": "adoption-scope-review",
+          "agent": "sdlc-artifact-reviewer",
+          "prompt": "Contexto:\n{{init.output}}\nRol: artifact-reviewer. Modo: review. Bucle: adoption.scope. Revisa system-context y ejecuta loop verdict."
+        }
+      ]
+    },
+    {
+      "type": "parallel",
+      "id": "context-signoff",
+      "joinPolicy": "allSettled",
+      "branches": [
+        {
+          "type": "step",
+          "id": "security-architect-sign",
+          "agent": "sdlc-security-architect",
+          "prompt": "Contexto:\n{{init.output}}\nRol: security-architect. Modo: sign."
+        },
+        {
+          "type": "step",
+          "id": "tech-writer-sign",
+          "agent": "sdlc-tech-writer",
+          "prompt": "Contexto:\n{{init.output}}\nRol: tech-writer. Modo: sign."
+        }
+      ]
+    },
+    {
+      "type": "step",
+      "id": "gate-scope",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: gate. Fase: scope. Cierra corrida: no.\nSi falla, pausa con razones y opciones; al reanudar reevalúa."
+    },
+    {
+      "type": "repeat",
+      "id": "adoption-assess-loop",
+      "maxIterations": 3,
+      "onMaxIterations": "pause",
+      "stopCondition": {
+        "fileCheck": {
+          "path": ".megafactory/state/adoption.assess.json",
+          "jsonPath": "$.loopStatus",
+          "value": "stop"
+        }
+      },
+      "steps": [
+        {
+          "type": "step",
+          "id": "posture-review",
+          "agent": "sdlc-security-auditor",
+          "prompt": "Contexto:\n{{init.output}}\nRol: security-auditor. Modo: posture-review. Bucle: adoption.assess.\nProduce o corrige SecurityPostureReview.json del sistema existente."
+        },
+        {
+          "type": "step",
+          "id": "cost-review",
+          "agent": "sdlc-finops",
+          "prompt": "Contexto:\n{{init.output}}\nRol: finops. Modo: cost-review. Bucle: adoption.assess.\nProduce o corrige CostReview.json del sistema existente."
+        },
+        {
+          "type": "step",
+          "id": "adoption-assess-review",
+          "agent": "sdlc-artifact-reviewer",
+          "prompt": "Contexto:\n{{init.output}}\nRol: artifact-reviewer. Modo: review. Bucle: adoption.assess. Revisa security-posture-review y cost-review y ejecuta loop verdict."
+        }
+      ]
+    },
+    {
+      "type": "step",
+      "id": "gate-assess",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: gate. Fase: assess. Cierra corrida: no.\nSi falla, pausa con razones y opciones; al reanudar reevalúa."
+    },
+    {
+      "type": "step",
+      "id": "decide-human",
+      "agent": "sdlc-conductor",
+      "completion": true,
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: approve-review.\nPide la decisión con request-approval --what review:<FEATURE_ID> y deja PENDING_HUMAN_COMMAND=node .megafactory/bin/factory.mjs approve --feature <FEATURE_ID> --what review:<FEATURE_ID> --by human:<nombre> (el dueño técnico valida el contexto)."
+    },
+    {
+      "type": "step",
+      "id": "gate-decide",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: gate. Fase: decide. Cierra corrida: no.\nSi falla, pausa con razones y opciones; al reanudar reevalúa."
+    },
+    {
+      "type": "step",
+      "id": "spawn",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: spawn.\nLee status --feature <FEATURE_ID> --json y crea los ítems debt y change de las acciones con init --entry <entryType> --link <tipo>:<FEATURE_ID> --action <id>. Si un init falla, detente en esa acción con RESULT=blocked."
+    },
+    {
+      "type": "step",
+      "id": "gate-act",
+      "agent": "sdlc-conductor",
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: gate. Fase: act. Cierra corrida: sí.\nSi falla, pausa con razones y opciones; al reanudar reevalúa. Siempre termina con run finish (ok o failed) y la lección."
+    }
+  ]
+}

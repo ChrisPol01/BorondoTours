@@ -1,0 +1,3947 @@
+{
+  "schemaVersion": 1,
+  "highLevel": [
+    "artifact-reviewer",
+    "conductor"
+  ],
+  "areas": {
+    "architecture": {
+      "lead": "architecture-lead",
+      "members": [
+        "api-contract",
+        "data-modeler",
+        "domain-rules",
+        "integrations",
+        "solutions-architect"
+      ]
+    },
+    "engineering": {
+      "lead": "engineering-lead",
+      "members": [
+        "backend",
+        "content-seo",
+        "engineering-manager",
+        "frontend",
+        "uiux-a11y"
+      ]
+    },
+    "operations": {
+      "lead": "operations-lead",
+      "members": [
+        "on-call-engineer",
+        "resilience-engineer",
+        "service-desk-l1",
+        "service-owner",
+        "sre",
+        "support-l2"
+      ]
+    },
+    "orchestration": {
+      "lead": null,
+      "members": [
+        "artifact-reviewer",
+        "conductor",
+        "cto"
+      ]
+    },
+    "platform": {
+      "lead": "platform-lead",
+      "members": [
+        "dba-prod",
+        "devops-sre",
+        "finops",
+        "release-manager"
+      ]
+    },
+    "product": {
+      "lead": "product-lead",
+      "members": [
+        "business-analyst",
+        "product-manager",
+        "tech-writer"
+      ]
+    },
+    "quality": {
+      "lead": "quality-lead",
+      "members": [
+        "peer-reviewer",
+        "qa-e2e"
+      ]
+    },
+    "security": {
+      "lead": "security-lead",
+      "members": [
+        "compliance-officer",
+        "dpo",
+        "security-architect",
+        "security-auditor"
+      ]
+    }
+  },
+  "nodes": [
+    {
+      "role": "api-contract",
+      "area": "architecture",
+      "level": "member"
+    },
+    {
+      "role": "architecture-lead",
+      "area": "architecture",
+      "level": "lead"
+    },
+    {
+      "role": "artifact-reviewer",
+      "area": "orchestration",
+      "level": "high"
+    },
+    {
+      "role": "backend",
+      "area": "engineering",
+      "level": "member"
+    },
+    {
+      "role": "business-analyst",
+      "area": "product",
+      "level": "member"
+    },
+    {
+      "role": "compliance-officer",
+      "area": "security",
+      "level": "member"
+    },
+    {
+      "role": "conductor",
+      "area": "orchestration",
+      "level": "high"
+    },
+    {
+      "role": "content-seo",
+      "area": "engineering",
+      "level": "member"
+    },
+    {
+      "role": "cto",
+      "area": "orchestration",
+      "level": "executive"
+    },
+    {
+      "role": "data-modeler",
+      "area": "architecture",
+      "level": "member"
+    },
+    {
+      "role": "dba-prod",
+      "area": "platform",
+      "level": "member"
+    },
+    {
+      "role": "devops-sre",
+      "area": "platform",
+      "level": "member"
+    },
+    {
+      "role": "domain-rules",
+      "area": "architecture",
+      "level": "member"
+    },
+    {
+      "role": "dpo",
+      "area": "security",
+      "level": "member"
+    },
+    {
+      "role": "engineering-lead",
+      "area": "engineering",
+      "level": "lead"
+    },
+    {
+      "role": "engineering-manager",
+      "area": "engineering",
+      "level": "member"
+    },
+    {
+      "role": "finops",
+      "area": "platform",
+      "level": "member"
+    },
+    {
+      "role": "frontend",
+      "area": "engineering",
+      "level": "member"
+    },
+    {
+      "role": "integrations",
+      "area": "architecture",
+      "level": "member"
+    },
+    {
+      "role": "on-call-engineer",
+      "area": "operations",
+      "level": "member"
+    },
+    {
+      "role": "operations-lead",
+      "area": "operations",
+      "level": "lead"
+    },
+    {
+      "role": "peer-reviewer",
+      "area": "quality",
+      "level": "member"
+    },
+    {
+      "role": "platform-lead",
+      "area": "platform",
+      "level": "lead"
+    },
+    {
+      "role": "product-lead",
+      "area": "product",
+      "level": "lead"
+    },
+    {
+      "role": "product-manager",
+      "area": "product",
+      "level": "member"
+    },
+    {
+      "role": "qa-e2e",
+      "area": "quality",
+      "level": "member"
+    },
+    {
+      "role": "quality-lead",
+      "area": "quality",
+      "level": "lead"
+    },
+    {
+      "role": "release-manager",
+      "area": "platform",
+      "level": "member"
+    },
+    {
+      "role": "resilience-engineer",
+      "area": "operations",
+      "level": "member"
+    },
+    {
+      "role": "security-architect",
+      "area": "security",
+      "level": "member"
+    },
+    {
+      "role": "security-auditor",
+      "area": "security",
+      "level": "member"
+    },
+    {
+      "role": "security-lead",
+      "area": "security",
+      "level": "lead"
+    },
+    {
+      "role": "service-desk-l1",
+      "area": "operations",
+      "level": "member"
+    },
+    {
+      "role": "service-owner",
+      "area": "operations",
+      "level": "member"
+    },
+    {
+      "role": "solutions-architect",
+      "area": "architecture",
+      "level": "member"
+    },
+    {
+      "role": "sre",
+      "area": "operations",
+      "level": "member"
+    },
+    {
+      "role": "support-l2",
+      "area": "operations",
+      "level": "member"
+    },
+    {
+      "role": "tech-writer",
+      "area": "product",
+      "level": "member"
+    },
+    {
+      "role": "uiux-a11y",
+      "area": "engineering",
+      "level": "member"
+    }
+  ],
+  "edges": [
+    {
+      "from": "api-contract",
+      "to": "data-modeler",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "api-contract",
+      "to": "domain-rules",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "api-contract",
+      "to": "integrations",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "api-contract",
+      "to": "solutions-architect",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "artifact-reviewer",
+      "to": "conductor",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:orchestration"
+    },
+    {
+      "from": "backend",
+      "to": "content-seo",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "backend",
+      "to": "engineering-manager",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "backend",
+      "to": "frontend",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "backend",
+      "to": "uiux-a11y",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "business-analyst",
+      "to": "product-manager",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:product"
+    },
+    {
+      "from": "business-analyst",
+      "to": "tech-writer",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:product"
+    },
+    {
+      "from": "compliance-officer",
+      "to": "dpo",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "compliance-officer",
+      "to": "security-architect",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "compliance-officer",
+      "to": "security-auditor",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "conductor",
+      "to": "artifact-reviewer",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:orchestration"
+    },
+    {
+      "from": "content-seo",
+      "to": "backend",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "content-seo",
+      "to": "engineering-manager",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "content-seo",
+      "to": "frontend",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "content-seo",
+      "to": "uiux-a11y",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "data-modeler",
+      "to": "api-contract",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "data-modeler",
+      "to": "domain-rules",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "data-modeler",
+      "to": "integrations",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "data-modeler",
+      "to": "solutions-architect",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "dba-prod",
+      "to": "devops-sre",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "dba-prod",
+      "to": "finops",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "dba-prod",
+      "to": "release-manager",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "devops-sre",
+      "to": "dba-prod",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "devops-sre",
+      "to": "finops",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "devops-sre",
+      "to": "release-manager",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "domain-rules",
+      "to": "api-contract",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "domain-rules",
+      "to": "data-modeler",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "domain-rules",
+      "to": "integrations",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "domain-rules",
+      "to": "solutions-architect",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "dpo",
+      "to": "compliance-officer",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "dpo",
+      "to": "security-architect",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "dpo",
+      "to": "security-auditor",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "engineering-manager",
+      "to": "backend",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "engineering-manager",
+      "to": "content-seo",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "engineering-manager",
+      "to": "frontend",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "engineering-manager",
+      "to": "uiux-a11y",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "finops",
+      "to": "dba-prod",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "finops",
+      "to": "devops-sre",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "finops",
+      "to": "release-manager",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "frontend",
+      "to": "backend",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "frontend",
+      "to": "content-seo",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "frontend",
+      "to": "engineering-manager",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "frontend",
+      "to": "uiux-a11y",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "integrations",
+      "to": "api-contract",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "integrations",
+      "to": "data-modeler",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "integrations",
+      "to": "domain-rules",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "integrations",
+      "to": "solutions-architect",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "on-call-engineer",
+      "to": "resilience-engineer",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "on-call-engineer",
+      "to": "service-desk-l1",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "on-call-engineer",
+      "to": "service-owner",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "on-call-engineer",
+      "to": "sre",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "on-call-engineer",
+      "to": "support-l2",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "peer-reviewer",
+      "to": "qa-e2e",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:quality"
+    },
+    {
+      "from": "product-manager",
+      "to": "business-analyst",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:product"
+    },
+    {
+      "from": "product-manager",
+      "to": "tech-writer",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:product"
+    },
+    {
+      "from": "qa-e2e",
+      "to": "peer-reviewer",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:quality"
+    },
+    {
+      "from": "release-manager",
+      "to": "dba-prod",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "release-manager",
+      "to": "devops-sre",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "release-manager",
+      "to": "finops",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "resilience-engineer",
+      "to": "on-call-engineer",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "resilience-engineer",
+      "to": "service-desk-l1",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "resilience-engineer",
+      "to": "service-owner",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "resilience-engineer",
+      "to": "sre",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "resilience-engineer",
+      "to": "support-l2",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "security-architect",
+      "to": "compliance-officer",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "security-architect",
+      "to": "dpo",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "security-architect",
+      "to": "security-auditor",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "security-auditor",
+      "to": "compliance-officer",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "security-auditor",
+      "to": "dpo",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "security-auditor",
+      "to": "security-architect",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "service-desk-l1",
+      "to": "on-call-engineer",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "service-desk-l1",
+      "to": "resilience-engineer",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "service-desk-l1",
+      "to": "service-owner",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "service-desk-l1",
+      "to": "sre",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "service-desk-l1",
+      "to": "support-l2",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "service-owner",
+      "to": "on-call-engineer",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "service-owner",
+      "to": "resilience-engineer",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "service-owner",
+      "to": "service-desk-l1",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "service-owner",
+      "to": "sre",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "service-owner",
+      "to": "support-l2",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "solutions-architect",
+      "to": "api-contract",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "solutions-architect",
+      "to": "data-modeler",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "solutions-architect",
+      "to": "domain-rules",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "solutions-architect",
+      "to": "integrations",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "sre",
+      "to": "on-call-engineer",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "sre",
+      "to": "resilience-engineer",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "sre",
+      "to": "service-desk-l1",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "sre",
+      "to": "service-owner",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "sre",
+      "to": "support-l2",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "support-l2",
+      "to": "on-call-engineer",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "support-l2",
+      "to": "resilience-engineer",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "support-l2",
+      "to": "service-desk-l1",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "support-l2",
+      "to": "service-owner",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "support-l2",
+      "to": "sre",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "tech-writer",
+      "to": "business-analyst",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:product"
+    },
+    {
+      "from": "tech-writer",
+      "to": "product-manager",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:product"
+    },
+    {
+      "from": "uiux-a11y",
+      "to": "backend",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "uiux-a11y",
+      "to": "content-seo",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "uiux-a11y",
+      "to": "engineering-manager",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "uiux-a11y",
+      "to": "frontend",
+      "kind": "peer",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "api-contract",
+      "to": "backend",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:backend"
+    },
+    {
+      "from": "api-contract",
+      "to": "frontend",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:frontend"
+    },
+    {
+      "from": "backend",
+      "to": "api-contract",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:backend"
+    },
+    {
+      "from": "backend",
+      "to": "data-modeler",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:backend"
+    },
+    {
+      "from": "backend",
+      "to": "integrations",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:backend"
+    },
+    {
+      "from": "backend",
+      "to": "qa-e2e",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:qa-e2e"
+    },
+    {
+      "from": "backend",
+      "to": "support-l2",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:support-l2"
+    },
+    {
+      "from": "compliance-officer",
+      "to": "product-manager",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:compliance-officer"
+    },
+    {
+      "from": "data-modeler",
+      "to": "backend",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:backend"
+    },
+    {
+      "from": "data-modeler",
+      "to": "dba-prod",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:dba-prod"
+    },
+    {
+      "from": "dba-prod",
+      "to": "data-modeler",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:dba-prod"
+    },
+    {
+      "from": "dba-prod",
+      "to": "sre",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:dba-prod"
+    },
+    {
+      "from": "devops-sre",
+      "to": "on-call-engineer",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:on-call-engineer"
+    },
+    {
+      "from": "devops-sre",
+      "to": "resilience-engineer",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:devops-sre"
+    },
+    {
+      "from": "devops-sre",
+      "to": "sre",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:devops-sre"
+    },
+    {
+      "from": "engineering-manager",
+      "to": "sre",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:engineering-manager"
+    },
+    {
+      "from": "finops",
+      "to": "service-owner",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:service-owner"
+    },
+    {
+      "from": "finops",
+      "to": "solutions-architect",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:finops"
+    },
+    {
+      "from": "frontend",
+      "to": "api-contract",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:frontend"
+    },
+    {
+      "from": "frontend",
+      "to": "qa-e2e",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:qa-e2e"
+    },
+    {
+      "from": "frontend",
+      "to": "support-l2",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:support-l2"
+    },
+    {
+      "from": "integrations",
+      "to": "backend",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:backend"
+    },
+    {
+      "from": "on-call-engineer",
+      "to": "devops-sre",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:on-call-engineer"
+    },
+    {
+      "from": "on-call-engineer",
+      "to": "release-manager",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:on-call-engineer"
+    },
+    {
+      "from": "peer-reviewer",
+      "to": "security-auditor",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:peer-reviewer"
+    },
+    {
+      "from": "product-manager",
+      "to": "compliance-officer",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:compliance-officer"
+    },
+    {
+      "from": "product-manager",
+      "to": "service-owner",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:service-owner"
+    },
+    {
+      "from": "qa-e2e",
+      "to": "backend",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:qa-e2e"
+    },
+    {
+      "from": "qa-e2e",
+      "to": "frontend",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:qa-e2e"
+    },
+    {
+      "from": "release-manager",
+      "to": "on-call-engineer",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:on-call-engineer"
+    },
+    {
+      "from": "release-manager",
+      "to": "sre",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:release-manager"
+    },
+    {
+      "from": "resilience-engineer",
+      "to": "devops-sre",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:devops-sre"
+    },
+    {
+      "from": "security-auditor",
+      "to": "peer-reviewer",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:peer-reviewer"
+    },
+    {
+      "from": "service-desk-l1",
+      "to": "tech-writer",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:service-desk-l1"
+    },
+    {
+      "from": "service-owner",
+      "to": "finops",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:service-owner"
+    },
+    {
+      "from": "service-owner",
+      "to": "product-manager",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:service-owner"
+    },
+    {
+      "from": "solutions-architect",
+      "to": "finops",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:finops"
+    },
+    {
+      "from": "solutions-architect",
+      "to": "tech-writer",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:tech-writer"
+    },
+    {
+      "from": "sre",
+      "to": "dba-prod",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:dba-prod"
+    },
+    {
+      "from": "sre",
+      "to": "devops-sre",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:devops-sre"
+    },
+    {
+      "from": "sre",
+      "to": "engineering-manager",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:engineering-manager"
+    },
+    {
+      "from": "sre",
+      "to": "release-manager",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:release-manager"
+    },
+    {
+      "from": "support-l2",
+      "to": "backend",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:support-l2"
+    },
+    {
+      "from": "support-l2",
+      "to": "frontend",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:support-l2"
+    },
+    {
+      "from": "tech-writer",
+      "to": "service-desk-l1",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:service-desk-l1"
+    },
+    {
+      "from": "tech-writer",
+      "to": "solutions-architect",
+      "kind": "peer-extra",
+      "requestKinds": [
+        "consult",
+        "cross-review"
+      ],
+      "source": "kit:tech-writer"
+    },
+    {
+      "from": "api-contract",
+      "to": "backend",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:asyncapi,type:openapi"
+    },
+    {
+      "from": "api-contract",
+      "to": "data-modeler",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:openapi"
+    },
+    {
+      "from": "api-contract",
+      "to": "frontend",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:openapi"
+    },
+    {
+      "from": "api-contract",
+      "to": "security-architect",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:asyncapi,type:openapi"
+    },
+    {
+      "from": "business-analyst",
+      "to": "product-manager",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:edge-cases"
+    },
+    {
+      "from": "business-analyst",
+      "to": "solutions-architect",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:edge-cases"
+    },
+    {
+      "from": "compliance-officer",
+      "to": "product-manager",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:compliance-requirements"
+    },
+    {
+      "from": "compliance-officer",
+      "to": "security-architect",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:control-matrix"
+    },
+    {
+      "from": "compliance-officer",
+      "to": "security-auditor",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:audit-evidence-map"
+    },
+    {
+      "from": "compliance-officer",
+      "to": "solutions-architect",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:compliance-requirements"
+    },
+    {
+      "from": "data-modeler",
+      "to": "api-contract",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:data-model"
+    },
+    {
+      "from": "data-modeler",
+      "to": "backend",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:data-model"
+    },
+    {
+      "from": "data-modeler",
+      "to": "security-architect",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:data-model"
+    },
+    {
+      "from": "devops-sre",
+      "to": "release-manager",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:ops-plan"
+    },
+    {
+      "from": "domain-rules",
+      "to": "backend",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:domain-rules"
+    },
+    {
+      "from": "domain-rules",
+      "to": "solutions-architect",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:domain-rules"
+    },
+    {
+      "from": "dpo",
+      "to": "artifact-reviewer",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:privacy-opinion"
+    },
+    {
+      "from": "engineering-manager",
+      "to": "artifact-reviewer",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:team-capacity-plan"
+    },
+    {
+      "from": "finops",
+      "to": "solutions-architect",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:cost-estimate"
+    },
+    {
+      "from": "integrations",
+      "to": "backend",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:integrations"
+    },
+    {
+      "from": "integrations",
+      "to": "security-architect",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:integrations"
+    },
+    {
+      "from": "product-manager",
+      "to": "business-analyst",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:prd"
+    },
+    {
+      "from": "product-manager",
+      "to": "compliance-officer",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:prd"
+    },
+    {
+      "from": "product-manager",
+      "to": "solutions-architect",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:prd"
+    },
+    {
+      "from": "release-manager",
+      "to": "devops-sre",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:change-record,type:release-plan"
+    },
+    {
+      "from": "release-manager",
+      "to": "finops",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:decommission-plan"
+    },
+    {
+      "from": "release-manager",
+      "to": "security-architect",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:change-record,type:decommission-plan"
+    },
+    {
+      "from": "release-manager",
+      "to": "solutions-architect",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:decommission-plan"
+    },
+    {
+      "from": "resilience-engineer",
+      "to": "solutions-architect",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:continuity-plan"
+    },
+    {
+      "from": "resilience-engineer",
+      "to": "sre",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:chaos-experiment,type:continuity-plan"
+    },
+    {
+      "from": "security-architect",
+      "to": "compliance-officer",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:threat-model"
+    },
+    {
+      "from": "security-architect",
+      "to": "solutions-architect",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:threat-model"
+    },
+    {
+      "from": "security-auditor",
+      "to": "security-architect",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:security-finding"
+    },
+    {
+      "from": "solutions-architect",
+      "to": "finops",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:c4-model,type:migration-plan"
+    },
+    {
+      "from": "solutions-architect",
+      "to": "product-manager",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:tech-debt-record"
+    },
+    {
+      "from": "solutions-architect",
+      "to": "security-architect",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:adr-draft,type:c4-model,type:migration-plan,type:system-context"
+    },
+    {
+      "from": "solutions-architect",
+      "to": "tech-writer",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:system-context"
+    },
+    {
+      "from": "sre",
+      "to": "release-manager",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:postmortem,type:slo-spec"
+    },
+    {
+      "from": "sre",
+      "to": "solutions-architect",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:postmortem,type:slo-spec"
+    },
+    {
+      "from": "uiux-a11y",
+      "to": "frontend",
+      "kind": "cosign",
+      "requestKinds": [
+        "cross-review"
+      ],
+      "source": "type:a11y-rules,type:design-tokens"
+    },
+    {
+      "from": "api-contract",
+      "to": "backend",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "architecture-lead",
+      "to": "conductor",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "artifact-reviewer",
+      "to": "conductor",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "backend",
+      "to": "integrations",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "business-analyst",
+      "to": "product-manager",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "compliance-officer",
+      "to": "security-architect",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "conductor",
+      "to": "artifact-reviewer",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "content-seo",
+      "to": "frontend",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "cto",
+      "to": "conductor",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "data-modeler",
+      "to": "backend",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "dba-prod",
+      "to": "data-modeler",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "devops-sre",
+      "to": "release-manager",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "domain-rules",
+      "to": "backend",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "dpo",
+      "to": "compliance-officer",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "engineering-lead",
+      "to": "conductor",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "finops",
+      "to": "solutions-architect",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "frontend",
+      "to": "content-seo",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "integrations",
+      "to": "backend",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "on-call-engineer",
+      "to": "devops-sre",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "operations-lead",
+      "to": "conductor",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "peer-reviewer",
+      "to": "security-auditor",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "platform-lead",
+      "to": "conductor",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "product-lead",
+      "to": "conductor",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "product-manager",
+      "to": "business-analyst",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "qa-e2e",
+      "to": "frontend",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "quality-lead",
+      "to": "conductor",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "release-manager",
+      "to": "devops-sre",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "resilience-engineer",
+      "to": "sre",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "security-architect",
+      "to": "security-auditor",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "security-auditor",
+      "to": "peer-reviewer",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "security-lead",
+      "to": "conductor",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "service-desk-l1",
+      "to": "support-l2",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "solutions-architect",
+      "to": "security-architect",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "sre",
+      "to": "devops-sre",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "tech-writer",
+      "to": "content-seo",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "uiux-a11y",
+      "to": "frontend",
+      "kind": "backup",
+      "requestKinds": [],
+      "source": "agents:backupAgent"
+    },
+    {
+      "from": "conductor",
+      "to": "api-contract",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "architecture-lead",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "artifact-reviewer",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "backend",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "business-analyst",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "compliance-officer",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "content-seo",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "cto",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "data-modeler",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "dba-prod",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "domain-rules",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "dpo",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "engineering-lead",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "engineering-manager",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "finops",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "frontend",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "integrations",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "operations-lead",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "peer-reviewer",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "platform-lead",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "product-lead",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "product-manager",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "qa-e2e",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "quality-lead",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "security-architect",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "security-auditor",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "security-lead",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "service-desk-l1",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "service-owner",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "solutions-architect",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "support-l2",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "tech-writer",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "conductor",
+      "to": "uiux-a11y",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "cto",
+      "to": "conductor",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "uiux-a11y",
+      "to": "figma-sync",
+      "kind": "subagent",
+      "requestKinds": [],
+      "source": "agents:availableAgents"
+    },
+    {
+      "from": "architecture-lead",
+      "to": "api-contract",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "architecture-lead",
+      "to": "data-modeler",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "architecture-lead",
+      "to": "domain-rules",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "architecture-lead",
+      "to": "integrations",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "architecture-lead",
+      "to": "solutions-architect",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "conductor",
+      "to": "api-contract",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "conductor",
+      "to": "architecture-lead",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "conductor",
+      "to": "backend",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "conductor",
+      "to": "business-analyst",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:product"
+    },
+    {
+      "from": "conductor",
+      "to": "compliance-officer",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "conductor",
+      "to": "content-seo",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "conductor",
+      "to": "data-modeler",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "conductor",
+      "to": "dba-prod",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "conductor",
+      "to": "devops-sre",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "conductor",
+      "to": "domain-rules",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "conductor",
+      "to": "dpo",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "conductor",
+      "to": "engineering-lead",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "conductor",
+      "to": "engineering-manager",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "conductor",
+      "to": "finops",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "conductor",
+      "to": "frontend",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "conductor",
+      "to": "integrations",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "conductor",
+      "to": "on-call-engineer",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "conductor",
+      "to": "operations-lead",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "conductor",
+      "to": "peer-reviewer",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:quality"
+    },
+    {
+      "from": "conductor",
+      "to": "platform-lead",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "conductor",
+      "to": "product-lead",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:product"
+    },
+    {
+      "from": "conductor",
+      "to": "product-manager",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:product"
+    },
+    {
+      "from": "conductor",
+      "to": "qa-e2e",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:quality"
+    },
+    {
+      "from": "conductor",
+      "to": "quality-lead",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:quality"
+    },
+    {
+      "from": "conductor",
+      "to": "release-manager",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "conductor",
+      "to": "resilience-engineer",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "conductor",
+      "to": "security-architect",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "conductor",
+      "to": "security-auditor",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "conductor",
+      "to": "security-lead",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "conductor",
+      "to": "service-desk-l1",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "conductor",
+      "to": "service-owner",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "conductor",
+      "to": "solutions-architect",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "conductor",
+      "to": "sre",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "conductor",
+      "to": "support-l2",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "conductor",
+      "to": "tech-writer",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:product"
+    },
+    {
+      "from": "conductor",
+      "to": "uiux-a11y",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "cto",
+      "to": "conductor",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "executive"
+    },
+    {
+      "from": "engineering-lead",
+      "to": "backend",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "engineering-lead",
+      "to": "content-seo",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "engineering-lead",
+      "to": "engineering-manager",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "engineering-lead",
+      "to": "frontend",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "engineering-lead",
+      "to": "uiux-a11y",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "operations-lead",
+      "to": "on-call-engineer",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "operations-lead",
+      "to": "resilience-engineer",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "operations-lead",
+      "to": "service-desk-l1",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "operations-lead",
+      "to": "service-owner",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "operations-lead",
+      "to": "sre",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "operations-lead",
+      "to": "support-l2",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "platform-lead",
+      "to": "dba-prod",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "platform-lead",
+      "to": "devops-sre",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "platform-lead",
+      "to": "finops",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "platform-lead",
+      "to": "release-manager",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "product-lead",
+      "to": "business-analyst",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:product"
+    },
+    {
+      "from": "product-lead",
+      "to": "product-manager",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:product"
+    },
+    {
+      "from": "product-lead",
+      "to": "tech-writer",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:product"
+    },
+    {
+      "from": "quality-lead",
+      "to": "peer-reviewer",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:quality"
+    },
+    {
+      "from": "quality-lead",
+      "to": "qa-e2e",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:quality"
+    },
+    {
+      "from": "security-lead",
+      "to": "compliance-officer",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "security-lead",
+      "to": "dpo",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "security-lead",
+      "to": "security-architect",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "security-lead",
+      "to": "security-auditor",
+      "kind": "delegation",
+      "requestKinds": [
+        "delegate"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "api-contract",
+      "to": "architecture-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "api-contract",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "architecture-lead",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "architecture-lead",
+      "to": "conductor",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "lead:architecture"
+    },
+    {
+      "from": "artifact-reviewer",
+      "to": "conductor",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "backend",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "backend",
+      "to": "engineering-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "business-analyst",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "business-analyst",
+      "to": "product-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:product"
+    },
+    {
+      "from": "compliance-officer",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "compliance-officer",
+      "to": "security-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "conductor",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "conductor",
+      "to": "cto",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "executive"
+    },
+    {
+      "from": "content-seo",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "content-seo",
+      "to": "engineering-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "data-modeler",
+      "to": "architecture-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "data-modeler",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "dba-prod",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "dba-prod",
+      "to": "platform-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "devops-sre",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "devops-sre",
+      "to": "platform-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "domain-rules",
+      "to": "architecture-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "domain-rules",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "dpo",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "dpo",
+      "to": "security-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "engineering-lead",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "engineering-lead",
+      "to": "conductor",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "lead:engineering"
+    },
+    {
+      "from": "engineering-manager",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "engineering-manager",
+      "to": "engineering-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "finops",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "finops",
+      "to": "platform-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "frontend",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "frontend",
+      "to": "engineering-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "integrations",
+      "to": "architecture-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "integrations",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "on-call-engineer",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "on-call-engineer",
+      "to": "operations-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "operations-lead",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "operations-lead",
+      "to": "conductor",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "lead:operations"
+    },
+    {
+      "from": "peer-reviewer",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "peer-reviewer",
+      "to": "quality-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:quality"
+    },
+    {
+      "from": "platform-lead",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "platform-lead",
+      "to": "conductor",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "lead:platform"
+    },
+    {
+      "from": "product-lead",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "product-lead",
+      "to": "conductor",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "lead:product"
+    },
+    {
+      "from": "product-manager",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "product-manager",
+      "to": "product-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:product"
+    },
+    {
+      "from": "qa-e2e",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "qa-e2e",
+      "to": "quality-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:quality"
+    },
+    {
+      "from": "quality-lead",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "quality-lead",
+      "to": "conductor",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "lead:quality"
+    },
+    {
+      "from": "release-manager",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "release-manager",
+      "to": "platform-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:platform"
+    },
+    {
+      "from": "resilience-engineer",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "resilience-engineer",
+      "to": "operations-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "security-architect",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "security-architect",
+      "to": "security-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "security-auditor",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "security-auditor",
+      "to": "security-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:security"
+    },
+    {
+      "from": "security-lead",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "security-lead",
+      "to": "conductor",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "lead:security"
+    },
+    {
+      "from": "service-desk-l1",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "service-desk-l1",
+      "to": "operations-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "service-owner",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "service-owner",
+      "to": "operations-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "solutions-architect",
+      "to": "architecture-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:architecture"
+    },
+    {
+      "from": "solutions-architect",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "sre",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "sre",
+      "to": "operations-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "support-l2",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "support-l2",
+      "to": "operations-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:operations"
+    },
+    {
+      "from": "tech-writer",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "tech-writer",
+      "to": "product-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:product"
+    },
+    {
+      "from": "uiux-a11y",
+      "to": "artifact-reviewer",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "high-level"
+    },
+    {
+      "from": "uiux-a11y",
+      "to": "engineering-lead",
+      "kind": "escalation",
+      "requestKinds": [
+        "escalate"
+      ],
+      "source": "area:engineering"
+    },
+    {
+      "from": "cto",
+      "to": "user",
+      "kind": "human-escalation",
+      "requestKinds": [],
+      "source": "reserved"
+    }
+  ],
+  "requestKinds": {
+    "consult": {
+      "edgeKinds": [
+        "peer",
+        "peer-extra"
+      ],
+      "blockingDefault": false
+    },
+    "cross-review": {
+      "edgeKinds": [
+        "peer",
+        "peer-extra",
+        "cosign"
+      ],
+      "blockingDefault": false
+    },
+    "delegate": {
+      "edgeKinds": [
+        "delegation"
+      ],
+      "blockingDefault": false
+    },
+    "escalate": {
+      "edgeKinds": [
+        "escalation"
+      ],
+      "blockingDefault": true
+    }
+  },
+  "limits": {
+    "maxOpenPerPair": 3,
+    "maxOpenPerRole": 5,
+    "maxEscalationDepth": 3
+  }
+}

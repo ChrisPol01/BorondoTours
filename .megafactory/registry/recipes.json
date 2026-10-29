@@ -1,0 +1,1504 @@
+{
+  "schemaVersion": 1,
+  "recipes": [
+    {
+      "recipe": "discovery",
+      "workflow": "factory-discovery.workflow.json",
+      "loops": [
+        {
+          "loop": "discovery.review",
+          "approvalThreshold": "medium",
+          "allowedOwnerRoles": [
+            "product-manager",
+            "business-analyst",
+            "compliance-officer",
+            "solutions-architect"
+          ],
+          "ownerModes": {
+            "artifact-reviewer": [
+              "review"
+            ],
+            "business-analyst": [
+              "contract"
+            ],
+            "compliance-officer": [
+              "contract"
+            ],
+            "product-manager": [
+              "contract"
+            ]
+          }
+        }
+      ],
+      "requiresGate": null,
+      "producesGate": "discovery",
+      "lastNode": "gate-discovery",
+      "lastMode": "gate",
+      "exclusive": true,
+      "loopStateFiles": [
+        "discovery.review.json"
+      ],
+      "lane": "delivery",
+      "entryTypes": [
+        "feature"
+      ],
+      "coversTypes": [
+        "compliance-requirements",
+        "edge-cases",
+        "prd"
+      ],
+      "stepRoles": [
+        "artifact-reviewer",
+        "business-analyst",
+        "compliance-officer",
+        "conductor",
+        "product-manager",
+        "solutions-architect"
+      ],
+      "stepRolesByPhase": {
+        "discovery": [
+          "artifact-reviewer",
+          "business-analyst",
+          "compliance-officer",
+          "conductor",
+          "product-manager",
+          "solutions-architect"
+        ]
+      }
+    },
+    {
+      "recipe": "contracts",
+      "workflow": "factory-contracts.workflow.json",
+      "loops": [
+        {
+          "loop": "contracts.review",
+          "approvalThreshold": "medium",
+          "allowedOwnerRoles": [
+            "solutions-architect",
+            "finops",
+            "api-contract",
+            "data-modeler",
+            "security-architect",
+            "uiux-a11y",
+            "domain-rules",
+            "integrations"
+          ],
+          "ownerModes": {
+            "api-contract": [
+              "contract"
+            ],
+            "artifact-reviewer": [
+              "review"
+            ],
+            "data-modeler": [
+              "contract"
+            ],
+            "domain-rules": [
+              "contract"
+            ],
+            "finops": [
+              "contract"
+            ],
+            "integrations": [
+              "contract"
+            ],
+            "security-architect": [
+              "contract"
+            ],
+            "solutions-architect": [
+              "contract"
+            ],
+            "uiux-a11y": [
+              "contract"
+            ]
+          }
+        }
+      ],
+      "requiresGate": "discovery",
+      "producesGate": "contracts",
+      "lastNode": "gate-contracts",
+      "lastMode": "gate",
+      "exclusive": true,
+      "loopStateFiles": [
+        "contracts.review.json"
+      ],
+      "lane": "delivery",
+      "entryTypes": [
+        "feature"
+      ],
+      "coversTypes": [
+        "a11y-rules",
+        "adr-draft",
+        "asyncapi",
+        "c4-model",
+        "cost-estimate",
+        "data-model",
+        "dbml-view",
+        "design-tokens",
+        "domain-rules",
+        "integrations",
+        "openapi",
+        "threat-model"
+      ],
+      "stepRoles": [
+        "api-contract",
+        "artifact-reviewer",
+        "backend",
+        "compliance-officer",
+        "conductor",
+        "data-modeler",
+        "domain-rules",
+        "finops",
+        "frontend",
+        "integrations",
+        "security-architect",
+        "solutions-architect",
+        "uiux-a11y"
+      ],
+      "stepRolesByPhase": {
+        "contracts": [
+          "api-contract",
+          "artifact-reviewer",
+          "backend",
+          "compliance-officer",
+          "conductor",
+          "data-modeler",
+          "domain-rules",
+          "finops",
+          "frontend",
+          "integrations",
+          "security-architect",
+          "solutions-architect",
+          "uiux-a11y"
+        ]
+      }
+    },
+    {
+      "recipe": "build",
+      "workflow": "factory-build.workflow.json",
+      "loops": [],
+      "requiresGate": "contracts",
+      "producesGate": "build",
+      "lastNode": "checkpoint-build",
+      "lastMode": "checkpoint",
+      "exclusive": true,
+      "loopStateFiles": [],
+      "lane": "delivery",
+      "entryTypes": [
+        "feature",
+        "change",
+        "defect",
+        "standard",
+        "debt",
+        "migration-wave",
+        "audit-remediation",
+        "decommission",
+        "experiment"
+      ],
+      "coversTypes": [
+        "build-report:api-contract",
+        "build-report:backend",
+        "build-report:content-seo",
+        "build-report:data-modeler",
+        "build-report:domain-rules",
+        "build-report:frontend",
+        "build-report:integrations",
+        "build-report:tech-writer",
+        "build-report:uiux-a11y"
+      ],
+      "stepRoles": [
+        "api-contract",
+        "backend",
+        "conductor",
+        "content-seo",
+        "data-modeler",
+        "domain-rules",
+        "frontend",
+        "integrations",
+        "tech-writer",
+        "uiux-a11y"
+      ],
+      "stepRolesByPhase": {
+        "build": [
+          "api-contract",
+          "backend",
+          "conductor",
+          "content-seo",
+          "data-modeler",
+          "domain-rules",
+          "frontend",
+          "integrations",
+          "tech-writer",
+          "uiux-a11y"
+        ]
+      }
+    },
+    {
+      "recipe": "quality-gates",
+      "workflow": "factory-quality-gates.workflow.json",
+      "loops": [
+        {
+          "loop": "quality.review",
+          "approvalThreshold": "high",
+          "allowedOwnerRoles": [
+            "backend",
+            "integrations",
+            "frontend",
+            "domain-rules",
+            "data-modeler",
+            "tech-writer",
+            "qa-e2e",
+            "peer-reviewer",
+            "security-auditor"
+          ],
+          "ownerModes": {
+            "artifact-reviewer": [
+              "verdict"
+            ],
+            "backend": [
+              "fix"
+            ],
+            "data-modeler": [
+              "fix"
+            ],
+            "domain-rules": [
+              "fix"
+            ],
+            "frontend": [
+              "fix"
+            ],
+            "integrations": [
+              "fix"
+            ],
+            "peer-reviewer": [
+              "gate"
+            ],
+            "qa-e2e": [
+              "gate"
+            ],
+            "security-auditor": [
+              "gate"
+            ],
+            "tech-writer": [
+              "fix"
+            ]
+          }
+        }
+      ],
+      "requiresGate": "build",
+      "producesGate": "quality",
+      "lastNode": "gate-quality",
+      "lastMode": "gate",
+      "exclusive": true,
+      "loopStateFiles": [
+        "quality.review.json"
+      ],
+      "lane": "delivery",
+      "entryTypes": [
+        "feature",
+        "change",
+        "defect",
+        "standard",
+        "debt",
+        "migration-wave",
+        "audit-remediation",
+        "decommission",
+        "experiment"
+      ],
+      "coversTypes": [
+        "build-report:backend",
+        "build-report:data-modeler",
+        "build-report:domain-rules",
+        "build-report:frontend",
+        "build-report:integrations",
+        "build-report:tech-writer",
+        "quality-report:peer",
+        "quality-report:qa",
+        "quality-report:security",
+        "quality-verdict"
+      ],
+      "stepRoles": [
+        "artifact-reviewer",
+        "backend",
+        "conductor",
+        "data-modeler",
+        "domain-rules",
+        "frontend",
+        "integrations",
+        "peer-reviewer",
+        "qa-e2e",
+        "security-auditor",
+        "tech-writer"
+      ],
+      "stepRolesByPhase": {
+        "quality": [
+          "artifact-reviewer",
+          "backend",
+          "conductor",
+          "data-modeler",
+          "domain-rules",
+          "frontend",
+          "integrations",
+          "peer-reviewer",
+          "qa-e2e",
+          "security-auditor",
+          "tech-writer"
+        ]
+      }
+    },
+    {
+      "recipe": "release",
+      "workflow": "factory-release.workflow.json",
+      "loops": [
+        {
+          "loop": "release.review",
+          "approvalThreshold": "medium",
+          "allowedOwnerRoles": [
+            "devops-sre",
+            "release-manager"
+          ],
+          "ownerModes": {
+            "artifact-reviewer": [
+              "review"
+            ],
+            "devops-sre": [
+              "release"
+            ],
+            "release-manager": [
+              "release"
+            ]
+          }
+        }
+      ],
+      "requiresGate": "quality",
+      "producesGate": "release",
+      "lastNode": "close",
+      "lastMode": "close",
+      "exclusive": true,
+      "loopStateFiles": [
+        "release.review.json"
+      ],
+      "lane": "delivery",
+      "entryTypes": [
+        "feature",
+        "change",
+        "defect",
+        "standard",
+        "debt",
+        "migration-wave",
+        "audit-remediation",
+        "decommission",
+        "experiment"
+      ],
+      "coversTypes": [
+        "ops-plan",
+        "release-plan",
+        "release-report:dev",
+        "release-report:prod"
+      ],
+      "stepRoles": [
+        "artifact-reviewer",
+        "conductor",
+        "devops-sre",
+        "release-manager"
+      ],
+      "stepRolesByPhase": {
+        "release": [
+          "artifact-reviewer",
+          "conductor",
+          "devops-sre",
+          "release-manager"
+        ]
+      }
+    },
+    {
+      "recipe": "change",
+      "workflow": "factory-change.workflow.json",
+      "loops": [
+        {
+          "loop": "change.discovery.review",
+          "approvalThreshold": "medium",
+          "allowedOwnerRoles": [
+            "product-manager",
+            "solutions-architect",
+            "business-analyst",
+            "compliance-officer"
+          ],
+          "ownerModes": {
+            "artifact-reviewer": [
+              "review"
+            ],
+            "business-analyst": [
+              "contract"
+            ],
+            "compliance-officer": [
+              "contract"
+            ],
+            "product-manager": [
+              "contract"
+            ],
+            "solutions-architect": [
+              "debt-record"
+            ]
+          }
+        },
+        {
+          "loop": "change.contracts.review",
+          "approvalThreshold": "medium",
+          "allowedOwnerRoles": [
+            "solutions-architect",
+            "api-contract",
+            "data-modeler",
+            "integrations",
+            "uiux-a11y",
+            "domain-rules",
+            "finops",
+            "security-architect",
+            "release-manager"
+          ],
+          "ownerModes": {
+            "api-contract": [
+              "contract"
+            ],
+            "artifact-reviewer": [
+              "review"
+            ],
+            "data-modeler": [
+              "contract"
+            ],
+            "domain-rules": [
+              "contract"
+            ],
+            "finops": [
+              "contract"
+            ],
+            "integrations": [
+              "contract"
+            ],
+            "release-manager": [
+              "change-record",
+              "decommission-plan"
+            ],
+            "security-architect": [
+              "contract"
+            ],
+            "solutions-architect": [
+              "contract"
+            ],
+            "uiux-a11y": [
+              "contract"
+            ]
+          }
+        }
+      ],
+      "requiresGate": null,
+      "producesGate": "contracts",
+      "lastNode": "gate-contracts",
+      "lastMode": "gate",
+      "exclusive": true,
+      "loopStateFiles": [
+        "change.discovery.review.json",
+        "change.contracts.review.json"
+      ],
+      "lane": "delivery",
+      "entryTypes": [
+        "change",
+        "defect",
+        "standard",
+        "debt",
+        "migration-wave",
+        "audit-remediation",
+        "decommission",
+        "experiment"
+      ],
+      "coversTypes": [
+        "a11y-rules",
+        "adr-draft",
+        "asyncapi",
+        "c4-model",
+        "change-record",
+        "compliance-requirements",
+        "cost-estimate",
+        "data-model",
+        "dbml-view",
+        "decommission-plan",
+        "design-tokens",
+        "domain-rules",
+        "edge-cases",
+        "integrations",
+        "openapi",
+        "prd",
+        "tech-debt-record",
+        "threat-model"
+      ],
+      "stepRoles": [
+        "api-contract",
+        "artifact-reviewer",
+        "backend",
+        "business-analyst",
+        "compliance-officer",
+        "conductor",
+        "data-modeler",
+        "devops-sre",
+        "domain-rules",
+        "finops",
+        "frontend",
+        "integrations",
+        "product-manager",
+        "release-manager",
+        "security-architect",
+        "solutions-architect",
+        "uiux-a11y"
+      ],
+      "stepRolesByPhase": {
+        "discovery": [
+          "api-contract",
+          "artifact-reviewer",
+          "backend",
+          "business-analyst",
+          "compliance-officer",
+          "conductor",
+          "data-modeler",
+          "devops-sre",
+          "domain-rules",
+          "finops",
+          "frontend",
+          "integrations",
+          "product-manager",
+          "release-manager",
+          "security-architect",
+          "solutions-architect",
+          "uiux-a11y"
+        ],
+        "contracts": [
+          "api-contract",
+          "artifact-reviewer",
+          "backend",
+          "compliance-officer",
+          "conductor",
+          "data-modeler",
+          "devops-sre",
+          "domain-rules",
+          "finops",
+          "frontend",
+          "integrations",
+          "release-manager",
+          "security-architect",
+          "solutions-architect",
+          "uiux-a11y"
+        ]
+      }
+    },
+    {
+      "recipe": "vulnerability",
+      "workflow": "factory-vulnerability.workflow.json",
+      "loops": [
+        {
+          "loop": "vulnerability.review",
+          "approvalThreshold": "medium",
+          "allowedOwnerRoles": [
+            "security-auditor",
+            "sre"
+          ],
+          "ownerModes": {
+            "artifact-reviewer": [
+              "review"
+            ],
+            "security-auditor": [
+              "triage"
+            ],
+            "sre": [
+              "contain"
+            ]
+          }
+        }
+      ],
+      "requiresGate": null,
+      "producesGate": "respond",
+      "lastNode": "gate-respond",
+      "lastMode": "gate",
+      "exclusive": true,
+      "loopStateFiles": [
+        "vulnerability.review.json"
+      ],
+      "lane": "operate",
+      "entryTypes": [
+        "vulnerability"
+      ],
+      "coversTypes": [
+        "security-finding"
+      ],
+      "stepRoles": [
+        "artifact-reviewer",
+        "conductor",
+        "security-architect",
+        "security-auditor",
+        "sre"
+      ],
+      "stepRolesByPhase": {
+        "detect": [
+          "artifact-reviewer",
+          "conductor",
+          "security-architect",
+          "security-auditor",
+          "sre"
+        ],
+        "respond": [
+          "conductor",
+          "security-architect",
+          "security-auditor"
+        ]
+      }
+    },
+    {
+      "recipe": "vulnerability-close",
+      "workflow": "factory-vulnerability-close.workflow.json",
+      "loops": [],
+      "requiresGate": "respond",
+      "producesGate": "improve",
+      "lastNode": "gate-improve",
+      "lastMode": "gate",
+      "exclusive": true,
+      "loopStateFiles": [],
+      "lane": "operate",
+      "entryTypes": [
+        "vulnerability"
+      ],
+      "coversTypes": [
+        "security-finding"
+      ],
+      "stepRoles": [
+        "conductor",
+        "security-architect",
+        "security-auditor"
+      ],
+      "stepRolesByPhase": {
+        "recover": [
+          "conductor",
+          "security-architect",
+          "security-auditor"
+        ],
+        "learn": [
+          "conductor"
+        ],
+        "improve": [
+          "conductor"
+        ]
+      }
+    },
+    {
+      "recipe": "audit",
+      "workflow": "factory-audit.workflow.json",
+      "loops": [
+        {
+          "loop": "audit.review",
+          "approvalThreshold": "medium",
+          "allowedOwnerRoles": [
+            "compliance-officer"
+          ],
+          "ownerModes": {
+            "artifact-reviewer": [
+              "review"
+            ],
+            "compliance-officer": [
+              "evidence-map"
+            ]
+          }
+        }
+      ],
+      "requiresGate": null,
+      "producesGate": "act",
+      "lastNode": "gate-act",
+      "lastMode": "gate",
+      "exclusive": true,
+      "loopStateFiles": [
+        "audit.review.json"
+      ],
+      "lane": "govern",
+      "entryTypes": [
+        "audit"
+      ],
+      "coversTypes": [
+        "audit-evidence-map",
+        "audit-finding",
+        "control-matrix"
+      ],
+      "stepRoles": [
+        "artifact-reviewer",
+        "compliance-officer",
+        "conductor",
+        "security-architect",
+        "security-auditor"
+      ],
+      "stepRolesByPhase": {
+        "scope": [
+          "artifact-reviewer",
+          "compliance-officer",
+          "conductor",
+          "security-architect",
+          "security-auditor"
+        ],
+        "assess": [
+          "artifact-reviewer",
+          "compliance-officer",
+          "conductor",
+          "security-auditor"
+        ],
+        "decide": [
+          "compliance-officer",
+          "conductor"
+        ],
+        "act": [
+          "conductor"
+        ]
+      }
+    },
+    {
+      "recipe": "migration",
+      "workflow": "factory-migration.workflow.json",
+      "loops": [
+        {
+          "loop": "migration.review",
+          "approvalThreshold": "medium",
+          "allowedOwnerRoles": [
+            "solutions-architect"
+          ],
+          "ownerModes": {
+            "artifact-reviewer": [
+              "review"
+            ],
+            "solutions-architect": [
+              "migration-plan"
+            ]
+          }
+        }
+      ],
+      "requiresGate": null,
+      "producesGate": "act",
+      "lastNode": "gate-act",
+      "lastMode": "gate",
+      "exclusive": true,
+      "loopStateFiles": [
+        "migration.review.json"
+      ],
+      "lane": "govern",
+      "entryTypes": [
+        "migration"
+      ],
+      "coversTypes": [
+        "migration-plan"
+      ],
+      "stepRoles": [
+        "artifact-reviewer",
+        "conductor",
+        "finops",
+        "security-architect",
+        "solutions-architect"
+      ],
+      "stepRolesByPhase": {
+        "scope": [
+          "artifact-reviewer",
+          "conductor",
+          "finops",
+          "security-architect",
+          "solutions-architect"
+        ],
+        "assess": [
+          "conductor"
+        ],
+        "decide": [
+          "conductor"
+        ],
+        "act": [
+          "conductor"
+        ]
+      }
+    },
+    {
+      "recipe": "adopt-brownfield",
+      "workflow": "factory-adopt-brownfield.workflow.json",
+      "loops": [
+        {
+          "loop": "adoption.scope",
+          "approvalThreshold": "medium",
+          "allowedOwnerRoles": [
+            "solutions-architect"
+          ],
+          "ownerModes": {
+            "artifact-reviewer": [
+              "review"
+            ],
+            "solutions-architect": [
+              "system-context"
+            ]
+          }
+        },
+        {
+          "loop": "adoption.assess",
+          "approvalThreshold": "medium",
+          "allowedOwnerRoles": [
+            "security-auditor",
+            "finops"
+          ],
+          "ownerModes": {
+            "artifact-reviewer": [
+              "review"
+            ],
+            "finops": [
+              "cost-review"
+            ],
+            "security-auditor": [
+              "posture-review"
+            ]
+          }
+        }
+      ],
+      "requiresGate": null,
+      "producesGate": "act",
+      "lastNode": "gate-act",
+      "lastMode": "gate",
+      "exclusive": true,
+      "loopStateFiles": [
+        "adoption.scope.json",
+        "adoption.assess.json"
+      ],
+      "lane": "govern",
+      "entryTypes": [
+        "adoption"
+      ],
+      "coversTypes": [
+        "cost-review",
+        "security-posture-review",
+        "system-context"
+      ],
+      "stepRoles": [
+        "artifact-reviewer",
+        "conductor",
+        "finops",
+        "security-architect",
+        "security-auditor",
+        "solutions-architect",
+        "tech-writer"
+      ],
+      "stepRolesByPhase": {
+        "scope": [
+          "artifact-reviewer",
+          "conductor",
+          "finops",
+          "security-architect",
+          "security-auditor",
+          "solutions-architect",
+          "tech-writer"
+        ],
+        "assess": [
+          "artifact-reviewer",
+          "conductor",
+          "finops",
+          "security-auditor"
+        ],
+        "decide": [
+          "conductor"
+        ],
+        "act": [
+          "conductor"
+        ]
+      }
+    },
+    {
+      "recipe": "feature-e2e",
+      "workflow": "factory-feature-e2e.workflow.json",
+      "loops": [
+        {
+          "loop": "discovery.review",
+          "approvalThreshold": "medium",
+          "allowedOwnerRoles": [
+            "product-manager",
+            "business-analyst",
+            "compliance-officer",
+            "solutions-architect"
+          ],
+          "ownerModes": {
+            "artifact-reviewer": [
+              "review"
+            ],
+            "business-analyst": [
+              "contract"
+            ],
+            "compliance-officer": [
+              "contract"
+            ],
+            "product-manager": [
+              "contract"
+            ]
+          }
+        },
+        {
+          "loop": "contracts.review",
+          "approvalThreshold": "medium",
+          "allowedOwnerRoles": [
+            "solutions-architect",
+            "finops",
+            "api-contract",
+            "data-modeler",
+            "security-architect",
+            "uiux-a11y",
+            "domain-rules",
+            "integrations"
+          ],
+          "ownerModes": {
+            "api-contract": [
+              "contract"
+            ],
+            "artifact-reviewer": [
+              "review"
+            ],
+            "data-modeler": [
+              "contract"
+            ],
+            "domain-rules": [
+              "contract"
+            ],
+            "finops": [
+              "contract"
+            ],
+            "integrations": [
+              "contract"
+            ],
+            "security-architect": [
+              "contract"
+            ],
+            "solutions-architect": [
+              "contract"
+            ],
+            "uiux-a11y": [
+              "contract"
+            ]
+          }
+        },
+        {
+          "loop": "quality.review",
+          "approvalThreshold": "high",
+          "allowedOwnerRoles": [
+            "backend",
+            "integrations",
+            "frontend",
+            "domain-rules",
+            "data-modeler",
+            "tech-writer",
+            "qa-e2e",
+            "peer-reviewer",
+            "security-auditor"
+          ],
+          "ownerModes": {
+            "artifact-reviewer": [
+              "verdict"
+            ],
+            "backend": [
+              "fix"
+            ],
+            "data-modeler": [
+              "fix"
+            ],
+            "domain-rules": [
+              "fix"
+            ],
+            "frontend": [
+              "fix"
+            ],
+            "integrations": [
+              "fix"
+            ],
+            "peer-reviewer": [
+              "gate"
+            ],
+            "qa-e2e": [
+              "gate"
+            ],
+            "security-auditor": [
+              "gate"
+            ],
+            "tech-writer": [
+              "fix"
+            ]
+          }
+        }
+      ],
+      "requiresGate": null,
+      "producesGate": "quality",
+      "lastNode": "q-gate-quality-close",
+      "lastMode": "gate",
+      "exclusive": true,
+      "loopStateFiles": [
+        "discovery.review.json",
+        "contracts.review.json",
+        "quality.review.json"
+      ],
+      "lane": "delivery",
+      "entryTypes": [
+        "feature"
+      ],
+      "coversTypes": [
+        "a11y-rules",
+        "adr-draft",
+        "asyncapi",
+        "build-report:api-contract",
+        "build-report:backend",
+        "build-report:content-seo",
+        "build-report:data-modeler",
+        "build-report:domain-rules",
+        "build-report:frontend",
+        "build-report:integrations",
+        "build-report:tech-writer",
+        "build-report:uiux-a11y",
+        "c4-model",
+        "compliance-requirements",
+        "cost-estimate",
+        "data-model",
+        "dbml-view",
+        "design-tokens",
+        "domain-rules",
+        "edge-cases",
+        "integrations",
+        "openapi",
+        "prd",
+        "quality-report:peer",
+        "quality-report:qa",
+        "quality-report:security",
+        "quality-verdict",
+        "threat-model"
+      ],
+      "stepRoles": [
+        "api-contract",
+        "artifact-reviewer",
+        "backend",
+        "business-analyst",
+        "compliance-officer",
+        "conductor",
+        "content-seo",
+        "data-modeler",
+        "domain-rules",
+        "finops",
+        "frontend",
+        "integrations",
+        "peer-reviewer",
+        "product-manager",
+        "qa-e2e",
+        "security-architect",
+        "security-auditor",
+        "solutions-architect",
+        "tech-writer",
+        "uiux-a11y"
+      ],
+      "stepRolesByPhase": {
+        "discovery": [
+          "api-contract",
+          "artifact-reviewer",
+          "backend",
+          "business-analyst",
+          "compliance-officer",
+          "conductor",
+          "content-seo",
+          "data-modeler",
+          "domain-rules",
+          "finops",
+          "frontend",
+          "integrations",
+          "peer-reviewer",
+          "product-manager",
+          "qa-e2e",
+          "security-architect",
+          "security-auditor",
+          "solutions-architect",
+          "tech-writer",
+          "uiux-a11y"
+        ],
+        "contracts": [
+          "api-contract",
+          "artifact-reviewer",
+          "backend",
+          "compliance-officer",
+          "conductor",
+          "content-seo",
+          "data-modeler",
+          "domain-rules",
+          "finops",
+          "frontend",
+          "integrations",
+          "peer-reviewer",
+          "qa-e2e",
+          "security-architect",
+          "security-auditor",
+          "solutions-architect",
+          "tech-writer",
+          "uiux-a11y"
+        ],
+        "build": [
+          "api-contract",
+          "artifact-reviewer",
+          "backend",
+          "conductor",
+          "content-seo",
+          "data-modeler",
+          "domain-rules",
+          "frontend",
+          "integrations",
+          "peer-reviewer",
+          "qa-e2e",
+          "security-auditor",
+          "tech-writer",
+          "uiux-a11y"
+        ],
+        "quality": [
+          "artifact-reviewer",
+          "backend",
+          "conductor",
+          "data-modeler",
+          "domain-rules",
+          "frontend",
+          "integrations",
+          "peer-reviewer",
+          "qa-e2e",
+          "security-auditor",
+          "tech-writer"
+        ]
+      }
+    },
+    {
+      "recipe": "contract-dispute",
+      "workflow": "factory-contract-dispute.workflow.json",
+      "loops": [
+        {
+          "loop": "dispute.negotiation",
+          "approvalThreshold": null,
+          "allowedOwnerRoles": [
+            "api-contract",
+            "data-modeler",
+            "backend"
+          ],
+          "ownerModes": {
+            "api-contract": [
+              "dispute"
+            ],
+            "artifact-reviewer": [
+              "arbiter"
+            ],
+            "backend": [
+              "dispute"
+            ],
+            "data-modeler": [
+              "dispute"
+            ]
+          }
+        }
+      ],
+      "requiresGate": null,
+      "producesGate": null,
+      "lastNode": "close",
+      "lastMode": "close",
+      "exclusive": false,
+      "slot": "dispute",
+      "loopStateFiles": [
+        "dispute.negotiation.json"
+      ],
+      "lane": "delivery",
+      "entryTypes": [
+        "feature",
+        "change",
+        "defect",
+        "standard",
+        "debt",
+        "migration-wave",
+        "audit-remediation",
+        "decommission",
+        "experiment"
+      ],
+      "coverageCheck": false,
+      "coversTypes": [
+        "asyncapi",
+        "cost-estimate",
+        "data-model",
+        "dbml-view",
+        "integrations",
+        "openapi",
+        "threat-model"
+      ],
+      "stepRoles": [
+        "api-contract",
+        "artifact-reviewer",
+        "backend",
+        "compliance-officer",
+        "conductor",
+        "data-modeler",
+        "finops",
+        "frontend",
+        "integrations",
+        "security-architect",
+        "solutions-architect"
+      ],
+      "stepRolesByPhase": {
+        "contracts": [
+          "api-contract",
+          "artifact-reviewer",
+          "backend",
+          "compliance-officer",
+          "conductor",
+          "data-modeler",
+          "finops",
+          "frontend",
+          "integrations",
+          "security-architect",
+          "solutions-architect"
+        ]
+      }
+    },
+    {
+      "recipe": "incident",
+      "workflow": "factory-incident.workflow.json",
+      "loops": [],
+      "requiresGate": null,
+      "producesGate": "recover",
+      "lastNode": "gate-recover",
+      "lastMode": "gate",
+      "exclusive": true,
+      "loopStateFiles": [],
+      "lane": "operate",
+      "entryTypes": [
+        "incident"
+      ],
+      "coversTypes": [
+        "incident-record"
+      ],
+      "stepRoles": [
+        "conductor",
+        "sre"
+      ],
+      "stepRolesByPhase": {
+        "detect": [
+          "conductor",
+          "sre"
+        ],
+        "respond": [
+          "conductor",
+          "sre"
+        ],
+        "recover": [
+          "conductor",
+          "sre"
+        ]
+      }
+    },
+    {
+      "recipe": "postmortem",
+      "workflow": "factory-postmortem.workflow.json",
+      "loops": [
+        {
+          "loop": "postmortem.review",
+          "approvalThreshold": "medium",
+          "allowedOwnerRoles": [
+            "sre"
+          ],
+          "ownerModes": {
+            "artifact-reviewer": [
+              "review"
+            ],
+            "sre": [
+              "postmortem"
+            ]
+          }
+        }
+      ],
+      "requiresGate": "recover",
+      "producesGate": "improve",
+      "lastNode": "gate-improve",
+      "lastMode": "gate",
+      "exclusive": true,
+      "loopStateFiles": [
+        "postmortem.review.json"
+      ],
+      "lane": "operate",
+      "entryTypes": [
+        "incident",
+        "problem"
+      ],
+      "coversTypes": [
+        "postmortem",
+        "problem-record"
+      ],
+      "stepRoles": [
+        "artifact-reviewer",
+        "conductor",
+        "release-manager",
+        "solutions-architect",
+        "sre"
+      ],
+      "stepRolesByPhase": {
+        "learn": [
+          "artifact-reviewer",
+          "conductor",
+          "release-manager",
+          "solutions-architect",
+          "sre"
+        ],
+        "improve": [
+          "conductor"
+        ]
+      }
+    },
+    {
+      "recipe": "ops-review",
+      "workflow": "factory-ops-review.workflow.json",
+      "loops": [
+        {
+          "loop": "ops-review.assess",
+          "approvalThreshold": "medium",
+          "allowedOwnerRoles": [
+            "sre",
+            "finops",
+            "security-auditor"
+          ],
+          "ownerModes": {
+            "artifact-reviewer": [
+              "review"
+            ],
+            "finops": [
+              "cost-review"
+            ],
+            "security-auditor": [
+              "posture-review"
+            ],
+            "sre": [
+              "slo-review"
+            ]
+          }
+        }
+      ],
+      "requiresGate": null,
+      "producesGate": "act",
+      "lastNode": "gate-act",
+      "lastMode": "gate",
+      "exclusive": true,
+      "loopStateFiles": [
+        "ops-review.assess.json"
+      ],
+      "lane": "govern",
+      "entryTypes": [
+        "ops-review"
+      ],
+      "coversTypes": [
+        "agentops-report",
+        "cost-review",
+        "review-scope",
+        "runbook",
+        "security-posture-review",
+        "slo-spec"
+      ],
+      "stepRoles": [
+        "artifact-reviewer",
+        "conductor",
+        "finops",
+        "release-manager",
+        "security-auditor",
+        "solutions-architect",
+        "sre"
+      ],
+      "stepRolesByPhase": {
+        "scope": [
+          "artifact-reviewer",
+          "conductor",
+          "finops",
+          "release-manager",
+          "security-auditor",
+          "solutions-architect",
+          "sre"
+        ],
+        "assess": [
+          "artifact-reviewer",
+          "conductor",
+          "finops",
+          "release-manager",
+          "security-auditor",
+          "solutions-architect",
+          "sre"
+        ],
+        "decide": [
+          "conductor",
+          "sre"
+        ],
+        "act": [
+          "conductor",
+          "sre"
+        ]
+      }
+    },
+    {
+      "recipe": "resilience-drill",
+      "workflow": "factory-resilience-drill.workflow.json",
+      "loops": [
+        {
+          "loop": "resilience.review",
+          "approvalThreshold": "medium",
+          "allowedOwnerRoles": [
+            "resilience-engineer"
+          ],
+          "ownerModes": {
+            "artifact-reviewer": [
+              "review"
+            ],
+            "resilience-engineer": [
+              "chaos-design"
+            ]
+          }
+        }
+      ],
+      "requiresGate": null,
+      "producesGate": "act",
+      "lastNode": "gate-act",
+      "lastMode": "gate",
+      "exclusive": true,
+      "loopStateFiles": [
+        "resilience.review.json"
+      ],
+      "lane": "govern",
+      "entryTypes": [
+        "resilience-drill"
+      ],
+      "coversTypes": [
+        "chaos-experiment",
+        "continuity-plan"
+      ],
+      "stepRoles": [
+        "artifact-reviewer",
+        "conductor",
+        "resilience-engineer",
+        "solutions-architect",
+        "sre"
+      ],
+      "stepRolesByPhase": {
+        "scope": [
+          "artifact-reviewer",
+          "conductor",
+          "resilience-engineer",
+          "solutions-architect",
+          "sre"
+        ],
+        "assess": [
+          "artifact-reviewer",
+          "conductor",
+          "resilience-engineer",
+          "sre"
+        ],
+        "decide": [
+          "conductor",
+          "resilience-engineer",
+          "sre"
+        ],
+        "act": [
+          "conductor",
+          "resilience-engineer",
+          "sre"
+        ]
+      }
+    }
+  ],
+  "skipped": []
+}
