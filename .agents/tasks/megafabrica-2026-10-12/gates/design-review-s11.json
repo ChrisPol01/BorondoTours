@@ -1,0 +1,76 @@
+{
+  "verdict": "APPROVED",
+  "iteration": 9,
+  "high": 0,
+  "medium": 2,
+  "low": 9,
+  "findings": [
+    {
+      "id": "M-34",
+      "severity": "MEDIUM",
+      "title": "Fuera de Kiro chat-run se amplia a toda receta, pero el conductor de Claude Code solo delega en availableAgents, que por D7/R-4 excluye release-manager, devops-sre, sre, platform-engineer y resilience-engineer (v0: release tiene 4+4 pasos de esos roles; la ficha v0 dice que chat-run no sirve para release); no hay flujo definido para esos pasos y en Codex spawn_agent ignora la exclusion",
+      "fix": "Regla general en 23.4.3: un paso cuyo rol no esta en availableAgents no se delega ni se actua; el conductor imprime NEXT_STEP=<paso> ROLE=sdlc-<rol> MODE=<modo> y PENDING_HUMAN_COMMAND=claude --settings .megafactory/adapters/claude.settings.agents.json --agent sdlc-<rol> (o sesion de Codex con .codex/agents/sdlc-<rol>.toml), pausa con warning y retoma con status (R-4 generalizado); el stub del conductor de Codex limita spawn_agent a availableAgents y R-4 se amplia a Codex; el render marca delegable true|false por paso en registry/recipes con lint chat-run-delegable; caso release en V-ML6 y test chat-run-excluded-roles; la ficha y el prompt del conductor reemplazan 'no sirve para release'"
+    },
+    {
+      "id": "M-35",
+      "severity": "MEDIUM",
+      "title": "link.manifest.json (versionado) guarda {hash,class,versioned} tambien de archivos ignorados, y claude.settings.agents.json contiene Edit(//<ruta real de MF_HOME>/**): con claude en el pin otra maquina reescribe el manifest (git status no vacio) o status --verify da E_VERIFY, y en CI --check da E_OUT_OF_DATE; quickstart y link-check-ci no lo ven porque usan la misma ruta de central",
+      "fix": "Las entradas versioned:false (views/, adapters/) no guardan hash en el manifest versionado (solo {class, versioned:false} o en state/link/local-files.json), se regeneran siempre (REGEN, nunca CONFLICT) y status --verify y R22 solo comparan hashes versionados; tests quickstart.e2e y link-check-ci.e2e con --tools agents-md,claude y una segunda copia de la central en otra ruta (git status vacio, --check exit 0 WRITES=0) y manifest-machine-independent.test.mjs (dos MF_HOME distintos dan manifest identico byte a byte)"
+    },
+    {
+      "id": "L-53",
+      "severity": "LOW",
+      "title": "Las opciones nuevas de index y scan no llegan a sus handlers con el despachador v0: ROUTES.index pasa solo flags (Set sin get) y __sub queda en opts; ROUTES.scan pasa solo opts y --strict es bandera",
+      "fix": "Declarar index: (root, opts, flags) => cmdIndex(root, opts, flags) con opts.__sub === 'rebuild' y scan: (root, opts, flags) => cmdScan(root, opts, flags) con flags.has('strict'); corregir el texto de 23.3.5 y 23.12; test con --strict al principio y al final"
+    },
+    {
+      "id": "L-54",
+      "severity": "LOW",
+      "title": "23.12 (e) cita 'el id del evento de escaneo', pero cmdScan v0 no escribe eventos y el diseno no define uno",
+      "fix": "El artefacto cita la ruta y el sha256 normalizado del archivo escaneado limpio y el validador o la puerta lo reescanea con --strict; alinear 23.12, el dataHandling del catalogo y las skills"
+    },
+    {
+      "id": "L-55",
+      "severity": "LOW",
+      "title": "El YAML de CI de 23.6 solo pone shell: bash en el primer paso; en un runner Windows los run siguientes corren en pwsh y $MF_HOME queda vacio",
+      "fix": "defaults: run: shell: bash en el job (o shell: bash en cada paso); mf doctor --print-ci lo imprime asi, con test"
+    },
+    {
+      "id": "L-56",
+      "severity": "LOW",
+      "title": "cmdRegistryCheck v0 tolera los errores missing-agent: como avisos (FEAT-003) y ningun delta lo retira, aunque R1/R1b son error",
+      "fix": "Delta D25 en deltas.json, compat-v0 y CHANGELOG: se retira la tolerancia y R1b emite adapter-missing-for-role:<tool>:<rol> como error; caso en registry-check-per-tool con kiro en el pin y un agente Kiro borrado: exit 1"
+    },
+    {
+      "id": "L-57",
+      "severity": "LOW",
+      "title": "Solo el conductor lleva Agent(...) en Claude: la arista subagent uiux-a11y -> figma-sync (subagentsFromProfile; v0 availableAgents ['figma-sync']) desaparece fuera de Kiro sin declararlo y R17 no distingue por herramienta",
+      "fix": "Declarar en 23.4.3 y 23.8.2b que las aristas subagent hacia agentes del proyecto solo aplican con kiro (R17 applied:false tool-not-linked); fuera de Kiro el stub de uiux-a11y deja PENDING_HUMAN_COMMAND para correr el agente del proyecto en Kiro, o agrega Agent(<nombre>) si el perfil declara un equivalente para Claude"
+    },
+    {
+      "id": "L-58",
+      "severity": "LOW",
+      "title": "La fila Steering de Kiro Crew en research-multitool 2 es VERIFICADO con 'indice de KC, docs/system-specs/features/steering-viewer.md': fuente oficial, pero sin id numerado ni URL completa",
+      "fix": "Agregar KC10 con https://github.com/kirodotdev/kirocrew/blob/main/docs/system-specs/features/steering-viewer.md y citarla en la fila y en 23.4.2"
+    },
+    {
+      "id": "L-59",
+      "severity": "LOW",
+      "title": "claude --settings (mecanismo del archivo de sesiones de 23.4.7) y su precedencia no tienen marca VERIFICADO/NO VERIFICADO; 23.4.2 afirma que '/' ancla en la raiz del proyecto (VERIFICADO-I) cuando CC10 solo dice 'anclado' sin la base",
+      "fix": "Filas NO VERIFICADO para --settings y la base del anclaje, agregadas a V-ML8 (Edit(/.megafactory/bus/**/manifest.json) del nucleo impide editarlo desde una sesion en la raiz); respaldo: copiar el archivo de sesiones a .claude/settings.local.json si --settings no existe; doctor --tool claude lo indica por version"
+    },
+    {
+      "id": "L-60",
+      "severity": "LOW",
+      "title": "mf migrate borra .kiro/factory/scripts/** sin avisar de los scripts de package.json que apuntan ahi (BT: factory, factory:test, factory:typecheck); el plan A y las adopciones dejan scripts rotos, contra brief 9.3",
+      "fix": "planMigrate lee (sin escribir) package.json#scripts y emite package-script-mentions-v0-cli:<script> con SUGGEST de cambiar a node .megafactory/bin/factory.mjs o quitarlo; las 3 notas de BT entran en bt-dry-run (notas exactas) y en el checklist; caso en migrate-v0.e2e"
+    },
+    {
+      "id": "L-61",
+      "severity": "LOW",
+      "title": "R1b tiene dos significados: no-backup en 7.3 y active-role-adapter en 23.8.2b (que renombra no-backup a R1b'), citado en 23.0, 23.4.7 y 23.9.1; registry check --json expone reglas por id",
+      "fix": "Dar a la regla de adaptador un id nuevo (R1c) o renombrar no-backup de forma coherente en 7.3, 23.0, 23.4.7, 23.8.2b, 23.9.1 y los tests"
+    }
+  ],
+  "reviewDoc": "C:/Users/Administrador/megafabrica-sdlc/.agents/tasks/megafabrica-v1/design-review.md"
+}

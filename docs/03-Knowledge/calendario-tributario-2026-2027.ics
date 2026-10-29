@@ -1,0 +1,222 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Borondo Tours SAS//Calendario Tributario//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Borondo Tours - Obligaciones Tributarias
+X-WR-TIMEZONE:America/Bogota
+X-WR-CALDESC:Vencimientos tributarios de Borondo Tours SAS (NIT 902.080.308-5, ultimo digito 8). Fechas aproximadas; confirmar el dia exacto en el portal DIAN/Cali antes de cada vencimiento.
+
+BEGIN:VEVENT
+UID:bt-ret-mensual-template@borondotours.com
+DTSTAMP:20261012T120000Z
+SUMMARY:Declarar y pagar Retencion en la Fuente (form. 350)
+DESCRIPTION:Preparamos nosotros -> contador firma. Periodo: mes anterior. Fecha aprox dia 22-24 (digito NIT = 8). Confirmar dia exacto en calendario DIAN.
+DTSTART;VALUE=DATE:20261022
+DTEND;VALUE=DATE:20261023
+RRULE:FREQ=MONTHLY;BYMONTHDAY=22
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:En 7 dias vence la Retencion en la Fuente - empezar a preparar
+END:VALARM
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Manana vence la Retencion en la Fuente
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:bt-cierre-mensual-template@borondotours.com
+DTSTAMP:20261012T120000Z
+SUMMARY:Cierre contable mensual (conciliar Bold, OnePayla, facturas) + PILA
+DESCRIPTION:Rutina de inicio de mes (dias 1-5): cerrar el mes anterior, conciliar banco y pasarela, liquidar PILA si hay nomina.
+DTSTART;VALUE=DATE:20261103
+DTEND;VALUE=DATE:20261104
+RRULE:FREQ=MONTHLY;BYMONTHDAY=3
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Manana: cierre contable mensual
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:bt-iva-2026-05@borondotours.com
+DTSTAMP:20261012T120000Z
+SUMMARY:Declarar IVA bimestral (Sep-Oct)
+DESCRIPTION:IVA bimestral periodo Sep-Oct 2026. Clasificar gravado 19 / exento / excluido antes de declarar. Preparamos nosotros -> contador firma.
+DTSTART;VALUE=DATE:20261111
+DTEND;VALUE=DATE:20261112
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:En 7 dias vence el IVA bimestral (Sep-Oct)
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:bt-iva-2027-01@borondotours.com
+DTSTAMP:20261012T120000Z
+SUMMARY:Declarar IVA bimestral (Nov-Dic)
+DESCRIPTION:IVA bimestral periodo Nov-Dic 2026.
+DTSTART;VALUE=DATE:20270115
+DTEND;VALUE=DATE:20270116
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:En 7 dias vence el IVA bimestral (Nov-Dic)
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:bt-iva-2027-03@borondotours.com
+DTSTAMP:20261012T120000Z
+SUMMARY:Declarar IVA bimestral (Ene-Feb)
+DESCRIPTION:IVA bimestral periodo Ene-Feb 2027.
+DTSTART;VALUE=DATE:20270311
+DTEND;VALUE=DATE:20270312
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:En 7 dias vence el IVA bimestral (Ene-Feb)
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:bt-iva-2027-05@borondotours.com
+DTSTAMP:20261012T120000Z
+SUMMARY:Declarar IVA bimestral (Mar-Abr)
+DESCRIPTION:IVA bimestral periodo Mar-Abr 2027.
+DTSTART;VALUE=DATE:20270513
+DTEND;VALUE=DATE:20270514
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:En 7 dias vence el IVA bimestral (Mar-Abr)
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:bt-fontur-2026-q4@borondotours.com
+DTSTAMP:20261012T120000Z
+SUMMARY:Pagar FONTUR trimestral (2,5 por mil ingresos turisticos)
+DESCRIPTION:Aporte parafiscal de turismo = 2,5 por mil (0,25 pct) de ingresos operacionales turisticos. Periodo Oct-Dic 2026. Se liquida en la plataforma FONTUR. NO olvidar: casi nadie lo recuerda y es obligatorio.
+DTSTART;VALUE=DATE:20270115
+DTEND;VALUE=DATE:20270116
+RRULE:FREQ=MONTHLY;INTERVAL=3
+BEGIN:VALARM
+TRIGGER:-P10D
+ACTION:DISPLAY
+DESCRIPTION:En 10 dias vence FONTUR trimestral
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:bt-rnt-2027@borondotours.com
+DTSTAMP:20261012T120000Z
+SUMMARY:RENOVAR RNT (Registro Nacional de Turismo) - CRITICO
+DESCRIPTION:Renovacion anual del RNT ante MinCIT. Ventana ene-mar. No renovar = suspension de la operacion turistica. Empezar temprano.
+DTSTART;VALUE=DATE:20270115
+DTEND;VALUE=DATE:20270116
+RRULE:FREQ=YEARLY;BYMONTH=1;BYMONTHDAY=15
+BEGIN:VALARM
+TRIGGER:-P15D
+ACTION:DISPLAY
+DESCRIPTION:Abrio la ventana de renovacion del RNT (ene-mar). Renovar ya.
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:bt-certs-retencion-2027@borondotours.com
+DTSTAMP:20261012T120000Z
+SUMMARY:Expedir certificados de retencion del ano anterior
+DESCRIPTION:Entregar a terceros los certificados de retencion en la fuente del ano gravable anterior. Vence el ultimo dia habil de marzo.
+DTSTART;VALUE=DATE:20270331
+DTEND;VALUE=DATE:20270401
+RRULE:FREQ=YEARLY;BYMONTH=3;BYMONTHDAY=31
+BEGIN:VALARM
+TRIGGER:-P10D
+ACTION:DISPLAY
+DESCRIPTION:En 10 dias vence expedir certificados de retencion
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:bt-exogena-2027@borondotours.com
+DTSTAMP:20261012T120000Z
+SUMMARY:Informacion exogena (medios magneticos) ano gravable 2026
+DESCRIPTION:Reporte anual de informacion exogena a la DIAN. Ventana abr-jun segun calendario DIAN. Confirmar dia exacto y topes.
+DTSTART;VALUE=DATE:20270501
+DTEND;VALUE=DATE:20270502
+BEGIN:VALARM
+TRIGGER:-P15D
+ACTION:DISPLAY
+DESCRIPTION:Se acerca la exogena - preparar reportes de terceros
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:bt-renta-2027-c1@borondotours.com
+DTSTAMP:20261012T120000Z
+SUMMARY:Declaracion de Renta AG 2026 - 1a cuota
+DESCRIPTION:Primera declaracion de renta de la SAS (ano gravable 2026). Fecha aprox 22-25 mayo (digito NIT = 8). Preparamos nosotros -> contador firma.
+DTSTART;VALUE=DATE:20270524
+DTEND;VALUE=DATE:20270525
+BEGIN:VALARM
+TRIGGER:-P30D
+ACTION:DISPLAY
+DESCRIPTION:En 30 dias vence Renta AG 2026 - empezar a preparar estados financieros
+END:VALARM
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:En 7 dias vence Renta AG 2026
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:bt-renta-2027-c2@borondotours.com
+DTSTAMP:20261012T120000Z
+SUMMARY:Declaracion de Renta AG 2026 - 2a cuota
+DESCRIPTION:Segunda cuota de la renta. Fecha aprox julio (confirmar dia por digito NIT en calendario DIAN).
+DTSTART;VALUE=DATE:20270723
+DTEND;VALUE=DATE:20270724
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:En 7 dias vence la 2a cuota de Renta
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:bt-ica-cali-pendiente@borondotours.com
+DTSTAMP:20261012T120000Z
+SUMMARY:ICA Cali - confirmar calendario y tarifa CIIU 7911
+DESCRIPTION:PENDIENTE DE DATO: descargar del portal cali.gov.co el calendario de ICA (bimestral/anual) y la tarifa exacta para CIIU 7911. Ajustar este recordatorio con las fechas reales de Cali. Avisos y Tableros = 15 pct del ICA solo si hay valla fisica.
+DTSTART;VALUE=DATE:20270120
+DTEND;VALUE=DATE:20270121
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:Revisar calendario ICA Cali y confirmar tarifa 7911
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:bt-cierre-anual-2026@borondotours.com
+DTSTAMP:20261012T120000Z
+SUMMARY:Cierre contable anual + provisiones + inventario de Coins
+DESCRIPTION:Cierre del ejercicio: provisiones, inventario de Borondo Coins (pasivo 2805, provision 70 pct redencion), ajustes NIIF, preparar estados financieros.
+DTSTART;VALUE=DATE:20261215
+DTEND;VALUE=DATE:20261216
+RRULE:FREQ=YEARLY;BYMONTH=12;BYMONTHDAY=15
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:Se acerca el cierre anual - preparar provisiones e inventario de Coins
+END:VALARM
+END:VEVENT
+
+END:VCALENDAR

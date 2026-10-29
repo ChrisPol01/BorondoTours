@@ -1,0 +1,7 @@
+{
+  "task_id": "task-sdlc-factory",
+  "task_description": "Construir la Fábrica SDLC multi-agente de BorondoTours en .kiro/ según el diseño APROBADO (design.md iteración 4): Context Bus como carpeta versionada (.kiro/factory/) con CLI Node ESM puro (factory.mjs) como único escritor del control, 22 agentes sdlc-*, 7 recetas de workflow, 2 hooks advisory, 10 skills bt-*, steering 19 y documentación. Se trabaja directo en la raíz del repo (sin worktree) porque Kiro solo carga los .kiro de la raíz.",
+  "status": "pending",
+  "feature_order": ["FEAT-001", "FEAT-002", "FEAT-003", "FEAT-004"],
+  "blocked_reason": null
+}

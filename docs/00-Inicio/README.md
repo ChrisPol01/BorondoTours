@@ -9,7 +9,7 @@ Documentos de arranque para entender el proyecto antes de leer specs técnicas.
 | `Inventario-Funcionalidades-MVP.md` | 148 funcionalidades priorizadas por fase con complejidad, dependencias y códigos de Spec |
 | `Stack-de requerimientos resumido.md` | Resumen ejecutivo de requerimientos |
 | `Infrastructure-Inventory.md` | Inventario de infraestructura |
-| `Vision-y-Objetivos.md` | Visión de negocio y roadmap por fases |
+| `Contexto-Para-IA.md` | Resumen ejecutivo para sesiones de IA |
 | `APP1-Portal-B2C.md` | Resumen App 1: portal público + área del viajero (roles CLIENT) |
 | `APP2-ERP-Agencia.md` | Resumen App 2: CRM, comisiones, dashboard gerente, SUPER_ADMIN (roles internos) |
 | `APP3-B2B-Operadores.md` | Resumen App 3: inventario, manifiesto, radar, finanzas (roles OPERATOR_*) |

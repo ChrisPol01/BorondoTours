@@ -8,6 +8,8 @@ kiro-spec: .kiro/specs/flujo-i-b2b-operadores.md
 
 # 📋 Spec I — B2B Portal de Operadores: Inventario, Manifiesto y Radar
 
+> ⚠️ BullMQ/Socket.io en este Spec se leen como EventBridge/SQS/Step Functions y API Gateway WebSocket (ADR-011). Ver [[../DECISIONES-PENDIENTES]] #3.
+
 > **App 3 del sistema BorondoTours.** Portal exclusivo para operadores turísticos externos (proveedores). Cada operador gestiona su inventario de tours, ve su manifiesto de pasajeros consolidado de TODAS las agencias, monitorea operaciones en campo y controla sus finanzas.
 >
 > **Propuesta de valor diferencial:** El manifiesto se llena solo. Los pasajeros que compran por el B2C de BorondoTours o por cotización de un agente aparecen automáticamente. Los que vienen de agencias externas (sin tecnología) se registran con un link público sin login. El operador ve TODO en un solo lugar.

@@ -8,6 +8,8 @@ kiro-spec: .kiro/specs/flujo-d-client-portal.md
 
 # 📋 Spec D — Área Privada, Wallet y Fidelización
 
+> ⚠️ BullMQ/Socket.io en este Spec se leen como EventBridge/SQS/Step Functions y API Gateway WebSocket (ADR-011). Ver [[../DECISIONES-PENDIENTES]] #3.
+
 ---
 
 ## 1. Objetivos de negocio

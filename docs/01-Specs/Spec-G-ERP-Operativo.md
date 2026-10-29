@@ -8,6 +8,8 @@ kiro-spec: .kiro/specs/flujo-g-erp-operativo.md
 
 # 📋 Spec G — ERP Operativo (Backoffice Interno y Portal Operador)
 
+> ⚠️ BullMQ/Socket.io en este Spec se leen como EventBridge/SQS/Step Functions y API Gateway WebSocket (ADR-011). Ver [[../DECISIONES-PENDIENTES]] #3.
+
 > Módulo interno para gestión de tours, asignación de recursos y coordinación de operaciones en campo. No visible para el cliente final.
 
 ---

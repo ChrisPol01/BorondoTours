@@ -6,6 +6,8 @@ status: aceptada
 
 # ADR-006 — Seguridad de Datos PII y Protección de Infraestructura
 
+> ⚠️ Equivalencias ADR-011: Redis/BullMQ → DynamoDB TTL + API Gateway throttling + EventBridge/SQS; Socket.io → API Gateway WebSocket. WAF diferido a F3. Ver [[../DECISIONES-PENDIENTES]] #3.
+
 ## Estado: Aceptada
 
 ## Contexto

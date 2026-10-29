@@ -1,0 +1,8 @@
+# mf link --dry-run contra BorondoTours (cierre, 2026-10-28, central en a57ec5c limpia)
+# Comando (cwd C:\Users\Administrador\megafabrica-sdlc):
+#   node C:\Users\Administrador\megafabrica-sdlc\bin\mf.mjs link --target c:\Users\Administrador\BorondoTours --dry-run
+# Exit: 0. git status --porcelain --untracked-files=all de BT idéntico antes y después.
+NOTE plan-unavailable:E_RUN_ACTIVE
+PLAN_STATUS=blocked-v0
+WRITES=0
+SUGGEST=mf migrate --from v0 --dry-run (para ver el motivo)

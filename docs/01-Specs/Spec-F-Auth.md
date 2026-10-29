@@ -8,6 +8,8 @@ kiro-spec: .kiro/specs/flujo-f-auth.md
 
 # 📋 Spec F — Autenticación, Autorización y RBAC
 
+> ⚠️ Equivalencias ADR-011: Redis/BullMQ → DynamoDB TTL + API Gateway throttling + EventBridge/SQS; Socket.io → API Gateway WebSocket. WAF diferido a F3. Ver [[../DECISIONES-PENDIENTES]] #3.
+
 ---
 
 ## 1. Objetivos de negocio

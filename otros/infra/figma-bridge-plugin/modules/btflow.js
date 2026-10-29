@@ -8,53 +8,55 @@
 // DATA es la fuente de verdad del inventario de pantallas; mantenerla al crear pantallas nuevas.
 const {F,T,I,sol,hex,fonts,C}=bridge.require('bt');
 
+// Ids = canónicos del tablero Colorido (132:33618), verificados 2026-10 contra pluginData row/dev/cell.
+// Los ids viejos (38:*, 48:*, 65:*, 69:*) están en la página "🗑 Temp — versiones viejas".
 const DATA=[
  {lane:'1 · Descubrir',items:[
-  {n:'Home',d:'38:1793',m:'39:2658',to:[[1,'Elegir experiencia'],[2,'Elegir destino'],[3,'Buscar']],st:[{n:'Panel de promociones',d:'39:2203',m:'73:90832',t:'Clic en Promociones'}]},
-  {n:'Experiencias por categoría',p:1,note:'Chips de la taxonomía → /experiencias/{slug}',to:[[3,'Ver tours']]},
-  {n:'Destino / región',p:1,note:'Landing por región o departamento',to:[[3,'Ver tours']]},
-  {n:'Explorar · lista',d:'39:2889',m:'39:3333',to:[[4,'Clic en tour']],st:[{n:'Filtros (hoja inferior)',m:'39:3468',t:'Tocar Filtros'},{n:'Vista mapa',d:'39:3524',m:'73:90650',t:'Cambiar a mapa'},{n:'Sugerencias de búsqueda',d:'74:91036',m:'74:91498',t:'Escribir en el buscador'},{n:'Sin resultados',id:'53:5282',t:'Filtros sin coincidencias'},{n:'Cargando (skeleton)',id:'53:5323',t:'Mientras carga'}]},
-  {n:'Detalle del tour',d:'39:3670',m:'48:994',out:'Reservar → 2 · Cuenta / 3 · Reserva',st:[{n:'Fecha agotada',id:'53:5352',t:'Fecha en rojo'},{n:'Lista de espera',id:'53:5386',t:'Avisarme'},{n:'Lista de espera · confirmado',id:'53:5428',t:'Enviar'}]}]},
+  {n:'Home',d:'113:17071',m:'113:17499',to:[[1,'Elegir experiencia'],[2,'Elegir destino'],[3,'Buscar']],st:[{n:'Panel de promociones',d:'125:24579',m:'125:23478',t:'Clic en Promociones'}]},
+  {n:'Experiencias por categoría',d:'93:92448',m:'93:92796',note:'Chips de la taxonomía → /experiencias/{slug}',to:[[3,'Ver tours']]},
+  {n:'Destino / región',d:'93:94077',m:'93:94320',note:'Landing por región o departamento',to:[[3,'Ver tours']]},
+  {n:'Explorar · lista',d:'109:14080',m:'109:14550',to:[[4,'Clic en tour']],st:[{n:'Filtros (hoja inferior)',m:'123:18147',t:'Tocar Filtros'},{n:'Vista mapa',d:'125:25560',m:'125:23094',t:'Cambiar a mapa'},{n:'Sugerencias de búsqueda',d:'125:26061',m:'125:23994',t:'Escribir en el buscador'},{n:'Sin resultados',d:'136:39362',m:'124:18546',t:'Filtros sin coincidencias'},{n:'Cargando (skeleton)',d:'136:38866',m:'124:18864',t:'Mientras carga'}]},
+  {n:'Detalle del tour',d:'93:77352',m:'93:78066',out:'Reservar → 2 · Cuenta / 3 · Reserva',st:[{n:'Fecha agotada',d:'135:34434',m:'124:19122',t:'Fecha en rojo'},{n:'Lista de espera',d:'128:28235',m:'124:19404',t:'Avisarme'},{n:'Lista de espera · confirmado',d:'128:28957',m:'124:19554',t:'Enviar'}]}]},
  {lane:'2 · Cuenta (Auth Gate)',items:[
-  {n:'Iniciar sesión',id:'54:6055',to:[[1,'Crear cuenta'],[3,'Olvidé mi contraseña']],out:'Sesión iniciada → vuelve al checkout'},
-  {n:'Crear cuenta',id:'54:6109',to:[[2,'Registrarme']]},
-  {n:'Código de verificación (OTP)',id:'54:6169',to:[[4,'Correo sin verificar']]},
-  {n:'Recuperar contraseña',p:1,note:'Correo → código → nueva contraseña'},
-  {n:'Verificar correo',p:1,note:'Aviso de enlace enviado + reenviar'}]},
+  {n:'Iniciar sesión',d:'128:30589',m:'93:106116',to:[[1,'Crear cuenta'],[3,'Olvidé mi contraseña']],out:'Sesión iniciada → vuelve al checkout'},
+  {n:'Crear cuenta',d:'128:31042',m:'93:106311',to:[[2,'Registrarme']]},
+  {n:'Código de verificación (OTP)',d:'128:31502',m:'93:106527',to:[[4,'Correo sin verificar']]},
+  {n:'Recuperar contraseña',d:'93:95382',m:'93:95449',note:'Correo → código → nueva contraseña'},
+  {n:'Verificar correo',d:'93:95709',m:'93:95770',note:'Aviso de enlace enviado + reenviar'}]},
  {lane:'3 · Reserva y pago',items:[
-  {n:'Checkout 1 · Tu viaje',d:'48:1263',m:'48:2292',to:[[1,'Continuar']]},
-  {n:'Checkout 2 · Viajeros',d:'48:1460',m:'48:2466',to:[[2,'Continuar']],st:[{n:'Extranjero · pasaporte pendiente',id:'53:5452',t:'No residente'},{n:'Extranjero · pasaporte cargado',id:'53:5486',t:'Subir foto'}]},
-  {n:'Checkout 3 · Pago',d:'48:1793',m:'48:2385',to:[[3,'Pagar en OnePay'],[5,'Divide tu cuenta']],st:[{n:'Pago rechazado',id:'53:5513',t:'Banco rechaza'},{n:'Link de pago vencido',id:'53:5539',t:'Pasa el plazo'},{n:'Cupo agotado al pagar',id:'53:5568',t:'Otro pagó primero'},{n:'Divide tu cuenta · activo',id:'53:5593',t:'Activar división'}]},
-  {n:'Procesando pago',p:1,note:'Espera del webhook de OnePay',to:[[4,'Pago confirmado']]},
-  {n:'Checkout 4 · Confirmación',d:'48:2147',m:'48:2639',out:'Ver reserva → 4 · Portal'},
-  {n:'Pago del participante',p:1,note:'Link individual de Divide tu cuenta'},
-  {n:'Pago del saldo',p:1,note:'Desde Mis reservas · Por pagar'}]},
+  {n:'Checkout 1 · Tu viaje',d:'93:80349',m:'93:80560',to:[[1,'Continuar']]},
+  {n:'Checkout 2 · Viajeros',d:'93:81291',m:'93:81527',to:[[2,'Continuar']],st:[{n:'Extranjero · pasaporte pendiente',d:'136:40027',m:'125:19638',t:'No residente'},{n:'Extranjero · pasaporte cargado',d:'136:40284',m:'125:19764',t:'Subir foto'}]},
+  {n:'Checkout 3 · Pago',d:'93:82359',m:'93:82525',to:[[3,'Pagar en OnePay'],[5,'Divide tu cuenta']],st:[{n:'Pago rechazado',d:'128:27651',m:'125:19851',t:'Banco rechaza'},{n:'Link de pago vencido',d:'128:27845',m:'125:19950',t:'Pasa el plazo'},{n:'Cupo agotado al pagar',d:'128:28040',m:'125:20058',t:'Otro pagó primero'},{n:'Divide tu cuenta · activo',d:'136:40537',m:'125:20154',t:'Activar división'}]},
+  {n:'Procesando pago',d:'93:96000',m:'93:96071',note:'Espera del webhook de OnePay',to:[[4,'Pago confirmado']]},
+  {n:'Checkout 4 · Confirmación',d:'93:83133',m:'93:83290',out:'Ver reserva → 4 · Portal'},
+  {n:'Pago del participante',d:'93:96351',m:'93:96464',note:'Link individual de Divide tu cuenta'},
+  {n:'Pago del saldo',d:'93:96954',m:'93:97062',note:'Desde Mis reservas · Por pagar'}]},
  {lane:'4 · Portal del viajero',items:[
-  {n:'Mis reservas',d:'49:2737',m:'50:4342',to:[[1,'Voucher'],[2,'Cancelar'],[3,'Retracto']],st:[{n:'Pestaña · Por pagar',id:'54:5657',t:'Tab Por pagar'},{n:'Pestaña · Completadas',id:'54:5699',t:'Tab Completadas'},{n:'Pestaña · Canceladas',id:'54:5752',t:'Tab Canceladas'},{n:'Vacío · sin reservas',id:'54:5783',t:'Sin reservas'},{n:'Detalle de reserva',id:'54:5798',t:'Ver detalle'},{n:'Modal · cancelar',id:'54:5864',t:'Cancelar reserva'},{n:'Modal · reprogramar',id:'54:5919',t:'Reprogramar'}]},
-  {n:'Voucher (QR)',p:1,note:'Vista del voucher y descarga PDF'},
-  {n:'Cancelación confirmada',p:1,note:'Resumen de penalidad y saldo'},
-  {n:'Solicitud de reembolso',p:1,note:'Retracto Ley 1480 · PQRS'},
-  {n:'Mis tours',d:'49:3008',m:'52:4536'},
-  {n:'Favoritos',d:'49:3240',m:'52:4667',st:[{n:'Vacío · sin favoritos',id:'54:5976',t:'Sin favoritos'}]},
-  {n:'Mensajes',d:'49:3500',m:'52:4768',st:[{n:'Chat del tour',m:'52:4865',t:'Abrir chat'},{n:'Bloqueado · antes de 24 h',id:'54:5993',t:'Faltan más de 24 h'},{n:'Solo lectura · tour finalizado',id:'54:6022',t:'Tour terminado'}]},
-  {n:'Perfil',d:'49:3696',m:'52:4917',st:[{n:'Menú de perfil',id:'54:6305',t:'Clic en avatar'}]},
-  {n:'Notificaciones',id:'54:6261'},
-  {n:'Calificar tour (post-tour)',id:'54:6213',note:'Modal bloqueante al terminar el tour'},
-  {n:'Onboarding del viajero',p:1,note:'Tooltips del primer ingreso'}]},
+  {n:'Mis reservas',d:'93:83928',m:'93:84220',to:[[1,'Voucher'],[2,'Cancelar'],[3,'Retracto']],st:[{n:'Pestaña · Por pagar',d:'142:40767',m:'125:20361',t:'Tab Por pagar'},{n:'Pestaña · Completadas',d:'142:41084',m:'125:20676',t:'Tab Completadas'},{n:'Pestaña · Canceladas',d:'142:41414',m:'125:21030',t:'Tab Canceladas'},{n:'Vacío · sin reservas',d:'142:41720',m:'125:21312',t:'Sin reservas'},{n:'Detalle de reserva',d:'128:29657',m:'125:21534',t:'Ver detalle'},{n:'Modal · cancelar',d:'128:29953',m:'125:21759',t:'Cancelar reserva'},{n:'Modal · reprogramar',d:'128:30239',m:'125:21954',t:'Reprogramar'}]},
+  {n:'Voucher (QR)',d:'93:97527',m:'93:97841',note:'Vista del voucher y descarga PDF'},
+  {n:'Cancelación confirmada',d:'93:99315',m:'93:99444',note:'Resumen de penalidad y saldo'},
+  {n:'Solicitud de reembolso',d:'93:99993',m:'93:100131',note:'Retracto Ley 1480 · PQRS'},
+  {n:'Mis tours',d:'93:85311',m:'93:85619'},
+  {n:'Favoritos',d:'93:86862',m:'93:87140',st:[{n:'Vacío · sin favoritos',d:'143:42027',m:'125:22143',t:'Sin favoritos'}]},
+  {n:'Mensajes',d:'93:88026',m:'93:88237',st:[{n:'Chat del tour',m:'123:18363',t:'Abrir chat'},{n:'Bloqueado · antes de 24 h',d:'143:42319',m:'125:22362',t:'Faltan más de 24 h'},{n:'Solo lectura · tour finalizado',d:'143:42560',m:'125:22635',t:'Tour terminado'}]},
+  {n:'Perfil',d:'93:88974',m:'93:89255',st:[{n:'Menú de perfil',d:'128:31935',m:'125:22899',t:'Clic en avatar'}]},
+  {n:'Notificaciones',d:'128:32188',m:'93:106662'},
+  {n:'Calificar tour (post-tour)',d:'128:32426',m:'93:106812',note:'Modal bloqueante al terminar el tour'},
+  {n:'Onboarding del viajero',d:'93:100725',m:'93:100844',note:'Tooltips del primer ingreso'}]},
  {lane:'5 · Contenido e información',items:[
-  {n:'Blog',d:'49:3925',m:'52:5094',to:[[1,'Leer artículo']]},
-  {n:'Artículo del blog',p:1,note:'Detalle + tours relacionados'},
-  {n:'Nosotros',d:'50:4094',m:'52:5165'},
-  {n:'Contacto',p:1,note:'Horario lun–sáb 8:00 a. m.–5:00 p. m.'},
-  {n:'Preguntas frecuentes',p:1},
-  {n:'Legal',p:1,note:'Términos · Privacidad · Datos personales'},
-  {n:'Política de cancelación',p:1}]},
+  {n:'Blog',d:'93:90459',m:'93:90652',to:[[1,'Leer artículo']]},
+  {n:'Artículo del blog',d:'93:101343',m:'93:101546',note:'Detalle + tours relacionados'},
+  {n:'Nosotros',d:'93:91293',m:'93:91571'},
+  {n:'Contacto',d:'93:102306',m:'93:102457',note:'Horario lun–sáb 8:00 a. m.–5:00 p. m.'},
+  {n:'Preguntas frecuentes',d:'93:103164',m:'93:103310'},
+  {n:'Legal',d:'93:103992',m:'93:104101',note:'Términos · Privacidad · Datos personales'},
+  {n:'Política de cancelación',d:'93:104574',m:'93:104692'}]},
  {lane:'6 · Sistema',items:[
-  {n:'Error 404',id:'54:6364'},
-  {n:'Error 500',id:'54:6381'},
-  {n:'Soporte',id:'54:6400'},
-  {n:'Consentimiento de cookies',p:1,note:'Ley 1581 · no pre-marcado'},
-  {n:'Sin conexión',p:1}]}];
+  {n:'Error 404',d:'143:42798',m:'93:106989'},
+  {n:'Error 500',d:'143:42868',m:'93:107049'},
+  {n:'Soporte',d:'128:32706',m:'93:107115'},
+  {n:'Consentimiento de cookies',d:'93:105234',m:'93:105346',note:'Ley 1581 · no pre-marcado'},
+  {n:'Sin conexión',d:'93:105855',m:'93:105911'}]}];
 
 const W=280,TH=175,SW=220,STH=138,GX=100,GS=64;
 const STATUS={ok:['Diseñada','ve','#3D6B1F'],st:['Estado','tu','#006B75'],ad:['Adaptar a móvil','co','#2364AA'],p:['Pendiente','do','#8A5A00']};
@@ -62,9 +64,10 @@ const thumbs={};
 async function thumb(id,w){const k=id+'@'+w;if(thumbs[k])return thumbs[k];const n=figma.getNodeById(id);if(!n)return null;
  const bytes=await n.exportAsync({format:'PNG',constraint:{type:'WIDTH',value:w*2}});const img=figma.createImage(bytes);thumbs[k]={hash:img.hash,ar:n.height/n.width};return thumbs[k];}
 // Ids de pantallas nuevas y estados móviles: se guardan en el documento (figma.root pluginData 'flowIds')
-// y en modules/flow-ids.json. Tienen prioridad sobre DATA.
+// y en modules/flow-ids.json (obsoletos: apuntan a la papelera). Solo se usan si DATA no trae d y m.
 function FIDS(){const s=bridge.store.get('flowIds');if(s)return s;try{return JSON.parse(figma.root.getPluginData('flowIds')||'{}');}catch(e){return {};}}
-function pick(it,vp){ // devuelve {id, status}
+function pick(it,vp){ // devuelve {id, status}. DATA con d/m manda; flowIds solo rellena huecos.
+ if(it.d&&it.m)return {id:vp==='d'?it.d:it.m,s:'ok'};
  const ov=(FIDS().screens||{})[it.n];if(ov&&(vp==='d'?ov.d:ov.m))return {id:vp==='d'?ov.d:ov.m,s:'ok'};
  const mid=(FIDS().states||{})[it.id];if(vp==='m'&&mid)return {id:mid,s:'ok'};
  if(it.p)return {id:null,s:'p'};

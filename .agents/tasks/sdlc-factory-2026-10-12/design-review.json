@@ -1,0 +1,190 @@
+{
+  "verdict": "APPROVED",
+  "findings": [
+    {
+      "id": "F-01",
+      "severity": "HIGH",
+      "status": "resolved",
+      "title": "Idempotencia del paso 6 por modo (status --role --mode --json con {applicable, skippable}, tablas doneWhen, PHASE_GATE_FAILED deja 'rehacer')",
+      "location": "§4.6, §4.4, §6.1, §8.1 paso 6, §14 skip.test.mjs",
+      "note": "Resuelto en iteración 4: la decisión de saltar la toma el CLI, no el agente; applicable:false evita E_TRANSITION waived→draft; skippable exige doneWhen."
+    },
+    {
+      "id": "F-02",
+      "severity": "MEDIUM",
+      "status": "resolved",
+      "title": "Identidad del agente verificable por renderPermissions por agente; E_SIGNER por doble firma; §16.1 corregida",
+      "location": "§4.1, §4.6 'Identidad del agente', §6.1 sign, §6.2, §16.1, §14 permissions.test.mjs/sign.test.mjs",
+      "note": "Resuelto: deny de *--agent=* y de --agent Y por agente; reassign solo conductor; una firma por agente y por hash."
+    },
+    {
+      "id": "F-03",
+      "severity": "MEDIUM",
+      "status": "resolved",
+      "title": "Lecturas con lock corto (≤2 s): sin lock status consistent:false y gate --check exit 3, nunca E_INTEGRITY falso",
+      "location": "§6.1, §6.3, §14 events.test.mjs",
+      "note": "Resuelto."
+    },
+    {
+      "id": "F-04",
+      "severity": "MEDIUM",
+      "status": "resolved",
+      "title": "C1 reporta modified:<id> solo para fases ≤ la pedida; --check de contracts no falla por BuildReport/QualityReport paralelos",
+      "location": "§7.1 C1, §14 gates.test.mjs",
+      "note": "Resuelto."
+    },
+    {
+      "id": "F-05",
+      "severity": "MEDIUM",
+      "status": "resolved",
+      "title": "Tabla de señal por RESULT en §8.3; blocked/dispute_opened → success para alcanzar checkpoint-build",
+      "location": "§8.2, §8.3, §9.6, §15 V6",
+      "note": "Resuelto."
+    },
+    {
+      "id": "F-06",
+      "severity": "MEDIUM",
+      "status": "resolved",
+      "title": "Negociación con salida 'continue' (rondas<3), in_negotiation, escalated solo con 3 rondas; cuatro salidas del árbitro",
+      "location": "§4.5, §6.1, §9.2 árbitro, §14 disputes.test.mjs",
+      "note": "Resuelto."
+    },
+    {
+      "id": "F-07",
+      "severity": "MEDIUM",
+      "status": "resolved",
+      "title": "Inbox con forModes; ack exige --mode; publish de build-report con hash nuevo marca CONTRACT_UPDATED; E_RULE contract-update-unaddressed",
+      "location": "§4.5, §6.1, §8.1 pasos 6 y 9, §14 cli.integration",
+      "note": "Resuelto."
+    },
+    {
+      "id": "F-08",
+      "severity": "MEDIUM",
+      "status": "resolved",
+      "title": "Reglas cr-owner-applicable y mitigation-owner-applicable; trazabilidad de build solo para CR cuyo dueño tiene build report requerido",
+      "location": "§5.1, §5.2, §14 rules.test.mjs/trace.test.mjs",
+      "note": "Resuelto."
+    },
+    {
+      "id": "F-09",
+      "severity": "MEDIUM",
+      "status": "resolved",
+      "title": "Disputa en quality: conductor en gate aplica checkpoint; NEXT de close cubre quality-gates (reanudar→build→quality)",
+      "location": "§9.2 conductor gate/close, §16.3, §14 cli.integration",
+      "note": "Resuelto."
+    },
+    {
+      "id": "F-10",
+      "severity": "LOW",
+      "status": "resolved",
+      "title": "Lista de modos del paso 2b unificada en §8.1; §1 remite a ella",
+      "location": "§1, §8.1 2b",
+      "note": "Resuelto."
+    },
+    {
+      "id": "F-11",
+      "severity": "LOW",
+      "status": "resolved",
+      "title": "BuildReport.inputFingerprint para design-qa (frontend) y tech-writer (todos); el paso 6 exige que coincida para saltar",
+      "location": "§4.6 skippable, §5.1 BuildReport",
+      "note": "Resuelto."
+    },
+    {
+      "id": "F-12",
+      "severity": "LOW",
+      "status": "resolved",
+      "title": "Perfil ops niega fs_write sobre infra/lib/** (CDK) hasta HUMAN_APPROVAL decision:#15",
+      "location": "§4.6 perfil ops",
+      "note": "Resuelto."
+    },
+    {
+      "id": "F-13",
+      "severity": "LOW",
+      "status": "resolved",
+      "title": "Deny exacto de pnpm --filter @borondo/web run test (watch) en developer y auditor; se usa test:run",
+      "location": "§4.6, §9.3",
+      "note": "Resuelto y verificado por lectura de apps/web/package.json (test=vitest watch, existe test:run)."
+    },
+    {
+      "id": "F-14",
+      "severity": "LOW",
+      "status": "resolved",
+      "title": "run-e2e con timeout de 1 800 000 ms; sin EC e2e no lanza Playwright (available:false)",
+      "location": "§6.1 run-e2e, §9.2 qa-e2e",
+      "note": "Resuelto; coherente con apps/web/package.json (test:e2e=playwright test)."
+    },
+    {
+      "id": "F-15",
+      "severity": "LOW",
+      "status": "resolved",
+      "title": "Claim del conductor con clave conductor:<runId>; el handoff de la disputa no libera el claim de la corrida principal pausada",
+      "location": "§4.5, §14 runs-loops.test.mjs",
+      "note": "Resuelto."
+    },
+    {
+      "id": "F-16",
+      "severity": "LOW",
+      "status": "resolved",
+      "title": "guard-bus queda para scan y artefactos firmados editados por agentes; ediciones humanas de control las detectan verify y C1; añadido a V3",
+      "location": "§10.2, §15 V3",
+      "note": "Resuelto."
+    },
+    {
+      "id": "F-17",
+      "severity": "LOW",
+      "status": "resolved",
+      "title": "V2 y README aclaran que retirar permissions tira los deny humanos y de identidad; segunda barrera opcional por TTY + reescribir id de feature",
+      "location": "§15 V2, README",
+      "note": "Resuelto."
+    },
+    {
+      "id": "F-18",
+      "severity": "LOW",
+      "status": "resolved",
+      "title": "El conductor sanea el título (metacaracteres de encadenado → espacio) antes de init --title",
+      "location": "§9.2 conductor init",
+      "note": "Resuelto."
+    },
+    {
+      "id": "F-19",
+      "severity": "LOW",
+      "status": "resolved",
+      "title": "V1 comprueba que fileCheck lea los state/<loop>.json ignorados por git; fallback: sacarlos del ignore o usar containsText",
+      "location": "§15 V1, §3.2",
+      "note": "Resuelto."
+    },
+    {
+      "id": "F-20",
+      "severity": "LOW",
+      "status": "resolved",
+      "title": "run.mjs --coverage agrega --test-coverage-lines=80 (Node ≥22.8); el PR 1 falla por debajo del umbral",
+      "location": "§2, §14, §19 PR 1",
+      "note": "Resuelto."
+    },
+    {
+      "id": "F-21",
+      "severity": "LOW",
+      "status": "resolved",
+      "title": "V2 verifica la herencia de permisos de subagentes; figma-sync recibe permissions acotado o chat-run se limita a discovery/contracts",
+      "location": "§8.4 figma-sync, §9.2 chat-run, §15 V2",
+      "note": "Resuelto."
+    },
+    {
+      "id": "N-01",
+      "severity": "NIT",
+      "status": "open",
+      "title": "El bloqueo verificable de Fase 3 frente a agentes depende de supuestos de permisos del IDE confirmados solo en V2; la corrección no depende de V2 (paso 2b + E_PHASE), con mitigaciones TTY documentadas",
+      "location": "§15 V2, §1, §16.1",
+      "note": "Nota de implementación; no bloquea."
+    },
+    {
+      "id": "N-02",
+      "severity": "NIT",
+      "status": "open",
+      "title": "Reconfirmar en V8 los exports de @playwright/test contra la versión del lockfile (package.json declara ^1.49.1; el diseño cita 1.61.1 como resuelta, el rango lo admite)",
+      "location": "§6.1 run-e2e, §15 V8",
+      "note": "Nota de implementación; no bloquea."
+    }
+  ],
+  "reviewDoc": "c:\\Users\\Administrador\\BorondoTours\\.agents\\tasks\\sdlc-factory-2026-10-12\\design-review.md"
+}

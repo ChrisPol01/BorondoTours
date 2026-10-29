@@ -1,0 +1,12 @@
+{
+  "verdict": "APPROVED",
+  "iteration": 5,
+  "counts": { "HIGH": 0, "MEDIUM": 3, "LOW": 1 },
+  "findings": [
+    { "id": "M-22", "severity": "MEDIUM", "summary": "assertLoopActive solo lee state/active-run.json; la disputa corre en la ranura dispute (dispute-run.json), asi que dispute resolve da loop-not-active y dispute.negotiation sigue sin detenerse; resolver la ranura desde la receta duena del bucle" },
+    { "id": "M-23", "severity": "MEDIUM", "summary": "prod-approved exige what release-prod:<id>, pero la ficha copy, el prompt y la plantilla v0 mandan approve --what release-prod; aceptar ambas formas (y en approval-present) con test mode-prod-approval-v0-what" },
+    { "id": "M-24", "severity": "MEDIUM", "summary": "El prompt v0 del arbitro manda Ejecuta loop verdict en dispute.negotiation; con v1 loop verdict escribe el mismo estado que dispute resolve con otra semantica; delta D19 al prompt, loop verdict rechaza bucles de ranura dispute y lint" },
+    { "id": "L-28", "severity": "LOW", "summary": "La idempotencia de loop verdict por hash del review-file no tiene donde guardarse: state/<loop>.json solo tiene reviewFile; agregar reviewHash" }
+  ],
+  "reviewDoc": "C:\\Users\\Administrador\\megafabrica-sdlc\\.agents\\tasks\\megafabrica-v1\\design-review.md"
+}

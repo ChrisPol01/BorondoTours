@@ -308,6 +308,7 @@ Aprovechando el stack técnico del proyecto (Lambda, EventBridge, SES, Siigo/Fac
 | [[Pipeline-Facturacion-y-Declaracion]] | Flujo factura + calendario DIAN detallado |
 | [[Guia-Tramites-DIAN]] | Paso a paso habilitación DIAN |
 | **[[Manual-Operacion-Contable]]** (este) | Operación diaria, proveedores, impuestos, automatización |
+| [[Automatizacion-Recordatorios-Tributarios]] | Calendario .ics para Google Calendar + EventBridge/SES |
 
 ---
 

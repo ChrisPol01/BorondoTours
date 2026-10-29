@@ -1,0 +1,40 @@
+{
+  "verdict": "APPROVED",
+  "iteration": 7,
+  "high": 0,
+  "medium": 1,
+  "low": 4,
+  "findings": [
+    {
+      "id": "M-29",
+      "severity": "MEDIUM",
+      "title": "El dataHandling de markitdown pide persistir en bus/<item>/sources/ solo despues de factory.mjs scan, pero cmdScan v0 solo lee archivos en disco (--paths/scopePaths) y la tuberia (*|*) y la redireccion (D23) estan negadas; sources/ no esta definido en ningun otro lugar y el bus esta versionado (README v0 solo ignora state/), asi que un documento con PII queda en una ruta versionada sin procedimiento de remediacion (contradice PROTOCOL.md 'sin PII en el bus')",
+      "fix": "Declarar bus/<item>/sources/ como cuarentena local: .kiro/factory/bus/*/sources/ en el bloque administrado de .gitignore (§6.3), clase local en §22.11 y nota en §16; reescribir dataHandling y el paso de las skills: (a) markitdown <ruta> por stdout, (b) fs_write a sources/<slug>.md, (c) factory.mjs scan --feature <id> --paths .kiro/factory/bus/<id>/sources/<slug>.md, (d) con hallazgos medium/high sobrescribir con marcadores y reescanear o vaciar el archivo y dejar PENDING_HUMAN_COMMAND para borrarlo, (e) los artefactos solo citan sources/ con escaneo limpio; self verify o R20 avisa sources-tracked si git ls-files lista algo bajo bus/*/sources/; tests sources-gitignored y tools-markitdown-data-handling"
+    },
+    {
+      "id": "L-37",
+      "severity": "LOW",
+      "title": "Los denyArgs obligatorios *<bin>* -*, *<bin>*<*, *<bin>*.env*, *<bin>*.pem*, *<bin>*.key* coinciden por subcadena y niegan comandos legitimos del CLI que mencionan la herramienta (p. ej. memory add --file memory-drafts/markitdown-tablas.json --feature ...; con binarios cortos como gh, *gh* -* negaria init --severity high --feature)",
+      "fix": "Anclar los obligatorios a la forma permitida (<bin> -*, <bin> * -*, <bin> *<*, <bin> *.env*, <bin> *.pem*, <bin> *.key*, y markitdown *http:*/*https:*), ya que allow <bin> * solo admite comandos que empiezan por el binario y el encadenado y > ya estan negados; tools-invocation-closed exige la forma anclada; casos en tools-agent-invocation.test.mjs (el memory add queda permitido, markitdown a.pdf -o x sigue negado); documentar en §20 que *>* tambien niega -> o => en argumentos"
+    },
+    {
+      "id": "L-38",
+      "severity": "LOW",
+      "title": "La alcanzabilidad usa stepRoles de la receta completa: en feature-e2e (20 de 22 agentes v0, incluidos solutions-architect y artifact-reviewer) una escalate a solutions-architect en build pasa la comprobacion aunque sus pasos ya pasaron y termina en pausa humana en lugar de SUGGEST=--to conductor",
+      "fix": "Renderizar stepRolesByPhase{<fase>: roles con paso en el tramo de esa fase o posterior}, partiendo la receta por sus nodos de puerta (producesGate/lastNode), y comprobar contra la fase actual del item; test request-escalate-unreachable-e2e; o documentar en §20 la pausa humana en feature-e2e"
+    },
+    {
+      "id": "L-39",
+      "severity": "LOW",
+      "title": "Tras dispute resolve --verdict escalated en la ronda 3, la resolucion humana --by human: corre con dispute-run.json aun activo y pasa por la comprobacion estricta de ruta y existencia, pero el diseno no fija que ruta pone el arbitro en el PENDING_HUMAN_COMMAND ni la prueba (solo cli-dispute-resolve-human-no-run)",
+      "fix": "El prompt reescrito del revisor (D6) y la ficha fijan --resolution-file .kiro/factory/bus/<id>/disputes/<DISPUTE_ID>/resolution-4.md para la decision humana (el patron [1-9][0-9]{0,2} ya la admite); test cli-dispute-resolve-human-active-run (agreed con la ruta correcta escribe loopStatus stop; otra ruta da E_ARGS sin mutar)"
+    },
+    {
+      "id": "L-40",
+      "severity": "LOW",
+      "title": "En §8.3 el primer parentesis de 'Reglas comunes del kit' aun describe requests-resolved solo con solicitudes blocking y open (request-open:<id>:<to>), mientras el final del parrafo y §22.7 agregan awaiting-human",
+      "fix": "Reescribir el parentesis: una solicitud blocking en open o awaiting-human con phaseAtOpen <= la fase evaluada da request-open:<id>:<to> o request-awaiting-human:<id>, salvo request-waiver:<id>"
+    }
+  ],
+  "reviewDoc": "C:/Users/Administrador/megafabrica-sdlc/.agents/tasks/megafabrica-v1/design-review.md"
+}

@@ -1,0 +1,17 @@
+{
+  "verdict": "APPROVED",
+  "findings": [
+    {"branch": "E1", "lot": "L34", "item": ".agents/tasks/megafabrica-v1/staged-L34/INTEGRATE.md", "issue": "Aplicar en integrate: copiar las 9 RACI, raci.mjs, el esquema y el test; fusionar los roles en los packs; quitar raci-agents de hierarchy.mjs y de su test; retirar engine:raci-agents de construction-pending.", "blocking": false},
+    {"branch": "A", "lot": "L26", "item": "library/lint/construction-pending.json", "issue": "111 construction-pending-stale: aplicar en integrate los fragmentos de retiro de todas las ramas.", "blocking": false},
+    {"branch": "B", "lot": "L28", "item": "engine/scripts/lib/lint/agents.mjs:57", "issue": "El lint todavía acepta 'publish --dry-run' como autoverificación. Quitarlo con test y agregar una regla de lint:content que rechace banderas que factory.mjs no lee.", "blocking": false},
+    {"branch": "E2", "lot": "L34", "item": "library/humans/*.md; mcp/catalog.{json,md}", "issue": "Retirar las 49 fichas humanas y las entradas human:<rol>. Regenerar mcp/catalog (2 mcp-template-sync), índices, allowlist, catálogo de herramientas y fixture. Actualizar los tests de jerarquía y de los 48 roles.", "blocking": false},
+    {"branch": "E5", "lot": "L35", "item": "library/skills/sdlc-enterprise-governance/SKILL.md; fragments/E5/integrate.json", "issue": "metadata.roles solo declara cto. Agregar los supervisores y el CTO a los packs, y los tipos area-report y executive-report a core.", "blocking": false},
+    {"branch": "F", "lot": "L36", "item": "library/areas/*/area.json#methods", "issue": "Con el máximo de 8 métodos por área, operations no recibió métodos nuevos. Decidir si se sube el límite y conectar los disparadores opcionales.", "blocking": false},
+    {"branch": "A", "lot": "L27", "item": "library/skills/sdlc-security-review/references/security-traceability.md", "issue": "LLM01, LLM03 y LLM10 de R5 siguen documentados como faltantes de motor. Si se implementan en integrate, que sea con test.", "blocking": false},
+    {"branch": "D", "lot": "L32", "item": "library/skills/sdlc-iac-change/SKILL.md", "issue": "metadata.roles incompleto. La desviación está documentada en fragments/D/findings.md §3.", "blocking": false},
+    {"branch": "F", "lot": "L37", "item": "THIRD_PARTY.md; LICENSE", "issue": "La LICENSE MIT espera confirmación humana (PD-12) y hay 50 licencias 'declared' por verificar.", "blocking": false},
+    {"branch": "E1", "lot": "L34", "item": ".agents/tasks/megafabrica-v1/scratch/{E1,E2,E3,E5}/*.json", "issue": "Hay JSON que no parsean y hacen fallar verify:repo. Limpiarlos o excluirlos en integrate.", "blocking": false},
+    {"branch": "A", "lot": "L27", "item": "engine/scripts/lib/lint/ (regla library-residue propuesta en lot-verification/L27.md)", "issue": "La neutralidad de RESIDUE_RE solo la mide library-v0.test.mjs, y solo sobre los roles v0. Agregar a lint:content una regla library-residue para card.md, prompt.md, SKILL.md y references/*.md de toda la biblioteca, con test positivo y negativo.", "blocking": false}
+  ],
+  "reviewDoc": "C:/Users/Administrador/megafabrica-sdlc/.agents/tasks/megafabrica-v1/lot-reviews/content.md"
+}

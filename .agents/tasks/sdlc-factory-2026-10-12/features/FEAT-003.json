@@ -1,0 +1,65 @@
+{
+  "id": "FEAT-003",
+  "type": "feat",
+  "description": "Agentes de Fases 3-5 + 2 skills (PR 3 del diseño §19). Crea las 2 skills bt-* restantes, 9 fichas de rol y 9 agentes JSON sdlc-*. Depende de FEAT-002 (los respaldos de estos roles son agentes de FEAT-002 y viceversa; registry check valida la compatibilidad de respaldos en ambos sentidos solo con los 22 agentes presentes). Leer design.md §9.1, §9.2, §9.3, §9.4, §11.",
+  "status": "completed",
+  "steps": [
+    "Leer PRIMERO context.json y este archivo; luego design.md §9.1 (filas de backend, frontend, content-seo, tech-writer, peer-reviewer, security-auditor, qa-e2e, devops-sre, release-manager), §9.2 (su contenido específico) y §9.3 (formato y render de permisos).",
+    "Crear las 2 skills restantes: .kiro/skills/bt-e2e-playwright/SKILL.md y .kiro/skills/bt-search-first/SKILL.md (§11; mismos criterios de frontmatter, longitud y atribución que FEAT-002; adaptadas de la copia local de ECC).",
+    "Crear 9 fichas roles/<role>.md con los encabezados obligatorios de §9.2 y el contenido de cada rol: backend, frontend, content-seo, tech-writer, peer-reviewer, security-auditor, qa-e2e, devops-sre, release-manager. Respetar los comandos de verificación de §8.2 (uno por script, toolcheck antes, run test:run en web nunca test).",
+    "Crear 9 agentes .kiro/agents/sdlc-<role>.json en el formato de §9.3 con los perfiles developer/writer/auditor/ops según la fila de §9.1. permissions = renderPermissions(agentName, profile, profileExtras); qa-e2e suma el extra fsWrite apps/web/e2e/**; devops-sre y release-manager usan el perfil ops (con los deny de prod/staging/cdk de §9.5). SIN campo 'hooks'. resources explícitos con PROTOCOL.md, la ficha, los steering de la fila y las skills del rol.",
+    "Quitar de registry.test.mjs las excepciones 'missing-agent' que FEAT-002 declaró como esperadas, de modo que el test valide los 22 agentes completos y la compatibilidad de respaldos en ambos sentidos (p.ej. qa-e2e -> frontend, backend -> integrations).",
+    "Ejecutar la verificación y registrar en findings la lista completa de 22 agentes y cualquier ajuste al registry/test."
+  ],
+  "acceptance_criteria": [
+    "registry.test.mjs pasa con los 22 agentes presentes, incluida la compatibilidad de respaldos en fs_write y shell (allow y ask) en ambos sentidos entre FEAT-002 y FEAT-003.",
+    "permissions.test.mjs pasa para los 9 agentes nuevos (incluido el extra fsWrite de qa-e2e y los deny de prod/staging/cdk del perfil ops).",
+    "Las 2 skills nuevas tienen frontmatter name y description y cierre '## Atribución'.",
+    "Ningún agente JSON contiene el campo 'hooks'.",
+    "node .kiro/factory/scripts/factory.mjs registry check termina sin errores (sin excepciones de agentes faltantes)."
+  ],
+  "verification": [
+    "pnpm factory:test",
+    "node .kiro/factory/scripts/factory.mjs registry check",
+    "pnpm factory:typecheck"
+  ],
+  "blocked_reason": null,
+  "findings": {
+    "summary": "FEAT-003 completado. Creadas las 2 skills restantes (bt-e2e-playwright, bt-search-first), 9 fichas de rol en .kiro/factory/roles/ (9 encabezados obligatorios de §9.2) y 9 agentes .kiro/agents/sdlc-*.json (perfiles developer/writer/auditor/ops según §9.1). Quitadas las excepciones missing-agent de registry.test.mjs; ahora valida los 22 agentes y la compatibilidad de respaldos en ambos sentidos. Los agentes JSON se generaron con un script de un solo uso (en el temp del SO, ya borrado) que importa renderPermissions real, de modo que permissions.rules es byte-exacto; salida JSON.stringify(obj, null, 2)+'\\n' con LF puro (0 bytes CR) como los agentes de FEAT-002.",
+    "created_skills": [
+      ".kiro/skills/bt-e2e-playwright/SKILL.md (148 líneas, frontmatter name/description, cierre ## Atribución MIT ECC)",
+      ".kiro/skills/bt-search-first/SKILL.md (90 líneas, frontmatter name/description, cierre ## Atribución MIT ECC + wshobson)"
+    ],
+    "created_roles": [
+      "backend", "frontend", "content-seo", "tech-writer", "peer-reviewer",
+      "security-auditor", "qa-e2e", "devops-sre", "release-manager"
+    ],
+    "created_agents": [
+      "sdlc-backend (developer; @power-cloud-architect-context7)",
+      "sdlc-frontend (developer; @playwright, @power-cloud-architect-context7)",
+      "sdlc-content-seo (developer; @playwright)",
+      "sdlc-tech-writer (writer; sin MCP, includeMcpJson:false)",
+      "sdlc-peer-reviewer (auditor; sin MCP)",
+      "sdlc-security-auditor (auditor; @power-saas-builder-aws-knowledge-mcp-server)",
+      "sdlc-qa-e2e (auditor + extra fsWrite apps/web/e2e/**; @playwright)",
+      "sdlc-devops-sre (ops; deny infra/lib/** y prod/staging/cdk, sam deploy/aws solo con --profile AdministratorAccess-232025404765 ask; @power-saas-builder-awslabs.aws-serverless-mcp, @power-saas-builder-aws-knowledge-mcp-server)",
+      "sdlc-release-manager (ops; mismos deny de prod/staging/cdk; @power-saas-builder-aws-knowledge-mcp-server)"
+    ],
+    "all_22_agents": [
+      "sdlc-conductor", "sdlc-artifact-reviewer", "sdlc-product-manager", "sdlc-business-analyst",
+      "sdlc-compliance-officer", "sdlc-solutions-architect", "sdlc-finops", "sdlc-api-contract",
+      "sdlc-data-modeler", "sdlc-security-architect", "sdlc-uiux-a11y", "sdlc-domain-rules",
+      "sdlc-integrations", "sdlc-backend", "sdlc-frontend", "sdlc-content-seo", "sdlc-tech-writer",
+      "sdlc-peer-reviewer", "sdlc-security-auditor", "sdlc-qa-e2e", "sdlc-devops-sre", "sdlc-release-manager"
+    ],
+    "registry_test_change": "Eliminado el Set EXPECTED_MISSING y la tolerancia de los 9 agentes de FEAT-003; el test ahora exige r.errors.length === 0 sobre los 22 agentes y añade un test 'compatibilidad de respaldos en ambos sentidos' (pares mutuos backend<->integrations, devops-sre<->release-manager, peer-reviewer<->security-auditor, frontend<->content-seo, product-manager<->business-analyst; respaldos de una vía qa-e2e->frontend, api-contract/data-modeler/domain-rules->backend, uiux-a11y->frontend; y la contención de perfil vía profiles[primary].backups).",
+    "adaptations_stack": "devops-sre y release-manager en perfil ops con SAM/CDK/Lambda y deny de infra/lib/** y de prod/staging/cdk (§9.5; no se avanza la decisión #15). Developers con deny de 'pnpm --filter @borondo/web run test' (watch cuelga; se usa run test:run). qa-e2e con run-e2e a timeout alto, sin lanzar Playwright si no hay EdgeCases e2e, y extra fsWrite apps/web/e2e/**. Sin Terraform/K8s/Prisma/Docusaurus/Datadog.",
+    "verification": [
+      "pnpm factory:test => 139 pass / 0 fail (antes 138; +1 por el test de respaldos). Cobertura con --coverage: líneas 96.46%, ramas 80.70%, funciones 95.59% (umbral 80% cumplido).",
+      "node .kiro/factory/scripts/factory.mjs registry check => 'registry: OK', exit 0, SIN avisos missing-agent.",
+      "pnpm factory:typecheck => exit 0 (tsc -p .kiro/factory/scripts/tsconfig.json sin errores).",
+      "JSON.parse con Node sobre los 9 agentes nuevos => 9 OK, ninguno con campo 'hooks', todos con name correcto y permissions.rules. Registros/esquemas nuevos: FEAT-003 no agrega schemas ni registros (el registry agents.json ya traía las 22 filas desde FEAT-002); registry check revalida los 4 registros sin errores."
+    ],
+    "notes": "No se tocó apps/, services/, packages/, infra/, package.json, pnpm-lock, mcp.json ni hooks/steering/agentes existentes. Sin 'any' ni 'console.log' nuevos (el único console.log fue del generador de un solo uso ya borrado). Agentes, roles y skills aparecen como untracked en git (el humano hace los commits). El borrado de .claude en git status es ruido ajeno, no tocado."
+  }
+}

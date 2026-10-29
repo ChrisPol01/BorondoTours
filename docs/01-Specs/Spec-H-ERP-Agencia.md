@@ -8,6 +8,8 @@ kiro-spec: .kiro/specs/flujo-h-erp-agencia.md
 
 # 📋 Spec H — ERP Agencia: CRM, Cotizaciones y Panel Interno
 
+> ⚠️ BullMQ/Socket.io en este Spec se leen como EventBridge/SQS/Step Functions y API Gateway WebSocket (ADR-011). Ver [[../DECISIONES-PENDIENTES]] #3.
+
 > **App 2 del sistema BorondoTours.** Módulo interno para los equipos comerciales y administrativos de la agencia. No visible para el cliente final (CLIENT). Accede desde el mismo login que App 1, con redirección automática por rol.
 >
 > **Relación con Spec-G:** Spec-G cubre el módulo *operativo* (coordinadores, tours, guías, vehículos, incidentes). Esta spec cubre el módulo *comercial y administrativo* (agentes de ventas, CRM, cotizaciones, comisiones, gerencia, SUPER_ADMIN).

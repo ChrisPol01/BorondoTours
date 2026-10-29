@@ -7,6 +7,8 @@ status: definitivo
 
 # ⚙️ Stack Tecnológico — BorondoTours
 
+> ⚠️ **Posiblemente desactualizado:** el código usa Hono (no NestJS) y Astro. Ver [[../DECISIONES-PENDIENTES]] #1 y #2.
+
 > **Fuente de verdad de arquitectura:** [[../02-ADRs/ADR-011-Arquitectura-Consolidada]] (serverless-first sobre AWS Lambda). Este documento refleja esa decisión.
 
 ## Stack por fase (AWS serverless-first, región us-east-1)

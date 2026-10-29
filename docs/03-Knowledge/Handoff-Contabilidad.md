@@ -71,7 +71,7 @@
 
 ## 4. Entregables ya creados
 
-Todos en `c:\Users\Administrador\BorondoTours\.obsidian\docs\03-Knowledge\`:
+Todos en `c:\Users\Administrador\BorondoTours\docs\03-Knowledge\`:
 
 | Archivo | Contenido |
 |---|---|
@@ -79,6 +79,8 @@ Todos en `c:\Users\Administrador\BorondoTours\.obsidian\docs\03-Knowledge\`:
 | `Pipeline-Facturacion-y-Declaracion.md` (v1.0) | Flujo de factura con validación previa DIAN, CUFE, calendario por dígito 8, arquitectura Lambda `invoice-emitter`. |
 | `Guia-Tramites-DIAN.md` (v1.0) | Paso a paso: RUT, firma electrónica (IFE), habilitación como facturador, resolución de numeración. |
 | `Manual-Operacion-Contable.md` (v1.0) | Operación diaria, ciclo de caja con asientos, proveedores/documento soporte, las 10 obligaciones (incl. FONTUR), automatización, división de tareas nosotros/contador. |
+| `Automatizacion-Recordatorios-Tributarios.md` (v1.0) | **(Opción 1 — HECHA)** Dos caminos de recordatorios: Google Calendar (hoy) y AWS EventBridge+SES (fase técnica), con crons por obligación y boceto de Lambda. |
+| `calendario-tributario-2026-2027.ics` | Archivo listo para importar a Google Calendar: todas las obligaciones con alarmas (dígito 8). |
 
 Steering actualizado: `c:\Users\Administrador\BorondoTours\.kiro\steering\05-business-rules.md`
 (sección "Reconocimiento de Ingresos — NIIF 15 Principal vs Agente").
@@ -130,23 +132,22 @@ Fechas calculadas para **último dígito de NIT = 8**:
 
 ## 7. ▶️ Próximo paso (3 opciones ofrecidas al cliente)
 
-El asistente propuso arrancar por la **opción 1** porque no depende de más datos y cubre el mayor riesgo:
+Se ofrecieron 3 opciones. **La opción 1 ya está HECHA.** Quedan la 2 y la 3:
 
-1. **Automatización de recordatorios tributarios** — calendario con las 10 obligaciones y fechas por
-   dígito 8, en Google Calendar (vía MCP) o como definición para AWS EventBridge. Evita la sanción mínima.
-2. **Balance de apertura** — requiere capital social + movimientos desde 18-06-2026 (ver pendientes).
-3. **Tarifa exacta de ICA Cali CIIU 7911** — dato puntual para cerrar el cálculo del ICA.
-
-> El cliente aún no eligió cuál de las 3 seguir. **Empezar preguntándole eso**, o proceder con la 1
-> si quiere avanzar sin bloqueos.
+1. ✅ **Automatización de recordatorios tributarios** — HECHA. Ver `Automatizacion-Recordatorios-Tributarios.md`
+   y el archivo `calendario-tributario-2026-2027.ics` (listo para importar a Google Calendar). Cubre la sanción
+   mínima por extemporaneidad. Falta la acción del CEO: importar el .ics a Google Calendar.
+2. ⬜ **Balance de apertura** — requiere capital social + movimientos desde 18-06-2026 (ver pendientes).
+   Es el siguiente paso natural; esperar a que el CEO aporte esos datos.
+3. ⬜ **Tarifa exacta de ICA Cali CIIU 7911** — dato puntual para cerrar el cálculo del ICA y afinar el
+   recordatorio placeholder de ICA en el .ics.
 
 ---
 
 ## 8. Notas técnicas / entorno
 
-- **Vault de docs contables:** `c:\Users\Administrador\BorondoTours\.obsidian\docs\03-Knowledge\`
-  (ruta canónica). Ojo: existe una copia paralela bajo `.kiro/steering/.obsidian/docs/...` —
-  **la fuente de verdad es la de `.obsidian/docs/`**, no la de steering.
+- **Vault de docs contables:** `c:\Users\Administrador\BorondoTours\docs\03-Knowledge\`
+  (ruta canónica; el vault completo vive en `docs/`).
 - **Google Workspace MCP:** usuario `christopher.epe@borondotours.com`. Proyecto Google Cloud
   **borondoTours (610031470722)**. Drive API ya habilitada. El scope `drive.file` limita qué archivos ve el MCP.
 - **Drive — Unidad compartida "Agencia BorondoTours"** (ID `0AAcjQcU90-DLUk9PVA`):

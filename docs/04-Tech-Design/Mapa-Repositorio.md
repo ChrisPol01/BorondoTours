@@ -63,6 +63,7 @@ Región us-east-1. Cuentas dev/prod/root y perfiles SSO: `docs/06-Operaciones/AW
 ## 7. Automatización de agentes
 - `.kiro/specs/`: b2c-glass-theme-ui-fixes, b2c-pixel-perfect-redesign, frontend-b2c-portal, operational-planning-module.
 - `.kiro/hooks/`: ~20 hooks (calidad, PII, RBAC, a11y, docs); hay duplicados `* copy.hook`.
+- Megafábrica SDLC enlazada con `mf link` (central `C:\Users\Administrador\megafabrica-sdlc`): `.megafactory/` (perfil, bus, memoria, CLI `node .megafactory/bin/factory.mjs`), `.kiro/agents/sdlc-*` (39 agentes), `.kiro/workflows/factory-*` (recetas), `.kiro/skills/bt-*` (10 skills del proyecto); ver steering 20 y `AGENTS.md`.
 - Steering: `.kiro/steering/` (ver tabla 8).
 
 ## 8. Tema -> fuente de verdad -> steering

@@ -134,6 +134,8 @@ kiro-spec: .kiro/specs/flujo-b-tour-detail.md
 - [ ] Query PostGIS: `ST_DWithin(t.location, :tour_location, 50000) AND t.id != :current_id`
 - [ ] Si hay menos de 3 tours cercanos: completar con tours del mismo operador
 - [ ] Título de la sección: "También en [nombre del destino]"
+- [ ] Demo (sin PostGIS): afinidad por región → categoría → popularidad (`relatedTours`). Si las sugerencias salen de varias regiones, el título es "Tours que también te pueden gustar"; si todas son de la región: "También en la región {región}".
+- [ ] Las sugerencias usan la tarjeta estándar de tour (DESIGN §6.3).
 
 ---
 

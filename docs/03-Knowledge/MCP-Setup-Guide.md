@@ -40,7 +40,7 @@ Agrega esto al JSON:
       "command": "npx",
       "args": [
         "mcp-obsidian",
-        "C:/ruta/a/tu/vault"
+        "C:/ruta/a/BorondoTours/docs"
       ]
     }
   }
@@ -80,7 +80,7 @@ Agrega este servidor:
   "name": "obsidian-vault",
   "type": "filesystem",
   "config": {
-    "rootPath": "C:/ruta/a/tu/vault",
+    "rootPath": "C:/ruta/a/BorondoTours/docs",
     "allowedExtensions": [".md"],
     "readOnly": false
   }

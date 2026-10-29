@@ -11,6 +11,8 @@ supersedes: [ADR-005, ADR-008]
 
 # ADR-011 — Arquitectura Consolidada: Serverless-first + Monolito Modular
 
+> ⚠️ Partes NestJS/Vite divergen del código (Hono/Astro): ver [[../DECISIONES-PENDIENTES]] #1 y #2. El resto sigue vigente.
+
 ## Estado
 **Aceptado** — Supera a [[ADR-005-Infra-MVP]] y [[ADR-008-Infra-AWS-First]] (ambos quedan `Superados`).
 Refina a [[ADR-002-Meilisearch]] (búsqueda) y [[ADR-003-DynamoDB-Chat]] (tiempo real).

@@ -7,6 +7,8 @@ kiro-spec: .kiro/specs/flujo-j-borondotours-app-movil.md
 
 # 📋 Spec J — BorondoTours App (Super App Móvil)
 
+> ⚠️ BullMQ/Socket.io en este Spec se leen como EventBridge/SQS/Step Functions y API Gateway WebSocket (ADR-011). Ver [[../DECISIONES-PENDIENTES]] #3.
+
 > **React Native (Expo) app publicada en tiendas oficiales (Google Play Store y Apple App Store) bajo el nombre único "BorondoTours".**
 >
 > **Propuesta de valor omnicanal:** Se trata de una única descarga. La app lee el `Role` del usuario una vez inicia sesión y adapta dinámicamente todo su árbol de navegación (Bottom Tabs y UI). Si un turista entra, ve sus promos y reservas. Si entra un Guía, su cámara se vuelve un escáner y la app se enfoca en hardware y supervivencia en campo.
