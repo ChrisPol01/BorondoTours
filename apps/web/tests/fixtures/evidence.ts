@@ -15,19 +15,19 @@ export const REDESIGN_DESIGN_EVIDENCE: SourceEvidence = {
 };
 
 export const SPEC_A_EVIDENCE: SourceEvidence = {
-  document: ".obsidian/docs/01-Specs/Spec-A-Discovery.md",
+  document: "docs/01-Specs/Spec-A-Discovery.md",
   references: ["RF-A01", "RF-A03", "RF-A04–RF-A12"],
   note: "Baseline funcional de Home y Discovery; endpoints históricos requieren contratos Zod vigentes antes de habilitar efectos.",
 };
 
 export const SPEC_B_EVIDENCE: SourceEvidence = {
-  document: ".obsidian/docs/01-Specs/Spec-B-Tour-Detail.md",
+  document: "docs/01-Specs/Spec-B-Tour-Detail.md",
   references: ["RF-B01–RF-B09"],
   note: "Baseline funcional de Tour Detail; waitlist, reviews y respuestas remotas siguen contract-dependent.",
 };
 
 export const ADR_011_EVIDENCE: SourceEvidence = {
-  document: ".obsidian/docs/02-ADRs/ADR-011-Arquitectura-Consolidada.md",
+  document: "docs/02-ADRs/ADR-011-Arquitectura-Consolidada.md",
   references: ["SW7", "INF8", "INF16"],
   note: "Contratos Zod compartidos y frontend estático S3/CloudFront; ADR-005 y ADR-008 están superados.",
 };

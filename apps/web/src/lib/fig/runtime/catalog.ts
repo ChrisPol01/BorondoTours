@@ -13,6 +13,7 @@ import { setSourceText, translateTree } from "./i18n-dom";
 import { fitBlock, rootChild } from "./layout";
 import { bindDropdown, closeAll } from "./menu";
 import { cardFromCatalog, createTourCard, createTourCardSkeleton, makeCardGrid } from "./tour-card";
+import { button, emptyState } from "./ui-kit";
 
 const invert = <K extends string>(map: Readonly<Record<K, string>>): Map<string, K> =>
   new Map((Object.entries(map) as [K, string][]).map(([k, v]) => [v, k]));
@@ -262,14 +263,13 @@ function setupGrid(stage: HTMLElement, results: () => CatalogTour[]): void {
       return el;
     }));
     if (list.length === 0) {
-      const empty = h("div", { class: "bt-empty", role: "status" }, [
-        h("h3", {}, ["No encontramos tours con esos filtros"]),
-        h("p", {}, ["Prueba con otra región, amplía el rango de precio o quita algunos filtros."]),
-      ]);
-      const reset = h("button", { type: "button", class: "bt-cta" }, ["Limpiar filtros"]);
-      markHandled(reset);
+      const reset = button({ label: "Limpiar filtros" });
       reset.addEventListener("click", () => update({ ...EMPTY_FILTERS }));
-      empty.append(reset);
+      const empty = emptyState({
+        title: "No encontramos tours con esos filtros",
+        text: "Prueba con otra región, amplía el rango de precio o quita algunos filtros.",
+        actions: [reset],
+      });
       grid.append(empty);
       translateTree(empty);
     }
@@ -317,6 +317,7 @@ function skeletonGrid(stage: HTMLElement): { grid: HTMLElement; cards: HTMLEleme
   }
   return best;
 }
+/** Estado de carga del catálogo: reemplaza la cuadrícula por tarjetas esqueleto (`createTourCardSkeleton`). */
 export function initCatalogLoading(): void {
   const stage = getStage();
   if (!stage || stage.dataset.figmaId !== LOADING_FIGMA_ID) return;

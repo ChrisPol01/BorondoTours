@@ -5,6 +5,7 @@
 import { assistantMessage, whatsappUrl } from "../whatsapp";
 import { h } from "./dom";
 import { createPanel, type Panel } from "./panel";
+import { button } from "./ui-kit";
 
 export const ASSISTANT_PLANS = ["Pasadía", "Pasanoche", "Excursión", "Personalizado", "Internacional", "Crucero"] as const;
 export type AssistantPlan = (typeof ASSISTANT_PLANS)[number];
@@ -31,7 +32,7 @@ function build(): Panel {
   const adults = h("input", { name: "adults", type: "number", min: "1", max: "50", value: "2", inputmode: "numeric", required: true });
   const children = h("input", { name: "children", type: "number", min: "0", max: "50", value: "0", inputmode: "numeric" });
   const notes = h("textarea", { name: "notes", maxlength: "500" });
-  const submit = h("button", { type: "submit", class: "bt-cta", "data-bt-handled": true }, ["Enviar por WhatsApp"]);
+  const submit = button({ label: "Enviar por WhatsApp", type: "submit" });
 
   const form = h("form", { class: "bt-form", novalidate: false }, [
     field("Tipo de plan", planSelect),

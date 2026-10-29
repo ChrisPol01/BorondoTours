@@ -233,9 +233,37 @@ function liftFabOverColophon(stage: HTMLElement): void {
   });
   observer.observe(bar);
 }
+/** Nota de TikTok en un solo color (hereda el color del texto), para el colofón monocromo. */
+function tiktokGlyph(): SVGSVGElement {
+  const svg = document.createElementNS(SVG_NS, "svg");
+  for (const [k, v] of Object.entries({ viewBox: "0 0 24 24", width: "18", height: "18", fill: "currentColor", "aria-hidden": "true", focusable: "false" })) svg.setAttribute(k, v);
+  svg.append(svgEl("path", { d: "M14.9 2c.3 2.4 1.7 3.9 4.1 4.2v3.1c-1.5.05-2.9-.4-4.1-1.2v6.6a6 6 0 1 1-6-6c.3 0 .6 0 .9.07v3.2a2.9 2.9 0 1 0 2 2.75V2Z" }));
+  return svg;
+}
+/**
+ * Íconos de redes del colofón: el diseño los trae como dibujos sin enlace. Se convierten en
+ * enlaces reales a las mismas redes oficiales del rail (Instagram, Facebook y TikTok).
+ */
+function linkColophonSocials(stage: HTMLElement): void {
+  const mark = [...stage.querySelectorAll<HTMLElement>("span")].find((s) => textOf(s).startsWith("© 2026 BorondoTours"));
+  const links = mark?.parentElement?.parentElement?.lastElementChild;
+  if (!links) return;
+  const icons = [...links.children].filter((c): c is SVGSVGElement => c instanceof SVGSVGElement);
+  icons.slice(0, SOCIAL.length).forEach((svg, i) => {
+    const item = SOCIAL[i];
+    if (!item) return;
+    const icon = item.key === "tiktok" ? tiktokGlyph() : svg;
+    const link = h("a", { href: item.href, target: "_blank", rel: "noopener noreferrer", class: "bt-colophon-social", "aria-label": `${item.label} de BorondoTours (se abre en otra pestaña)` });
+    markHandled(link);
+    svg.before(link);
+    link.append(icon);
+    if (icon !== svg) svg.remove();
+  });
+}
 export function initFixedChrome(): void {
   const stage = getStage();
   if (!stage) return;
+  linkColophonSocials(stage);
   fitColophon(stage);
   liftFabOverColophon(stage);
   const hasNav = Boolean(findNav(stage));

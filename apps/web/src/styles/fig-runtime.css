@@ -104,7 +104,8 @@ html.fig-booting .fig-stage { animation: none; }
 .fig-stage .bt-menu-item:hover,
 .fig-stage .bt-menu-item:focus-visible { background: color-mix(in srgb, var(--semantic-action-primary) 18%, transparent); }
 .fig-stage .bt-menu-item[aria-pressed="true"] { background: color-mix(in srgb, var(--semantic-action-primary) 24%, transparent); }
-.fig-stage .bt-menu-item[aria-pressed="true"]::after { content: "?"; position: absolute; right: 14px; }
+/* Marca de selección: escape Unicode (U+2713) para que ningún cambio de codificación la rompa. */
+.fig-stage .bt-menu-item[aria-pressed="true"]::after { content: "\2713"; position: absolute; right: 14px; font-weight: 700; }
 .fig-stage .bt-menu-item { position: relative; }
 
 .fig-stage .bt-theme-btn {
@@ -206,9 +207,14 @@ html.fig-booting .fig-stage { animation: none; }
   height: 40px;
   border-radius: 12px;
   color: inherit;
-  transition: background-color var(--motion-duration-standard) var(--motion-ease-standard);
+  transition: transform var(--motion-duration-standard) var(--motion-ease-standard);
 }
-.fig-stage .bt-rail-link:hover { background: color-mix(in srgb, #ffffff 16%, transparent); }
+/* Sin rectángulo de fondo al pasar el cursor: el logo se agranda un poco. */
+.fig-stage .bt-rail-link:hover { background: transparent; transform: scale(1.12); }
+@media (prefers-reduced-motion: reduce) {
+  .fig-stage .bt-rail-link { transition: none; }
+  .fig-stage .bt-rail-link:hover { transform: none; }
+}
 
 /* ---------- Chrome fijo al hacer scroll ---------- */
 
@@ -251,6 +257,8 @@ html.fig-booting .fig-stage { animation: none; }
  * En Figma salieron en blanco (--semantic-glass-text); el wordmark original es color arena/crema
  * (#f3e8d1), el mismo tono de la cresta del ave en logo.png, no el dorado saturado. */
 .fig-stage .bt-logo-link svg path { fill: var(--brand-arena) !important; }
+/* En Claro la cápsula del logo es vidrio claro: el wordmark arena se perdería; va en azul profundo. */
+[data-theme="claro"] .fig-stage .bt-logo-link svg path { fill: var(--brand-azul-profundo) !important; }
 /* El logo siempre completo dentro de su capsula: no se recorta ni se encoge. */
 .fig-stage .bt-logo-link { overflow: visible; }
 .fig-stage .bt-logo-link svg { overflow: visible; }
@@ -309,7 +317,10 @@ html.fig-booting .fig-stage { animation: none; }
   --bt-glass-fill: color-mix(in srgb, var(--derived-neutral) 22%, transparent);
   --bt-glass-fill-strong: color-mix(in srgb, var(--derived-neutral) 34%, transparent);
   --bt-glass-fill-scrolled: color-mix(in srgb, var(--derived-neutral) 22%, transparent);
-  --bt-nav-fill: var(--bt-glass-fill);
+  /* Navbar: vidrio claro más denso. Con el gris al 22 % el texto oscuro quedaba ilegible sobre
+     fotos oscuras (p. ej. /destinos); con Blanco Niebla al 72 % el contraste del texto es >= 4.5:1
+     sobre cualquier foto. */
+  --bt-nav-fill: color-mix(in srgb, var(--brand-blanco-niebla) 72%, transparent);
   /* Sobre el gris claro translucido el texto va oscuro para contraste AA. */
   --bt-glass-text: var(--brand-negro-volcanico);
 }
@@ -324,7 +335,7 @@ html.fig-booting .fig-stage { animation: none; }
     --bt-glass-fill: color-mix(in srgb, var(--derived-neutral) 22%, transparent);
     --bt-glass-fill-strong: color-mix(in srgb, var(--derived-neutral) 34%, transparent);
     --bt-glass-fill-scrolled: color-mix(in srgb, var(--derived-neutral) 22%, transparent);
-    --bt-nav-fill: var(--bt-glass-fill);
+    --bt-nav-fill: color-mix(in srgb, var(--brand-blanco-niebla) 72%, transparent);
     --bt-glass-text: var(--brand-negro-volcanico);
   }
 }
@@ -481,19 +492,10 @@ html.fig-booting .fig-stage { animation: none; }
 .bt-auth-sep { display: flex; align-items: center; gap: 12px; font-size: 12px; opacity: 0.85; color: var(--bt-glass-text); }
 .bt-auth-sep::before, .bt-auth-sep::after { content: ""; flex: 1; height: 1px; background: currentColor; opacity: 0.3; }
 .bt-auth-rules { display: flex; gap: 12px; flex-wrap: wrap; margin: 4px 0 0; padding: 0; list-style: none; font-size: 12px; font-weight: 500; }
-.bt-auth-rules li::before { content: "? "; }
-.bt-auth-rules li[data-ok="true"]::before { content: "? "; color: var(--semantic-available); }
-.fig-stage .bt-auth-btn {
-  display: flex; align-items: center; justify-content: center; width: 100%; min-height: 48px; border-radius: 999px;
-  font: 600 15px "Inter", var(--type-body); cursor: pointer;
-  transition: background-color var(--motion-duration-standard) var(--motion-ease-standard);
-}
-.fig-stage .bt-auth-btn--primary { background: var(--semantic-action-primary); color: var(--semantic-text-on-action); }
-.fig-stage .bt-auth-btn--primary:hover { background: var(--semantic-action-primary-hover); }
-.fig-stage .bt-auth-btn--ghost { border: 1px solid var(--bt-glass-stroke); color: var(--bt-glass-text); }
-.fig-stage .bt-auth-btn--link { min-height: 44px; width: auto; align-self: center; color: var(--bt-glass-text); text-decoration: underline; font-size: 14px; }
-.fig-stage .bt-auth-row .bt-auth-btn--link { align-self: auto; }
-.fig-stage .bt-auth-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.bt-auth-rules li::before { content: "\25CB "; }
+.bt-auth-rules li[data-ok="true"]::before { content: "\2713 "; color: var(--semantic-available); }
+/* Los botones del acceso son .bt-btn del kit (ver "KIT DE COMPONENTES"). */
+.fig-stage .bt-auth-row .bt-btn--link { align-self: auto; }
 .bt-auth-notice { padding: 10px 14px; border-radius: 12px; font-size: 13px; line-height: 1.45; color: var(--bt-glass-text); border: 1px solid var(--bt-glass-stroke); }
 .bt-auth-notice[hidden] { display: none; }
 .bt-auth-notice--demo { background: color-mix(in srgb, var(--semantic-action-cta) 22%, transparent); }
@@ -514,9 +516,19 @@ html.fig-booting .fig-stage { animation: none; }
   align-items: stretch;
   padding: 16px;
   background: color-mix(in srgb, var(--brand-negro-volcanico) 20%, transparent);
+  animation: bt-fade-in var(--bt-enter) ease-out both;
+}
+/* El desenfoque del velo va en un pseudo-elemento y no en el overlay: un `backdrop-filter` en el
+ * ancestro vuelve al overlay "raíz de fondo" y el vidrio del panel (su propio backdrop-filter) dejaba
+ * de ver la página detrás, por eso se veía plano. Así el panel desenfoca la página real. */
+.bt-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  animation: bt-fade-in var(--bt-enter) ease-out both;
 }
 .bt-overlay[hidden] { display: none; }
 .bt-overlay.is-closing { animation: bt-fade-out var(--bt-exit) ease-in both; }
@@ -633,12 +645,13 @@ html.fig-booting .fig-stage { animation: none; }
  * conserva su forma con barras donde irán los textos. Solo el brillo se anima (y se apaga con
  * movimiento reducido). */
 .fig-stage .bt-vcard--skeleton {
-  background:
-    linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--brand-blanco-niebla) 14%, transparent) 50%, transparent 70%) 0 0 / 220% 100% no-repeat,
-    color-mix(in srgb, var(--brand-azul-profundo) 70%, var(--brand-blanco-niebla) 8%);
+  background-color: color-mix(in srgb, var(--brand-azul-condor) 38%, var(--brand-azul-profundo));
+  background-image: linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--brand-blanco-niebla) 16%, transparent) 50%, transparent 70%);
+  background-size: 220% 100%;
+  background-repeat: no-repeat;
   animation: bt-shimmer 1.6s linear infinite;
 }
-@keyframes bt-shimmer { from { background-position: 120% 0, 0 0; } to { background-position: -120% 0, 0 0; } }
+@keyframes bt-shimmer { from { background-position: 120% 0; } to { background-position: -120% 0; } }
 .bt-vskel { display: block; height: 12px; border-radius: 6px; background: color-mix(in srgb, var(--brand-blanco-niebla) 22%, transparent); }
 .bt-vskel--badge { position: absolute; top: 12px; left: 12px; width: 84px; height: 24px; border-radius: 999px; }
 .bt-vskel--place { width: 45%; }
@@ -662,23 +675,6 @@ html.fig-booting .fig-stage { animation: none; }
 }
 
 
-.fig-stage .bt-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 48px;
-  padding: 0 22px;
-  border-radius: 999px;
-  background: var(--semantic-action-primary);
-  color: var(--semantic-text-on-action);
-  font-family: "Inter", var(--type-body);
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color var(--motion-duration-standard) var(--motion-ease-standard);
-}
-.fig-stage .bt-cta:hover { background: var(--semantic-action-primary-hover); }
 
 /* Formulario del asistente */
 .bt-form { display: flex; flex-direction: column; gap: 14px; font-family: "Inter", var(--type-body); }
@@ -723,7 +719,7 @@ html.fig-booting .fig-stage { animation: none; }
   border: 1.5px solid var(--bt-glass-text); align-items: center; justify-content: center;
 }
 .fig-stage [aria-checked="true"] > .bt-check { background: var(--semantic-action-primary); border-color: var(--semantic-action-primary); }
-.fig-stage [aria-checked="true"] > .bt-check::after { content: "?"; font-size: 12px; font-weight: 700; color: var(--semantic-text-on-action); }
+.fig-stage [aria-checked="true"] > .bt-check::after { content: "\2713"; font-size: 12px; font-weight: 700; color: var(--semantic-text-on-action); }
 .fig-stage [role="checkbox"]:focus-visible, .fig-stage [role="switch"]:focus-visible, .fig-stage .bt-chip:focus-visible { outline: 2px solid var(--semantic-focus); outline-offset: 2px; border-radius: 8px; }
 
 .fig-stage .bt-switch { position: relative; flex-shrink: 0; width: 36px; height: 20px; border-radius: 999px; background: color-mix(in srgb, var(--bt-glass-text) 30%, transparent); transition: background-color 200ms; }
@@ -746,8 +742,7 @@ html.fig-booting .fig-stage { animation: none; }
 }
 .fig-stage a:hover > .bt-reserve-pill, .fig-stage a:focus-visible > .bt-reserve-pill { opacity: 1; transform: none; }
 .fig-stage a.bt-low span { }
-.fig-stage .bt-empty { width: 100%; padding: 48px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; color: var(--semantic-text-primary); font-family: "Inter", var(--type-body); }
-.fig-stage .bt-empty h3 { font: 700 22px "Sora", var(--type-heading); }
+
 
 /* ---------- Centro legal (/nosotros) ---------- */
 
@@ -844,8 +839,9 @@ textarea.bt-contact-input { resize: vertical; min-height: 7rem; }
   top: 0;
   height: 160px;
   pointer-events: none;
-  z-index: 1;
-  background: linear-gradient(to bottom, transparent, var(--semantic-surface-page));
+  /* Sin z-index: queda DETRÁS del contenido de la sección (el título no debe quedar velado). */
+  /* Continúa el color con que termina el hero y se disuelve en el fondo real de la página. */
+  background: linear-gradient(to bottom, var(--semantic-surface-page), transparent);
 }
 
 /* ---------- 4.6 Carril derecho: tokens de reserva de espacio ---------- */
@@ -883,6 +879,20 @@ textarea.bt-contact-input { resize: vertical; min-height: 7rem; }
   height: 44px;
 }
 .fig-stage .bt-rail-link:focus-visible { outline: 2px solid var(--semantic-focus); outline-offset: 2px; }
+/* Íconos de redes del colofón: enlace de 44px (mínimo táctil) sin alterar el espaciado visual. */
+.fig-stage .bt-colophon-social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: 44px;
+  min-height: 44px;
+  margin: -13px;
+  border-radius: 12px;
+  color: inherit;
+}
+.fig-stage .bt-colophon-social:hover { color: var(--semantic-action-primary); }
+.fig-stage .bt-colophon-social:focus-visible { outline: 2px solid var(--semantic-focus); outline-offset: 2px; }
 /* Logos 40% mas grandes que antes (24px -> 34px) dentro de la caja de 44px. */
 .fig-stage .bt-rail-link svg { width: 34px; height: 34px; display: block; }
 
@@ -990,10 +1000,11 @@ textarea.bt-contact-input { resize: vertical; min-height: 7rem; }
  * Panel ancho y centrado con carrusel horizontal: cabecera con icono, flechas, "Ver todas" y cerrar;
  * tarjetas con foto a sangre y un panel de vidrio oscuro con los datos (se lee sobre cualquier foto).
  * El vidrio del PANEL sigue el del tema (--bt-glass-fill); el de las tarjetas es propio de la foto. */
-.bt-overlay--center { justify-content: center; align-items: center; }
+/* Sin padding en el overlay (los 16 px recortaban el borde difuminado del vidrio): el margen lo da el panel. */
+.bt-overlay--center { justify-content: center; align-items: center; padding: 0; }
 .bt-panel--wide {
-  width: min(1180px, 100%);
-  max-height: 100%;
+  width: min(1180px, calc(100% - 32px));
+  max-height: calc(100% - 32px);
   gap: 20px;
   padding: 24px 28px 28px;
   animation: bt-pop-in var(--bt-enter) var(--bt-ease-out) both;
@@ -1032,20 +1043,6 @@ textarea.bt-contact-input { resize: vertical; min-height: 7rem; }
 .fig-stage .bt-vnav,
 .fig-stage .bt-panel--wide .bt-close { border: 1px solid color-mix(in srgb, var(--semantic-glass-border) 60%, transparent); }
 .fig-stage .bt-vnav:disabled { opacity: 0.4; cursor: default; }
-.fig-stage .bt-vall {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 0 20px;
-  border-radius: 999px;
-  background: var(--semantic-action-primary);
-  color: var(--semantic-text-on-action) !important;
-  font: 600 15px/1 "Inter", var(--type-body);
-  text-decoration: none;
-  transition: background-color var(--motion-duration-standard) var(--motion-ease-standard);
-}
-.fig-stage .bt-vall:hover { background: var(--semantic-action-primary-hover); }
 
 .bt-vtrack {
   display: flex;
@@ -1059,6 +1056,12 @@ textarea.bt-contact-input { resize: vertical; min-height: 7rem; }
   scrollbar-width: none;
 }
 .bt-vtrack::-webkit-scrollbar { display: none; }
+/* Bordes difuminados: las tarjetas que se cortan en los extremos se desvanecen en vez de quedar con un
+ * corte seco. El tramo (28 px) coincide con el padding de reposo, que queda totalmente visible. */
+.bt-vtrack {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, black 28px, black calc(100% - 28px), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, black 28px, black calc(100% - 28px), transparent 100%);
+}
 .fig-stage .bt-vtrack:focus-visible { outline: 2px solid var(--semantic-focus); outline-offset: 2px; border-radius: 24px; }
 
 /* Contenedor de la tarjeta estándar: lleva el enlace (.bt-vcard) y el corazón como hermanos. */
@@ -1234,4 +1237,239 @@ textarea.bt-contact-input { resize: vertical; min-height: 7rem; }
 
 @media (prefers-reduced-motion: reduce) {
   .fig-stage a.bt-side-tab { transition: none; }
+}
+
+/* =====================================================================================
+ * KIT DE COMPONENTES (runtime/ui-kit.ts). Carga en todas las páginas.
+ * Una pieza = una clase. Las pantallas solo agregan colocación (left/top) en su propio CSS.
+ * Toda pieza o variante que no exista en Figma se replica en Figma (agente figma-sync).
+ * ===================================================================================== */
+
+/* ---------- Botón: .bt-btn + --primary | --glass ---------- */
+.fig-stage .bt-btn,
+.bt-overlay .bt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font: 600 15px/1 "Inter", var(--type-body);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--motion-duration-standard) var(--motion-ease-standard), transform var(--motion-duration-standard) var(--motion-ease-standard), box-shadow var(--motion-duration-standard) var(--motion-ease-standard);
+}
+.fig-stage .bt-btn svg,
+.bt-overlay .bt-btn svg { transition: transform var(--motion-duration-standard) var(--motion-ease-standard); }
+.fig-stage .bt-btn:hover svg,
+.bt-overlay .bt-btn:hover svg { transform: translateX(3px); }
+.fig-stage .bt-btn:active,
+.bt-overlay .bt-btn:active { transform: scale(0.97); }
+.fig-stage .bt-btn:focus-visible,
+.bt-overlay .bt-btn:focus-visible { outline: 2px solid var(--semantic-focus); outline-offset: 3px; }
+.fig-stage .bt-btn--primary,
+.bt-overlay .bt-btn--primary {
+  color: var(--semantic-text-on-action) !important;
+  background-color: var(--semantic-action-primary);
+}
+.fig-stage .bt-btn--primary:hover,
+.bt-overlay .bt-btn--primary:hover { background-color: var(--semantic-action-primary-hover); }
+.fig-stage .bt-btn--glass,
+.bt-overlay .bt-btn--glass {
+  color: var(--bt-glass-text);
+  background-color: var(--bt-glass-fill);
+  border-color: color-mix(in srgb, var(--semantic-glass-rim-hi) 40%, transparent);
+  backdrop-filter: blur(var(--bt-glass-blur)) saturate(1.6);
+  -webkit-backdrop-filter: blur(var(--bt-glass-blur)) saturate(1.6);
+}
+.fig-stage .bt-btn--glass:hover,
+.bt-overlay .bt-btn--glass:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand-turquesa-laguna) 55%, transparent), 0 10px 28px color-mix(in srgb, var(--brand-azul-condor) 45%, transparent);
+}
+.fig-stage .bt-btn--link,
+.bt-overlay .bt-btn--link {
+  align-self: center;
+  padding: 0 4px;
+  color: var(--bt-glass-text);
+  background: none;
+  font-size: 14px;
+  text-decoration: underline;
+}
+.fig-stage .bt-btn--block,
+.bt-overlay .bt-btn--block { display: flex; width: 100%; min-height: 48px; }
+.fig-stage .bt-btn:disabled,
+.bt-overlay .bt-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* ---------- Interacción compartida: .bt-lift (sube y brilla al pasar, se hunde al pulsar) ---------- */
+.fig-stage .bt-lift {
+  cursor: pointer;
+  transition: transform var(--motion-duration-standard) var(--motion-ease-standard), box-shadow var(--motion-duration-standard) var(--motion-ease-standard);
+}
+.fig-stage .bt-lift:hover,
+.fig-stage .bt-lift:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand-turquesa-laguna) 45%, transparent), 0 14px 34px color-mix(in srgb, var(--brand-azul-condor) 40%, transparent);
+}
+.fig-stage .bt-lift:active { transform: translateY(0) scale(0.98); }
+.fig-stage .bt-lift:focus-visible { outline: 2px solid var(--semantic-focus); outline-offset: 3px; }
+.fig-stage .bt-lift:hover svg:last-child,
+.fig-stage .bt-lift:focus-visible svg:last-child { transform: translateX(3px); transition: transform var(--motion-duration-standard) var(--motion-ease-standard); }
+/* En tarjetas de cifras el icono va primero: no se desplaza. */
+.fig-stage .bt-stat.bt-lift:hover svg:last-child { transform: none; }
+
+/* ---------- Encabezado de sección: eyebrow + título + acciones ---------- */
+.fig-stage .bt-section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; color: var(--semantic-text-primary); }
+.fig-stage .bt-section-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.fig-stage .bt-eyebrow {
+  margin: 0 0 8px;
+  font: 600 12px/1.4 "Inter", var(--type-body);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--semantic-text-muted);
+}
+.fig-stage .bt-section-title {
+  margin: 0;
+  font: 700 36px/1.2 "Sora", var(--type-heading);
+  color: var(--semantic-text-heading, var(--semantic-text-primary));
+}
+/* ---------- Zona oscura: .bt-on-strong ----------
+ * Para franjas con fondo surface-strong. Redefine las variables del vidrio dentro de la zona, así todo
+ * lo que contiene (vidrio del kit y capas de vidrio generadas desde Figma) usa vidrio claro y texto
+ * claro en cualquier tema, sin reglas por componente. */
+.fig-stage .bt-on-strong {
+  --bt-glass-fill: color-mix(in srgb, var(--brand-blanco-niebla) 8%, transparent);
+  --bt-glass-text: var(--semantic-text-on-strong);
+  --semantic-glass-text: var(--semantic-text-on-strong);
+  --semantic-text-primary: var(--semantic-text-on-strong);
+  --semantic-text-heading: var(--semantic-text-on-strong);
+  --semantic-text-muted: var(--semantic-action-primary);
+  color: var(--semantic-text-on-strong);
+}
+
+/* ---------- Sello: píldora de vidrio con icono ---------- */
+.fig-stage .bt-seal {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font: 600 14px/1 "Inter", var(--type-body);
+}
+.fig-stage .bt-seal svg { color: var(--semantic-action-primary-hover); }
+
+/* ---------- Tarjeta de cifra ---------- */
+.fig-stage .bt-stat-grid { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.fig-stage .bt-stat { display: flex; flex-direction: column; gap: 8px; min-height: 150px; padding: 22px 24px; border-radius: 20px; }
+.fig-stage .bt-stat-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  color: var(--semantic-action-primary);
+  background-color: color-mix(in srgb, var(--brand-turquesa-laguna) 16%, transparent);
+}
+.fig-stage .bt-stat-value { font: 700 36px/1 "Sora", var(--type-heading); }
+.fig-stage .bt-stat-label { font: 400 14px/1.4 "Inter", var(--type-body); opacity: 0.85; }
+
+/* ---------- Funcionalidad: fila enlace en vidrio (icono · título + beneficio · flecha) y su grupo ---------- */
+.fig-stage .bt-feature-group { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; color: var(--semantic-text-primary); }
+.fig-stage .bt-feature-group-title { margin: 0; font: 700 24px/1.3 "Sora", var(--type-heading); color: var(--semantic-text-heading, var(--semantic-text-primary)); }
+.fig-stage .bt-feature-group-intro { margin: 0 0 8px; font: 400 16px/1.5 "Inter", var(--type-body); opacity: 0.85; }
+.fig-stage .bt-feature-list { width: 100%; margin: 0 0 8px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.fig-stage .bt-feature {
+  display: grid;
+  grid-template-columns: 44px 1fr 18px;
+  align-items: center;
+  gap: 16px;
+  min-height: 76px;
+  padding: 14px 20px;
+  border-radius: 18px;
+  color: var(--bt-glass-text);
+  text-decoration: none;
+}
+.fig-stage .bt-feature-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  color: var(--semantic-action-primary);
+  background-color: color-mix(in srgb, var(--brand-turquesa-laguna) 16%, transparent);
+}
+/* Solo la flecha se desplaza con .bt-lift; el icono de la izquierda se queda quieto. */
+.fig-stage .bt-feature.bt-lift:hover .bt-feature-icon svg,
+.fig-stage .bt-feature.bt-lift:focus-visible .bt-feature-icon svg { transform: none; }
+.fig-stage .bt-feature-body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.fig-stage .bt-feature-title { font: 600 16px/1.3 "Inter", var(--type-body); }
+.fig-stage .bt-feature-text { font: 400 14px/1.45 "Inter", var(--type-body); opacity: 0.85; }
+
+/* ---------- Línea divisoria ---------- */
+.fig-stage .bt-rule { margin: 0; border: 0; border-top: 1px solid color-mix(in srgb, currentColor 14%, transparent); }
+
+/* ---------- Estrellas ---------- */
+.fig-stage .bt-stars { display: inline-flex; gap: 2px; color: color-mix(in srgb, currentColor 45%, transparent); }
+.fig-stage .bt-stars .is-on { color: var(--semantic-action-cta); fill: currentColor; }
+
+/* ---------- Estado vacío: centrado (listados) o --start (dentro de una sección) ---------- */
+.fig-stage .bt-empty {
+  width: 100%;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  font-family: "Inter", var(--type-body);
+  color: var(--semantic-text-primary);
+}
+.fig-stage .bt-empty.bt-glass-std { color: var(--bt-glass-text); border-radius: 20px; }
+.fig-stage .bt-empty h3 { margin: 0; font: 600 20px/1.3 "Sora", var(--type-heading); }
+.fig-stage .bt-empty p { margin: 0; max-width: 720px; font-size: 15px; line-height: 1.6; }
+.fig-stage .bt-empty--start { align-items: flex-start; text-align: left; padding: 28px 32px; }
+
+/* ---------- Luz ambiental: luces de marca desenfocadas detrás del vidrio ---------- */
+.fig-stage .bt-ambient-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(460px 300px at 15% 55%, color-mix(in srgb, var(--brand-turquesa-laguna) 24%, transparent), transparent 70%),
+    radial-gradient(420px 300px at 60% 35%, color-mix(in srgb, var(--brand-azul-condor) 28%, transparent), transparent 70%),
+    radial-gradient(460px 300px at 90% 75%, color-mix(in srgb, var(--brand-verde-frailejon) 18%, transparent), transparent 70%);
+}
+
+/* ---------- Reseñas: resumen + tarjetas ---------- */
+.fig-stage .bt-rating-summary,
+.fig-stage .bt-review-card { border-radius: 20px; }
+.fig-stage .bt-rating-summary { display: flex; flex-direction: column; justify-content: center; gap: 8px; padding: 28px; }
+.fig-stage .bt-rating-score { font: 700 48px/1 "Sora", var(--type-heading); }
+.fig-stage .bt-rating-total { font-size: 14px; }
+.fig-stage .bt-review-card { display: flex; flex-direction: column; gap: 10px; padding: 24px; }
+.fig-stage .bt-review-head { display: flex; align-items: center; gap: 12px; }
+.fig-stage .bt-review-avatar {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font: 700 16px/1 "Sora", var(--type-heading);
+  color: var(--semantic-text-on-action);
+  background-color: var(--semantic-action-primary);
+}
+.fig-stage .bt-review-meta { display: flex; flex-direction: column; }
+.fig-stage .bt-review-author { font-size: 15px; }
+.fig-stage .bt-review-date { font-size: 13px; opacity: 0.85; }
+.fig-stage .bt-review-text { margin: 0; font-size: 14px; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.fig-stage .bt-review-link { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin-top: auto; font-weight: 600; color: inherit; }
+.fig-stage .bt-review-link:focus-visible { outline: 2px solid var(--semantic-focus); outline-offset: 2px; border-radius: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fig-stage .bt-btn, .fig-stage .bt-lift, .bt-overlay .bt-btn { transition-duration: 1ms; }
+  .fig-stage .bt-lift:hover, .fig-stage .bt-lift:focus-visible, .fig-stage .bt-btn--glass:hover, .bt-overlay .bt-btn--glass:hover { transform: none; }
 }

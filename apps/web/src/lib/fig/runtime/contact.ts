@@ -8,6 +8,7 @@ import { getStage, h, markHandled, textOf } from "./dom";
 import { translateTree } from "./i18n-dom";
 import { growWithContent } from "./layout";
 import { createPanel } from "./panel";
+import { button } from "./ui-kit";
 
 type Key = "name" | "email" | "phone" | "message" | "motive";
 
@@ -79,8 +80,7 @@ function initForm(stage: HTMLElement, submit: HTMLElement): void {
   form.append(trap);
 
   const sent = createPanel({ id: "bt-contact-sent", title: "¡Mensaje enviado!", subtitle: "Gracias por escribirnos. Una persona del equipo te responde en menos de 1 día hábil, de lunes a sábado.", narrow: true });
-  const ok = h("button", { type: "button", class: "bt-cta" }, ["Entendido"]);
-  markHandled(ok);
+  const ok = button({ label: "Entendido" });
   ok.addEventListener("click", () => sent.close());
   sent.body.append(ok);
 

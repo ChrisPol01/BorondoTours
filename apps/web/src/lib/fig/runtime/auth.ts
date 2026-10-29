@@ -15,6 +15,7 @@ import {
 import { focusables, getStage, h, markHandled, textOf } from "./dom";
 import { translateTree } from "./i18n-dom";
 import { pageRoot } from "./layout";
+import { button as kitButton } from "./ui-kit";
 
 /* ---------------- Storage ---------------- */
 
@@ -111,10 +112,10 @@ function passwordField(label: string, autocomplete: string): Field {
   return f;
 }
 
+/** Botón del acceso: el del kit, a todo el ancho (salvo los enlaces de texto). */
 function button(label: string, kind: "primary" | "ghost" | "link" = "primary", type: "submit" | "button" = "submit"): HTMLButtonElement {
-  const b = h("button", { type, class: `bt-auth-btn bt-auth-btn--${kind}` }, [label]);
-  markHandled(b);
-  return b;
+  const variant = kind === "ghost" ? "glass" : kind;
+  return kitButton({ label, variant, type, block: kind !== "link" });
 }
 
 async function busy(btn: HTMLButtonElement, task: () => Promise<void>): Promise<void> {
@@ -193,7 +194,6 @@ function renderLogin(ctx: Ctx): HTMLFormElement {
     submit,
     toRegister,
   ]);
-  notice(ctx, `Modo demostración: usa ${DEMO_ACCOUNT.email} / ${DEMO_ACCOUNT.password} o crea una cuenta.`, "demo");
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const eErr = validateEmail(email.input.value);

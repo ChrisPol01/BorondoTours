@@ -7,9 +7,13 @@ import { ADVISOR_CARD_MESSAGES, BEST_SELLERS, HERO_SLIDES, nextIndex, PROMOTIONS
 import { tourHref } from "../catalog";
 import { whatsappUrl } from "../whatsapp";
 import { getStage, h, icon, ICONS, markHandled, reducedMotion, textOf } from "./dom";
+import { figScale, fitBlock } from "./layout";
 import { createPanel, type Panel } from "./panel";
 import { cardFromShowcase, createTourCard } from "./tour-card";
 import { setSourceText, translateTree } from "./i18n-dom";
+import { displayAuthor, featuredReviews, formatRating, GOOGLE_REVIEWS, type GoogleReview, type GoogleReviewsSource } from "../trust";
+import { authUrl } from "../auth";
+import { ambientGlow, button, emptyState, featureGroup, lift, onStrong, ratingSummary, reviewCard, sectionHead, stars, type FeatureOptions } from "./ui-kit";
 const HOME_FIGMA_ID = "113:17071";
 const AUTOPLAY_MS = 7000;
 /* ---------------- Hero: carrusel de 4 destinos ---------------- */
@@ -124,7 +128,7 @@ function showcase(id: string, title: string, subtitle: string, tours: readonly S
   const track = h("div", { class: "bt-vtrack", tabindex: "0", role: "region", "aria-label": title }, tours.map((t) => createTourCard(cardFromShowcase(t))));
   const prev = h("button", { type: "button", class: "bt-icon-btn bt-vnav", "aria-label": "Tours anteriores", "data-bt-handled": true }, [icon(ICONS.prev)]);
   const next = h("button", { type: "button", class: "bt-icon-btn bt-vnav", "aria-label": "Tours siguientes", "data-bt-handled": true }, [icon(ICONS.next)]);
-  const all = h("a", { class: "bt-vall", href: "/explorar", "data-bt-handled": true }, ["Ver todas", icon(ICONS.arrowRight, 16)]);
+  const all = button({ label: "Ver todas", href: "/explorar", arrow: true });
   const step = (): number => {
     const first = track.firstElementChild as HTMLElement | null;
     return first ? first.offsetWidth + 16 : track.clientWidth;
@@ -203,11 +207,192 @@ function setupAdvisorCards(stage: HTMLElement): void {
     button.addEventListener("click", () => window.open(whatsappUrl(message), "_blank", "noopener"));
   });
 }
+/* ---------------- Gestor BorondoTech para agencias y operadores ---------------- */
+/** Todas las funcionalidades llevan a iniciar sesión: el gestor aún no tiene ruta en el B2C. */
+const GESTOR_LOGIN = authUrl("login");
+const GESTOR_SR_HINT = "Inicia sesión para usarlo";
+/** Iconos de trazo 2 px (viewBox 24). */
+const GESTOR_ICONS = {
+  pipeline: ["M6 5v11", "M12 5v6", "M18 5v14"],
+  quote: ["M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z", "M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8", "M12 17.5v-11"],
+  inbox: ["M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z", "M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"],
+  percent: ["M19 5 5 19", "M6.5 9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z", "M17.5 20a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"],
+  seats: ["M8 2v4", "M16 2v4", "M3 10h18", "M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z", "m9 16 2 2 4-4"],
+  manifest: ["M9 2h6a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z", "M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2", "M12 11h4", "M12 16h4", "M8 11h.01", "M8 16h.01"],
+  share: ["M18 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6z", "M6 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z", "M18 22a3 3 0 1 0 0-6 3 3 0 0 0 0 6z", "m8.59 13.51 6.83 3.98", "m15.41 6.51-6.82 3.98"],
+  wallet: ["M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1", "M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"],
+} as const;
+type GestorFeature = readonly [title: string, text: string, icon: readonly string[]];
+/** Funcionalidades del gestor (propuesta consolidada ERP+B2B y decisiones del dueño D2-D4). */
+const AGENCY_FEATURES: readonly GestorFeature[] = [
+  ["CRM y embudo de ventas", "Sigue cada cliente desde el primer mensaje hasta la reserva.", GESTOR_ICONS.pipeline],
+  ["Cotizaciones con link de pago", "Envía la cotización y cobra en línea con el mismo enlace.", GESTOR_ICONS.quote],
+  ["Bandeja multicanal", "WhatsApp, Instagram y Messenger en una sola bandeja.", GESTOR_ICONS.inbox],
+  ["Comisiones claras", "Consulta lo que ganas por cada venta, sin hojas de cálculo.", GESTOR_ICONS.percent],
+];
+const OPERATOR_FEATURES: readonly GestorFeature[] = [
+  ["Tours y cupos en tiempo real", "Actualiza la disponibilidad una vez y todos ven el mismo dato.", GESTOR_ICONS.seats],
+  ["Manifiesto automático", "La lista de pasajeros se llena sola con cada reserva.", GESTOR_ICONS.manifest],
+  ["Distribución a agencias", "Fija una comisión para tus revendedores y deja que vendan por ti.", GESTOR_ICONS.share],
+  ["Liquidaciones a la vista", "Revisa pagos, retenciones y soportes de cada ciclo.", GESTOR_ICONS.wallet],
+];
+const toFeature = ([title, text, iconPaths]: GestorFeature): FeatureOptions => ({ title, text, icon: iconPaths, href: GESTOR_LOGIN, srHint: GESTOR_SR_HINT });
+/** Margen inferior de la franja (px de diseño) bajo el contenido. */
+const GESTOR_BAND_PADDING = 72;
+/**
+ * Franja del gestor (p0_126, fondo surface-strong): reemplaza la de cifras y medios de pago.
+ * Encabezado y dos grupos (agencias / operadores) del kit; cada funcionalidad y cada CTA llevan a
+ * iniciar sesión. El alto sigue al contenido (idioma, fuentes) con fitBlock.
+ */
+function setupGestorBand(stage: HTMLElement): void {
+  const band = stage.querySelector<HTMLElement>(".p0_126");
+  if (!band || band.querySelector(".bt-gestor")) return;
+  band.classList.add("bt-gestor-band");
+  onStrong(band);
+  const groups = h("div", { class: "bt-gestor-groups" }, [
+    featureGroup({ title: "Para agencias", intro: "Vende tours sin perder el hilo de cada cliente.", features: AGENCY_FEATURES.map(toFeature), cta: button({ label: "Entrar como agencia", href: GESTOR_LOGIN, arrow: true }) }),
+    featureGroup({ title: "Para operadores", intro: "Publica tus tours una vez y deja que las agencias los vendan.", features: OPERATOR_FEATURES.map(toFeature), cta: button({ label: "Entrar como operador", href: GESTOR_LOGIN, arrow: true }) }),
+  ]);
+  const section = h("section", { class: "bt-gestor", "aria-labelledby": "bt-gestor-title" }, [
+    sectionHead({ eyebrow: "BorondoTech para empresas de turismo", title: "Tu agencia u operadora, organizada en un solo lugar", id: "bt-gestor-title" }),
+    groups,
+  ]);
+  // Los bloques generados de "Paga como prefieras" (p0_127/p0_129) salen de la franja.
+  band.replaceChildren(ambientGlow(), section);
+  const apply = (): void => fitBlock(stage, band, section.offsetTop + section.offsetHeight + GESTOR_BAND_PADDING);
+  if (typeof ResizeObserver !== "undefined") new ResizeObserver(apply).observe(section);
+  apply();
+}
+/** Promesas (p0_140) y botones de "Más allá de Colombia" (p0_111): vidrio e interacción del kit. */
+function setupStandardSurfaces(stage: HTMLElement): void {
+  stage.querySelectorAll<HTMLElement>(".p0_139 > .p0_140").forEach((card) => card.classList.add("bt-glass-std"));
+  lift(...stage.querySelectorAll(".p0_111 > button"), stage.querySelector(".p0_66"));
+}
+
+/* ---------------- Reseñas de Google ---------------- */
+const REVIEW_DATE = new Intl.DateTimeFormat("es-CO", { month: "long", year: "numeric" });
+function toCard(review: GoogleReview): HTMLElement {
+  const date = new Date(`${review.date}T12:00:00`);
+  return reviewCard({
+    author: displayAuthor(review.author),
+    date: Number.isNaN(date.getTime()) ? "" : REVIEW_DATE.format(date),
+    rating: review.rating,
+    ratingLabel: `${review.rating} de 5 estrellas`,
+    text: review.text,
+    url: review.url,
+  });
+}
+function reviewsBody(source: GoogleReviewsSource): HTMLElement {
+  const featured = featuredReviews(source.reviews);
+  if (source.rating === null || featured.length === 0) {
+    // Sin reseñas reales todavía: estado "pronto", sin cifras ni estrellas inventadas.
+    return emptyState({
+      align: "start",
+      glass: true,
+      media: stars(0, 22),
+      title: "Pronto verás aquí las opiniones de nuestros viajeros",
+      text: "Publicamos solo reseñas reales de nuestro perfil de Google. ¿Ya viajaste con nosotros? Cuéntanos cómo te fue.",
+    });
+  }
+  const score = formatRating(source.rating);
+  const summary = ratingSummary(score, Math.round(source.rating), `${source.total} reseñas en Google`, `${score} de 5 estrellas`);
+  return h("div", { class: "bt-reviews-grid" }, [summary, h("ul", { class: "bt-reviews-list" }, featured.map(toCard))]);
+}
+/**
+ * Sección "Lo que dicen nuestros viajeros" encima de las promesas (p0_138). Las promesas bajan lo
+ * que mida la sección y el resto de la página se desplaza con fitBlock.
+ */
+function setupGoogleReviews(stage: HTMLElement): void {
+  const block = stage.querySelector<HTMLElement>(".p0_138");
+  const cards = block?.querySelector<HTMLElement>(":scope > .p0_139");
+  if (!block || !cards || block.querySelector(".bt-reviews")) return;
+  const source = GOOGLE_REVIEWS;
+  const actions = [button({ label: "Ver en Google", variant: "glass", href: source.profileUrl, external: true, arrow: true })];
+  if (source.writeReviewUrl) actions.push(button({ label: "Escribir una reseña", href: source.writeReviewUrl, external: true }));
+  const section = h("section", { class: "bt-reviews", "aria-labelledby": "bt-reviews-title" }, [
+    sectionHead({ eyebrow: "Reseñas de Google", title: "Lo que dicen nuestros viajeros", id: "bt-reviews-title", aside: actions }),
+    reviewsBody(source),
+  ]);
+  block.prepend(ambientGlow(), section);
+  const baseTop = Number.parseFloat(getComputedStyle(cards).top) || 0;
+  const baseHeight = Number.parseFloat(getComputedStyle(block).height) || 0;
+  const GAP = 56;
+  const apply = (): void => {
+    const extra = section.offsetHeight + GAP;
+    cards.style.top = `${baseTop + extra}px`;
+    fitBlock(stage, block, baseHeight + extra);
+  };
+  // El alto cambia con el idioma, las fuentes y la cantidad de reseñas.
+  if (typeof ResizeObserver !== "undefined") new ResizeObserver(apply).observe(section);
+  apply();
+}
+
+/* ---------------- Hero que cabe en la ventana ---------------- */
+/** Alto mínimo del hero (px de diseño): por debajo, título y buscador se solaparían. */
+const HERO_MIN_HEIGHT = 700;
+/** Cuánto del recorte se aplica también al bloque del título (el resto lo absorbe el buscador). */
+const HERO_TITLE_SHARE = 0.4;
+const HERO_TITLE_MAX_SHIFT = 90;
+/** Margen extra para que el texto inferior quede por encima del degradado que funde el hero con la página. */
+const HERO_FADE_CLEARANCE = 14;
+const HERO_BOTTOM_GROUP = [".p0_30", ".p0_40", ".p0_44"] as const;
+const HERO_TITLE_GROUP = [".p0_25", ".p0_19", ".p0_24"] as const;
+const HERO_FULL_LAYERS = [".p0_2", ".p0_4"] as const;
+/** Valor original de una propiedad en px (se guarda la primera vez para no acumular ajustes). */
+function heroOriginal(el: HTMLElement, prop: "top" | "height"): number {
+  const key = prop === "top" ? "btHeroTop" : "btHeroHeight";
+  const stored = el.dataset[key];
+  if (stored !== undefined) return Number(stored);
+  const value = Number.parseFloat(getComputedStyle(el)[prop]) || 0;
+  el.dataset[key] = String(value);
+  return value;
+}
+/**
+ * El hero mide 900 px de diseño y se escala con el ancho: en pantallas anchas pero bajas (1366×768)
+ * el buscador y el texto inferior quedaban bajo el pliegue. Se acorta hasta caber en la ventana
+ * (con un mínimo) subiendo el grupo inferior; el resto de la página sube con él.
+ */
+function fitHeroToViewport(stage: HTMLElement): void {
+  const hero = stage.querySelector<HTMLElement>(".p0_1");
+  if (!hero || hero.parentElement !== stage.firstElementChild) return;
+  fitBlock(stage, hero, 0); // guarda las medidas originales
+  const base = Number(hero.dataset.btOrigHeight ?? hero.offsetHeight);
+  if (!base) return;
+  const apply = (): void => {
+    const target = Math.round(Math.min(base, Math.max(HERO_MIN_HEIGHT, window.innerHeight / figScale())));
+    const delta = base - target;
+    fitBlock(stage, hero, target, true);
+    const shift = (selectors: readonly string[], amount: number): void => {
+      for (const selector of selectors) {
+        const el = hero.querySelector<HTMLElement>(`:scope > ${selector}`);
+        if (el) el.style.top = `${heroOriginal(el, "top") - amount}px`;
+      }
+    };
+    shift(HERO_BOTTOM_GROUP, delta + HERO_FADE_CLEARANCE);
+    shift(HERO_TITLE_GROUP, Math.min(Math.round(delta * HERO_TITLE_SHARE), HERO_TITLE_MAX_SHIFT));
+    for (const selector of HERO_FULL_LAYERS) {
+      const layer = hero.querySelector<HTMLElement>(`:scope > ${selector}`);
+      if (layer) layer.style.height = `${target}px`;
+    }
+    const shade = hero.querySelector<HTMLElement>(":scope > .p0_3");
+    if (shade) shade.style.height = `${target - heroOriginal(shade, "top")}px`;
+  };
+  let frame = 0;
+  window.addEventListener("resize", () => {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(apply);
+  }, { passive: true });
+  apply();
+}
 export function initHome(): void {
   const stage = getStage();
   if (!stage || stage.dataset.figmaId !== HOME_FIGMA_ID) return;
+  fitHeroToViewport(stage);
   setupHero(stage);
   setupSideTabs(stage);
   setupAdvisorCards(stage);
+  setupGestorBand(stage);
+  setupStandardSurfaces(stage);
+  setupGoogleReviews(stage);
   translateTree(stage);
 }

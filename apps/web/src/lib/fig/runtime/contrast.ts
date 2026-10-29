@@ -172,4 +172,8 @@ export function initContrast(): void {
   // El runtime agrega tarjetas, documentos y diálogos: solo cambios de hijos (fix() solo toca estilos).
   if (stage) new MutationObserver(run).observe(stage, { childList: true, subtree: true });
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", run);
+  // La primera pasada puede correr antes de que lleguen las hojas de estilo (en dev Vite las inyecta
+  // tras el módulo) y entonces no ve los colores finales: se repite cuando todo terminó de cargar.
+  if (document.readyState !== "complete") window.addEventListener("load", run, { once: true });
+  void document.fonts?.ready.then(run);
 }

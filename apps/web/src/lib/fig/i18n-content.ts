@@ -7,6 +7,44 @@ type T = Readonly<Record<"en" | "fr" | "zh" | "ja" | "pt", string>>;
 const tr = (en: string, fr: string, zh: string, ja: string, pt: string): T => ({ en, fr, zh, ja, pt });
 
 export const CONTENT_DICTIONARY: Readonly<Record<string, T>> = {
+  // ---------- Home: gestor BorondoTech para agencias y operadores ----------
+  "BorondoTech para empresas de turismo": tr("BorondoTech for tourism businesses", "BorondoTech pour les entreprises de tourisme", "面向旅游企业的 BorondoTech", "観光事業者向け BorondoTech", "BorondoTech para empresas de turismo"),
+  "Tu agencia u operadora, organizada en un solo lugar": tr("Your agency or tour operator, organized in one place", "Votre agence ou votre opérateur, organisé en un seul endroit", "你的旅行社或运营商，统一在一处管理", "旅行会社もツアー運営も、ひとつの場所で管理", "Sua agência ou operadora, organizada em um só lugar"),
+  "Para agencias": tr("For agencies", "Pour les agences", "旅行社专用", "旅行会社向け", "Para agências"),
+  "Vende tours sin perder el hilo de cada cliente.": tr("Sell tours without losing track of any client.", "Vendez des circuits sans perdre le fil de chaque client.", "销售行程，不错过任何一位客户的进展。", "お客様一人ひとりの状況を見失わずにツアーを販売できます。", "Venda passeios sem perder o fio de cada cliente."),
+  "CRM y embudo de ventas": tr("CRM and sales pipeline", "CRM et pipeline de ventes", "CRM 与销售漏斗", "CRM と営業パイプライン", "CRM e funil de vendas"),
+  "Sigue cada cliente desde el primer mensaje hasta la reserva.": tr("Follow each client from the first message to the booking.", "Suivez chaque client du premier message à la réservation.", "从第一条消息到预订，跟进每位客户。", "最初のメッセージから予約まで、お客様を追跡できます。", "Acompanhe cada cliente da primeira mensagem até a reserva."),
+  "Cotizaciones con link de pago": tr("Quotes with a payment link", "Devis avec lien de paiement", "附带支付链接的报价", "決済リンク付きの見積もり", "Orçamentos com link de pagamento"),
+  "Envía la cotización y cobra en línea con el mismo enlace.": tr("Send the quote and get paid online with the same link.", "Envoyez le devis et encaissez en ligne avec le même lien.", "发送报价，并用同一链接在线收款。", "見積もりを送り、同じリンクでオンライン決済を受け付けます。", "Envie o orçamento e receba online com o mesmo link."),
+  "Bandeja multicanal": tr("Multichannel inbox", "Boîte de réception multicanal", "多渠道收件箱", "マルチチャネル受信箱", "Caixa de entrada multicanal"),
+  "WhatsApp, Instagram y Messenger en una sola bandeja.": tr("WhatsApp, Instagram and Messenger in a single inbox.", "WhatsApp, Instagram et Messenger dans une seule boîte.", "WhatsApp、Instagram 和 Messenger 集中在一个收件箱。", "WhatsApp、Instagram、Messenger をひとつの受信箱で。", "WhatsApp, Instagram e Messenger em uma só caixa de entrada."),
+  "Comisiones claras": tr("Clear commissions", "Commissions claires", "清晰的佣金", "わかりやすい手数料", "Comissões claras"),
+  "Consulta lo que ganas por cada venta, sin hojas de cálculo.": tr("See what you earn on each sale, no spreadsheets.", "Voyez ce que vous gagnez sur chaque vente, sans tableur.", "无需表格，即可查看每笔销售的收入。", "販売ごとの収益を、表計算なしで確認できます。", "Veja quanto você ganha em cada venda, sem planilhas."),
+  "Entrar como agencia": tr("Sign in as an agency", "Se connecter en tant qu'agence", "以旅行社身份登录", "旅行会社としてログイン", "Entrar como agência"),
+  "Para operadores": tr("For tour operators", "Pour les opérateurs", "运营商专用", "ツアー運営会社向け", "Para operadoras"),
+  "Publica tus tours una vez y deja que las agencias los vendan.": tr("Publish your tours once and let agencies sell them.", "Publiez vos circuits une fois et laissez les agences les vendre.", "只需发布一次行程，让旅行社替你销售。", "ツアーを一度掲載すれば、旅行会社が販売します。", "Publique seus passeios uma vez e deixe as agências venderem."),
+  "Tours y cupos en tiempo real": tr("Real-time tours and availability", "Circuits et places en temps réel", "实时行程与名额", "ツアーと空き枠をリアルタイムで", "Passeios e vagas em tempo real"),
+  "Actualiza la disponibilidad una vez y todos ven el mismo dato.": tr("Update availability once and everyone sees the same data.", "Mettez à jour les disponibilités une fois et tout le monde voit la même info.", "更新一次名额，所有人看到的都是同一数据。", "空き状況を一度更新すれば、全員が同じ情報を見られます。", "Atualize a disponibilidade uma vez e todos veem o mesmo dado."),
+  "Manifiesto automático": tr("Automatic manifest", "Manifeste automatique", "自动乘客名单", "自動作成の乗客名簿", "Manifesto automático"),
+  "La lista de pasajeros se llena sola con cada reserva.": tr("The passenger list fills itself with every booking.", "La liste des passagers se remplit à chaque réservation.", "每笔预订都会自动填入乘客名单。", "予約ごとに乗客リストが自動で埋まります。", "A lista de passageiros se preenche sozinha a cada reserva."),
+  "Distribución a agencias": tr("Distribution to agencies", "Distribution aux agences", "分销给旅行社", "旅行会社への販売委託", "Distribuição para agências"),
+  "Fija una comisión para tus revendedores y deja que vendan por ti.": tr("Set a commission for your resellers and let them sell for you.", "Fixez une commission pour vos revendeurs et laissez-les vendre pour vous.", "为分销商设定佣金，让他们替你销售。", "販売代理店の手数料を設定し、代わりに販売してもらえます。", "Defina uma comissão para seus revendedores e deixe que vendam por você."),
+  "Liquidaciones a la vista": tr("Settlements at a glance", "Règlements en un coup d'œil", "结算一目了然", "精算がひと目でわかる", "Liquidações à vista"),
+  "Revisa pagos, retenciones y soportes de cada ciclo.": tr("Review payments, withholdings and receipts for each cycle.", "Consultez paiements, retenues et justificatifs de chaque cycle.", "查看每个周期的付款、预扣税和凭证。", "各サイクルの支払い、源泉徴収、証憑を確認できます。", "Revise pagamentos, retenções e comprovantes de cada ciclo."),
+  "Entrar como operador": tr("Sign in as an operator", "Se connecter en tant qu'opérateur", "以运营商身份登录", "ツアー運営会社としてログイン", "Entrar como operadora"),
+  "Inicia sesión para usarlo": tr("Sign in to use it", "Connectez-vous pour l'utiliser", "登录后即可使用", "ログインして利用", "Faça login para usar"),
+  // ---------- Home: reseñas de Google ----------
+  "Reseñas de Google": tr("Google reviews", "Avis Google", "Google 评价", "Google のレビュー", "Avaliações do Google"),
+  "Lo que dicen nuestros viajeros": tr("What our travelers say", "Ce que disent nos voyageurs", "旅行者怎么说", "旅行者の声", "O que dizem nossos viajantes"),
+  "Ver en Google": tr("See on Google", "Voir sur Google", "在 Google 上查看", "Google で見る", "Ver no Google"),
+  "Escribir una reseña": tr("Write a review", "Écrire un avis", "写评价", "レビューを書く", "Escrever uma avaliação"),
+  "Leer en Google": tr("Read on Google", "Lire sur Google", "在 Google 上阅读", "Google で読む", "Ler no Google"),
+  "Pronto verás aquí las opiniones de nuestros viajeros": tr("Soon you'll see our travelers' reviews here", "Bientôt, vous verrez ici les avis de nos voyageurs", "很快你就能在这里看到旅行者的评价", "まもなくここに旅行者のレビューが表示されます", "Em breve você verá aqui as opiniões dos nossos viajantes"),
+  "Publicamos solo reseñas reales de nuestro perfil de Google. ¿Ya viajaste con nosotros? Cuéntanos cómo te fue.": tr("We only publish real reviews from our Google profile. Have you traveled with us? Tell us how it went.", "Nous ne publions que de vrais avis issus de notre profil Google. Vous avez voyagé avec nous ? Racontez-nous.", "我们只发布 Google 主页上的真实评价。和我们旅行过吗？告诉我们你的体验。", "Google プロフィールの実際のレビューのみを掲載しています。ご旅行の感想をお聞かせください。", "Publicamos apenas avaliações reais do nosso perfil no Google. Já viajou com a gente? Conte como foi."),
+  // ---------- Tarjeta de tour estándar y listas que la usan ----------
+  "Ver todas": tr("See all", "Tout voir", "查看全部", "すべて見る", "Ver todas"),
+  "Tours que también te pueden gustar": tr("Tours you might also like", "Circuits qui pourraient aussi vous plaire", "你可能也喜欢的行程", "こちらもおすすめのツアー", "Passeios que você também pode gostar"),
+  "Ver todos en la región": tr("See all in the region", "Tout voir dans la région", "查看该地区全部", "この地域のツアーをすべて見る", "Ver todos na região"),
   // ---------- Disponibilidad de tarjetas ----------
   "Agotado": tr("Sold out", "Complet", "已售罄", "完売", "Esgotado"),
   // ---------- Blog ----------
@@ -245,7 +283,11 @@ export const CONTENT_DICTIONARY: Readonly<Record<string, T>> = {
 export type ContentRule = readonly [RegExp, Readonly<Record<"en" | "fr" | "zh" | "ja" | "pt", string>>];
 
 export const CONTENT_PATTERNS: readonly ContentRule[] = [
+  [/^(\d+) reseñas en Google$/, { en: "$1 reviews on Google", fr: "$1 avis sur Google", zh: "Google 上的 $1 条评价", ja: "Google のレビュー $1 件", pt: "$1 avaliações no Google" }],
+  [/^(\d+) tours? guardados?\. Te avisamos si se abren cupos en los que están agotados\.$/, { en: "$1 saved tours. We'll let you know if spots open up on the sold-out ones.", fr: "$1 circuits enregistrés. Nous vous prévenons si des places se libèrent pour les circuits complets.", zh: "已收藏 $1 个行程。已售罄的行程有名额时我们会通知你。", ja: "$1 件のツアーを保存済み。完売したツアーに空きが出たらお知らせします。", pt: "$1 passeios salvos. Avisamos se abrirem vagas nos esgotados." }],
   [/^v(\d+\.\d+) · (\d+) (sep|ago) 2026$/, { en: "v$1 · $t3 $2, 2026", fr: "v$1 · $2 $t3 2026", zh: "v$1 · 2026 年 $t3 $2 日", ja: "v$1 · 2026年$t3$2日", pt: "v$1 · $2 $t3 2026" }],
+  // Subtítulo de las vitrinas (Promociones / Más vendidos): "<frase> · N tours".
+  [/^(.+) · (\d+) tours$/, { en: "$t1 · $2 tours", fr: "$t1 · $2 circuits", zh: "$t1 · $2 条行程", ja: "$t1 · $2 件のツアー", pt: "$t1 · $2 passeios" }],
   [/^(\d+) tours · (.+)$/, { en: "$1 tours · $t2", fr: "$1 circuits · $t2", zh: "$1 条行程 · $t2", ja: "$1 件のツアー · $t2", pt: "$1 passeios · $t2" }],
   [/^Ordenar: (.+)$/, { en: "Sort: $t1", fr: "Trier : $t1", zh: "排序：$t1", ja: "並べ替え：$t1", pt: "Ordenar: $t1" }],
   [/^(.+) ×$/, { en: "$t1 ×", fr: "$t1 ×", zh: "$t1 ×", ja: "$t1 ×", pt: "$t1 ×" }],
@@ -263,7 +305,6 @@ export const CONTENT_PATTERNS: readonly ContentRule[] = [
   [/^Código incorrecto\. Te quedan (\d+) intentos\.$/, { en: "Wrong code. $1 attempts left.", fr: "Code incorrect. Il vous reste $1 tentatives.", zh: "验证码错误，还剩 $1 次机会。", ja: "コードが違います。残り$1回です。", pt: "Código incorreto. Restam $1 tentativas." }],
   [/^Cuenta bloqueada por intentos fallidos\. Intenta de nuevo en (\d+) min\.$/, { en: "Account locked after failed attempts. Try again in $1 min.", fr: "Compte bloqué après plusieurs échecs. Réessayez dans $1 min.", zh: "因多次失败账号已锁定，请在 $1 分钟后重试。", ja: "失敗が続いたためロックされました。$1分後に再試行してください。", pt: "Conta bloqueada por tentativas falhas. Tente de novo em $1 min." }],
   [/^Enviamos un código de 6 dígitos a (\S+)\. Vence en 10 minutos\.$/, { en: "We sent a 6-digit code to $1. It expires in 10 minutes.", fr: "Nous avons envoyé un code à 6 chiffres à $1. Il expire dans 10 minutes.", zh: "我们已向 $1 发送 6 位验证码，10 分钟内有效。", ja: "$1 に6桁のコードを送りました。有効期限は10分です。", pt: "Enviamos um código de 6 dígitos para $1. Ele vence em 10 minutos." }],
-  [/^Modo demostración: usa (\S+) \/ (\S+) o crea una cuenta\.$/, { en: "Demo mode: use $1 / $2 or create an account.", fr: "Mode démo : utilisez $1 / $2 ou créez un compte.", zh: "演示模式：使用 $1 / $2 或创建账号。", ja: "デモモード：$1 / $2 を使うか、アカウントを作成してください。", pt: "Modo demonstração: use $1 / $2 ou crie uma conta." }],
   [/^Modo demostración: tu código es (\d{6})\. En producción llega a tu correo\.$/, { en: "Demo mode: your code is $1. In production it arrives by email.", fr: "Mode démo : votre code est $1. En production, il arrive par e-mail.", zh: "演示模式：你的验证码是 $1。正式环境会发送到邮箱。", ja: "デモモード：コードは $1 です。本番ではメールで届きます。", pt: "Modo demonstração: seu código é $1. Em produção ele chega por e-mail." }],
   [/^Modo demostración: tu nuevo código es (\d{6})\.$/, { en: "Demo mode: your new code is $1.", fr: "Mode démo : votre nouveau code est $1.", zh: "演示模式：你的新验证码是 $1。", ja: "デモモード：新しいコードは $1 です。", pt: "Modo demonstração: seu novo código é $1." }],
 ];

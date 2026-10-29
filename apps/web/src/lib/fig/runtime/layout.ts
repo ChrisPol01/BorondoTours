@@ -43,13 +43,16 @@ function original(node: HTMLElement, prop: "top" | "height"): number {
 
 /**
  * Ajusta el alto de un bloque absoluto (hijo de la raíz) a `height` px y desplaza lo que está debajo.
- * Solo crece: si el contenido cabe en el alto original, todo vuelve a su lugar.
+ * Por defecto solo crece (si el contenido cabe en el alto original, todo vuelve a su lugar);
+ * con `allowShrink` el bloque también puede quedar más bajo que el original (p. ej. el hero en
+ * ventanas bajas) y lo de abajo sube.
  */
-export function fitBlock(stage: HTMLElement, block: HTMLElement, height: number): void {
+export function fitBlock(stage: HTMLElement, block: HTMLElement, height: number, allowShrink = false): void {
   const root = pageRoot(stage);
   if (!root || block.parentElement !== root) return;
   const baseHeight = original(block, "height");
-  const delta = Math.max(0, Math.ceil(height - baseHeight));
+  const raw = Math.ceil(height - baseHeight);
+  const delta = allowShrink ? raw : Math.max(0, raw);
   block.dataset.btDelta = String(delta);
   block.style.height = `${baseHeight + delta}px`;
 
@@ -59,7 +62,7 @@ export function fitBlock(stage: HTMLElement, block: HTMLElement, height: number)
     (c): c is HTMLElement => c instanceof HTMLElement && getComputedStyle(c).position === "absolute",
   );
   const grown = absolute
-    .filter((c) => Number(c.dataset.btDelta ?? 0) > 0)
+    .filter((c) => Number(c.dataset.btDelta ?? 0) !== 0)
     .map((c) => ({ bottom: original(c, "top") + original(c, "height"), delta: Number(c.dataset.btDelta) }));
   for (const child of absolute) {
     const childTop = original(child, "top");

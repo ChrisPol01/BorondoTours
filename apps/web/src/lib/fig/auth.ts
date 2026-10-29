@@ -16,7 +16,7 @@ export const AUTH_STORAGE = {
   attempts: "borondo.demo.attempts",
 } as const;
 
-/** Cuenta de prueba publicada en la pantalla de acceso. */
+/** Cuenta de prueba de la demostración (documentada en docs/06-Operaciones/Credenciales-Demo.md, no en pantalla). */
 export const DEMO_ACCOUNT = {
   email: "demo@borondotours.com",
   password: "Borondo2026",

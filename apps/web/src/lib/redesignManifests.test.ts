@@ -141,8 +141,8 @@ describe("versioned redesign fixtures", () => {
 
   it("records Spec A/B evidence while leaving incomplete remote contracts disabled", () => {
     const evidenceDocuments = STAGE_MANIFESTS.flatMap((stage) => stage.evidence.map((item) => item.document));
-    expect(evidenceDocuments).toContain(".obsidian/docs/01-Specs/Spec-A-Discovery.md");
-    expect(evidenceDocuments).toContain(".obsidian/docs/01-Specs/Spec-B-Tour-Detail.md");
+    expect(evidenceDocuments).toContain("docs/01-Specs/Spec-A-Discovery.md");
+    expect(evidenceDocuments).toContain("docs/01-Specs/Spec-B-Tour-Detail.md");
     expect(CONTRACT_READINESS.catalogSearch.requestSchemaApproved).toBe(true);
     expect(CONTRACT_READINESS.catalogSearch.responseSchemaApproved).toBe(false);
     expect(CONTRACT_READINESS.tourPageData.responseSchemaApproved).toBe(false);

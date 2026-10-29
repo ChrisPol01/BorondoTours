@@ -57,12 +57,91 @@
 .bt-side-tab:hover,
 .bt-side-tab:focus-visible { translate: var(--bt-full-x, 0) 0; filter: brightness(1.05); }
 
-/* Tarjetas de "Más allá de Colombia" (p0_111) → WhatsApp. */
-.p0_111 { overflow: visible; }
-.p0_111 > button { cursor: pointer; transition: transform var(--motion-duration-standard) var(--motion-ease-standard); }
-.p0_111 > button:hover { transform: translateY(-4px); }
+/* Tarjetas de "Más allá de Colombia" (p0_111) → WhatsApp.
+ * El CSS generado fija `overflow: hidden` en p0_111 con la misma especificidad, por eso el hover
+ * (sube 4 px) se cortaba arriba. Con `.fig-stage` gana el `visible`. */
+.fig-stage .p0_111 { overflow: visible; } /* la interacción es .bt-lift del kit */
+
+/* ---------- Transición hero → sección "Explora Colombia" ----------
+ * El hero terminaba con un corte seco contra el fondo de la página. La foto se funde con el color de
+ * superficie del tema en sus últimos 64 px (debajo del texto del buscador) y la sección arranca con un
+ * halo muy suave del mismo color de acción, de modo que ambas partes se unen sin línea. */
+.fig-stage .p0_1::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 72px;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--semantic-surface-page));
+}
+
+/* ---------- Botón "Ver todo el catálogo" (p0_66): vidrio del tema + interacción ----------
+ * El texto y la flecha siguen el color del vidrio (--bt-glass-text): oscuro en Claro, claro en
+ * Colorido y Oscuro; antes la flecha quedaba con el color de otro tema y se perdía. */
+/* La interacción es .bt-lift del kit; aquí solo el color del texto y la flecha sobre su capa de vidrio. */
+.fig-stage .p0_66,
+.fig-stage .p0_66 .p0_68 { color: var(--bt-glass-text); }
+.fig-stage .p0_66 svg path { fill: currentColor; }
+.fig-stage .p0_66 .p0_67 { width: 100%; height: 100%; }
+
+/* ---------- Tarjetas de categoría (p0_69…p0_95) ----------
+ * Crecen un poco al pasar el mouse; el botón circular de la flecha es vidrio y se ilumina en azul. */
+.fig-stage .p0_49 a[href^="/explorar?category="] {
+  cursor: pointer;
+  transition: transform var(--motion-duration-standard) var(--motion-ease-standard), box-shadow var(--motion-duration-standard) var(--motion-ease-standard);
+}
+.fig-stage .p0_49 a[href^="/explorar?category="]:hover,
+.fig-stage .p0_49 a[href^="/explorar?category="]:focus-visible {
+  transform: scale(1.025);
+  z-index: 2;
+  box-shadow: 0 18px 40px color-mix(in srgb, var(--brand-azul-profundo) 55%, transparent);
+}
+.fig-stage .p0_49 a[href^="/explorar?category="]:focus-visible { outline: 2px solid var(--semantic-focus); outline-offset: 3px; }
+/* Botón de la flecha: vidrio (fondo translúcido + desenfoque + borde de luz). La flecha es siempre
+ * clara porque se apoya sobre la foto oscurecida, en cualquier tema (en Claro salía negra). */
+.fig-stage .p0_49 a[href^="/explorar?category="] > svg:last-child {
+  border-radius: 50%;
+  background-color: color-mix(in srgb, var(--brand-blanco-niebla) 14%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid color-mix(in srgb, var(--brand-blanco-niebla) 35%, transparent);
+  box-shadow: inset 0 1px 6px color-mix(in srgb, var(--brand-blanco-niebla) 25%, transparent);
+  transition: background-color var(--motion-duration-standard) var(--motion-ease-standard), box-shadow var(--motion-duration-standard) var(--motion-ease-standard), transform var(--motion-duration-standard) var(--motion-ease-standard);
+}
+.fig-stage .p0_49 a[href^="/explorar?category="] > svg:last-child .p0_77 { fill: var(--brand-blanco-niebla); }
+.fig-stage .p0_49 a[href^="/explorar?category="]:hover > svg:last-child,
+.fig-stage .p0_49 a[href^="/explorar?category="]:focus-visible > svg:last-child {
+  background-color: color-mix(in srgb, var(--brand-azul-condor) 55%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand-turquesa-laguna) 70%, transparent), 0 0 22px 3px color-mix(in srgb, var(--brand-azul-condor) 85%, transparent);
+  transform: translateX(3px);
+}
+.fig-stage .p0_49 a[href^="/explorar?category="] > svg:last-child:active { transform: scale(0.92); }
+
+/* ---------- Tarjetas informativas (p0_139): mismo alto ----------
+ * Las que tienen texto de dos líneas medían 178 px y las de una, 155 px. Ahora todas se estiran al alto
+ * de la fila y su capa de vidrio las cubre completas. */
+.fig-stage .p0_139 { align-items: stretch; }
+.fig-stage .p0_139 > .p0_140 { align-self: stretch; }
+.fig-stage .p0_140 > .p0_141,
+.fig-stage .p0_140 > .p0_145 { height: 100%; }
 
 @media (prefers-reduced-motion: reduce) {
   .bt-hero-slide { animation-duration: 1ms; }
   .bt-side-tab, .p0_46 > div { transition-duration: 1ms; }
 }
+
+/* ---------- Gestor BorondoTech (p0_126): solo colocación. Las piezas son del kit. ----------
+ * Encabezado arriba (72) y dos grupos en columnas; el alto lo ajusta fitBlock desde el runtime. */
+.fig-stage .p0_126.bt-gestor-band > .bt-gestor { position: absolute; left: 80px; top: 72px; width: 1280px; display: flex; flex-direction: column; gap: 40px; }
+.fig-stage .p0_126.bt-gestor-band .bt-gestor-groups { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
+
+/* ---------- Reseñas de Google (encima de las promesas, p0_138): colocación y rejilla ---------- */
+.fig-stage .bt-reviews { position: absolute; left: 80px; top: 72px; width: 1280px; display: flex; flex-direction: column; gap: 28px; }
+.fig-stage .bt-reviews-grid { display: grid; grid-template-columns: 260px 1fr; gap: 20px; align-items: stretch; }
+.fig-stage .bt-reviews-list { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+/* ---------- Promesas (p0_140): vidrio estándar del kit; el texto hereda su color ---------- */
+.fig-stage .p0_139 { overflow: visible; }
+.fig-stage .p0_139 > .p0_140.bt-glass-std .p0_143,
+.fig-stage .p0_139 > .p0_140.bt-glass-std .p0_144 { color: inherit; }
