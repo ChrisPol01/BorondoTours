@@ -2,7 +2,11 @@
 // Recibe POST desde API Gateway WS ($connect, $disconnect, sendMessage)
 // Stateless — DynamoDB guarda Connections y ChatMessages
 // Ver: docs/02-ADRs/ADR-003-DynamoDB-Chat.md
-export async function handler(event: any) {
+interface WebSocketEvent {
+  requestContext?: { routeKey?: string };
+}
+
+export async function handler(event: WebSocketEvent) {
   const { requestContext } = event;
   const routeKey = requestContext?.routeKey;
 
