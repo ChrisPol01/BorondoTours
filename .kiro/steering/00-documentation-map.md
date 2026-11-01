@@ -18,7 +18,7 @@ Toda la documentación vive en `docs/` (vault Obsidian, config en `docs/.obsidia
 | `docs/04-Tech-Design/Mapa-Repositorio.md` | Árbol real, comandos, ownership, integraciones |
 | `.kiro/specs/` | Specs de features B2C y planificación operativa |
 | `.kiro/hooks/` | Hooks de agente (calidad, PII, RBAC, a11y) |
-| `.kiro/factory/` | Fábrica SDLC multi-agente: Context Bus, registro de agentes sdlc-*, esquemas y CLI; recetas en .kiro/workflows/ (steering 19) |
+| `.megafactory/` | Megafábrica SDLC enlazada: perfil, bus, memoria y CLI (`node .megafactory/bin/factory.mjs`); recetas en .kiro/workflows/ (steering factory-agents) |
 | `.claude/` | Plantillas claude-flow; no son fuente de verdad |
 | `otros/design/` | Diseño, marca y herramientas Figma; fuera del producto |
 

@@ -67,6 +67,7 @@ export function resolveHomeMinimal(i) {
     const dir = resolve(i.projectRoot, value);
     const reason = reasonOf(dir, i.projectRoot, platform);
     if (!reason) return { home: realpathSync(dir), source, skips, error: null };
+    if (reason === 'missing' && source === 'local') return { home: null, source, skips, error: 'invalid:local:missing' }; // MF-10
     skips.push(`${source}:${reason}`);
   }
   return { home: null, source: null, skips, error: 'not-found' };
@@ -74,7 +75,6 @@ export function resolveHomeMinimal(i) {
 
 /** @param {string} code @param {string} message @param {number} exit @returns {number} */
 const stop = (code, message, exit) => { process.stderr.write(`${code}: ${message}\n`); return exit; };
-
 /** @param {string[]} argv @returns {Promise<number>} */
 export async function main(argv) {
   const root = realpathSync(join(dirname(fileURLToPath(import.meta.url)), '..', '..'));
@@ -88,8 +88,8 @@ export async function main(argv) {
   if (!r.home) return stop('E_MF_HOME', `${r.error}${r.skips.length ? ` (${r.skips.join(', ')})` : ''}; ${HELP}`, 1);
   const lib = (/** @type {string} */ rel) => import(pathToFileURL(join(/** @type {string} */ (r.home), ...rel.split('/'))).href);
   const drift = await lib('engine/scripts/lib/drift.mjs');
-  const d = drift.launcherDrift({ lock, home: r.home, policy: drift.effectivePolicy(drift.projectDriftPolicy(root), process.env) });
-  if (d.error) return stop('E_DRIFT', d.error, 2);
+  const d = drift.launcherDrift({ lock, home: r.home, policy: drift.effectivePolicy(drift.projectDriftPolicy(root), process.env), argv, root, env: process.env });
+  if (d.error) return stop(d.code ?? 'E_DRIFT', d.error, 2);
   if (d.line) process.stderr.write(`${d.line}\n`);
   const engine = await lib('engine/scripts/factory.mjs');
   return engine.run(engine.liftSubcommand(argv), { root });

@@ -72,6 +72,7 @@ export function resolveHomeMinimal(i) {
     const dir = resolve(i.projectRoot, value);
     const reason = reasonOf(dir, i.projectRoot, platform);
     if (!reason) return { home: realpathSync(dir), source, skips, error: null };
+    if (reason === 'missing' && source === 'local') return { home: null, source, skips, error: 'invalid:local:missing' }; // MF-10
     skips.push(`${source}:${reason}`);
   }
   return { home: null, source: null, skips, error: 'not-found' };

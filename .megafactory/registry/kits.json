@@ -728,6 +728,7 @@
       },
       "tools": {
         "ids": [
+          "crawl4ai",
           "markitdown",
           "vale"
         ],
@@ -1042,10 +1043,12 @@
       },
       "tools": {
         "ids": [
+          "crawl4ai",
           "gitleaks",
           "lighthouse-ci",
           "lychee",
           "playwright",
+          "scrapling",
           "semgrep",
           "vale"
         ],
@@ -1519,7 +1522,8 @@
           "infracost",
           "kubeconform",
           "tflint",
-          "trivy"
+          "trivy",
+          "witr"
         ],
         "agentInvocation": []
       },
@@ -2219,6 +2223,7 @@
         "ids": [
           "axe-core-cli",
           "gitleaks",
+          "gsap",
           "lighthouse-ci",
           "playwright",
           "semgrep"
@@ -2458,7 +2463,8 @@
         "ids": [
           "gh",
           "jq",
-          "promtool"
+          "promtool",
+          "witr"
         ],
         "agentInvocation": []
       },
@@ -4256,7 +4262,8 @@
       "tools": {
         "ids": [
           "jq",
-          "promtool"
+          "promtool",
+          "witr"
         ],
         "agentInvocation": []
       },
@@ -4379,9 +4386,11 @@
       },
       "tools": {
         "ids": [
+          "cap",
           "gh",
           "jq",
-          "promtool"
+          "promtool",
+          "witr"
         ],
         "agentInvocation": []
       },
@@ -4502,6 +4511,7 @@
       },
       "tools": {
         "ids": [
+          "cap",
           "lychee",
           "markdownlint-cli2",
           "markitdown",
@@ -4616,6 +4626,7 @@
         "ids": [
           "axe-core-cli",
           "gitleaks",
+          "gsap",
           "playwright",
           "semgrep"
         ],

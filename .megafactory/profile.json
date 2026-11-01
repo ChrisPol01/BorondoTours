@@ -127,6 +127,7 @@
     ],
     "appRoots": [
       "apps/web/",
+      "apps/gestion/",
       "apps/erp/",
       "apps/b2b/",
       "apps/",
@@ -159,20 +160,32 @@
     },
     "ui": {
       "paths": [
-        "packages/ui/src/",
-        "apps/web/e2e/",
-        "apps/web/src/lib/i18n/",
-        "apps/web/src/lib/fig/",
-        "apps/web/src/styles/",
-        "apps/web/src/lib/api/mocks/",
-        "apps/web/test/",
-        "apps/web/tests/"
-      ]
+        "packages/ui/src/"
+      ],
+      "byApp": {
+        "apps/web/": [
+          "apps/web/e2e/",
+          "apps/web/src/lib/i18n/",
+          "apps/web/src/lib/fig/",
+          "apps/web/src/styles/",
+          "apps/web/src/lib/api/mocks/",
+          "apps/web/test/",
+          "apps/web/tests/"
+        ],
+        "apps/gestion/": [
+          "apps/gestion/src/",
+          "apps/gestion/e2e/",
+          "apps/gestion/test/"
+        ]
+      }
     },
     "content-seo": {
-      "paths": [
-        "apps/web/src/lib/i18n/"
-      ]
+      "paths": [],
+      "byApp": {
+        "apps/web/": [
+          "apps/web/src/lib/i18n/"
+        ]
+      }
     },
     "integrations": {
       "paths": []
@@ -335,7 +348,12 @@
         "is_deleted"
       ],
       "financialAuditColumn": "created_by",
-      "tenantColumn": "operator_id"
+      "tenantColumn": "operator_id",
+      "tenantColumns": [
+        "operator_id",
+        "organization_id",
+        "company_id"
+      ]
     },
     "security": {
       "forbidCardData": true,
@@ -649,16 +667,14 @@
     "note": "No se resuelven en la fábrica; ver docs/DECISIONES-PENDIENTES.md.",
     "ids": [
       "#1 Hono vs NestJS",
-      "#2 Astro vs Vite",
       "#15 SAM vs CDK",
       "#16-#32 propuestas de la fábrica"
-    ]
+    ],
+    "source": "docs/DECISIONES-PENDIENTES.md"
   },
   "factory": {
-    "test": "pnpm factory:test",
-    "typecheck": "pnpm factory:typecheck",
-    "registryCheck": "node .kiro/factory/scripts/factory.mjs registry check",
-    "cli": "node .kiro/factory/scripts/factory.mjs"
+    "registryCheck": "node .megafactory/bin/factory.mjs registry check",
+    "cli": "node .megafactory/bin/factory.mjs"
   },
   "migration": {
     "from": "v0",
@@ -678,5 +694,71 @@
       "17-estado-del-proyecto.md",
       "20-fabrica-sdlc-contexto.md"
     ]
-  }
+  },
+  "timezone": "America/Bogota",
+  "autonomy": {
+    "delegatedHumanCommands": [
+      "mf link",
+      "mf status",
+      "mf doctor",
+      "mf link --repair-link",
+      "mf link --pin-checkout"
+    ]
+  },
+  "design": {
+    "source": "figma",
+    "requiredMcp": [
+      "figma"
+    ]
+  },
+  "docs": {
+    "historical": [
+      "docs/02-ADRs/ADR-005-Infra-MVP.md",
+      "docs/02-ADRs/ADR-008-Infra-AWS-First.md",
+      "docs/04-Tech-Design/Estructura-Proyecto.md",
+      "docs/04-Tech-Design/Frontend-Architecture.md"
+    ]
+  },
+  "mandatoryBaseline": [
+    {
+      "id": "SEC-01",
+      "text": "Aislamiento por tenant en dos capas: middleware que fija organization_id/company_id desde la sesión y Row Level Security en toda tabla con tenant, con tests de acceso cruzado."
+    },
+    {
+      "id": "SEC-02",
+      "text": "Denegar por defecto: cada ruta declara rol, módulo y permiso; sin declaración, 403. Tests de acceso y denegación por rol."
+    },
+    {
+      "id": "SEC-03",
+      "text": "MFA obligatoria para roles administrativos; bloqueo por intentos; access token corto en memoria y refresh rotativo en cookie HttpOnly, Secure, SameSite=Strict con detección de reutilización."
+    },
+    {
+      "id": "SEC-04",
+      "text": "Bitácora de auditoría inmutable para permisos, módulos, finanzas, documentos y suplantación, sin datos personales."
+    },
+    {
+      "id": "SEC-05",
+      "text": "Entradas validadas con Zod en el borde, HTML solo vía SafeHtml, CSP estricta y cabeceras de seguridad."
+    },
+    {
+      "id": "SEC-06",
+      "text": "Archivos con URL prefirmada de vida corta, tipo y tamaño validados, bucket privado cifrado y escaneo de malware antes de usarlos."
+    },
+    {
+      "id": "SEC-07",
+      "text": "Secretos solo en Secrets Manager e IAM de mínimo privilegio por función; cero secretos en el repo."
+    },
+    {
+      "id": "SEC-08",
+      "text": "Límite de peticiones por usuario y por IP en login, OTP y rutas públicas."
+    },
+    {
+      "id": "SEC-09",
+      "text": "Auditoría de dependencias y SBOM en cada build; sin dependencias nuevas sin aprobación."
+    },
+    {
+      "id": "SEC-10",
+      "text": "Datos personales cifrados en reposo y retención según la política de datos personales."
+    }
+  ]
 }

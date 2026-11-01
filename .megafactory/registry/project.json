@@ -21,7 +21,12 @@
         "is_deleted"
       ],
       "financialAuditColumn": "created_by",
-      "tenantColumn": "operator_id"
+      "tenantColumn": "operator_id",
+      "tenantColumns": [
+        "operator_id",
+        "organization_id",
+        "company_id"
+      ]
     },
     "security": {
       "forbidCardData": true,
@@ -57,6 +62,7 @@
   "paths": {
     "appRoots": [
       "apps/web/",
+      "apps/gestion/",
       "apps/erp/",
       "apps/b2b/",
       "apps/",
@@ -190,14 +196,80 @@
     "note": "No se resuelven en la fábrica; ver docs/DECISIONES-PENDIENTES.md.",
     "ids": [
       "#1 Hono vs NestJS",
-      "#2 Astro vs Vite",
       "#15 SAM vs CDK",
       "#16-#32 propuestas de la fábrica"
+    ],
+    "source": "docs/DECISIONES-PENDIENTES.md"
+  },
+  "mandatoryBaseline": [
+    {
+      "id": "SEC-01",
+      "text": "Aislamiento por tenant en dos capas: middleware que fija organization_id/company_id desde la sesión y Row Level Security en toda tabla con tenant, con tests de acceso cruzado."
+    },
+    {
+      "id": "SEC-02",
+      "text": "Denegar por defecto: cada ruta declara rol, módulo y permiso; sin declaración, 403. Tests de acceso y denegación por rol."
+    },
+    {
+      "id": "SEC-03",
+      "text": "MFA obligatoria para roles administrativos; bloqueo por intentos; access token corto en memoria y refresh rotativo en cookie HttpOnly, Secure, SameSite=Strict con detección de reutilización."
+    },
+    {
+      "id": "SEC-04",
+      "text": "Bitácora de auditoría inmutable para permisos, módulos, finanzas, documentos y suplantación, sin datos personales."
+    },
+    {
+      "id": "SEC-05",
+      "text": "Entradas validadas con Zod en el borde, HTML solo vía SafeHtml, CSP estricta y cabeceras de seguridad."
+    },
+    {
+      "id": "SEC-06",
+      "text": "Archivos con URL prefirmada de vida corta, tipo y tamaño validados, bucket privado cifrado y escaneo de malware antes de usarlos."
+    },
+    {
+      "id": "SEC-07",
+      "text": "Secretos solo en Secrets Manager e IAM de mínimo privilegio por función; cero secretos en el repo."
+    },
+    {
+      "id": "SEC-08",
+      "text": "Límite de peticiones por usuario y por IP en login, OTP y rutas públicas."
+    },
+    {
+      "id": "SEC-09",
+      "text": "Auditoría de dependencias y SBOM en cada build; sin dependencias nuevas sin aprobación."
+    },
+    {
+      "id": "SEC-10",
+      "text": "Datos personales cifrados en reposo y retención según la política de datos personales."
+    }
+  ],
+  "design": {
+    "source": "figma",
+    "requiredMcp": [
+      "figma"
+    ]
+  },
+  "docs": {
+    "historical": [
+      "docs/02-ADRs/ADR-005-Infra-MVP.md",
+      "docs/02-ADRs/ADR-008-Infra-AWS-First.md",
+      "docs/04-Tech-Design/Estructura-Proyecto.md",
+      "docs/04-Tech-Design/Frontend-Architecture.md"
     ]
   },
   "factory": {
     "driftPolicy": "warn-ahead"
   },
+  "autonomy": {
+    "delegatedHumanCommands": [
+      "mf link",
+      "mf status",
+      "mf doctor",
+      "mf link --repair-link",
+      "mf link --pin-checkout"
+    ]
+  },
+  "timezone": "America/Bogota",
   "incompleteFields": [
     "commands.observability:on-call-engineer",
     "commands.observability:resilience-engineer",

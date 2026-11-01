@@ -93,6 +93,51 @@
       "status": "documented"
     },
     {
+      "id": "cap",
+      "category": "role-tool",
+      "repo": "https://github.com/CapSoftware/Cap",
+      "purpose": "App de escritorio para grabar pantalla, cámara y micrófono, con CLI que responde en JSON; deja en video la evidencia de una sesión exploratoria, la reproducción de un defecto o un tutorial.",
+      "license": "AGPL-3.0-only AND MIT",
+      "licenseClass": "copyleft",
+      "licenseStatus": "declared",
+      "licenseNote": "AGPLv3 en casi todo (only u or-later sin confirmar) y MIT en los crates cap-camera* y scap-*: la fábrica no redistribuye la app ni copia su skill; autoalojar un Cap modificado obliga a publicar los cambios.",
+      "kind": "desktop-app",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "cap",
+        "args": []
+      },
+      "pinnedVersion": null,
+      "usage": "cap record start --screen <id> --json --detach y exportar a mp4 con cap export, en el equipo de dev",
+      "network": true,
+      "requiresEnv": [],
+      "agentInvocation": {
+        "allow": [],
+        "ask": [
+          "cap *"
+        ],
+        "denyArgs": [
+          "cap -*",
+          "cap * -*",
+          "cap *<*",
+          "cap *.env*",
+          "cap *.pem*",
+          "cap *.key*",
+          "cap update*",
+          "cap agents*",
+          "cap desktop*",
+          "cap automations*",
+          "cap mcp*"
+        ]
+      },
+      "status": "documented",
+      "dataHandling": "Graba la pantalla completa: cerrar secretos y datos personales antes, solo en dev. Toda invocación por agentes va en ask; cap upload sube a cap.so (nube) y lo confirma el humano, mejor guardar en local o en un S3 propio. Requisito: cap automations list --json vacío (ejecutan comandos). Negados update, agents, desktop, automations y mcp. Cap AI envía contenido a terceros: apagado.",
+      "cost": "freemium",
+      "costNote": "Grabar en local es gratis; Cap Pro para compartir en su nube es de pago."
+    },
+    {
       "id": "cfn-guard",
       "category": "role-tool",
       "repo": "https://github.com/aws-cloudformation/cloudformation-guard",
@@ -234,6 +279,55 @@
       "status": "documented"
     },
     {
+      "id": "crawl4ai",
+      "category": "role-tool",
+      "repo": "https://github.com/unclecode/crawl4ai",
+      "purpose": "Crawler responsable por defecto: convierte páginas públicas, propias o con permiso en Markdown limpio para investigación de mercado, SEO, documentación y normativa, respetando robots.txt y con caché.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "python",
+        "min": "3.10"
+      },
+      "check": {
+        "bin": "crwl",
+        "args": []
+      },
+      "pinnedVersion": null,
+      "usage": "crwl <url> -o markdown -c check_robots_txt=true   (en código: CrawlerRunConfig(check_robots_txt=True) con pausas y caché)",
+      "network": true,
+      "requiresEnv": [],
+      "agentInvocation": {
+        "allow": [],
+        "ask": [
+          "crwl *"
+        ],
+        "denyArgs": [
+          "crwl -*",
+          "crwl * -*",
+          "crwl *<*",
+          "crwl *.env*",
+          "crwl *.pem*",
+          "crwl *.key*",
+          "crwl *--stealth*",
+          "crwl *enable_stealth*",
+          "crwl *undetected*",
+          "crwl *magic=*",
+          "crwl *simulate_user*",
+          "crwl *override_navigator*",
+          "crwl *proxy=*",
+          "crwl *--proxy*",
+          "crwl config*"
+        ]
+      },
+      "status": "documented",
+      "dataHandling": "Solo sitios públicos, propios o con permiso: robots.txt (check_robots_txt=True), términos de uso, pausas y caché. Prohibido stealth, resolver CAPTCHA, eludir login o anti-bot, proxies para evadir bloqueos y recolectar datos personales. Si hay API pública oficial, va primero. Salida a bus/<ítem>/sources/ y scan --strict antes de citar; extracción con LLM solo con modelo local.",
+      "cost": "gratis",
+      "costNote": "Gratis en local; su nube es freemium y no se usa."
+    },
+    {
       "id": "dbml-cli",
       "category": "role-tool",
       "repo": "https://github.com/holistics/dbml",
@@ -313,6 +407,31 @@
       "requiresEnv": [],
       "agentInvocation": null,
       "status": "documented"
+    },
+    {
+      "id": "gsap",
+      "category": "role-tool",
+      "repo": "https://github.com/greensock/GSAP",
+      "purpose": "Biblioteca de animación en JavaScript (líneas de tiempo, ScrollTrigger y matchMedia para movimiento reducido) para secciones narrativas del frontend; es una dependencia del proyecto, no un comando.",
+      "license": "LicenseRef-GSAP-Standard-No-Charge",
+      "licenseClass": "proprietary",
+      "licenseStatus": "declared",
+      "licenseNote": "Licencia propietaria \"Standard No Charge\" de Webflow (gsap.com/standard-license): gratis incluso en uso comercial, pero no es OSI, prohíbe constructores visuales sin código que compitan con Webflow y puede cambiar; legal-counsel la revisa antes de adoptarla.",
+      "kind": "library",
+      "runtime": {
+        "kind": "node",
+        "min": "22"
+      },
+      "check": null,
+      "pinnedVersion": null,
+      "usage": "gsap.matchMedia() con prefers-reduced-motion y ScrollTrigger cargado de forma diferida en el código del frontend",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "dataHandling": "No trata datos. Agregarla al proyecto es una dependencia nueva con licencia propietaria: la aprueba el humano tras la revisión de legal-counsel; uiux-a11y verifica el movimiento reducido y que nada parpadee ni bloquee el scroll.",
+      "cost": "gratis",
+      "costNote": "Gratis incluso en uso comercial, con licencia propietaria de Webflow."
     },
     {
       "id": "hadolint",
@@ -568,7 +687,7 @@
           "--version"
         ]
       },
-      "pinnedVersion": null,
+      "pinnedVersion": "0.1.9",
       "usage": "markitdown <ruta-del-documento>   (Markdown por la salida estándar)",
       "network": false,
       "requiresEnv": [],
@@ -591,7 +710,9 @@
       "status": "documented",
       "licenseVerifiedAt": "2026-10-24",
       "licenseFile": "LICENSE",
-      "dataHandling": "Salida con posibles datos personales. (a) markitdown <ruta> por stdout; (b) escribirla en bus/<ítem>/sources/<slug>.md (cuarentena local ignorada por git); (c) factory.mjs scan --strict --feature <ítem> --paths <esa ruta>; (d) con cualquier hallazgo, también low, redactar y reescanear, o vaciar y pedir borrado humano; (e) citar solo fuentes con escaneo limpio. Sin nube ni plugins."
+      "dataHandling": "Salida con posibles datos personales. (a) markitdown <ruta> por stdout; (b) escribirla en bus/<ítem>/sources/<slug>.md (cuarentena local ignorada por git); (c) factory.mjs scan --strict --feature <ítem> --paths <esa ruta>; (d) con cualquier hallazgo, también low, redactar y reescanear, o vaciar y pedir borrado humano; (e) citar solo fuentes con escaneo limpio. Sin nube ni plugins.",
+      "cost": "gratis",
+      "costNote": "Gratis y local; sin plugins ni servicios de nube."
     },
     {
       "id": "mermaid-cli",
@@ -802,6 +923,56 @@
       "dataHandling": "Envía datos generados a la API de dev; nunca contra producción ni con datos reales de usuarios."
     },
     {
+      "id": "scrapling",
+      "category": "role-tool",
+      "repo": "https://github.com/D4Vinci/Scrapling",
+      "purpose": "Scraper en Python para sitios estáticos, solo en modo normal (Fetcher o extract get) y con robots_txt_obey en las arañas; alternativa a Crawl4AI cuando basta una petición HTTP.",
+      "license": "BSD-3-Clause",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "python",
+        "min": "3.10"
+      },
+      "check": {
+        "bin": "scrapling",
+        "args": []
+      },
+      "pinnedVersion": null,
+      "usage": "scrapling extract get <url> <salida.md>   (en código: Fetcher.get o un Spider con robots_txt_obey = True)",
+      "network": true,
+      "requiresEnv": [],
+      "agentInvocation": {
+        "allow": [],
+        "ask": [
+          "scrapling *"
+        ],
+        "denyArgs": [
+          "scrapling -*",
+          "scrapling * -*",
+          "scrapling *<*",
+          "scrapling *.env*",
+          "scrapling *.pem*",
+          "scrapling *.key*",
+          "scrapling *StealthyFetcher*",
+          "scrapling *stealth*",
+          "scrapling *--solve-cloudflare*",
+          "scrapling *solve_cloudflare*",
+          "scrapling *--impersonate*",
+          "scrapling *impersonate=*",
+          "scrapling extract fetch*",
+          "scrapling install*",
+          "scrapling shell*",
+          "scrapling mcp*"
+        ]
+      },
+      "status": "documented",
+      "dataHandling": "Solo modo normal en sitios públicos, propios o con permiso: robots.txt (robots_txt_obey = True en las arañas), términos de uso, pausas y sin datos personales. Prohibidos StealthyFetcher, stealthy-fetch, solve_cloudflare, impersonate, proxies y resolvedores de CAPTCHA. Crawl4AI va primero y una API pública oficial antes que ambos. Salida a bus/<ítem>/sources/ y scan --strict antes de citar.",
+      "cost": "gratis",
+      "costNote": "Gratis en modo normal; sus proxies y resolvedores patrocinados son de pago y están prohibidos."
+    },
+    {
       "id": "semgrep",
       "category": "role-tool",
       "repo": "https://github.com/semgrep/semgrep",
@@ -993,6 +1164,50 @@
         ]
       },
       "status": "documented"
+    },
+    {
+      "id": "witr",
+      "category": "role-tool",
+      "repo": "https://github.com/pranshuparmar/witr",
+      "purpose": "Explica por qué algo está corriendo: desde un proceso, puerto, contenedor o archivo llega al PID, su cadena de ancestros, quién lo lanzó y qué lo mantiene vivo, con advertencias y salida JSON.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "witr",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "witr --port <puerto> --json   (también --pid <pid> --tree, --container <id> o un nombre de proceso)",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": {
+        "allow": [
+          "witr *"
+        ],
+        "ask": [],
+        "denyArgs": [
+          "witr -*",
+          "witr * -*",
+          "witr *<*",
+          "witr *.env*",
+          "witr *.pem*",
+          "witr *.key*",
+          "witr *--env*",
+          "witr *--interactive*",
+          "witr completion*"
+        ]
+      },
+      "status": "documented",
+      "dataHandling": "Solo lee procesos: cerrar, reiniciar o cambiar la prioridad de uno lo decide el humano (la interfaz interactiva queda negada). --env imprime variables de entorno con secretos: negado. Ver procesos de otros usuarios exige Administrador o sudo, que ejecuta el humano. No usar los scripts de instalación por tubería.",
+      "cost": "gratis",
+      "costNote": "Gratis; sin cuenta ni servicio externo."
     },
     {
       "id": "zap",
