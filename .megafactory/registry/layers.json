@@ -14,15 +14,24 @@
       ],
       "active": true,
       "paths": [
-        "packages/ui/src/",
-        "apps/web/e2e/",
-        "apps/web/src/lib/i18n/",
-        "apps/web/src/lib/fig/",
-        "apps/web/src/styles/",
-        "apps/web/src/lib/api/mocks/",
-        "apps/web/test/",
-        "apps/web/tests/"
-      ]
+        "packages/ui/src/"
+      ],
+      "byApp": {
+        "apps/web/": [
+          "apps/web/e2e/",
+          "apps/web/src/lib/i18n/",
+          "apps/web/src/lib/fig/",
+          "apps/web/src/styles/",
+          "apps/web/src/lib/api/mocks/",
+          "apps/web/test/",
+          "apps/web/tests/"
+        ],
+        "apps/gestion/": [
+          "apps/gestion/src/",
+          "apps/gestion/e2e/",
+          "apps/gestion/test/"
+        ]
+      }
     },
     {
       "layer": "api",
@@ -109,9 +118,12 @@
         "web-app"
       ],
       "active": true,
-      "paths": [
-        "apps/web/src/lib/i18n/"
-      ]
+      "paths": [],
+      "byApp": {
+        "apps/web/": [
+          "apps/web/src/lib/i18n/"
+        ]
+      }
     },
     {
       "layer": "auth-rbac",

@@ -24,7 +24,7 @@
     ".kiro/agents/sdlc-business-analyst.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:6c3133f4314689ed2d070d203ddc21bf567c53cafde56e21ed670f569594fe1a"
+      "hash": "sha256:36428d04c8ee7f601173dabf3221847294dd68a80513060321339134d9850ec1"
     },
     ".kiro/agents/sdlc-compliance-officer.json": {
       "class": "adapter",
@@ -39,7 +39,7 @@
     ".kiro/agents/sdlc-content-seo.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:a83cf050398251ece7de4af56d087cfd0b9ed7aa6b94220d37fca3e663a2a0f6"
+      "hash": "sha256:7f30206692d01c415a23742ea8fe01f688c5686f04754eeb718142f40199cea0"
     },
     ".kiro/agents/sdlc-cto.json": {
       "class": "adapter",
@@ -59,7 +59,7 @@
     ".kiro/agents/sdlc-devops-sre.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:79aaae906d03ae261e0d2f4d5df264008eeb337850d7359f1bf10880eeee9617"
+      "hash": "sha256:043b38191bd7c4482de36e92f393462d7b8ee21f14d46dff1cea3db5a06917db"
     },
     ".kiro/agents/sdlc-domain-rules.json": {
       "class": "adapter",
@@ -89,7 +89,7 @@
     ".kiro/agents/sdlc-frontend.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:7319539ebcf2cd2f3d74e9f880ad3d634d7049b07a6134488c8a55be3677dbee"
+      "hash": "sha256:46ea7df1448da8d9f671b0d1e05b86d5d30e0765c1ce58c7b0b70d8ea912c3ae"
     },
     ".kiro/agents/sdlc-integrations.json": {
       "class": "adapter",
@@ -99,7 +99,7 @@
     ".kiro/agents/sdlc-on-call-engineer.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:96325d051a7bfd5a5e585bc7199873fd229168781703cc81b626e35d304c282f"
+      "hash": "sha256:22272d58503b2b7d97c6464a6d49090721e8631b58dd626543e3fa7b7f018186"
     },
     ".kiro/agents/sdlc-operations-lead.json": {
       "class": "adapter",
@@ -179,22 +179,22 @@
     ".kiro/agents/sdlc-sre.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:221ce2b355869bc4621cbf524e640dc95ae157759aff2323ff1540593b04c5d0"
+      "hash": "sha256:895bb482a47241f77e7a1987d543c6f99e5a1e685cf629f42592959bfc4b44f2"
     },
     ".kiro/agents/sdlc-support-l2.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:2b0ab27956e884864765904a0307e881500a04d5b157f2e85ecd378bc6818a7c"
+      "hash": "sha256:d33d7816351bcd213b183e2042fcc50c99f9d43e432eb561cb60573a7953cd47"
     },
     ".kiro/agents/sdlc-tech-writer.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:5b9d9328e6ffc13d58c271c272bc61ab734679b7f690e45a29f0c2c370abcb22"
+      "hash": "sha256:2c01fa7adcbd06357fb3e2edcd7493e0137ac8b6c104b5b2b420ac0269ea00b8"
     },
     ".kiro/agents/sdlc-uiux-a11y.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:ccd72aabf12685fdb2df5213f11598aace2959b08092c673c562bae778a0dfc8"
+      "hash": "sha256:21b01d61c0f4047e467a0101efdb031eba2e42f4678076ed789494873f65f1e3"
     },
     ".kiro/hooks/factory-bus-guard.json": {
       "class": "adapter",
@@ -219,12 +219,12 @@
     ".kiro/steering/factory-agents.md": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:419dbd78d76b371468b1be9d02eb45a654f32a723d53cd82b060de3a125e5e9e"
+      "hash": "sha256:9df0b5975facb1d4f3ea5f061584748c0a9a8b2b514ed6a63a6a8330d2130910"
     },
     ".kiro/steering/factory-context.md": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:0500b3b5ffe44caac228d97ee826d262bb6bb224301e8d7342ed3c77503abcde"
+      "hash": "sha256:e38762117fc918f5d911f24cfee93452981c3525942b20c69e094ae380490cbf"
     },
     ".kiro/workflows/factory-adopt-brownfield.workflow.json": {
       "class": "adapter",
@@ -333,12 +333,12 @@
     ".megafactory/bin/factory.mjs": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:6479127ed65d98c7429f90c31390324123cd1a16ee9c9c416327b4bf494c95ee"
+      "hash": "sha256:1ba93208dff8fe54b624e6e34799f31b1a11aecd1652d3ad889bcfc81e0cdd47"
     },
     ".megafactory/bin/mf.mjs": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:158cf0ea6bf2ffd4ebd3da495bf3386b3fd739fcd95e6cc08e9b1f371461f84e"
+      "hash": "sha256:b966c8b15b750a0d559b579c6ab70bd46a60f37162e179066da50a7e412bb864"
     },
     ".megafactory/profile.json": {
       "class": "seed",
@@ -363,7 +363,7 @@
     ".megafactory/registry/kits.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:fe69d521391178a9bcafcec1a3e6458ff48f801228a5a56bfaf22889a0bd3350"
+      "hash": "sha256:618c8d17bd3971ec49a2dc67430f3be084c2b851121a4728e0e8f7fcb325ce09"
     },
     ".megafactory/registry/lanes.json": {
       "class": "render",
@@ -373,7 +373,7 @@
     ".megafactory/registry/layers.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:0162d08d1b6bdb289c0c2b320140137de34fe883f6c8d3f6689037ae2eed5122"
+      "hash": "sha256:4c31da5c3eeb47fead8eb577360d6f47c8c330b2cdc3faa4bc1aa15958749bf7"
     },
     ".megafactory/registry/mcp.json": {
       "class": "render",
@@ -398,7 +398,7 @@
     ".megafactory/registry/project.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:36a00ffd15757f92a96d610418ee3600b44a49e4715ba9cfa461d1f7bbc7f147"
+      "hash": "sha256:2afef3506bb6b389bcbc4d502ee4091d9afd6c25884b268b085b5f3b5d779a07"
     },
     ".megafactory/registry/recipes.json": {
       "class": "render",
@@ -438,7 +438,7 @@
     ".megafactory/registry/schemas/compliance-requirements.schema.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:ff1843373831ea67dbfaf596f1583782a481efe745faeff40eb1e23d9314d7e5"
+      "hash": "sha256:dab7eb2e6c45b19c19809a50ed60b67575cf30001af683ddf526d588ac2528c8"
     },
     ".megafactory/registry/schemas/continuity-plan.schema.json": {
       "class": "render",
@@ -503,7 +503,7 @@
     ".megafactory/registry/schemas/prd.schema.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:5474935b7741286ff0e3f5641fad9b3c6246b8eb98b7ed4ca103cbb17ec4b76b"
+      "hash": "sha256:27f77c133b0c25ec90b36ce165f2e11d19f64b8648c673b80653c2dee3fa6ff7"
     },
     ".megafactory/registry/schemas/privacy-opinion.schema.json": {
       "class": "render",
@@ -690,6 +690,11 @@
       "versioned": true,
       "hash": "sha256:d3f726f537e09e045c0b485fb9e90a04d7cd2da316f725936bde6a3cefb95242"
     },
+    ".megafactory/registry/templates/handoff.md": {
+      "class": "render",
+      "versioned": true,
+      "hash": "sha256:87cb53bab1dac4ca5da45088bcc228d1ba988e11ee9c89dc601ef6dcde76e2b9"
+    },
     ".megafactory/registry/templates/incident-record.example.json": {
       "class": "render",
       "versioned": true,
@@ -788,7 +793,7 @@
     ".megafactory/registry/tools.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:ef72264c41505e1904e03114c3f8c6169442107ae5185fbdb19d7abf2b1029c3"
+      "hash": "sha256:c0dfe7c9113943d03b8a3ad5caf1d2b9063a1a9f7df42b37de8ccc9fbfbfd8e6"
     },
     ".megafactory/views/kits/architecture.md": {
       "class": "render",
@@ -851,7 +856,7 @@
       "hash": "sha256:e5ec0a295775e73c609494b98e0ff3cab6911097ee755a7bcb8e9f465edb6b49"
     },
     "AGENTS.md": {
-      "hash": "sha256:f64b71de94bf3ca4133a972ad3b71cc201f68b7e854615aa347cebb29e7b97a5"
+      "hash": "sha256:af3351837f7d2d6188d1143993d5f57311f88d3b0af4daff2b8080fb65f52d42"
     }
   },
   "link": {

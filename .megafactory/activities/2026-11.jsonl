@@ -1,0 +1,1 @@
+{"ts":"2026-11-01T10:24:45.477Z","item":null,"lane":null,"event":"CHECK_RECORDED","role":null,"artifact":null,"eventId":"evt_7a7093fd-4ea3-44f8-ad00-c0e1d0380ac3","runId":null,"check":{"kind":"registry","command":"factory.mjs registry check","exit":0,"counts":{},"failed":[],"signature":"a75c824b5809"}}

@@ -16,10 +16,10 @@ inclusion: always
 | `infra/` | SAM y CDK presentes | Despliegue core (Lambda, RDS) |
 | Integraciones | - | OnePay.la, Siigo, Split Fare, publicidad |
 | Borondo Coins | - | En pausa (Spec-E) |
-| Fábrica SDLC (.kiro/factory) | Bus, CLI con tests, 22 agentes sdlc-*, 7 recetas; hooks deshabilitados hasta V3 | Memoria vectorial (#25), CI de la fábrica (#26) |
+| Megafábrica SDLC (`.megafactory/`, enlazada a la central 1.0.1) | 39 agentes sdlc-*, 17 recetas | Propuestas #16-#32 en `DECISIONS.md` de la central |
 
 Tests: solo web y ui tienen; servicios, contracts, db y domain tienen 0, aunque las reglas los exigen en finanzas y RBAC.
 
-Pendientes abiertos (`docs/DECISIONES-PENDIENTES.md`): #1 Hono vs NestJS, #2 Astro vs Vite, #11 rotar la API key del plugin Obsidian (acción del usuario), #13 CI, #14 scripts db, #15 SAM vs CDK; #16-#32 (propuestas de la fábrica).
+Pendientes abiertos (`docs/DECISIONES-PENDIENTES.md`): #1 Hono vs NestJS, #11 rotar la API key del plugin Obsidian (acción del usuario), #13 CI, #14 scripts db, #15 SAM vs CDK; #16-#32 (propuestas de la fábrica).
 
 Mantenimiento: actualizar al cerrar cada Spec o feature; si la fecha tiene más de 30 días, re-verificar listando directorios.

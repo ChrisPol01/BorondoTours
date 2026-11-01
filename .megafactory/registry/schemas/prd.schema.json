@@ -279,6 +279,16 @@
           },
           "target": {
             "type": "string"
+          },
+          "baselineIds": {
+            "type": "array",
+            "uniqueItems": true,
+            "maxItems": 40,
+            "description": "MF-18: ids de profile.json#mandatoryBaseline que cubre este NFR (regla baseline-coverage).",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Z][A-Z0-9]{1,9}-[0-9]{2,3}$"
+            }
           }
         }
       }
