@@ -2191,12 +2191,12 @@
           "sdlc-tdd",
           "sdlc-verification-loop",
           "sdlc-search-first",
-          "sdlc-e2e-testing"
+          "sdlc-e2e-testing",
+          "sdlc-design-heuristics"
         ],
         "overlays": [
           "bt-astro-frontend",
-          "bt-tdd-vitest",
-          "bt-e2e-playwright"
+          "bt-tdd-vitest"
         ]
       },
       "mcp": {
@@ -2226,6 +2226,7 @@
           "gsap",
           "lighthouse-ci",
           "playwright",
+          "playwright-cli",
           "semgrep"
         ],
         "agentInvocation": []
@@ -3095,6 +3096,7 @@
           "axe-core-cli",
           "maestro",
           "playwright",
+          "playwright-cli",
           "schemathesis"
         ],
         "agentInvocation": []
@@ -4596,7 +4598,8 @@
           "sdlc-tdd",
           "sdlc-verification-loop",
           "sdlc-search-first",
-          "sdlc-frontend-web"
+          "sdlc-frontend-web",
+          "sdlc-design-heuristics"
         ],
         "overlays": [
           "bt-astro-frontend",
@@ -4628,6 +4631,7 @@
           "gitleaks",
           "gsap",
           "playwright",
+          "playwright-cli",
           "semgrep"
         ],
         "agentInvocation": []

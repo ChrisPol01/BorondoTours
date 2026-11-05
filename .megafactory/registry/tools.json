@@ -844,6 +844,60 @@
       "status": "documented"
     },
     {
+      "id": "playwright-cli",
+      "category": "role-tool",
+      "repo": "https://github.com/microsoft/playwright-cli",
+      "purpose": "CLI de Playwright para agentes: abre un navegador, navega, hace clic y escribe por referencias del snapshot de accesibilidad, y toma capturas, trazas y video. Sirve para revisión visual, QA exploratoria y reproducir defectos en dev.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "verified",
+      "licenseVerifiedAt": "2026-11-03",
+      "licenseFile": "LICENSE",
+      "kind": "cli",
+      "runtime": {
+        "kind": "node",
+        "min": "22"
+      },
+      "check": {
+        "bin": "playwright-cli",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": "0.1.23",
+      "usage": "playwright-cli open <url-de-dev>, luego snapshot, click <ref>, screenshot y close (sin opciones: las banderas quedan negadas al agente)",
+      "network": true,
+      "requiresEnv": [],
+      "agentInvocation": {
+        "allow": [],
+        "ask": [
+          "playwright-cli *"
+        ],
+        "denyArgs": [
+          "playwright-cli -*",
+          "playwright-cli * -*",
+          "playwright-cli *<*",
+          "playwright-cli *.env*",
+          "playwright-cli *.pem*",
+          "playwright-cli *.key*",
+          "playwright-cli *run-code*",
+          "playwright-cli *cookie*",
+          "playwright-cli state-*",
+          "playwright-cli *storage*",
+          "playwright-cli upload*",
+          "playwright-cli webmcp-call*",
+          "playwright-cli *file:*",
+          "playwright-cli install*",
+          "playwright-cli delete-data*",
+          "playwright-cli kill-all*"
+        ]
+      },
+      "status": "documented",
+      "dataHandling": "Solo URLs de dev, propias o con permiso; nunca el navegador personal (attach --cdp o --extension caen en flags negados). Snapshots, capturas, trazas y videos de .playwright-cli/ pueden traer datos personales: a bus/<ítem>/sources/ y scan --strict al citar. Negados cookies, storage, state-*, upload, run-code, webmcp-call, file:, install, delete-data y kill-all. NO_UPDATE_NOTIFIER=1 evita npm view.",
+      "cost": "gratis",
+      "costNote": "Gratis y local (Apache-2.0), sin cuenta ni servicio de pago. El navegador se descarga una vez del CDN de Playwright (del orden de cientos de MB) o se usa el Chrome instalado."
+    },
+    {
       "id": "promtool",
       "category": "role-tool",
       "repo": "https://github.com/prometheus/prometheus",

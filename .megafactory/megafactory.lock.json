@@ -3,9 +3,9 @@
   "factory": {
     "name": "megafabrica-sdlc",
     "version": "1.0.0",
-    "commit": "59f5289678bc2abd140027ea127df57e759f3068",
+    "commit": "26059fa0a6bb2243c07b91e91554bf716b78c681",
     "ref": null,
-    "contentHash": "sha256:5c072d76f147dd475346e1fd8d83e00790b3944307b00214d3ead406c46d3720",
+    "contentHash": "sha256:8b8e535a5bb5c8a42e7af4b4b308d920f33602aaba60b4fe2e2d160654cbea54",
     "dirty": false,
     "remote": null
   },
@@ -21,7 +21,7 @@
   "profileHash": "sha256:bef79b50a0cfaa6270b67db94ac8b83b21a331400204f4d957680587f0da1fa3",
   "migratedFrom": "v0-borondotours-2026-10-12",
   "linkedAt": "2026-10-28T21:43:53.098Z",
-  "updatedAt": "2026-11-01T10:24:39.494Z",
+  "updatedAt": "2026-11-05T06:51:49.647Z",
   "history": [
     {
       "at": "2026-10-28T21:43:53.098Z",
@@ -42,6 +42,13 @@
       "action": "update",
       "fromCommit": "dd052c1",
       "toCommit": "59f5289",
+      "conflicts": 0
+    },
+    {
+      "at": "2026-11-05T06:51:49.647Z",
+      "action": "update",
+      "fromCommit": "59f5289",
+      "toCommit": "26059fa",
       "conflicts": 0
     }
   ]

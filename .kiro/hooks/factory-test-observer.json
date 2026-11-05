@@ -12,6 +12,18 @@
       },
       "timeout": 10,
       "enabled": false
+    },
+    {
+      "name": "Factory Skill Use",
+      "description": "Registro del uso de skills (sin IA): tras cada lectura, factory.mjs skill-use --stdin deduce el id de la ruta .../skills/<id>/SKILL.md (barras o contrabarras) y deja una línea SKILL_USED en .megafactory/activities/ (solo ids); cualquier otra lectura se ignora. Nace deshabilitado; se activa con profile.kit.observer.enabled. El nombre del disparador PostToolUse, el matcher read y el formato del stdin de Kiro están NO VERIFICADOS.",
+      "trigger": "PostToolUse",
+      "matcher": "read",
+      "action": {
+        "type": "command",
+        "command": "node .megafactory/bin/factory.mjs skill-use --stdin"
+      },
+      "timeout": 10,
+      "enabled": false
     }
   ]
 }

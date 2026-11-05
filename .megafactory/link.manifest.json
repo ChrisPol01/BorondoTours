@@ -89,7 +89,7 @@
     ".kiro/agents/sdlc-frontend.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:46ea7df1448da8d9f671b0d1e05b86d5d30e0765c1ce58c7b0b70d8ea912c3ae"
+      "hash": "sha256:8539ce52e7d3d86bb8564ceb33f37abfdc10498ecfbc0e6498386212340a89ba"
     },
     ".kiro/agents/sdlc-integrations.json": {
       "class": "adapter",
@@ -129,7 +129,7 @@
     ".kiro/agents/sdlc-qa-e2e.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:ae22cb59b647871d6ac66682b44ed1f5d317852c1ca344aaa3bd10476757c680"
+      "hash": "sha256:b3262ad084b7882ec7067e1a10d26b3a4a2b7adb611d0dadd2eb697271623de0"
     },
     ".kiro/agents/sdlc-quality-lead.json": {
       "class": "adapter",
@@ -194,7 +194,7 @@
     ".kiro/agents/sdlc-uiux-a11y.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:21b01d61c0f4047e467a0101efdb031eba2e42f4678076ed789494873f65f1e3"
+      "hash": "sha256:957c47c2a836169b82017e94cdc8bfbbb75581f20122c1ea38486b5aa054d725"
     },
     ".kiro/hooks/factory-bus-guard.json": {
       "class": "adapter",
@@ -209,7 +209,7 @@
     ".kiro/hooks/factory-test-observer.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:355ea5378081ae2e0684ccbb91696bbafe890f2fdf0061fce113e9aed8d4a856"
+      "hash": "sha256:cadb1022f90b79d7055613dbb428063542a00529a12b6b6917ca8c9892bcaf83"
     },
     ".kiro/settings/mcp.json": {
       "class": "seed",
@@ -363,7 +363,7 @@
     ".megafactory/registry/kits.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:618c8d17bd3971ec49a2dc67430f3be084c2b851121a4728e0e8f7fcb325ce09"
+      "hash": "sha256:40e7f1e9415437d0828acf005278684497b791832832aa726be8aebe484d3027"
     },
     ".megafactory/registry/lanes.json": {
       "class": "render",
@@ -793,7 +793,7 @@
     ".megafactory/registry/tools.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:c0dfe7c9113943d03b8a3ad5caf1d2b9063a1a9f7df42b37de8ccc9fbfbfd8e6"
+      "hash": "sha256:8f6ed0e1a318f5d0eedf6a317f77c8e00b4d5a84c530666a0c6d03c70d0a6974"
     },
     ".megafactory/views/kits/architecture.md": {
       "class": "render",
