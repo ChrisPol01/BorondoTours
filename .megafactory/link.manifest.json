@@ -428,7 +428,7 @@
     ".megafactory/registry/project.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:04cf5296f0d7d4904e3f4e71b549b0226bc139bd220f6404c720f459fd8b120f"
+      "hash": "sha256:36a18efe87e2e63cd6897b4a9f270d7f9e1a3fd7e5cf90274eed3a3fc251c0c7"
     },
     ".megafactory/registry/recipes.json": {
       "class": "render",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "profileDoc": "Perfil del proyecto para la fábrica SDLC. Captura TODO lo específico de un repo (stack, rutas, comandos, normativa, steering y MCP) para que el motor de la fábrica (bus, CLI, agentes, recetas) sea neutro y portable. El esquema completo está documentado en .kiro/factory/PORTING.md §Esquema. Para adaptar la fábrica a otro repo, reemplaza este archivo con los valores del repo nuevo (ver ADAPT-PROMPT.md).",
+  "profileDoc": "Perfil del proyecto para la fÃ¡brica SDLC. Captura TODO lo especÃ­fico de un repo (stack, rutas, comandos, normativa, steering y MCP) para que el motor de la fÃ¡brica (bus, CLI, agentes, recetas) sea neutro y portable. El esquema completo estÃ¡ documentado en .kiro/factory/PORTING.md Â§Esquema. Para adaptar la fÃ¡brica a otro repo, reemplaza este archivo con los valores del repo nuevo (ver ADAPT-PROMPT.md).",
   "project": {
     "name": "BorondoTours",
     "slug": "borondotours",
@@ -207,7 +207,7 @@
     "e2e": "pnpm --filter @borondo/web run test:e2e",
     "webPackage": "@borondo/web",
     "uiPackage": "@borondo/ui",
-    "verificationNote": "Línea base del producto (comparar antes/después): pnpm typecheck; pnpm --filter @borondo/web run lint; pnpm --filter @borondo/web run test:run; pnpm --filter @borondo/ui run test. NO pnpm lint/test de la raíz (fallan por #27/#28).",
+    "verificationNote": "LÃ­nea base del producto (comparar antes/despuÃ©s): pnpm typecheck; pnpm --filter @borondo/web run lint; pnpm --filter @borondo/web run test:run; pnpm --filter @borondo/ui run test. NO pnpm lint/test de la raÃ­z (fallan por #27/#28).",
     "available": {
       "eslintOutsideWeb": false,
       "coverageThreshold": false,
@@ -391,7 +391,7 @@
     "frameworks": [
       {
         "id": "ley-1581-2012",
-        "name": "Ley 1581 de 2012 (habeas data / protección de datos personales)"
+        "name": "Ley 1581 de 2012 (habeas data / protecciÃ³n de datos personales)"
       },
       {
         "id": "decreto-1377-2013",
@@ -407,7 +407,7 @@
       },
       {
         "id": "dian",
-        "name": "DIAN / facturación electrónica (Siigo)"
+        "name": "DIAN / facturaciÃ³n electrÃ³nica (Siigo)"
       },
       {
         "id": "pci-dss",
@@ -424,7 +424,7 @@
       "SOC 2",
       "ISO 27701"
     ],
-    "piiRules": "Sin PII ni secretos en logs, URLs, errores ni en el bus. Pasaporte de extranjeros en S3 privado (5 años). HTML del backend solo vía SafeHtml/DOMPurify.",
+    "piiRules": "Sin PII ni secretos en logs, URLs, errores ni en el bus. Pasaporte de extranjeros en S3 privado (5 aÃ±os). HTML del backend solo vÃ­a SafeHtml/DOMPurify.",
     "frameworkCodes": [
       "LEY_1581",
       "DEC_1377",
@@ -645,7 +645,7 @@
     "note": "Solo nombres de servidores (de ~/.kiro/settings/mcp.json). Nunca env ni args. 'available' no implica tier B operativo (ver V2)."
   },
   "productionGuard": {
-    "note": "Producción solo humana (steering 10). La base de permisos niega perfiles de prod/root y despliegues fuera de dev.",
+    "note": "ProducciÃ³n solo humana (steering 10). La base de permisos niega perfiles de prod/root y despliegues fuera de dev.",
     "devCloudProfiles": [
       "AdministratorAccess-232025404765"
     ],
@@ -664,11 +664,9 @@
     ]
   },
   "openDecisions": {
-    "note": "No se resuelven en la fábrica; ver docs/DECISIONES-PENDIENTES.md.",
+    "note": "No se resuelven en la fÃ¡brica; ver docs/DECISIONES-PENDIENTES.md.",
     "ids": [
-      "#1 Hono vs NestJS",
-      "#15 SAM vs CDK",
-      "#16-#32 propuestas de la fábrica"
+      "#16-#32 propuestas de la fÃ¡brica"
     ],
     "source": "docs/DECISIONES-PENDIENTES.md"
   },
@@ -728,43 +726,43 @@
   "mandatoryBaseline": [
     {
       "id": "SEC-01",
-      "text": "Aislamiento por tenant en dos capas: middleware que fija organization_id/company_id desde la sesión y Row Level Security en toda tabla con tenant, con tests de acceso cruzado."
+      "text": "Aislamiento por tenant en dos capas: middleware que fija organization_id/company_id desde la sesiÃ³n y Row Level Security en toda tabla con tenant, con tests de acceso cruzado."
     },
     {
       "id": "SEC-02",
-      "text": "Denegar por defecto: cada ruta declara rol, módulo y permiso; sin declaración, 403. Tests de acceso y denegación por rol."
+      "text": "Denegar por defecto: cada ruta declara rol, mÃ³dulo y permiso; sin declaraciÃ³n, 403. Tests de acceso y denegaciÃ³n por rol."
     },
     {
       "id": "SEC-03",
-      "text": "MFA obligatoria para roles administrativos; bloqueo por intentos; access token corto en memoria y refresh rotativo en cookie HttpOnly, Secure, SameSite=Strict con detección de reutilización."
+      "text": "MFA obligatoria para roles administrativos; bloqueo por intentos; access token corto en memoria y refresh rotativo en cookie HttpOnly, Secure, SameSite=Strict con detecciÃ³n de reutilizaciÃ³n."
     },
     {
       "id": "SEC-04",
-      "text": "Bitácora de auditoría inmutable para permisos, módulos, finanzas, documentos y suplantación, sin datos personales."
+      "text": "BitÃ¡cora de auditorÃ­a inmutable para permisos, mÃ³dulos, finanzas, documentos y suplantaciÃ³n, sin datos personales."
     },
     {
       "id": "SEC-05",
-      "text": "Entradas validadas con Zod en el borde, HTML solo vía SafeHtml, CSP estricta y cabeceras de seguridad."
+      "text": "Entradas validadas con Zod en el borde, HTML solo vÃ­a SafeHtml, CSP estricta y cabeceras de seguridad."
     },
     {
       "id": "SEC-06",
-      "text": "Archivos con URL prefirmada de vida corta, tipo y tamaño validados, bucket privado cifrado y escaneo de malware antes de usarlos."
+      "text": "Archivos con URL prefirmada de vida corta, tipo y tamaÃ±o validados, bucket privado cifrado y escaneo de malware antes de usarlos."
     },
     {
       "id": "SEC-07",
-      "text": "Secretos solo en Secrets Manager e IAM de mínimo privilegio por función; cero secretos en el repo."
+      "text": "Secretos solo en Secrets Manager e IAM de mÃ­nimo privilegio por funciÃ³n; cero secretos en el repo."
     },
     {
       "id": "SEC-08",
-      "text": "Límite de peticiones por usuario y por IP en login, OTP y rutas públicas."
+      "text": "LÃ­mite de peticiones por usuario y por IP en login, OTP y rutas pÃºblicas."
     },
     {
       "id": "SEC-09",
-      "text": "Auditoría de dependencias y SBOM en cada build; sin dependencias nuevas sin aprobación."
+      "text": "AuditorÃ­a de dependencias y SBOM en cada build; sin dependencias nuevas sin aprobaciÃ³n."
     },
     {
       "id": "SEC-10",
-      "text": "Datos personales cifrados en reposo y retención según la política de datos personales."
+      "text": "Datos personales cifrados en reposo y retenciÃ³n segÃºn la polÃ­tica de datos personales."
     }
   ]
 }

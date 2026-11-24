@@ -89,7 +89,7 @@
     "e2e": "pnpm --filter @borondo/web run test:e2e",
     "webPackage": "@borondo/web",
     "uiPackage": "@borondo/ui",
-    "verificationNote": "Línea base del producto (comparar antes/después): pnpm typecheck; pnpm --filter @borondo/web run lint; pnpm --filter @borondo/web run test:run; pnpm --filter @borondo/ui run test. NO pnpm lint/test de la raíz (fallan por #27/#28).",
+    "verificationNote": "LÃ­nea base del producto (comparar antes/despuÃ©s): pnpm typecheck; pnpm --filter @borondo/web run lint; pnpm --filter @borondo/web run test:run; pnpm --filter @borondo/ui run test. NO pnpm lint/test de la raÃ­z (fallan por #27/#28).",
     "available": {
       "eslintOutsideWeb": false,
       "coverageThreshold": false,
@@ -193,54 +193,52 @@
     }
   },
   "openDecisions": {
-    "note": "No se resuelven en la fábrica; ver docs/DECISIONES-PENDIENTES.md.",
+    "note": "No se resuelven en la fÃ¡brica; ver docs/DECISIONES-PENDIENTES.md.",
     "ids": [
-      "#1 Hono vs NestJS",
-      "#15 SAM vs CDK",
-      "#16-#32 propuestas de la fábrica"
+      "#16-#32 propuestas de la fÃ¡brica"
     ],
     "source": "docs/DECISIONES-PENDIENTES.md"
   },
   "mandatoryBaseline": [
     {
       "id": "SEC-01",
-      "text": "Aislamiento por tenant en dos capas: middleware que fija organization_id/company_id desde la sesión y Row Level Security en toda tabla con tenant, con tests de acceso cruzado."
+      "text": "Aislamiento por tenant en dos capas: middleware que fija organization_id/company_id desde la sesiÃ³n y Row Level Security en toda tabla con tenant, con tests de acceso cruzado."
     },
     {
       "id": "SEC-02",
-      "text": "Denegar por defecto: cada ruta declara rol, módulo y permiso; sin declaración, 403. Tests de acceso y denegación por rol."
+      "text": "Denegar por defecto: cada ruta declara rol, mÃ³dulo y permiso; sin declaraciÃ³n, 403. Tests de acceso y denegaciÃ³n por rol."
     },
     {
       "id": "SEC-03",
-      "text": "MFA obligatoria para roles administrativos; bloqueo por intentos; access token corto en memoria y refresh rotativo en cookie HttpOnly, Secure, SameSite=Strict con detección de reutilización."
+      "text": "MFA obligatoria para roles administrativos; bloqueo por intentos; access token corto en memoria y refresh rotativo en cookie HttpOnly, Secure, SameSite=Strict con detecciÃ³n de reutilizaciÃ³n."
     },
     {
       "id": "SEC-04",
-      "text": "Bitácora de auditoría inmutable para permisos, módulos, finanzas, documentos y suplantación, sin datos personales."
+      "text": "BitÃ¡cora de auditorÃ­a inmutable para permisos, mÃ³dulos, finanzas, documentos y suplantaciÃ³n, sin datos personales."
     },
     {
       "id": "SEC-05",
-      "text": "Entradas validadas con Zod en el borde, HTML solo vía SafeHtml, CSP estricta y cabeceras de seguridad."
+      "text": "Entradas validadas con Zod en el borde, HTML solo vÃ­a SafeHtml, CSP estricta y cabeceras de seguridad."
     },
     {
       "id": "SEC-06",
-      "text": "Archivos con URL prefirmada de vida corta, tipo y tamaño validados, bucket privado cifrado y escaneo de malware antes de usarlos."
+      "text": "Archivos con URL prefirmada de vida corta, tipo y tamaÃ±o validados, bucket privado cifrado y escaneo de malware antes de usarlos."
     },
     {
       "id": "SEC-07",
-      "text": "Secretos solo en Secrets Manager e IAM de mínimo privilegio por función; cero secretos en el repo."
+      "text": "Secretos solo en Secrets Manager e IAM de mÃ­nimo privilegio por funciÃ³n; cero secretos en el repo."
     },
     {
       "id": "SEC-08",
-      "text": "Límite de peticiones por usuario y por IP en login, OTP y rutas públicas."
+      "text": "LÃ­mite de peticiones por usuario y por IP en login, OTP y rutas pÃºblicas."
     },
     {
       "id": "SEC-09",
-      "text": "Auditoría de dependencias y SBOM en cada build; sin dependencias nuevas sin aprobación."
+      "text": "AuditorÃ­a de dependencias y SBOM en cada build; sin dependencias nuevas sin aprobaciÃ³n."
     },
     {
       "id": "SEC-10",
-      "text": "Datos personales cifrados en reposo y retención según la política de datos personales."
+      "text": "Datos personales cifrados en reposo y retenciÃ³n segÃºn la polÃ­tica de datos personales."
     }
   ],
   "design": {
