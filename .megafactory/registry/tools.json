@@ -19,7 +19,7 @@
           "--version"
         ]
       },
-      "pinnedVersion": null,
+      "pinnedVersion": "1.7.12",
       "usage": "actionlint <ruta-del-workflow>",
       "network": false,
       "requiresEnv": [],
@@ -37,7 +37,66 @@
           "actionlint *.key*"
         ]
       },
-      "status": "documented"
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "invocationNote": "tools-invocable-unpinned",
+      "verification": "verified-static"
+    },
+    {
+      "id": "age",
+      "category": "role-tool",
+      "repo": "https://github.com/FiloSottile/age",
+      "purpose": "Cifrado de archivos moderno y simple con claves públicas. Plan B local: gpg.",
+      "license": "BSD-3-Clause",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "age",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "age -r <clave-publica> -o <salida.age> <archivo>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verification": "verified-static"
+    },
+    {
+      "id": "ast-grep",
+      "category": "role-tool",
+      "repo": "https://github.com/ast-grep/ast-grep",
+      "purpose": "Búsqueda y refactor estructural sobre el árbol sintáctico del código. Plan B local: semgrep o ripgrep.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "ast-grep",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "ast-grep run -p '<patrón>' <ruta>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verification": "verified-static"
     },
     {
       "id": "asyncapi-cli",
@@ -63,7 +122,37 @@
       "network": false,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verification": "verified-static"
+    },
+    {
+      "id": "atlas",
+      "category": "role-tool",
+      "repo": "https://github.com/ariga/atlas",
+      "purpose": "Migraciones declarativas de esquema de base de datos con diff y lint de cambios peligrosos. Plan B local: dbml-cli con migraciones SQL escritas a mano.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "atlas",
+        "args": [
+          "version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "atlas schema diff --from <origen> --to <destino>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verification": "verified-static"
     },
     {
       "id": "axe-core-cli",
@@ -90,7 +179,9 @@
       "network": false,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verification": "verified-static"
     },
     {
       "id": "cap",
@@ -109,7 +200,7 @@
         "bin": "cap",
         "args": []
       },
-      "pinnedVersion": null,
+      "pinnedVersion": "0.6.3",
       "usage": "cap record start --screen <id> --json --detach y exportar a mp4 con cap export, en el equipo de dev",
       "network": true,
       "requiresEnv": [],
@@ -135,7 +226,10 @@
       "status": "documented",
       "dataHandling": "Graba la pantalla completa: cerrar secretos y datos personales antes, solo en dev. Toda invocación por agentes va en ask; cap upload sube a cap.so (nube) y lo confirma el humano, mejor guardar en local o en un S3 propio. Requisito: cap automations list --json vacío (ejecutan comandos). Negados update, agents, desktop, automations y mcp. Cap AI envía contenido a terceros: apagado.",
       "cost": "freemium",
-      "costNote": "Grabar en local es gratis; Cap Pro para compartir en su nube es de pago."
+      "costNote": "Grabar en local es gratis; Cap Pro para compartir en su nube es de pago.",
+      "licenseVerifiedAt": "2026-11-18",
+      "invocationNote": "tools-invocable-unpinned",
+      "verification": "verified-static"
     },
     {
       "id": "cfn-guard",
@@ -160,46 +254,9 @@
       "network": false,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
-    },
-    {
-      "id": "cfn-lint",
-      "category": "role-tool",
-      "repo": "https://github.com/aws-cloudformation/cfn-lint",
-      "purpose": "Valida plantillas de CloudFormation y SAM contra la especificación de recursos y reglas de buenas prácticas.",
-      "license": "MIT-0",
-      "licenseClass": "permissive",
-      "licenseStatus": "declared",
-      "kind": "cli",
-      "runtime": {
-        "kind": "python",
-        "min": "3.10"
-      },
-      "check": {
-        "bin": "cfn-lint",
-        "args": [
-          "--version"
-        ]
-      },
-      "pinnedVersion": null,
-      "usage": "cfn-lint <plantilla.yaml>",
-      "network": false,
-      "requiresEnv": [],
-      "agentInvocation": {
-        "allow": [
-          "cfn-lint *"
-        ],
-        "ask": [],
-        "denyArgs": [
-          "cfn-lint -*",
-          "cfn-lint * -*",
-          "cfn-lint *<*",
-          "cfn-lint *.env*",
-          "cfn-lint *.pem*",
-          "cfn-lint *.key*"
-        ]
-      },
-      "status": "documented"
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verification": "verified-static"
     },
     {
       "id": "chaostoolkit",
@@ -225,7 +282,9 @@
       "network": true,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verification": "verified-static"
     },
     {
       "id": "checkov",
@@ -251,7 +310,9 @@
       "network": false,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verification": "verified-static"
     },
     {
       "id": "conftest",
@@ -276,7 +337,9 @@
       "network": false,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verification": "verified-static"
     },
     {
       "id": "crawl4ai",
@@ -295,7 +358,7 @@
         "bin": "crwl",
         "args": []
       },
-      "pinnedVersion": null,
+      "pinnedVersion": "0.9.5",
       "usage": "crwl <url> -o markdown -c check_robots_txt=true   (en código: CrawlerRunConfig(check_robots_txt=True) con pausas y caché)",
       "network": true,
       "requiresEnv": [],
@@ -325,7 +388,39 @@
       "status": "documented",
       "dataHandling": "Solo sitios públicos, propios o con permiso: robots.txt (check_robots_txt=True), términos de uso, pausas y caché. Prohibido stealth, resolver CAPTCHA, eludir login o anti-bot, proxies para evadir bloqueos y recolectar datos personales. Si hay API pública oficial, va primero. Salida a bus/<ítem>/sources/ y scan --strict antes de citar; extracción con LLM solo con modelo local.",
       "cost": "gratis",
-      "costNote": "Gratis en local; su nube es freemium y no se usa."
+      "costNote": "Gratis en local; su nube es freemium y no se usa.",
+      "licenseVerifiedAt": "2026-11-18",
+      "invocationNote": "tools-invocable-unpinned",
+      "verification": "verified-static"
+    },
+    {
+      "id": "curl",
+      "category": "role-tool",
+      "repo": "https://github.com/curl/curl",
+      "purpose": "Peticiones HTTP desde la terminal para probar APIs y descargar recursos públicos. Plan B local: httpie o la herramienta fetch del propio agente.",
+      "license": "LicenseRef-curl",
+      "licenseClass": "proprietary",
+      "licenseStatus": "declared",
+      "licenseNote": "Licencia curl, permisiva de estilo MIT pero fuera de la tabla SPDX del lint tools; se clasifica como propia. La fábrica no redistribuye la herramienta.",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "curl",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "curl -sS -I <url>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verification": "verified-static"
     },
     {
       "id": "dbml-cli",
@@ -351,7 +446,142 @@
       "network": false,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verification": "verified-static"
+    },
+    {
+      "id": "deepeval",
+      "category": "role-tool",
+      "repo": "https://github.com/confident-ai/deepeval",
+      "purpose": "Evaluación de salidas de LLM y de RAG con métricas G-Eval y la tríada de RAG. Plan B local: promptfoo.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "python",
+        "min": "3.10"
+      },
+      "check": {
+        "bin": "deepeval",
+        "args": []
+      },
+      "pinnedVersion": null,
+      "usage": "deepeval test run <prueba.py>",
+      "network": true,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "dataHandling": "Usa un modelo juez local por defecto; un juez comercial es gasto y decisión humana. Sin datos reales de clientes en los casos de prueba.",
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verification": "verified-static"
+    },
+    {
+      "id": "dspy",
+      "category": "role-tool",
+      "repo": "https://github.com/stanfordnlp/dspy",
+      "purpose": "Biblioteca de Python que compila prompts declarativos y los optimiza contra métricas. Plan B local: promptfoo para comparar variantes a mano.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "library",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "python",
+        "min": "3.10"
+      },
+      "check": null,
+      "pinnedVersion": null,
+      "usage": "import dspy  # desde el código de optimización de prompts del proyecto",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verification": "verified-static"
+    },
+    {
+      "id": "duckdb",
+      "category": "role-tool",
+      "repo": "https://github.com/duckdb/duckdb",
+      "purpose": "SQL analítico en proceso sobre CSV, Parquet y JSON, sin servidor ni instalación de base de datos. Plan B local: miller, o python con sqlite3 de su biblioteca estándar.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "duckdb",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "duckdb -c \"SELECT * FROM 'datos.csv' LIMIT 5\"",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verification": "verified-static"
+    },
+    {
+      "id": "eslint",
+      "category": "role-tool",
+      "repo": "https://github.com/eslint/eslint",
+      "purpose": "Análisis estático de JavaScript y TypeScript con reglas del proyecto. Plan B local: tsc --noEmit y semgrep.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "node",
+        "min": "22.0"
+      },
+      "check": {
+        "bin": "eslint",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "eslint <ruta>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verification": "verified-static"
+    },
+    {
+      "id": "evidently",
+      "category": "role-tool",
+      "repo": "https://github.com/evidentlyai/evidently",
+      "purpose": "Biblioteca de Python para detectar deriva de datos y de modelos y generar reportes de calidad. Plan B local: duckdb con consultas de estadísticas por ventana.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "library",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "python",
+        "min": "3.10"
+      },
+      "check": null,
+      "pinnedVersion": null,
+      "usage": "from evidently import Report  # desde el código de evaluación del proyecto",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verification": "verified-static"
     },
     {
       "id": "gh",
@@ -381,7 +611,9 @@
         }
       ],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verification": "verified-static"
     },
     {
       "id": "gitleaks",
@@ -406,7 +638,34 @@
       "network": false,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verification": "verified-static"
+    },
+    {
+      "id": "gptcache",
+      "category": "role-tool",
+      "repo": "https://github.com/zilliztech/GPTCache",
+      "purpose": "Biblioteca de Python con caché semántica de respuestas de LLM para reducir llamadas repetidas. Plan B local: una caché por hash exacto del prompt.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "library",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "python",
+        "min": "3.10"
+      },
+      "check": null,
+      "pinnedVersion": "0.1.44",
+      "usage": "from gptcache import cache  # desde el código del proyecto",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verificationNote": "verified-with-user-token (gh-keyring-authenticated)",
+      "verification": "verified-static"
     },
     {
       "id": "gsap",
@@ -415,7 +674,7 @@
       "purpose": "Biblioteca de animación en JavaScript (líneas de tiempo, ScrollTrigger y matchMedia para movimiento reducido) para secciones narrativas del frontend; es una dependencia del proyecto, no un comando.",
       "license": "LicenseRef-GSAP-Standard-No-Charge",
       "licenseClass": "proprietary",
-      "licenseStatus": "declared",
+      "licenseStatus": "license-review-needed",
       "licenseNote": "Licencia propietaria \"Standard No Charge\" de Webflow (gsap.com/standard-license): gratis incluso en uso comercial, pero no es OSI, prohíbe constructores visuales sin código que compitan con Webflow y puede cambiar; legal-counsel la revisa antes de adoptarla.",
       "kind": "library",
       "runtime": {
@@ -434,43 +693,93 @@
       "costNote": "Gratis incluso en uso comercial, con licencia propietaria de Webflow."
     },
     {
-      "id": "hadolint",
+      "id": "himalaya",
       "category": "role-tool",
-      "repo": "https://github.com/hadolint/hadolint",
-      "purpose": "Linter de Dockerfile que revisa buenas prácticas de construcción de imágenes y las instrucciones de shell que contienen.",
-      "license": "GPL-3.0-only",
-      "licenseClass": "copyleft",
+      "repo": "https://github.com/pimalaya/himalaya",
+      "purpose": "Cliente de correo por línea de comandos (IMAP y SMTP) para leer y redactar sin abrir un cliente gráfico. Plan B local: el MCP de correo del proyecto o un borrador en Markdown.",
+      "license": "MIT",
+      "licenseClass": "permissive",
       "licenseStatus": "declared",
-      "licenseNote": "GPL: la fábrica no redistribuye la herramienta; se instala aparte y solo se invoca como programa externo.",
       "kind": "cli",
+      "cost": "gratis",
       "runtime": {
         "kind": "none"
       },
       "check": {
-        "bin": "hadolint",
+        "bin": "himalaya",
         "args": [
           "--version"
         ]
       },
-      "pinnedVersion": null,
-      "usage": "hadolint <Dockerfile>",
-      "network": false,
+      "pinnedVersion": "2.2.1",
+      "usage": "himalaya envelope list",
+      "network": true,
       "requiresEnv": [],
-      "agentInvocation": {
-        "allow": [
-          "hadolint *"
-        ],
-        "ask": [],
-        "denyArgs": [
-          "hadolint -*",
-          "hadolint * -*",
-          "hadolint *<*",
-          "hadolint *.env*",
-          "hadolint *.pem*",
-          "hadolint *.key*"
+      "agentInvocation": null,
+      "dataHandling": "Lee y redacta correo del propio buzón; enviar un mensaje es PENDING_HUMAN_COMMAND. Credenciales solo en la configuración del usuario, nunca en el bus.",
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verificationNote": "verified-with-user-token (gh-keyring-authenticated)",
+      "verification": "verified-static"
+    },
+    {
+      "id": "htmlq",
+      "category": "role-tool",
+      "repo": "https://github.com/mgdm/htmlq",
+      "purpose": "Extrae fragmentos de HTML con selectores CSS, como jq pero para páginas. Plan B local: crawl4ai o python con html.parser.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "htmlq",
+        "args": [
+          "--version"
         ]
       },
-      "status": "documented"
+      "pinnedVersion": "0.4.0",
+      "usage": "htmlq 'h1' < <pagina.html>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verificationNote": "verified-with-user-token (gh-keyring-authenticated)",
+      "verification": "verified-static"
+    },
+    {
+      "id": "httpie",
+      "category": "role-tool",
+      "repo": "https://github.com/httpie/cli",
+      "purpose": "Cliente HTTP legible para probar APIs REST con JSON y cabeceras. Plan B local: curl.",
+      "license": "BSD-3-Clause",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "python",
+        "min": "3.10"
+      },
+      "check": {
+        "bin": "http",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": "3.2.4",
+      "usage": "http GET <url> Accept:application/json",
+      "network": true,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verificationNote": "verified-with-user-token (gh-keyring-authenticated)",
+      "verification": "verified-static"
     },
     {
       "id": "infracost",
@@ -490,7 +799,7 @@
           "--version"
         ]
       },
-      "pinnedVersion": null,
+      "pinnedVersion": "0.10.50",
       "usage": "infracost breakdown --path <ruta-terraform>",
       "network": true,
       "requiresEnv": [
@@ -500,7 +809,10 @@
         }
       ],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verificationNote": "verified-with-user-token (gh-keyring-authenticated)",
+      "verification": "verified-static"
     },
     {
       "id": "jq",
@@ -509,7 +821,7 @@
       "purpose": "Procesador de JSON en la línea de comandos para filtrar y resumir salidas de otros comandos y registros.",
       "license": "MIT",
       "licenseClass": "permissive",
-      "licenseStatus": "declared",
+      "licenseStatus": "license-review-needed",
       "kind": "cli",
       "runtime": {
         "kind": "none"
@@ -525,7 +837,37 @@
       "network": false,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "licenseNote": "Licencia NOASSERTION o no detectada (jq/ledger/litellm/miller/nmap/gsap)"
+    },
+    {
+      "id": "k6",
+      "category": "role-tool",
+      "repo": "https://github.com/grafana/k6",
+      "purpose": "Pruebas de carga y rendimiento con scripts en JavaScript; solo contra el entorno de desarrollo con presupuesto acordado.",
+      "license": "AGPL-3.0-only",
+      "licenseClass": "copyleft",
+      "licenseStatus": "declared",
+      "licenseNote": "AGPL: la fábrica no redistribuye la herramienta; ofrecerla como servicio de red obliga a publicar cambios, así que solo se usa localmente o contra dev.",
+      "kind": "cli",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "k6",
+        "args": [
+          "version"
+        ]
+      },
+      "pinnedVersion": "2.4.0",
+      "usage": "k6 run <script.js>",
+      "network": true,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verificationNote": "verified-with-user-token (gh-keyring-authenticated)",
+      "verification": "verified-static"
     },
     {
       "id": "kubeconform",
@@ -545,12 +887,44 @@
           "-v"
         ]
       },
-      "pinnedVersion": null,
+      "pinnedVersion": "0.8.0",
       "usage": "kubeconform <manifiesto.yaml>",
       "network": false,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verificationNote": "verified-with-user-token (gh-keyring-authenticated)",
+      "verification": "verified-static"
+    },
+    {
+      "id": "kustomize",
+      "category": "role-tool",
+      "repo": "https://github.com/kubernetes-sigs/kustomize",
+      "purpose": "Personaliza manifiestos de Kubernetes por entorno sin plantillas. Plan B local: yq para aplicar parches sobre YAML.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "kustomize",
+        "args": [
+          "version"
+        ]
+      },
+      "pinnedVersion": "5.8.3",
+      "usage": "kustomize build <carpeta>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verificationNote": "verified-with-user-token (gh-keyring-authenticated)",
+      "verification": "verified-static"
     },
     {
       "id": "lighthouse-ci",
@@ -571,12 +945,99 @@
           "--version"
         ]
       },
-      "pinnedVersion": null,
+      "pinnedVersion": "0.16.1",
       "usage": "lhci autorun --collect.url=<url-de-dev>",
       "network": true,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verificationNote": "verified-with-user-token (gh-keyring-authenticated)",
+      "verification": "verified-static"
+    },
+    {
+      "id": "litellm",
+      "category": "role-tool",
+      "repo": "https://github.com/BerriAI/litellm",
+      "purpose": "Pasarela unificada a modelos de varios proveedores con conteo de tokens y de costos. Plan B local: el conteo de tokens de la propia herramienta.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "license-review-needed",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "python",
+        "min": "3.10"
+      },
+      "check": {
+        "bin": "litellm",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "litellm --model <modelo> --test",
+      "network": true,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "dataHandling": "Las llaves de proveedor viven en variables del usuario; un proveedor comercial es gasto y decisión humana. Sin PII en las pruebas.",
+      "status": "documented",
+      "licenseNote": "Licencia NOASSERTION o no detectada (jq/ledger/litellm/miller/nmap/gsap)"
+    },
+    {
+      "id": "llama-cpp",
+      "category": "role-tool",
+      "repo": "https://github.com/ggml-org/llama.cpp",
+      "purpose": "Inferencia local de modelos GGUF en CPU o GPU, base para modelos pequeños sin enviar datos a terceros. Plan B local: ollama.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "llama-cli",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": "1.0.0",
+      "usage": "llama-cli -m <modelo.gguf> -p \"<texto>\"",
+      "network": true,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "dataHandling": "Inferencia local; descargar pesos de un modelo es un gasto de ancho de banda y disco que decide el humano. Sin datos de clientes en los prompts de prueba.",
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verificationNote": "verified-with-user-token (gh-keyring-authenticated)",
+      "verification": "verified-static"
+    },
+    {
+      "id": "llmlingua",
+      "category": "role-tool",
+      "repo": "https://github.com/microsoft/LLMLingua",
+      "purpose": "Biblioteca de Python que comprime prompts largos conservando la información útil. Plan B local: resúmenes por ítem y show --pointer.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "library",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "python",
+        "min": "3.10"
+      },
+      "check": null,
+      "pinnedVersion": "0.2.2",
+      "usage": "from llmlingua import PromptCompressor  # desde el código del proyecto",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verificationNote": "verified-with-user-token (gh-keyring-authenticated)",
+      "verification": "verified-static"
     },
     {
       "id": "lychee",
@@ -596,12 +1057,15 @@
           "--version"
         ]
       },
-      "pinnedVersion": null,
+      "pinnedVersion": "0.24.2",
       "usage": "lychee <ruta-o-patrón>",
       "network": true,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verificationNote": "verified-with-user-token (gh-keyring-authenticated)",
+      "verification": "verified-static"
     },
     {
       "id": "maestro",
@@ -622,12 +1086,15 @@
           "--version"
         ]
       },
-      "pinnedVersion": null,
+      "pinnedVersion": "2.12.1",
       "usage": "maestro test <flujo.yaml>",
       "network": false,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verificationNote": "verified-with-user-token (gh-keyring-authenticated)",
+      "verification": "verified-static"
     },
     {
       "id": "markdownlint-cli2",
@@ -648,7 +1115,8 @@
           "--version"
         ]
       },
-      "pinnedVersion": null,
+      "pinnedVersion": "0.24.1",
+      "pinnedSha": "c01a1853c19b175aee6a09f24e2ad9b748c485ad",
       "usage": "markdownlint-cli2 <ruta-o-patrón>",
       "network": false,
       "requiresEnv": [],
@@ -666,7 +1134,10 @@
           "markdownlint-cli2 *.key*"
         ]
       },
-      "status": "documented"
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "invocationNote": "tools-invocable-unpinned",
+      "verification": "verified-static"
     },
     {
       "id": "markitdown",
@@ -708,11 +1179,43 @@
         ]
       },
       "status": "documented",
-      "licenseVerifiedAt": "2026-10-24",
+      "licenseVerifiedAt": "2026-11-18",
       "licenseFile": "LICENSE",
       "dataHandling": "Salida con posibles datos personales. (a) markitdown <ruta> por stdout; (b) escribirla en bus/<ítem>/sources/<slug>.md (cuarentena local ignorada por git); (c) factory.mjs scan --strict --feature <ítem> --paths <esa ruta>; (d) con cualquier hallazgo, también low, redactar y reescanear, o vaciar y pedir borrado humano; (e) citar solo fuentes con escaneo limpio. Sin nube ni plugins.",
       "cost": "gratis",
-      "costNote": "Gratis y local; sin plugins ni servicios de nube."
+      "costNote": "Gratis y local; sin plugins ni servicios de nube.",
+      "verificationNote": "verified-with-user-token (gh-keyring-authenticated)",
+      "verification": "verified-static"
+    },
+    {
+      "id": "marp-cli",
+      "category": "role-tool",
+      "repo": "https://github.com/marp-team/marp-cli",
+      "purpose": "Convierte presentaciones escritas en Markdown a PDF, PPTX o HTML para decks de inversionistas y juntas. Plan B local: pandoc con salida a PPTX.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "node",
+        "min": "22.0"
+      },
+      "check": {
+        "bin": "marp",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": "4.5.1",
+      "usage": "marp <deck.md> -o <deck.pdf>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verificationNote": "verified-with-user-token (gh-keyring-authenticated)",
+      "verification": "verified-static"
     },
     {
       "id": "mermaid-cli",
@@ -733,12 +1236,73 @@
           "--version"
         ]
       },
-      "pinnedVersion": null,
+      "pinnedVersion": "12.2.0",
       "usage": "mmdc -i <diagrama.mmd> -o <salida.svg>",
       "network": false,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verificationNote": "verified-with-user-token (gh-keyring-authenticated)",
+      "verification": "verified-static"
+    },
+    {
+      "id": "miller",
+      "category": "role-tool",
+      "repo": "https://github.com/johnkerl/miller",
+      "purpose": "Transformación de CSV, TSV y JSON por registros (sort, join, agregados) con sintaxis tipo awk. Plan B local: xsv o jq.",
+      "license": "BSD-2-Clause",
+      "licenseClass": "permissive",
+      "licenseStatus": "license-review-needed",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "mlr",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "mlr --icsv --opprint sort -nr <campo> <archivo.csv>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "licenseNote": "Licencia NOASSERTION o no detectada (jq/ledger/litellm/miller/nmap/gsap)"
+    },
+    {
+      "id": "mycli",
+      "category": "role-tool",
+      "repo": "https://github.com/dbcli/mycli",
+      "purpose": "Cliente interactivo de MySQL y MariaDB con autocompletado y resaltado. Plan B local: duckdb con su extensión mysql, o el cliente mysql.",
+      "license": "BSD-3-Clause",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "python",
+        "min": "3.10"
+      },
+      "check": {
+        "bin": "mycli",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": "2.31.0",
+      "usage": "mycli -h <host> -u <usuario-solo-lectura> <base>",
+      "network": true,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "dataHandling": "Solo contra bases de dev con un usuario de solo lectura; nunca producción. Credenciales del entorno del usuario, nunca en el bus.",
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "verificationNote": "verified-with-user-token (gh-keyring-authenticated)",
+      "verification": "verified-static"
     },
     {
       "id": "oasdiff",
@@ -763,7 +1327,35 @@
       "network": false,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "verificationNote": "pending-verification"
+    },
+    {
+      "id": "opentofu",
+      "category": "prerequisite",
+      "repo": "https://github.com/opentofu/opentofu",
+      "purpose": "Alternativa abierta a Terraform, compatible con su lenguaje, para validar y planificar infraestructura.",
+      "license": "MPL-2.0",
+      "licenseClass": "weak-copyleft",
+      "licenseStatus": "declared",
+      "licenseNote": "MPL: la fábrica no redistribuye la herramienta; cambios a sus archivos fuente quedarían bajo MPL.",
+      "kind": "cli",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "tofu",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "tofu plan -out <plan>",
+      "network": true,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "verificationNote": "pending-verification"
     },
     {
       "id": "osv-scanner",
@@ -788,7 +1380,8 @@
       "network": true,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "verificationNote": "pending-verification"
     },
     {
       "id": "pandoc",
@@ -815,7 +1408,37 @@
       "requiresEnv": [],
       "agentInvocation": null,
       "status": "documented",
-      "dataHandling": "Convierte documentos del proyecto; la salida se trata como fuente: cuarentena en sources/ y scan --strict antes de citarla."
+      "dataHandling": "Convierte documentos del proyecto; la salida se trata como fuente: cuarentena en sources/ y scan --strict antes de citarla.",
+      "verificationNote": "pending-verification"
+    },
+    {
+      "id": "pgcli",
+      "category": "role-tool",
+      "repo": "https://github.com/dbcli/pgcli",
+      "purpose": "Cliente interactivo de PostgreSQL con autocompletado y resaltado. Plan B local: duckdb con su extensión postgres, o psql.",
+      "license": "BSD-3-Clause",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "python",
+        "min": "3.10"
+      },
+      "check": {
+        "bin": "pgcli",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "pgcli -h <host> -U <usuario-solo-lectura> <base>",
+      "network": true,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "dataHandling": "Solo contra bases de dev con un usuario de solo lectura; nunca producción. Credenciales del entorno del usuario, nunca en el bus.",
+      "status": "documented",
+      "verificationNote": "pending-verification"
     },
     {
       "id": "playwright",
@@ -841,7 +1464,8 @@
       "network": true,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "verificationNote": "pending-verification"
     },
     {
       "id": "playwright-cli",
@@ -895,7 +1519,63 @@
       "status": "documented",
       "dataHandling": "Solo URLs de dev, propias o con permiso; nunca el navegador personal (attach --cdp o --extension caen en flags negados). Snapshots, capturas, trazas y videos de .playwright-cli/ pueden traer datos personales: a bus/<ítem>/sources/ y scan --strict al citar. Negados cookies, storage, state-*, upload, run-code, webmcp-call, file:, install, delete-data y kill-all. NO_UPDATE_NOTIFIER=1 evita npm view.",
       "cost": "gratis",
-      "costNote": "Gratis y local (Apache-2.0), sin cuenta ni servicio de pago. El navegador se descarga una vez del CDN de Playwright (del orden de cientos de MB) o se usa el Chrome instalado."
+      "costNote": "Gratis y local (Apache-2.0), sin cuenta ni servicio de pago. El navegador se descarga una vez del CDN de Playwright (del orden de cientos de MB) o se usa el Chrome instalado.",
+      "verificationNote": "pending-verification"
+    },
+    {
+      "id": "prettier",
+      "category": "role-tool",
+      "repo": "https://github.com/prettier/prettier",
+      "purpose": "Formateador de código y documentos (TS, CSS, Markdown, JSON) con estilo fijo. Plan B local: el formateador del editor o eslint --fix.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "node",
+        "min": "22.0"
+      },
+      "check": {
+        "bin": "prettier",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "prettier --check <ruta>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "verificationNote": "pending-verification"
+    },
+    {
+      "id": "promptfoo",
+      "category": "role-tool",
+      "repo": "https://github.com/promptfoo/promptfoo",
+      "purpose": "Evaluación y pruebas de prompts y aplicaciones con LLM, incluidas pruebas adversarias de seguridad.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "runtime": {
+        "kind": "node",
+        "min": "22"
+      },
+      "check": {
+        "bin": "promptfoo",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "promptfoo eval -c <configuración.yaml>",
+      "network": true,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "verificationNote": "pending-verification"
     },
     {
       "id": "promtool",
@@ -920,7 +1600,8 @@
       "network": false,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "verificationNote": "pending-verification"
     },
     {
       "id": "prowler",
@@ -947,7 +1628,90 @@
       "requiresEnv": [],
       "agentInvocation": null,
       "status": "documented",
-      "dataHandling": "Lee configuración de la cuenta con un perfil de solo lectura de dev; el informe puede nombrar recursos y se escanea antes de citarlo."
+      "dataHandling": "Lee configuración de la cuenta con un perfil de solo lectura de dev; el informe puede nombrar recursos y se escanea antes de citarlo.",
+      "verificationNote": "pending-verification"
+    },
+    {
+      "id": "qpdf",
+      "category": "role-tool",
+      "repo": "https://github.com/qpdf/qpdf",
+      "purpose": "Unir, dividir, cifrar y reparar PDF sin perder contenido, para paquetes de data room y contratos. Plan B local: pandoc para regenerar el PDF desde su Markdown.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "qpdf",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "qpdf --empty --pages a.pdf b.pdf -- salida.pdf",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "verificationNote": "pending-verification"
+    },
+    {
+      "id": "redocly-cli",
+      "category": "role-tool",
+      "repo": "https://github.com/Redocly/redocly-cli",
+      "purpose": "Valida, empaqueta y publica definiciones OpenAPI con reglas de estilo configurables. Plan B local: spectral.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "node",
+        "min": "22.0"
+      },
+      "check": {
+        "bin": "redocly",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "redocly lint <openapi.yaml>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "verificationNote": "pending-verification"
+    },
+    {
+      "id": "ripgrep",
+      "category": "role-tool",
+      "repo": "https://github.com/BurntSushi/ripgrep",
+      "purpose": "Búsqueda de texto muy rápida en el árbol del proyecto respetando .gitignore. Plan B local: git grep.",
+      "license": "Unlicense OR MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "rg",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "rg -n \"<patrón>\" <ruta>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "verificationNote": "pending-verification"
     },
     {
       "id": "schemathesis",
@@ -974,57 +1738,8 @@
       "requiresEnv": [],
       "agentInvocation": null,
       "status": "documented",
-      "dataHandling": "Envía datos generados a la API de dev; nunca contra producción ni con datos reales de usuarios."
-    },
-    {
-      "id": "scrapling",
-      "category": "role-tool",
-      "repo": "https://github.com/D4Vinci/Scrapling",
-      "purpose": "Scraper en Python para sitios estáticos, solo en modo normal (Fetcher o extract get) y con robots_txt_obey en las arañas; alternativa a Crawl4AI cuando basta una petición HTTP.",
-      "license": "BSD-3-Clause",
-      "licenseClass": "permissive",
-      "licenseStatus": "declared",
-      "kind": "cli",
-      "runtime": {
-        "kind": "python",
-        "min": "3.10"
-      },
-      "check": {
-        "bin": "scrapling",
-        "args": []
-      },
-      "pinnedVersion": null,
-      "usage": "scrapling extract get <url> <salida.md>   (en código: Fetcher.get o un Spider con robots_txt_obey = True)",
-      "network": true,
-      "requiresEnv": [],
-      "agentInvocation": {
-        "allow": [],
-        "ask": [
-          "scrapling *"
-        ],
-        "denyArgs": [
-          "scrapling -*",
-          "scrapling * -*",
-          "scrapling *<*",
-          "scrapling *.env*",
-          "scrapling *.pem*",
-          "scrapling *.key*",
-          "scrapling *StealthyFetcher*",
-          "scrapling *stealth*",
-          "scrapling *--solve-cloudflare*",
-          "scrapling *solve_cloudflare*",
-          "scrapling *--impersonate*",
-          "scrapling *impersonate=*",
-          "scrapling extract fetch*",
-          "scrapling install*",
-          "scrapling shell*",
-          "scrapling mcp*"
-        ]
-      },
-      "status": "documented",
-      "dataHandling": "Solo modo normal en sitios públicos, propios o con permiso: robots.txt (robots_txt_obey = True en las arañas), términos de uso, pausas y sin datos personales. Prohibidos StealthyFetcher, stealthy-fetch, solve_cloudflare, impersonate, proxies y resolvedores de CAPTCHA. Crawl4AI va primero y una API pública oficial antes que ambos. Salida a bus/<ítem>/sources/ y scan --strict antes de citar.",
-      "cost": "gratis",
-      "costNote": "Gratis en modo normal; sus proxies y resolvedores patrocinados son de pago y están prohibidos."
+      "dataHandling": "Envía datos generados a la API de dev; nunca contra producción ni con datos reales de usuarios.",
+      "verificationNote": "pending-verification"
     },
     {
       "id": "semgrep",
@@ -1051,7 +1766,8 @@
       "network": false,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "verificationNote": "pending-verification"
     },
     {
       "id": "spectral",
@@ -1077,7 +1793,8 @@
       "network": false,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "verificationNote": "pending-verification"
     },
     {
       "id": "sqlfluff",
@@ -1103,7 +1820,92 @@
       "network": false,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "verificationNote": "pending-verification"
+    },
+    {
+      "id": "style-dictionary",
+      "category": "role-tool",
+      "repo": "https://github.com/style-dictionary/style-dictionary",
+      "purpose": "Convierte tokens de diseño W3C a CSS, Tailwind, iOS y Android desde una sola fuente. Plan B local: jq con una plantilla de salida por plataforma.",
+      "license": "Apache-2.0",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "node",
+        "min": "22.0"
+      },
+      "check": {
+        "bin": "style-dictionary",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "style-dictionary build --config <config.json>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "verificationNote": "pending-verification"
+    },
+    {
+      "id": "stylelint",
+      "category": "role-tool",
+      "repo": "https://github.com/stylelint/stylelint",
+      "purpose": "Linter de CSS y SCSS con reglas del proyecto. Plan B local: prettier --check.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "node",
+        "min": "22.0"
+      },
+      "check": {
+        "bin": "stylelint",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "stylelint \"<ruta>/**/*.css\"",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "verificationNote": "pending-verification"
+    },
+    {
+      "id": "svgo",
+      "category": "role-tool",
+      "repo": "https://github.com/svg/svgo",
+      "purpose": "Optimiza archivos SVG quitando metadatos y simplificando rutas. Plan B local: la exportación optimizada del editor de diseño.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "node",
+        "min": "22.0"
+      },
+      "check": {
+        "bin": "svgo",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "svgo <icono.svg> -o <salida.svg>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "verificationNote": "pending-verification"
     },
     {
       "id": "syft",
@@ -1128,7 +1930,35 @@
       "network": false,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "verificationNote": "pending-verification"
+    },
+    {
+      "id": "taskwarrior",
+      "category": "role-tool",
+      "repo": "https://github.com/GothenburgBitFactory/taskwarrior",
+      "purpose": "Lista de tareas en terminal con prioridades, dependencias y filtros para el trabajo de un solo equipo. Plan B local: una tabla Markdown de tareas en bus/<ítem>/.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "task",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "task add \"<tarea>\" priority:H",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "verificationNote": "pending-verification"
     },
     {
       "id": "tflint",
@@ -1154,7 +1984,8 @@
       "network": false,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "verificationNote": "pending-verification"
     },
     {
       "id": "trivy",
@@ -1179,7 +2010,8 @@
       "network": true,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "verificationNote": "pending-verification"
     },
     {
       "id": "vale",
@@ -1199,7 +2031,7 @@
           "--version"
         ]
       },
-      "pinnedVersion": null,
+      "pinnedVersion": "3.27.0",
       "usage": "vale <ruta-del-documento>",
       "network": false,
       "requiresEnv": [],
@@ -1217,7 +2049,67 @@
           "vale *.key*"
         ]
       },
-      "status": "documented"
+      "status": "documented",
+      "licenseVerifiedAt": "2026-11-18",
+      "invocationNote": "tools-invocable-unpinned",
+      "verification": "verified-static"
+    },
+    {
+      "id": "visidata",
+      "category": "role-tool",
+      "repo": "https://github.com/saulpw/visidata",
+      "purpose": "Explorador interactivo de datos tabulares (CSV, JSON, Excel) con perfilado de columnas. Plan B local: miller o duckdb.",
+      "license": "GPL-3.0-only",
+      "licenseClass": "copyleft",
+      "licenseStatus": "declared",
+      "licenseNote": "Copyleft fuerte: la fábrica no redistribuye la herramienta; se instala aparte y solo se invoca como programa externo.",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "python",
+        "min": "3.10"
+      },
+      "check": {
+        "bin": "vd",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "vd <archivo.csv>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "verificationNote": "pending-verification"
+    },
+    {
+      "id": "vitest",
+      "category": "role-tool",
+      "repo": "https://github.com/vitest-dev/vitest",
+      "purpose": "Ejecutor de pruebas unitarias y de cobertura para TypeScript con salida JSON. Plan B local: el ejecutor nativo node --test.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "node",
+        "min": "22.0"
+      },
+      "check": {
+        "bin": "vitest",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "vitest run --coverage",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "verificationNote": "pending-verification"
     },
     {
       "id": "witr",
@@ -1237,7 +2129,7 @@
           "--version"
         ]
       },
-      "pinnedVersion": null,
+      "pinnedVersion": "0.3.4",
       "usage": "witr --port <puerto> --json   (también --pid <pid> --tree, --container <id> o un nombre de proceso)",
       "network": false,
       "requiresEnv": [],
@@ -1261,7 +2153,64 @@
       "status": "documented",
       "dataHandling": "Solo lee procesos: cerrar, reiniciar o cambiar la prioridad de uno lo decide el humano (la interfaz interactiva queda negada). --env imprime variables de entorno con secretos: negado. Ver procesos de otros usuarios exige Administrador o sudo, que ejecuta el humano. No usar los scripts de instalación por tubería.",
       "cost": "gratis",
-      "costNote": "Gratis; sin cuenta ni servicio externo."
+      "costNote": "Gratis; sin cuenta ni servicio externo.",
+      "licenseVerifiedAt": "2026-11-18",
+      "invocationNote": "tools-invocable-unpinned",
+      "verification": "verified-static"
+    },
+    {
+      "id": "xsv",
+      "category": "role-tool",
+      "repo": "https://github.com/BurntSushi/xsv",
+      "purpose": "Inspección, filtro y estadísticas rápidas de archivos CSV grandes desde la terminal. Plan B local: qsv o miller.",
+      "license": "Unlicense OR MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "xsv",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "xsv stats <archivo.csv>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "verificationNote": "pending-verification"
+    },
+    {
+      "id": "yq",
+      "category": "role-tool",
+      "repo": "https://github.com/mikefarah/yq",
+      "purpose": "Lectura y edición de YAML, JSON y TOML con filtros al estilo jq. Plan B local: jq para JSON, o python con PyYAML.",
+      "license": "MIT",
+      "licenseClass": "permissive",
+      "licenseStatus": "declared",
+      "kind": "cli",
+      "cost": "gratis",
+      "runtime": {
+        "kind": "none"
+      },
+      "check": {
+        "bin": "yq",
+        "args": [
+          "--version"
+        ]
+      },
+      "pinnedVersion": null,
+      "usage": "yq '.campo' <archivo.yaml>",
+      "network": false,
+      "requiresEnv": [],
+      "agentInvocation": null,
+      "status": "documented",
+      "verificationNote": "pending-verification"
     },
     {
       "id": "zap",
@@ -1294,7 +2243,8 @@
       "network": true,
       "requiresEnv": [],
       "agentInvocation": null,
-      "status": "documented"
+      "status": "documented",
+      "verificationNote": "pending-verification"
     }
   ]
 }

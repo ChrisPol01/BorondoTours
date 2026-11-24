@@ -57,7 +57,7 @@
   "routing": "possible-incident",
   "clusterSignal": "Cinco reportes de error al pagar en veinte minutos",
   "approvalPath": {
-    "approver": "agent:operations-lead",
+    "approver": "agent:cco",
     "command": "sin aprobación: aviso operativo al SRE por el bus"
   },
   "actions": [

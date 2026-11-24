@@ -130,6 +130,32 @@
       "items": {
         "type": "object"
       }
+    },
+    "sources": {
+      "type": "array",
+      "maxItems": 50,
+      "description": "MF-31: fuentes de las cifras de costo; verified false avisa (regla cost-sources-verified; error con conventions.review.unverifiedCostSources).",
+      "items": {
+        "type": "object",
+        "required": [
+          "url",
+          "verified"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "url": {
+            "type": "string",
+            "pattern": "^https://[^\\s]{3,300}$"
+          },
+          "verified": {
+            "type": "boolean"
+          },
+          "checkedAt": {
+            "type": "string",
+            "maxLength": 40
+          }
+        }
+      }
     }
   }
 }

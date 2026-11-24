@@ -28,6 +28,37 @@
       "actionsFrom": "json bt-method#/actions"
     },
     {
+      "type": "specialist-review",
+      "file": "specialist/SpecialistReview.<slug>.json",
+      "multiple": true,
+      "format": "json",
+      "phase": null,
+      "anyPhase": true,
+      "signable": false,
+      "producerRole": null,
+      "producerBySlug": {
+        "meta-prompt-architect": "meta-prompt-architect",
+        "evalops-engineer": "evalops-engineer",
+        "token-economics-engineer": "token-economics-engineer",
+        "workflow-decomposer": "workflow-decomposer",
+        "agent-tooling-integrator": "agent-tooling-integrator"
+      },
+      "cosigners": [],
+      "subscribers": [
+        "conductor",
+        "artifact-reviewer"
+      ],
+      "applicableWhen": {
+        "optional": true
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "schema": "specialist-review.schema.json",
+      "rules": [],
+      "lane": "delivery",
+      "actionsFrom": "/actions"
+    },
+    {
       "type": "area-report",
       "file": "areas/AreaReport.<slug>.json",
       "multiple": true,
@@ -36,13 +67,14 @@
       "anyPhase": true,
       "signable": false,
       "producerBySlug": {
-        "architecture": "architecture-lead",
-        "engineering": "engineering-lead",
-        "operations": "operations-lead",
-        "platform": "platform-lead",
-        "product": "product-lead",
-        "quality": "quality-lead",
-        "security": "security-lead"
+        "engineering": "cto",
+        "operations": "coo",
+        "product": "cpo",
+        "quality": "vp-qa",
+        "security": "ciso",
+        "customer": "cco",
+        "legal": "clo",
+        "science-privacy": "cso"
       },
       "cosigners": [],
       "subscribers": [
@@ -76,6 +108,35 @@
       "dependsOnTypes": [],
       "feedbackFrom": [],
       "schema": "executive-report.schema.json",
+      "rules": [],
+      "lane": "govern",
+      "actionsFrom": "/actions"
+    },
+    {
+      "type": "governance-review",
+      "file": "governance/GovernanceReview.<slug>.json",
+      "multiple": true,
+      "format": "json",
+      "phase": null,
+      "anyPhase": true,
+      "signable": false,
+      "producerRole": null,
+      "producerBySlug": {
+        "content-seo": "content-seo",
+        "cco": "cco",
+        "clo": "clo"
+      },
+      "cosigners": [],
+      "subscribers": [
+        "conductor",
+        "artifact-reviewer"
+      ],
+      "applicableWhen": {
+        "optional": true
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "schema": "governance-review.schema.json",
       "rules": [],
       "lane": "govern",
       "actionsFrom": "/actions"
@@ -1519,6 +1580,32 @@
       "rules": [],
       "lane": "govern",
       "actionsFrom": "/actions"
+    },
+    {
+      "type": "improvement-scope",
+      "file": "01-scope/ImprovementScope.json",
+      "multiple": false,
+      "format": "json",
+      "phase": "scope",
+      "signable": false,
+      "producerRole": "meta-prompt-architect",
+      "cosigners": [],
+      "subscribers": [
+        "evalops-engineer",
+        "token-economics-engineer",
+        "workflow-decomposer",
+        "agent-tooling-integrator"
+      ],
+      "applicableWhen": {
+        "entryTypesAny": [
+          "improvement"
+        ]
+      },
+      "dependsOnTypes": [],
+      "feedbackFrom": [],
+      "schema": "improvement-scope.schema.json",
+      "rules": [],
+      "lane": "govern"
     },
     {
       "type": "review-scope",

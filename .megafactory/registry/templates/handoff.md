@@ -8,36 +8,33 @@ lastEventId: <evt_...>
 
 <!-- Plantilla de handoff/<rol>.md. Copia este archivo a .megafactory/bus/<ítem>/handoff/<rol>.md, rellena las
 secciones y ejecuta: node .megafactory/bin/factory.mjs handoff --feature <ítem> --role <rol> --agent <agente>
-- Los siete encabezados "## …" de abajo son obligatorios, con este texto exacto (si falta uno: E_SCHEMA).
+- Las cinco secciones "## …" de abajo son obligatorias, con este texto exacto, y todo su contenido va en viñetas
+  ("- "). Tope: kit.base.json#tokenBudgets.handoffMaxTokens (300 tokens sin contar el front-matter ni este
+  comentario). Si falta una sección, una sección no tiene viñetas o se pasa del tope: E_SCHEMA.
+- El formato de siete secciones (## Estado, ## Hecho, ## Decisiones y supuestos, ## Bloqueos, ## Siguiente paso,
+  ## Artefactos tocados) se acepta por una versión con el aviso W_HANDOFF_LEGACY; no lo uses en handoffs nuevos.
 - updatedAt y lastEventId los escribe el CLI con los datos del evento AGENT_HANDOFF: déjalos como <iso> y
   <evt_...>. Un valor inventado (una fecha fuera de la vida del ítem o un id que no está en el bus) es E_SCHEMA.
 - Sin PII ni secretos: usa marcadores como <email> o <documento>.
 - ## Lecciones y ## Propuestas son opcionales (una viñeta por lección); el conductor las cosecha. -->
 
-## Estado
+## Contexto
 
-Resumen breve del estado del trabajo del rol (una o dos líneas).
+- Qué recibiste (artefacto@versión) y qué punteros JSON leíste (por ejemplo prd /stories/2).
 
-## Hecho
+## Logrado
 
-- Lo que se completó en esta sesión, con los artefactos y versiones publicados (<tipo>@v<n>).
+- <tipo>@v<n> publicado: comando ejecutado y código de salida.
 
 ## Pendiente
 
-- Lo que falta por hacer.
+- Qué falta y qué rol debe tomarlo.
 
-## Decisiones y supuestos
+## A decidir
 
-- Decisiones tomadas y supuestos asumidos; cita los ids de memoria aplicados (mem_…).
+- Opciones con su recomendación (o "ninguna").
+- [RESERVADO HUMANO] PENDING_HUMAN_COMMAND=<comando exacto>, solo si hace falta una acción humana.
 
-## Bloqueos
+## Dependencias técnicas
 
-- Bloqueos encontrados, o "ninguno".
-
-## Siguiente paso
-
-- La acción concreta que debe seguir y quién la hace.
-
-## Artefactos tocados
-
-- <tipo>@v<n>, firmas emitidas y archivos del bus escritos.
+- Lo que necesita el siguiente rol: contrato, migración, variable de entorno, token de diseño o cofirma.

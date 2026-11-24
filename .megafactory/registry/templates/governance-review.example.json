@@ -1,0 +1,37 @@
+{
+  "feature": "ejemplo-feature",
+  "role": "legal-counsel",
+  "mode": "license-review",
+  "decisionClass": "risk",
+  "authority": "delegated",
+  "question": "¿Se puede incorporar la biblioteca de gráficos propuesta con su licencia actual?",
+  "scope": "Dependencias nuevas del ítem según el SBOM publicado en la fase build.",
+  "criteria": ["Licencias permitidas por la política de la organización", "Obligaciones de atribución cumplibles"],
+  "findings": [
+    {
+      "id": "LG1",
+      "statement": "La biblioteca usa una licencia de copyleft débil que exige publicar los cambios al propio componente.",
+      "severity": "medium",
+      "evidence": "sources/sbom.md"
+    }
+  ],
+  "options": [
+    { "id": "A", "summary": "Usarla sin modificar el componente y registrar la atribución.", "pros": ["Sin costo"], "cons": ["Vigilar que nadie la modifique"] },
+    { "id": "B", "summary": "Reemplazarla por una alternativa con licencia MIT.", "pros": ["Sin obligaciones extra"], "cons": ["Dos días de trabajo"] }
+  ],
+  "recommendation": { "option": "A", "rationale": "La obligación solo aplica si se modifica el componente y el ítem no lo modifica.", "confidence": "medium" },
+  "risks": [
+    { "id": "R1", "description": "Un cambio futuro modifica la biblioteca sin revisar la licencia.", "likelihood": 2, "impact": 3, "treatment": "mitigate" }
+  ],
+  "sources": [{ "path": "sources/sbom.md" }],
+  "route": { "approver": "agent:ciso", "status": "pending" },
+  "actions": [
+    {
+      "id": "LG1-A",
+      "title": "Registrar la atribución de la biblioteca de gráficos",
+      "entryType": "standard",
+      "owner": "tech-writer",
+      "due": "2026-12-15"
+    }
+  ]
+}

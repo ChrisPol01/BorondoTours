@@ -1,6 +1,6 @@
 # .megafactory
 
-Carpeta de contexto de la Megafábrica SDLC 1.0.0 en este proyecto. Lo pesado (motor, roles, skills, recetas, métodos y manual) vive en la fábrica central; aquí quedan el perfil, el pin, el registro renderizado y los resultados del trabajo.
+Carpeta de contexto de la Megafábrica SDLC 1.0.4 en este proyecto. Lo pesado (motor, roles, skills, recetas, métodos y manual) vive en la fábrica central; aquí quedan el perfil, el pin, el registro renderizado y los resultados del trabajo.
 
 - Packs: core, web-app, ops-day2.
 - Herramientas enlazadas: agents-md, kiro.

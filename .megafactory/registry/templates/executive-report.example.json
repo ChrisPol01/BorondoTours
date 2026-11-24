@@ -43,7 +43,7 @@
       "likelihood": "medium",
       "impact": "medium",
       "mitigation": "Paralelizar pruebas de punta a punta con la corrección",
-      "owner": "engineering-lead"
+      "owner": "cto"
     }
   ],
   "cost": {

@@ -1,0 +1,29 @@
+{
+  "feature": "ejemplo-feature",
+  "role": "exploratory-tester",
+  "mode": "session",
+  "question": "¿El flujo de alta de cuenta resiste datos fuera de rango, cortes de red y doble envío antes de la puerta de calidad?",
+  "scope": "Sesión de 60 minutos sobre el entorno de prueba del ítem, carta EXP-01; fuera de alcance: pagos y producción.",
+  "criteria": ["Criterios de aceptación del PRD", "Casos borde publicados en EdgeCases"],
+  "evidence": [
+    { "name": "playwright", "cmd": "npx playwright test --grep @exploratory", "exitCode": 1, "available": true, "summary": "1 de 6 escenarios falla: doble clic en Enviar crea dos solicitudes" }
+  ],
+  "findings": [
+    { "id": "EXP-01-F1", "statement": "El botón Enviar no se deshabilita mientras la solicitud está en curso y el doble clic crea dos altas.", "severity": "high", "status": "open", "ownerRole": "frontend", "criterion": "EC-007", "evidence": "sources/exp-01-notas.md" }
+  ],
+  "verdict": "fail",
+  "decisionClass": "advice",
+  "authority": "advice",
+  "options": [
+    { "id": "A", "summary": "Bloquear la puerta de calidad hasta corregir EXP-01-F1.", "pros": ["Evita datos duplicados"], "cons": ["Retrasa la puerta un ciclo"] }
+  ],
+  "recommendation": { "option": "A", "summary": "Corregir antes de la puerta.", "rationale": "El defecto duplica registros y no tiene mitigación en el servidor.", "confidence": "high" },
+  "risks": [
+    { "id": "R1", "description": "Registros duplicados en producción si se libera sin corrección.", "likelihood": 4, "impact": 3, "treatment": "avoid" }
+  ],
+  "sources": [{ "path": "sources/exp-01-notas.md" }],
+  "route": { "approver": "agent:vp-qa", "status": "not-required" },
+  "actions": [
+    { "id": "EXP-01-A1", "title": "Deshabilitar Enviar durante la solicitud y agregar idempotencia", "entryType": "defect", "owner": "frontend", "due": "2026-12-15" }
+  ]
+}

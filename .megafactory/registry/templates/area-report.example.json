@@ -1,7 +1,7 @@
 {
   "feature": "FEAT-0001",
   "area": "product",
-  "lead": "product-lead",
+  "lead": "cpo",
   "delegation": {
     "from": "conductor",
     "requestId": "req-0001",

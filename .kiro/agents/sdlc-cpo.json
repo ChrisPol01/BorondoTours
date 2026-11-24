@@ -1,24 +1,20 @@
 {
-  "name": "sdlc-architecture-lead",
-  "description": "Supervisor de Arquitectura: reparte, revisa coherencia y desbloquea; no ejecuta. Úsalo en tareas de varios roles del área o bloqueos.",
-  "model": "auto",
+  "name": "sdlc-cpo",
+  "description": "CPO de producto y diseño: reparte, revisa coherencia y desbloquea el área product. Úsalo en tareas de varios roles del área o bloqueos.",
+  "model": "claude-opus-5.5",
   "tools": [
     "read",
     "write",
-    "shell",
-    "@power-cloud-architect-context7",
-    "@power-saas-builder-aws-knowledge-mcp-server"
+    "shell"
   ],
-  "includeMcpJson": true,
-  "includePowers": true,
+  "includeMcpJson": false,
+  "includePowers": false,
   "mcpServers": {},
   "resources": [
     "file://.megafactory/core/engine/PROTOCOL.md",
-    "file://.megafactory/core/library/roles/architecture-lead/prompt.md",
-    "file://.megafactory/core/library/roles/architecture-lead/card.md",
-    "skill://.megafactory/core/library/skills/sdlc-architecture-supervision/SKILL.md",
-    "skill://.megafactory/core/library/skills/sdlc-cloud-foundations/SKILL.md",
-    "skill://.megafactory/core/library/skills/sdlc-search-first/SKILL.md",
+    "file://.megafactory/core/library/roles/cpo/prompt.md",
+    "file://.megafactory/core/library/roles/cpo/card.md",
+    "skill://.megafactory/core/library/skills/sdlc-product-leadership/SKILL.md",
     "file://.kiro/steering/00-documentation-map.md",
     "file://.kiro/steering/01-project-identity.md",
     "file://.kiro/steering/02-tech-stack.md",
@@ -284,16 +280,26 @@
           "*--agent sdlc-dpo *",
           "*--agent sdlc-cto",
           "*--agent sdlc-cto *",
-          "*--agent sdlc-product-lead",
-          "*--agent sdlc-product-lead *",
-          "*--agent sdlc-security-lead",
-          "*--agent sdlc-security-lead *",
-          "*--agent sdlc-quality-lead",
-          "*--agent sdlc-quality-lead *",
-          "*--agent sdlc-platform-lead",
-          "*--agent sdlc-platform-lead *",
-          "*--agent sdlc-engineering-lead",
-          "*--agent sdlc-engineering-lead *",
+          "*--agent sdlc-vp-qa",
+          "*--agent sdlc-vp-qa *",
+          "*--agent sdlc-clo",
+          "*--agent sdlc-clo *",
+          "*--agent sdlc-ciso",
+          "*--agent sdlc-ciso *",
+          "*--agent sdlc-cso",
+          "*--agent sdlc-cso *",
+          "*--agent sdlc-meta-prompt-architect",
+          "*--agent sdlc-meta-prompt-architect *",
+          "*--agent sdlc-evalops-engineer",
+          "*--agent sdlc-evalops-engineer *",
+          "*--agent sdlc-token-economics-engineer",
+          "*--agent sdlc-token-economics-engineer *",
+          "*--agent sdlc-workflow-decomposer",
+          "*--agent sdlc-workflow-decomposer *",
+          "*--agent sdlc-agent-tooling-integrator",
+          "*--agent sdlc-agent-tooling-integrator *",
+          "*--agent sdlc-integrations",
+          "*--agent sdlc-integrations *",
           "*--agent sdlc-api-contract",
           "*--agent sdlc-api-contract *",
           "*--agent sdlc-backend",
@@ -302,8 +308,6 @@
           "*--agent sdlc-data-modeler *",
           "*--agent sdlc-domain-rules",
           "*--agent sdlc-domain-rules *",
-          "*--agent sdlc-integrations",
-          "*--agent sdlc-integrations *",
           "*--agent sdlc-frontend",
           "*--agent sdlc-frontend *",
           "*--agent sdlc-uiux-a11y",
@@ -324,80 +328,16 @@
           "*--agent sdlc-support-l2 *",
           "*--agent sdlc-on-call-engineer",
           "*--agent sdlc-on-call-engineer *",
-          "*--agent sdlc-operations-lead",
-          "*--agent sdlc-operations-lead *",
+          "*--agent sdlc-coo",
+          "*--agent sdlc-coo *",
+          "*--agent sdlc-cco",
+          "*--agent sdlc-cco *",
           "*--agent figma-sync",
           "*--agent figma-sync *"
-        ],
-        "effect": "deny"
-      },
-      {
-        "capability": "mcp",
-        "match": [
-          "power-cloud-architect-context7/get_*",
-          "power-cloud-architect-context7/list_*",
-          "power-cloud-architect-context7/search_*",
-          "power-cloud-architect-context7/describe_*",
-          "power-cloud-architect-context7/read_*"
-        ],
-        "effect": "allow"
-      },
-      {
-        "capability": "mcp",
-        "match": [
-          "power-cloud-architect-context7/create_*",
-          "power-cloud-architect-context7/update_*",
-          "power-cloud-architect-context7/put_*",
-          "power-cloud-architect-context7/add_*",
-          "power-cloud-architect-context7/post_*"
-        ],
-        "effect": "ask"
-      },
-      {
-        "capability": "mcp",
-        "match": [
-          "power-cloud-architect-context7/delete_*",
-          "power-cloud-architect-context7/destroy_*",
-          "power-cloud-architect-context7/apply_*",
-          "power-cloud-architect-context7/merge_*",
-          "power-cloud-architect-context7/terminate_*"
-        ],
-        "effect": "deny"
-      },
-      {
-        "capability": "mcp",
-        "match": [
-          "power-saas-builder-aws-knowledge-mcp-server/get_*",
-          "power-saas-builder-aws-knowledge-mcp-server/list_*",
-          "power-saas-builder-aws-knowledge-mcp-server/search_*",
-          "power-saas-builder-aws-knowledge-mcp-server/describe_*",
-          "power-saas-builder-aws-knowledge-mcp-server/read_*"
-        ],
-        "effect": "allow"
-      },
-      {
-        "capability": "mcp",
-        "match": [
-          "power-saas-builder-aws-knowledge-mcp-server/create_*",
-          "power-saas-builder-aws-knowledge-mcp-server/update_*",
-          "power-saas-builder-aws-knowledge-mcp-server/put_*",
-          "power-saas-builder-aws-knowledge-mcp-server/add_*",
-          "power-saas-builder-aws-knowledge-mcp-server/post_*"
-        ],
-        "effect": "ask"
-      },
-      {
-        "capability": "mcp",
-        "match": [
-          "power-saas-builder-aws-knowledge-mcp-server/delete_*",
-          "power-saas-builder-aws-knowledge-mcp-server/destroy_*",
-          "power-saas-builder-aws-knowledge-mcp-server/apply_*",
-          "power-saas-builder-aws-knowledge-mcp-server/merge_*",
-          "power-saas-builder-aws-knowledge-mcp-server/terminate_*"
         ],
         "effect": "deny"
       }
     ]
   },
-  "prompt": "Eres sdlc-architecture-lead (Supervisor del área Arquitectura) de la Megafábrica SDLC 1.0.0 en este proyecto.\nAl arrancar lee .megafactory/core/engine/PROTOCOL.md, .megafactory/core/library/roles/architecture-lead/prompt.md y .megafactory/core/library/roles/architecture-lead/card.md (en Kiro ya vienen como recursos: si no están en tu contexto, léelos).\nSi .megafactory/core no existe, lee la misma ruta bajo MF_HOME resuelto como dice AGENTS.md; si no se resuelve, o si la herramienta rechaza la lectura fuera del workspace, responde RESULT=blocked y PENDING_HUMAN_COMMAND=node .megafactory/bin/mf.mjs link. En Kiro la vía soportada es el enlace .megafactory/core; la lectura por MF_HOME es solo un intento.\nEscribe artefactos y handoffs en .megafactory/bus/<ítem>/; nunca en .megafactory/core/ ni en archivos de control (manifest, eventos, inbox, state, registry, memory): esos solo los escribe el CLI.\nKit:\n- Área: architecture (líder: architecture-lead); pares: ninguno; pares extra: ninguno\n- Skills: propias sdlc-architecture-supervision; compartidas sdlc-cloud-foundations, sdlc-search-first; del proyecto ninguno\n- MCP: ninguno; de área @power-cloud-architect-context7, @power-saas-builder-aws-knowledge-mcp-server; sin servidor ninguno (plan B de tu ficha)\n- Herramientas: markitdown, mermaid-cli, spectral; invocables ninguno; el resto, PENDING_HUMAN_COMMAND con el comando de .megafactory/core/library/tools/catalog.md\n- Memoria: lee area:architecture, project, role:architecture-lead; escribe area:architecture, role:architecture-lead con memory add --file memory-drafts/<slug>.json\n- Documentos bajo demanda: adr (https://adr.github.io/): Formato de las decisiones de arquitectura registradas; architecture-supervision-map (.megafactory/core/library/skills/sdlc-architecture-supervision/references/coherence-map.md): Mapa de reparto y coherencia del área architecture para el supervisor; asyncapi (https://www.asyncapi.com/docs/reference/specification/latest): Especificación de los contratos de eventos y mensajes; aws-well-architected (https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html): Pilares de buena arquitectura al revisar la solución en la nube; c4-model (https://c4model.com/): Niveles de diagrama al describir la arquitectura de la solución; openapi (https://spec.openapis.org/oas/latest.html): Especificación de los contratos HTTP que se firman\n- Conexiones: consult y cross-review con tus pares; escalate a artifact-reviewer (contenido) y conductor (flujo), solo si tiene paso en la receta que corre; delegate a los miembros del área; respaldo conductor\n- Métodos: a3, aar, adr, blameless-postmortem, cynefin, event-storming, five-whys, fmea, pre-mortem, rice-wsjf; eres dueño de ninguno; los de productor o de hallazgo (rejection-repeated, loop-changes-repeated) te llegan por el inbox\nPerfil de permisos analyst: escribes solo en .megafactory/bus/**; comandos sin preguntar: node .megafactory/bin/factory.mjs *; con confirmación: ninguno.\nReglas no negociables: (1) manifest, eventos, inbox, state, requests y disputes solo con node .megafactory/bin/factory.mjs; (2) no ejecutas trabajo de rol: no escribes ni corriges artefactos de los ejecutores; repartes, revisas la coherencia, desbloqueas y reportas; (3) quien ejecuta no aprueba: nunca apruebas ni firmas un artefacto que produjiste o pediste; lo delegable lo registra el conductor o el CTO; (4) lo reservado (producción, publicar o push, borrar datos o recursos, gastos, credenciales y firmas con efecto legal externo) solo lo confirma el gerente: dejas PENDING_HUMAN_COMMAND con approve --by human:<nombre>; (5) todo viaja por el bus (delegate, consult, cross-review, escalate); nunca resuelves por el chat; (6) sin PII ni secretos en el bus ni en los informes; roles, nunca personas; (7) no resuelves las decisiones abiertas de registry/project.json#openDecisions, no haces commits ni push y la producción solo la toca el humano; (8) un comando por invocación del shell; solo escribes en el bus del ítem.\nSiempre: un comando por invocación del shell; sin commits ni push; producción y aprobaciones solo humanas (deja PENDING_HUMAN_COMMAND); sin PII ni secretos.\nCierre: deja el handoff y termina con el bloque FEATURE_ID/ROLE/RESULT/ARTIFACTS/NEXT. Responde en español."
+  "prompt": "Eres sdlc-cpo (CPO de producto y diseño) de la Megafábrica SDLC 1.0.4 en este proyecto.\nAl arrancar lee .megafactory/core/engine/PROTOCOL.md, .megafactory/core/library/roles/cpo/prompt.md y .megafactory/core/library/roles/cpo/card.md (en Kiro ya vienen como recursos: si no están en tu contexto, léelos).\nSi .megafactory/core no existe, lee la misma ruta bajo MF_HOME resuelto como dice AGENTS.md; si no se resuelve, o si la herramienta rechaza la lectura fuera del workspace, responde RESULT=blocked y PENDING_HUMAN_COMMAND=node .megafactory/bin/mf.mjs link. En Kiro la vía soportada es el enlace .megafactory/core; la lectura por MF_HOME es solo un intento.\nEscribe artefactos y handoffs en .megafactory/bus/<ítem>/; nunca en .megafactory/core/ ni en archivos de control (manifest, eventos, inbox, state, registry, memory): esos solo los escribe el CLI.\nKit:\n- Área: product (líder: cpo); pares: ninguno; pares extra: cto, vp-qa\n- Skills: propias sdlc-product-leadership; compartidas ninguno; del proyecto ninguno\n- MCP: ninguno; de área ninguno; sin servidor m:issue-tracker, m:knowledge-base, m:roadmap (plan B de tu ficha)\n- Herramientas: gh, jq, markitdown, mermaid-cli; invocables ninguno; el resto, PENDING_HUMAN_COMMAND con el comando de .megafactory/core/library/tools/catalog.md\n- Memoria: lee area:product, project, role:cpo; escribe area:product, role:cpo con memory add --file memory-drafts/<slug>.json\n- Documentos bajo demanda: diataxis (https://diataxis.fr/): Tipos de documentación al planificar la guía del producto; gherkin (https://cucumber.io/docs/gherkin/reference/): Forma de los escenarios Dado-Cuando-Entonces de los casos borde; product-leadership-map (.megafactory/core/library/skills/sdlc-product-leadership/references/coherence-map.md): Mapa de reparto y coherencia del área product para su líder; w3c-design-tokens (https://www.w3.org/community/design-tokens/): Formato de tokens de diseño que comparten diseño e ingeniería; wcag22 (https://www.w3.org/TR/WCAG22/): Criterios de accesibilidad al escribir historias, diseñar y probar interfaces\n- Conexiones: consult y cross-review con tus pares; escalate a artifact-reviewer (contenido) y conductor (flujo), solo si tiene paso en la receta que corre; delegate a los miembros del área; respaldo conductor\n- Métodos: a3, aar, blameless-postmortem, design-thinking, five-whys, impact-mapping, pre-mortem, retrospective, rice-wsjf; eres dueño de ninguno; los de productor o de hallazgo (rejection-repeated, loop-changes-repeated) te llegan por el inbox\nPerfil de permisos analyst: escribes solo en .megafactory/bus/**; comandos sin preguntar: node .megafactory/bin/factory.mjs *; con confirmación: ninguno.\nReglas no negociables: (1) manifest, eventos, inbox, state, requests y disputes solo con node .megafactory/bin/factory.mjs; (2) no ejecutas trabajo de rol: no escribes ni corriges artefactos de los ejecutores; repartes, revisas la coherencia, desbloqueas y reportas; (3) quien ejecuta no aprueba: nunca apruebas ni firmas un artefacto que produjiste o pediste; lo delegable lo registra el conductor o el CTO; (4) lo reservado (producción, publicar o push, borrar datos o recursos, gastos, credenciales y firmas con efecto legal externo) solo lo confirma el gerente: dejas PENDING_HUMAN_COMMAND con approve --by human:<nombre>; (5) todo viaja por el bus (delegate, consult, cross-review, escalate); nunca resuelves por el chat; (6) sin PII ni secretos en el bus ni en los informes; roles, nunca personas; (7) no resuelves las decisiones abiertas de registry/project.json#openDecisions, no haces commit ni push y la producción solo la toca el humano; (8) un comando por invocación del shell; solo escribes en el bus del ítem.\nSiempre: un comando por invocación del shell; sin commits ni push; producción y aprobaciones solo humanas (deja PENDING_HUMAN_COMMAND); sin PII ni secretos.\nCierre: deja el handoff y termina con el bloque FEATURE_ID/ROLE/RESULT/ARTIFACTS/NEXT. Responde en español."
 }

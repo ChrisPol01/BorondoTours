@@ -1,7 +1,7 @@
 ---
 inclusion: always
 ---
-# Estado del proyecto (verificado: 2026-10-12)
+# Estado del proyecto (verificado: 2026-11-19)
 
 | Pieza | En código | Sólo en docs |
 |---|---|---|
@@ -16,7 +16,7 @@ inclusion: always
 | `infra/` | SAM y CDK presentes | Despliegue core (Lambda, RDS) |
 | Integraciones | - | OnePay.la, Siigo, Split Fare, publicidad |
 | Borondo Coins | - | En pausa (Spec-E) |
-| Megafábrica SDLC (`.megafactory/`, enlazada a la central 1.0.1) | 39 agentes sdlc-*, 17 recetas | Propuestas #16-#32 en `DECISIONS.md` de la central |
+| Megafábrica SDLC (`.megafactory/`, enlazada a la central 1.0.4) | agentes `sdlc-*` y recetas `factory-*` de los packs `core`, `web-app` y `ops-day2` | Propuestas #16-#32 en `DECISIONS.md` de la central |
 
 Tests: solo web y ui tienen; servicios, contracts, db y domain tienen 0, aunque las reglas los exigen en finanzas y RBAC.
 

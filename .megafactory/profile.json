@@ -672,9 +672,15 @@
     ],
     "source": "docs/DECISIONES-PENDIENTES.md"
   },
+  "models": {
+    "byTool": {
+      "kiro": { "planner": "claude-opus-5.5", "executor": "claude-sonnet-5.5" }
+    }
+  },
   "factory": {
     "registryCheck": "node .megafactory/bin/factory.mjs registry check",
-    "cli": "node .megafactory/bin/factory.mjs"
+    "cli": "node .megafactory/bin/factory.mjs",
+    "compat": "1.0.2"
   },
   "migration": {
     "from": "v0",

@@ -6,8 +6,7 @@ import { dirname, join, posix, resolve, win32 } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 // Lanzador del proyecto (.megafactory/bin/factory.mjs; §23.3.4, MF-D55): raíz desde su ubicación, pin válido
-// (E_INTEGRITY si no), central por las fuentes 2-6 de §23.2.2 (paridad en launcher-home-parity.test.mjs),
-// desfase, --root reservado y el motor central sobre el proyecto, con su exit. Bytes iguales en todo proyecto.
+// (E_INTEGRITY si no), central por las fuentes 2-6 de §23.2.2 (paridad en launcher-home-parity.test.mjs), desfase, --root reservado y el motor central sobre el proyecto, con su exit. Bytes iguales en todo proyecto.
 
 const MARKER = { file: 'mf-home.json', product: 'megafabrica-sdlc', layouts: [1] };
 const REQUIRED = ['engine/scripts/factory.mjs', 'engine/version.json', 'bin/mf.mjs'];
@@ -41,6 +40,7 @@ function reasonOf(dir, project, platform) {
   return inside(real, proj, platform) || inside(proj, real, platform) ? 'overlaps-project' : null;
 }
 
+const stopsOnMissingLocal = (/** @type {string} */ mf) => { const f = pick(json(join(mf, 'registry', 'project.json')), 'factory'); const m = /^(\d+)\.(\d+)(?:\.(\d+))?$/.exec(String(pick(f, 'compat') ?? '')); const opt = pick(f, 'compatOptIn'); return (Array.isArray(opt) && opt.includes('local-home-missing-stops')) || (m !== null && [Number(m[1]), Number(m[2]), Number(m[3] ?? 0)].reduce((c, n, i) => c || Math.sign(n - [1, 0, 2][i]), 0) >= 0); }; // MF-10 desde el nivel 1.0.2 (factory.compat, compat.mjs); sin campo salta a la fuente siguiente
 /**
  * Resolución mínima de la central (fuentes 2-6; sin --mf-home, que solo aceptan los comandos mf).
  * @param {{projectRoot:string, env?:Record<string, string|undefined>, platform?:string, userHome?:string, cwd?:string}} i
@@ -67,7 +67,7 @@ export function resolveHomeMinimal(i) {
     const dir = resolve(i.projectRoot, value);
     const reason = reasonOf(dir, i.projectRoot, platform);
     if (!reason) return { home: realpathSync(dir), source, skips, error: null };
-    if (reason === 'missing' && source === 'local') return { home: null, source, skips, error: 'invalid:local:missing' }; // MF-10
+    if (reason === 'missing' && source === 'local' && stopsOnMissingLocal(mf)) return { home: null, source, skips, error: 'invalid:local:missing' }; // MF-10
     skips.push(`${source}:${reason}`);
   }
   return { home: null, source: null, skips, error: 'not-found' };

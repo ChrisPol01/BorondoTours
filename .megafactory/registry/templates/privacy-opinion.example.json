@@ -54,8 +54,8 @@
   "breachAssessment": [],
   "opinion": "favorable-with-measures",
   "approvalPath": {
-    "approver": "agent:security-lead",
-    "command": "node .megafactory/bin/factory.mjs delegated-approve --feature ejemplo-privacidad --what risk:reminders-privacy --by agent:security-lead --role security-lead --agent sdlc-security-lead"
+    "approver": "agent:cso",
+    "command": "node .megafactory/bin/factory.mjs delegated-approve --feature ejemplo-privacidad --what risk:reminders-privacy --by agent:cso --role cso --agent sdlc-cso"
   },
   "actions": [
     {

@@ -1,0 +1,9 @@
+{
+  "feature": "ejemplo-feature",
+  "goal": "Reducir el consumo de contexto de los prompts de rol sin perder calidad medida",
+  "targets": [
+    "prompts",
+    "tokens"
+  ],
+  "successMetric": "Menos tokens por paquete de rol con la misma puntuación EDD"
+}

@@ -2,10 +2,10 @@
   "schemaVersion": 2,
   "factory": {
     "name": "megafabrica-sdlc",
-    "version": "1.0.0",
-    "commit": "26059fa0a6bb2243c07b91e91554bf716b78c681",
+    "version": "1.0.4",
+    "commit": "92c5385bd95002aaf00cec04bfc11beb923499c1",
     "ref": null,
-    "contentHash": "sha256:8b8e535a5bb5c8a42e7af4b4b308d920f33602aaba60b4fe2e2d160654cbea54",
+    "contentHash": "sha256:595f7cfc4f7bf46775a23aeca482724085e2afc4287183375173725a73c9afe6",
     "dirty": false,
     "remote": null
   },
@@ -18,10 +18,10 @@
     "agents-md",
     "kiro"
   ],
-  "profileHash": "sha256:bef79b50a0cfaa6270b67db94ac8b83b21a331400204f4d957680587f0da1fa3",
+  "profileHash": "sha256:0c24665d2c47a0de728ffb1362ace894c4dcff1387c8c1a728368f88b38f8de2",
   "migratedFrom": "v0-borondotours-2026-10-12",
   "linkedAt": "2026-10-28T21:43:53.098Z",
-  "updatedAt": "2026-11-05T06:51:49.647Z",
+  "updatedAt": "2026-11-20T00:56:24.182Z",
   "history": [
     {
       "at": "2026-10-28T21:43:53.098Z",
@@ -49,6 +49,27 @@
       "action": "update",
       "fromCommit": "59f5289",
       "toCommit": "26059fa",
+      "conflicts": 0
+    },
+    {
+      "at": "2026-11-19T09:20:48.920Z",
+      "action": "update",
+      "fromCommit": "26059fa",
+      "toCommit": "92c5385",
+      "conflicts": 0
+    },
+    {
+      "at": "2026-11-19T22:00:19.805Z",
+      "action": "update",
+      "fromCommit": "92c5385",
+      "toCommit": "92c5385",
+      "conflicts": 0
+    },
+    {
+      "at": "2026-11-20T00:56:24.182Z",
+      "action": "update",
+      "fromCommit": "92c5385",
+      "toCommit": "92c5385",
       "conflicts": 0
     }
   ]

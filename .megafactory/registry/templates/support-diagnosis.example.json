@@ -62,7 +62,7 @@
   "workaround": "Descargar desde el historial, que usa un nombre sin tildes",
   "defectProposal": "Esperado: descarga con cualquier nombre válido. Obtenido: error 500 con tildes. Alcance: desde la última salida, todas las regiones.",
   "approvalPath": {
-    "approver": "agent:operations-lead",
+    "approver": "agent:cco",
     "command": "sin aprobación: el conductor abre el defecto"
   },
   "actions": [

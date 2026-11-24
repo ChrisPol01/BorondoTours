@@ -180,7 +180,7 @@
       "fmeaActionThreshold": 100
     },
     "learning": {
-      "shareToFactory": false,
+      "shareToFactory": true,
       "redactTerms": []
     }
   },
@@ -258,7 +258,8 @@
     ]
   },
   "factory": {
-    "driftPolicy": "warn-ahead"
+    "driftPolicy": "warn-ahead",
+    "compat": "1.0.2"
   },
   "autonomy": {
     "delegatedHumanCommands": [
@@ -270,6 +271,14 @@
     ]
   },
   "timezone": "America/Bogota",
+  "models": {
+    "byTool": {
+      "kiro": {
+        "planner": "claude-opus-5.5",
+        "executor": "claude-sonnet-5.5"
+      }
+    }
+  },
   "incompleteFields": [
     "commands.observability:on-call-engineer",
     "commands.observability:resilience-engineer",
