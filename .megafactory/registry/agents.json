@@ -765,7 +765,7 @@
     },
     {
       "role": "cto",
-      "title": "CTO de la fábrica",
+      "title": "CTO de la fábrica y líder de ingeniería",
       "protocolNumber": 0,
       "phase": "all",
       "primaryAgent": "sdlc-cto",
@@ -803,10 +803,28 @@
           "artifacts": [],
           "doneWhen": "always-run",
           "idempotency": "cli"
+        },
+        "distribute": {
+          "artifacts": [
+            "area-report:engineering"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "area-review": {
+          "artifacts": [
+            "area-report:engineering"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "unblock": {
+          "artifacts": [],
+          "doneWhen": "always-run",
+          "idempotency": "cli"
         }
       },
       "produces": [
-        "executive-report"
+        "executive-report",
+        "area-report:engineering"
       ],
       "consumes": [
         "agentops-report",
@@ -816,21 +834,33 @@
         "cost-estimate",
         "security-posture-review",
         "postmortem",
-        "area-report"
+        "area-report",
+        "openapi",
+        "data-model",
+        "domain-rules",
+        "integrations",
+        "c4-model",
+        "build-report:backend",
+        "build-report:frontend",
+        "team-capacity-plan",
+        "release-plan",
+        "release-report:dev",
+        "release-report:prod",
+        "db-change-review"
       ],
       "cosigns": [],
       "active": true
     },
     {
-      "role": "product-lead",
-      "title": "Supervisor del área Producto",
+      "role": "cpo",
+      "title": "CPO de producto y diseño",
       "protocolNumber": 0,
       "phase": "all",
-      "primaryAgent": "sdlc-product-lead",
+      "primaryAgent": "sdlc-cpo",
       "backupAgent": "sdlc-conductor",
       "profile": "analyst",
       "profileExtras": {},
-      "roleCard": ".megafactory/core/library/roles/product-lead/card.md",
+      "roleCard": ".megafactory/core/library/roles/cpo/card.md",
       "modes": {
         "distribute": {
           "artifacts": [
@@ -856,110 +886,24 @@
       "consumes": [
         "edge-cases",
         "prd",
-        "build-report:tech-writer"
+        "build-report:tech-writer",
+        "design-tokens",
+        "a11y-rules",
+        "build-report:uiux-a11y"
       ],
       "cosigns": [],
       "active": true
     },
     {
-      "role": "security-lead",
-      "title": "Supervisor del área Seguridad",
+      "role": "vp-qa",
+      "title": "VP de aseguramiento de calidad",
       "protocolNumber": 0,
       "phase": "all",
-      "primaryAgent": "sdlc-security-lead",
+      "primaryAgent": "sdlc-vp-qa",
       "backupAgent": "sdlc-conductor",
       "profile": "analyst",
       "profileExtras": {},
-      "roleCard": ".megafactory/core/library/roles/security-lead/card.md",
-      "modes": {
-        "distribute": {
-          "artifacts": [
-            "area-report:security"
-          ],
-          "doneWhen": "artifacts-current"
-        },
-        "area-review": {
-          "artifacts": [
-            "area-report:security"
-          ],
-          "doneWhen": "artifacts-current"
-        },
-        "unblock": {
-          "artifacts": [],
-          "doneWhen": "always-run",
-          "idempotency": "cli"
-        }
-      },
-      "produces": [
-        "area-report:security"
-      ],
-      "consumes": [
-        "compliance-requirements",
-        "privacy-opinion",
-        "threat-model",
-        "quality-report:security"
-      ],
-      "cosigns": [],
-      "active": true
-    },
-    {
-      "role": "architecture-lead",
-      "title": "Supervisor del área Arquitectura",
-      "protocolNumber": 0,
-      "phase": "all",
-      "primaryAgent": "sdlc-architecture-lead",
-      "backupAgent": "sdlc-conductor",
-      "profile": "analyst",
-      "profileExtras": {},
-      "roleCard": ".megafactory/core/library/roles/architecture-lead/card.md",
-      "modes": {
-        "distribute": {
-          "artifacts": [
-            "area-report:architecture"
-          ],
-          "doneWhen": "artifacts-current"
-        },
-        "area-review": {
-          "artifacts": [
-            "area-report:architecture"
-          ],
-          "doneWhen": "artifacts-current"
-        },
-        "unblock": {
-          "artifacts": [],
-          "doneWhen": "always-run",
-          "idempotency": "cli"
-        }
-      },
-      "produces": [
-        "area-report:architecture"
-      ],
-      "consumes": [
-        "openapi",
-        "build-report:api-contract",
-        "data-model",
-        "dbml-view",
-        "build-report:data-modeler",
-        "domain-rules",
-        "build-report:domain-rules",
-        "integrations",
-        "build-report:integrations",
-        "c4-model",
-        "adr-draft"
-      ],
-      "cosigns": [],
-      "active": true
-    },
-    {
-      "role": "quality-lead",
-      "title": "Supervisor del área Calidad",
-      "protocolNumber": 0,
-      "phase": "all",
-      "primaryAgent": "sdlc-quality-lead",
-      "backupAgent": "sdlc-conductor",
-      "profile": "analyst",
-      "profileExtras": {},
-      "roleCard": ".megafactory/core/library/roles/quality-lead/card.md",
+      "roleCard": ".megafactory/core/library/roles/vp-qa/card.md",
       "modes": {
         "distribute": {
           "artifacts": [
@@ -984,31 +928,38 @@
       ],
       "consumes": [
         "quality-report:peer",
-        "quality-report:qa"
+        "quality-report:qa",
+        "quality-verdict"
       ],
       "cosigns": [],
       "active": true
     },
     {
-      "role": "platform-lead",
-      "title": "Supervisor del área Plataforma",
+      "role": "clo",
+      "title": "Chief Legal Officer",
       "protocolNumber": 0,
       "phase": "all",
-      "primaryAgent": "sdlc-platform-lead",
+      "primaryAgent": "sdlc-clo",
       "backupAgent": "sdlc-conductor",
       "profile": "analyst",
       "profileExtras": {},
-      "roleCard": ".megafactory/core/library/roles/platform-lead/card.md",
+      "roleCard": ".megafactory/core/library/roles/clo/card.md",
       "modes": {
+        "legal-plan": {
+          "artifacts": [
+            "governance-review:clo"
+          ],
+          "doneWhen": "artifacts-current"
+        },
         "distribute": {
           "artifacts": [
-            "area-report:platform"
+            "area-report:legal"
           ],
           "doneWhen": "artifacts-current"
         },
         "area-review": {
           "artifacts": [
-            "area-report:platform"
+            "area-report:legal"
           ],
           "doneWhen": "artifacts-current"
         },
@@ -1019,39 +970,42 @@
         }
       },
       "produces": [
-        "area-report:platform"
+        "governance-review:clo",
+        "area-report:legal"
       ],
       "consumes": [
-        "db-change-review",
-        "ops-plan",
-        "release-report:dev",
-        "cost-estimate",
-        "release-plan",
-        "release-report:prod"
+        "compliance-requirements",
+        "control-matrix",
+        "audit-evidence-map",
+        "privacy-opinion"
       ],
       "cosigns": [],
       "active": true
     },
     {
-      "role": "engineering-lead",
-      "title": "Supervisor del área Ingeniería",
-      "protocolNumber": 0,
-      "phase": "all",
-      "primaryAgent": "sdlc-engineering-lead",
-      "backupAgent": "sdlc-conductor",
+      "role": "ciso",
+      "title": "Chief Information Security Officer",
+      "protocolNumber": 31,
+      "phase": "decide",
+      "primaryAgent": "sdlc-ciso",
+      "backupAgent": "sdlc-security-architect",
       "profile": "analyst",
       "profileExtras": {},
-      "roleCard": ".megafactory/core/library/roles/engineering-lead/card.md",
+      "roleCard": ".megafactory/core/library/roles/ciso/card.md",
       "modes": {
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        },
         "distribute": {
           "artifacts": [
-            "area-report:engineering"
+            "area-report:security"
           ],
           "doneWhen": "artifacts-current"
         },
         "area-review": {
           "artifacts": [
-            "area-report:engineering"
+            "area-report:security"
           ],
           "doneWhen": "artifacts-current"
         },
@@ -1062,16 +1016,263 @@
         }
       },
       "produces": [
-        "area-report:engineering"
+        "area-report:security"
       ],
       "consumes": [
-        "build-report:backend",
-        "build-report:content-seo",
-        "team-capacity-plan",
-        "build-report:frontend",
-        "design-tokens",
-        "a11y-rules",
-        "build-report:uiux-a11y"
+        "security-finding",
+        "threat-model",
+        "security-posture-review",
+        "audit-finding",
+        "control-matrix",
+        "specialist-review",
+        "governance-review",
+        "quality-report",
+        "compliance-requirements",
+        "privacy-opinion"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "cso",
+      "title": "Chief Science Officer",
+      "protocolNumber": 0,
+      "phase": "all",
+      "primaryAgent": "sdlc-cso",
+      "backupAgent": "sdlc-conductor",
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/cso/card.md",
+      "modes": {
+        "distribute": {
+          "artifacts": [
+            "area-report:science-privacy"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "area-review": {
+          "artifacts": [
+            "area-report:science-privacy"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "unblock": {
+          "artifacts": [],
+          "doneWhen": "always-run",
+          "idempotency": "cli"
+        }
+      },
+      "produces": [
+        "area-report:science-privacy"
+      ],
+      "consumes": [
+        "specialist-review",
+        "governance-review",
+        "privacy-opinion"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "meta-prompt-architect",
+      "title": "Meta-Prompt & Cognitive Architect",
+      "protocolNumber": 99,
+      "phase": "quality",
+      "primaryAgent": "sdlc-meta-prompt-architect",
+      "backupAgent": null,
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/meta-prompt-architect/card.md",
+      "modes": {
+        "plan": {
+          "artifacts": [
+            "improvement-scope",
+            "specialist-review:meta-prompt-architect"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "optimize-prompts": {
+          "artifacts": [
+            "specialist-review:meta-prompt-architect"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        }
+      },
+      "produces": [
+        "improvement-scope",
+        "specialist-review:meta-prompt-architect"
+      ],
+      "consumes": [
+        "agentops-report",
+        "quality-verdict",
+        "specialist-review"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "evalops-engineer",
+      "title": "Agent Evaluation & Alignment Engineer",
+      "protocolNumber": 99,
+      "phase": "quality",
+      "primaryAgent": "sdlc-evalops-engineer",
+      "backupAgent": null,
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/evalops-engineer/card.md",
+      "modes": {
+        "build-dataset": {
+          "artifacts": [
+            "specialist-review:evalops-engineer"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "evaluate": {
+          "artifacts": [
+            "specialist-review:evalops-engineer"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        }
+      },
+      "produces": [
+        "specialist-review:evalops-engineer"
+      ],
+      "consumes": [
+        "agentops-report",
+        "quality-verdict",
+        "specialist-review"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "token-economics-engineer",
+      "title": "Token Economics & LLM Efficiency Engineer",
+      "protocolNumber": 99,
+      "phase": "quality",
+      "primaryAgent": "sdlc-token-economics-engineer",
+      "backupAgent": "sdlc-finops",
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/token-economics-engineer/card.md",
+      "modes": {
+        "audit-budget": {
+          "artifacts": [
+            "specialist-review:token-economics-engineer"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "optimize-cost": {
+          "artifacts": [
+            "specialist-review:token-economics-engineer"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        }
+      },
+      "produces": [
+        "specialist-review:token-economics-engineer"
+      ],
+      "consumes": [
+        "agentops-report",
+        "cost-review",
+        "specialist-review"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "workflow-decomposer",
+      "title": "Autonomous Workflow & Task Decomposer",
+      "protocolNumber": 99,
+      "phase": "quality",
+      "primaryAgent": "sdlc-workflow-decomposer",
+      "backupAgent": null,
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/workflow-decomposer/card.md",
+      "modes": {
+        "decompose": {
+          "artifacts": [
+            "specialist-review:workflow-decomposer"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "optimize-dag": {
+          "artifacts": [
+            "specialist-review:workflow-decomposer"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        }
+      },
+      "produces": [
+        "specialist-review:workflow-decomposer"
+      ],
+      "consumes": [
+        "agentops-report",
+        "quality-verdict",
+        "specialist-review"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "agent-tooling-integrator",
+      "title": "Agent Tooling & Dynamic Skill Integrator",
+      "protocolNumber": 99,
+      "phase": "quality",
+      "primaryAgent": "sdlc-agent-tooling-integrator",
+      "backupAgent": "sdlc-integrations",
+      "profile": "developer",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/agent-tooling-integrator/card.md",
+      "modes": {
+        "validate-catalog": {
+          "artifacts": [
+            "specialist-review:agent-tooling-integrator"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "propose-replacement": {
+          "artifacts": [
+            "specialist-review:agent-tooling-integrator"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "patch-catalog": {
+          "artifacts": [
+            "specialist-review:agent-tooling-integrator"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "sign": {
+          "artifacts": [],
+          "doneWhen": "no-missing-signatures-of-role"
+        }
+      },
+      "produces": [
+        "specialist-review:agent-tooling-integrator"
+      ],
+      "consumes": [
+        "agentops-report",
+        "security-posture-review",
+        "quality-verdict",
+        "specialist-review"
       ],
       "cosigns": [],
       "active": true
@@ -1441,10 +1642,29 @@
             "build-report:content-seo"
           ],
           "doneWhen": "build-report-complete"
+        },
+        "seo-clusters": {
+          "artifacts": [
+            "governance-review:content-seo"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "conversion-copy": {
+          "artifacts": [
+            "governance-review:content-seo"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "cwv-audit": {
+          "artifacts": [
+            "governance-review:content-seo"
+          ],
+          "doneWhen": "artifacts-current"
         }
       },
       "produces": [
-        "build-report:content-seo"
+        "build-report:content-seo",
+        "governance-review:content-seo"
       ],
       "consumes": [
         "prd",
@@ -1818,6 +2038,18 @@
             "ticket-triage"
           ],
           "doneWhen": "artifacts-current"
+        },
+        "deescalation": {
+          "artifacts": [
+            "ticket-triage"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "sla-watch": {
+          "artifacts": [
+            "ticket-triage"
+          ],
+          "doneWhen": "artifacts-current"
         }
       },
       "produces": [
@@ -1856,6 +2088,18 @@
           "doneWhen": "artifacts-current"
         },
         "defect-handoff": {
+          "artifacts": [
+            "support-diagnosis"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "har-triage": {
+          "artifacts": [
+            "support-diagnosis"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "bug-repro": {
           "artifacts": [
             "support-diagnosis"
           ],
@@ -1919,15 +2163,15 @@
       "active": true
     },
     {
-      "role": "operations-lead",
-      "title": "Supervisor del área Operaciones",
-      "protocolNumber": 0,
-      "phase": "all",
-      "primaryAgent": "sdlc-operations-lead",
-      "backupAgent": "sdlc-conductor",
+      "role": "coo",
+      "title": "Chief Operating Officer",
+      "protocolNumber": 34,
+      "phase": "assess",
+      "primaryAgent": "sdlc-coo",
+      "backupAgent": null,
       "profile": "analyst",
       "profileExtras": {},
-      "roleCard": ".megafactory/core/library/roles/operations-lead/card.md",
+      "roleCard": ".megafactory/core/library/roles/coo/card.md",
       "modes": {
         "distribute": {
           "artifacts": [
@@ -1942,7 +2186,9 @@
           "doneWhen": "artifacts-current"
         },
         "unblock": {
-          "artifacts": [],
+          "artifacts": [
+            "area-report:operations"
+          ],
           "doneWhen": "always-run",
           "idempotency": "cli"
         }
@@ -1951,15 +2197,63 @@
         "area-report:operations"
       ],
       "consumes": [
+        "agentops-report",
+        "incident-record",
+        "problem-record",
+        "slo-spec",
+        "team-capacity-plan",
         "execution-package",
         "continuity-plan",
         "chaos-experiment",
-        "ticket-triage",
         "service-review",
-        "incident-record",
-        "postmortem",
-        "problem-record",
-        "support-diagnosis"
+        "postmortem"
+      ],
+      "cosigns": [],
+      "active": true
+    },
+    {
+      "role": "cco",
+      "title": "Chief Customer Officer",
+      "protocolNumber": 0,
+      "phase": "all",
+      "primaryAgent": "sdlc-cco",
+      "backupAgent": "sdlc-conductor",
+      "profile": "analyst",
+      "profileExtras": {},
+      "roleCard": ".megafactory/core/library/roles/cco/card.md",
+      "modes": {
+        "customer-plan": {
+          "artifacts": [
+            "governance-review:cco"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "distribute": {
+          "artifacts": [
+            "area-report:customer"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "area-review": {
+          "artifacts": [
+            "area-report:customer"
+          ],
+          "doneWhen": "artifacts-current"
+        },
+        "unblock": {
+          "artifacts": [],
+          "doneWhen": "always-run",
+          "idempotency": "cli"
+        }
+      },
+      "produces": [
+        "governance-review:cco",
+        "area-report:customer"
+      ],
+      "consumes": [
+        "ticket-triage",
+        "support-diagnosis",
+        "service-review"
       ],
       "cosigns": [],
       "active": true
@@ -1991,9 +2285,9 @@
       "activateWhen": "activar el pack ai-llm en el perfil"
     },
     {
-      "role": "data-ai-lead",
+      "role": "caio",
       "pack": "ai-llm",
-      "title": "Supervisor del área Datos e IA",
+      "title": "Chief AI Officer",
       "reason": "pack ai-llm no activo",
       "activateWhen": "activar el pack ai-llm en el perfil"
     },
@@ -2001,6 +2295,13 @@
       "role": "ai-governance-officer",
       "pack": "ai-llm",
       "title": "Oficial de gobierno de IA",
+      "reason": "pack ai-llm no activo",
+      "activateWhen": "activar el pack ai-llm en el perfil"
+    },
+    {
+      "role": "mlops-llmops-engineer",
+      "pack": "ai-llm",
+      "title": "MLOps / LLMOps Engineer",
       "reason": "pack ai-llm no activo",
       "activateWhen": "activar el pack ai-llm en el perfil"
     },
@@ -2061,6 +2362,13 @@
       "activateWhen": "activar el pack data-ml en el perfil"
     },
     {
+      "role": "analytics-bi-architect",
+      "pack": "data-ml",
+      "title": "Arquitecto de analítica y BI",
+      "reason": "pack data-ml no activo",
+      "activateWhen": "activar el pack data-ml en el perfil"
+    },
+    {
       "role": "ceo-sponsor",
       "pack": "enterprise-governance",
       "title": "Patrocinador ejecutivo",
@@ -2075,23 +2383,9 @@
       "activateWhen": "activar el pack enterprise-governance en el perfil"
     },
     {
-      "role": "ciso",
-      "pack": "enterprise-governance",
-      "title": "Chief Information Security Officer",
-      "reason": "pack enterprise-governance no activo",
-      "activateWhen": "activar el pack enterprise-governance en el perfil"
-    },
-    {
       "role": "cfo",
       "pack": "enterprise-governance",
       "title": "Chief Financial Officer",
-      "reason": "pack enterprise-governance no activo",
-      "activateWhen": "activar el pack enterprise-governance en el perfil"
-    },
-    {
-      "role": "coo",
-      "pack": "enterprise-governance",
-      "title": "Chief Operating Officer",
       "reason": "pack enterprise-governance no activo",
       "activateWhen": "activar el pack enterprise-governance en el perfil"
     },
@@ -2127,6 +2421,34 @@
       "role": "endpoint-admin",
       "pack": "enterprise-governance",
       "title": "Administrador de equipos de usuario",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "ceo",
+      "pack": "enterprise-governance",
+      "title": "CEO de la oficina ejecutiva",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "cro",
+      "pack": "enterprise-governance",
+      "title": "Chief Revenue Officer",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "cmo",
+      "pack": "enterprise-governance",
+      "title": "Chief Marketing Officer",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "chro",
+      "pack": "enterprise-governance",
+      "title": "Chief Human Resources Officer",
       "reason": "pack enterprise-governance no activo",
       "activateWhen": "activar el pack enterprise-governance en el perfil"
     },
@@ -2222,6 +2544,272 @@
       "activateWhen": "activar el pack enterprise-governance en el perfil"
     },
     {
+      "role": "executive-assistant",
+      "pack": "enterprise-governance",
+      "title": "Asistente ejecutivo",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "strategy-bizops-analyst",
+      "pack": "enterprise-governance",
+      "title": "Analista de estrategia y BizOps",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "investor-relations",
+      "pack": "enterprise-governance",
+      "title": "Asociado de relación con inversionistas",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "corporate-development",
+      "pack": "enterprise-governance",
+      "title": "Asociado de desarrollo corporativo",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "process-improvement-analyst",
+      "pack": "enterprise-governance",
+      "title": "Process Improvement Analyst",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "backoffice-ops-agent",
+      "pack": "enterprise-governance",
+      "title": "Backoffice Operations Agent",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "facility-manager",
+      "pack": "enterprise-governance",
+      "title": "Facility Manager",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "logistics-coordinator",
+      "pack": "enterprise-governance",
+      "title": "Logistics Coordinator",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "procurement-specialist",
+      "pack": "enterprise-governance",
+      "title": "Procurement Specialist",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "sdr-bdr",
+      "pack": "enterprise-governance",
+      "title": "Sales Development Representative (SDR/BDR)",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "account-executive",
+      "pack": "enterprise-governance",
+      "title": "Account Executive",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "solutions-engineer",
+      "pack": "enterprise-governance",
+      "title": "Solutions Engineer",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "revops-analyst",
+      "pack": "enterprise-governance",
+      "title": "Revenue Operations Analyst",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "customer-success-manager",
+      "pack": "enterprise-governance",
+      "title": "Customer Success Manager",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "growth-performance-marketer",
+      "pack": "enterprise-governance",
+      "title": "Growth & Performance Marketer",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "marketing-automation-crm",
+      "pack": "enterprise-governance",
+      "title": "Marketing Automation & CRM Specialist",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "community-social-manager",
+      "pack": "enterprise-governance",
+      "title": "Community & Social Media Manager",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "brand-pr-multimedia",
+      "pack": "enterprise-governance",
+      "title": "Brand, PR & Multimedia Lead",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "fpa-financial-analyst",
+      "pack": "enterprise-governance",
+      "title": "FP&A and FinOps Analyst",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "inhouse-accountant",
+      "pack": "enterprise-governance",
+      "title": "In-house Accountant",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "accounts-receivable-ar",
+      "pack": "enterprise-governance",
+      "title": "Accounts Receivable Analyst",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "accounts-payable-ap",
+      "pack": "enterprise-governance",
+      "title": "Accounts Payable Analyst",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "payroll-specialist",
+      "pack": "enterprise-governance",
+      "title": "Payroll Specialist",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "it-recruiter-sourcer",
+      "pack": "enterprise-governance",
+      "title": "Reclutador IT y sourcer técnico",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "hr-ops-analyst",
+      "pack": "enterprise-governance",
+      "title": "Analista de operaciones de personas",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "comp-benefits-specialist",
+      "pack": "enterprise-governance",
+      "title": "Especialista en compensación y beneficios",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "culture-internal-comms",
+      "pack": "enterprise-governance",
+      "title": "Analista de cultura y comunicación interna",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "oss-license-ip-specialist",
+      "pack": "enterprise-governance",
+      "title": "Especialista en licencias de código abierto y propiedad intelectual",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "appsec-devsecops",
+      "pack": "enterprise-governance",
+      "title": "AppSec / DevSecOps Engineer",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "cloud-security-engineer",
+      "pack": "enterprise-governance",
+      "title": "Cloud Security Engineer",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "grc-compliance-specialist",
+      "pack": "enterprise-governance",
+      "title": "GRC & Security Compliance Specialist",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "workplace-automation-lead",
+      "pack": "enterprise-governance",
+      "title": "Workplace Systems & Internal Automation Lead",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "applied-research-scientist",
+      "pack": "enterprise-governance",
+      "title": "Applied Research Scientist",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "rapid-poc-engineer",
+      "pack": "enterprise-governance",
+      "title": "Rapid Prototyping & PoC Engineer",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "tech-scout-patent-specialist",
+      "pack": "enterprise-governance",
+      "title": "Technology Scout & Patent Intelligence Specialist",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "hpc-simulation-engineer",
+      "pack": "enterprise-governance",
+      "title": "HPC & Simulation Engineer",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "tech-transfer-lead",
+      "pack": "enterprise-governance",
+      "title": "Technology Transfer & Commercialization Lead",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
+      "role": "cpo-privacy",
+      "pack": "enterprise-governance",
+      "title": "Chief Privacy Officer",
+      "reason": "pack enterprise-governance no activo",
+      "activateWhen": "activar el pack enterprise-governance en el perfil"
+    },
+    {
       "role": "platform-engineer",
       "pack": "infra-iac",
       "title": "Platform Engineer (IaC)",
@@ -2306,6 +2894,27 @@
       "activateWhen": "agregarlo a roles.enable del perfil"
     },
     {
+      "role": "knowledge-supportops",
+      "pack": "ops-day2",
+      "title": "Gestor de conocimiento y operaciones de soporte",
+      "reason": "rol opcional sin activar",
+      "activateWhen": "agregarlo a roles.enable del perfil"
+    },
+    {
+      "role": "cx-voc-analyst",
+      "pack": "ops-day2",
+      "title": "Analista de experiencia del cliente y voz del cliente",
+      "reason": "rol opcional sin activar",
+      "activateWhen": "agregarlo a roles.enable del perfil"
+    },
+    {
+      "role": "onboarding-specialist",
+      "pack": "ops-day2",
+      "title": "Especialista de onboarding e implementación",
+      "reason": "rol opcional sin activar",
+      "activateWhen": "agregarlo a roles.enable del perfil"
+    },
+    {
       "role": "api-product-manager",
       "pack": "web-app",
       "title": "API Product Manager",
@@ -2323,6 +2932,20 @@
       "role": "translator",
       "pack": "web-app",
       "title": "Translator & Linguistic Reviewer",
+      "reason": "rol opcional sin activar",
+      "activateWhen": "agregarlo a roles.enable del perfil"
+    },
+    {
+      "role": "security-qa-analyst",
+      "pack": "web-app",
+      "title": "Analista de seguridad de calidad",
+      "reason": "rol opcional sin activar",
+      "activateWhen": "agregarlo a roles.enable del perfil"
+    },
+    {
+      "role": "qa-release-manager",
+      "pack": "web-app",
+      "title": "Gerente de liberación de calidad",
       "reason": "rol opcional sin activar",
       "activateWhen": "agregarlo a roles.enable del perfil"
     }

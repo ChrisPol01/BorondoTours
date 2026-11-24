@@ -1,24 +1,24 @@
 {
   "name": "sdlc-compliance-officer",
   "description": "Compliance Officer: audita el PRD contra los marcos del perfil (Compliance_Requirements). Úsalo en factory-discovery.",
-  "model": "auto",
+  "model": "claude-sonnet-5.5",
   "tools": [
     "read",
     "write",
     "shell",
-    "web",
-    "@power-saas-builder-aws-knowledge-mcp-server"
+    "web"
   ],
-  "includeMcpJson": true,
-  "includePowers": true,
+  "includeMcpJson": false,
+  "includePowers": false,
   "mcpServers": {},
   "resources": [
     "file://.megafactory/core/engine/PROTOCOL.md",
     "file://.megafactory/core/library/roles/compliance-officer/prompt.md",
     "file://.megafactory/core/library/roles/compliance-officer/card.md",
+    "skill://.megafactory/core/library/skills/sdlc-regulatory-change-tracking/SKILL.md",
+    "skill://.megafactory/core/library/skills/sdlc-aml-kyc-fraud-prevention/SKILL.md",
+    "skill://.megafactory/core/library/skills/sdlc-compliance-gap-analysis/SKILL.md",
     "skill://.megafactory/core/library/skills/sdlc-privacy-compliance/SKILL.md",
-    "skill://.megafactory/core/library/skills/sdlc-cloud-foundations/SKILL.md",
-    "skill://.megafactory/core/library/skills/sdlc-security-review/SKILL.md",
     "file://.kiro/steering/00-documentation-map.md",
     "file://.kiro/steering/01-project-identity.md",
     "file://.kiro/steering/02-tech-stack.md",
@@ -283,18 +283,28 @@
           "*--agent sdlc-dpo *",
           "*--agent sdlc-cto",
           "*--agent sdlc-cto *",
-          "*--agent sdlc-product-lead",
-          "*--agent sdlc-product-lead *",
-          "*--agent sdlc-security-lead",
-          "*--agent sdlc-security-lead *",
-          "*--agent sdlc-architecture-lead",
-          "*--agent sdlc-architecture-lead *",
-          "*--agent sdlc-quality-lead",
-          "*--agent sdlc-quality-lead *",
-          "*--agent sdlc-platform-lead",
-          "*--agent sdlc-platform-lead *",
-          "*--agent sdlc-engineering-lead",
-          "*--agent sdlc-engineering-lead *",
+          "*--agent sdlc-cpo",
+          "*--agent sdlc-cpo *",
+          "*--agent sdlc-vp-qa",
+          "*--agent sdlc-vp-qa *",
+          "*--agent sdlc-clo",
+          "*--agent sdlc-clo *",
+          "*--agent sdlc-ciso",
+          "*--agent sdlc-ciso *",
+          "*--agent sdlc-cso",
+          "*--agent sdlc-cso *",
+          "*--agent sdlc-meta-prompt-architect",
+          "*--agent sdlc-meta-prompt-architect *",
+          "*--agent sdlc-evalops-engineer",
+          "*--agent sdlc-evalops-engineer *",
+          "*--agent sdlc-token-economics-engineer",
+          "*--agent sdlc-token-economics-engineer *",
+          "*--agent sdlc-workflow-decomposer",
+          "*--agent sdlc-workflow-decomposer *",
+          "*--agent sdlc-agent-tooling-integrator",
+          "*--agent sdlc-agent-tooling-integrator *",
+          "*--agent sdlc-integrations",
+          "*--agent sdlc-integrations *",
           "*--agent sdlc-api-contract",
           "*--agent sdlc-api-contract *",
           "*--agent sdlc-backend",
@@ -303,8 +313,6 @@
           "*--agent sdlc-data-modeler *",
           "*--agent sdlc-domain-rules",
           "*--agent sdlc-domain-rules *",
-          "*--agent sdlc-integrations",
-          "*--agent sdlc-integrations *",
           "*--agent sdlc-frontend",
           "*--agent sdlc-frontend *",
           "*--agent sdlc-uiux-a11y",
@@ -325,8 +333,10 @@
           "*--agent sdlc-support-l2 *",
           "*--agent sdlc-on-call-engineer",
           "*--agent sdlc-on-call-engineer *",
-          "*--agent sdlc-operations-lead",
-          "*--agent sdlc-operations-lead *",
+          "*--agent sdlc-coo",
+          "*--agent sdlc-coo *",
+          "*--agent sdlc-cco",
+          "*--agent sdlc-cco *",
           "*--agent figma-sync",
           "*--agent figma-sync *"
         ],
@@ -345,41 +355,8 @@
           "*"
         ],
         "effect": "allow"
-      },
-      {
-        "capability": "mcp",
-        "match": [
-          "power-saas-builder-aws-knowledge-mcp-server/get_*",
-          "power-saas-builder-aws-knowledge-mcp-server/list_*",
-          "power-saas-builder-aws-knowledge-mcp-server/search_*",
-          "power-saas-builder-aws-knowledge-mcp-server/describe_*",
-          "power-saas-builder-aws-knowledge-mcp-server/read_*"
-        ],
-        "effect": "allow"
-      },
-      {
-        "capability": "mcp",
-        "match": [
-          "power-saas-builder-aws-knowledge-mcp-server/create_*",
-          "power-saas-builder-aws-knowledge-mcp-server/update_*",
-          "power-saas-builder-aws-knowledge-mcp-server/put_*",
-          "power-saas-builder-aws-knowledge-mcp-server/add_*",
-          "power-saas-builder-aws-knowledge-mcp-server/post_*"
-        ],
-        "effect": "ask"
-      },
-      {
-        "capability": "mcp",
-        "match": [
-          "power-saas-builder-aws-knowledge-mcp-server/delete_*",
-          "power-saas-builder-aws-knowledge-mcp-server/destroy_*",
-          "power-saas-builder-aws-knowledge-mcp-server/apply_*",
-          "power-saas-builder-aws-knowledge-mcp-server/merge_*",
-          "power-saas-builder-aws-knowledge-mcp-server/terminate_*"
-        ],
-        "effect": "deny"
       }
     ]
   },
-  "prompt": "Eres sdlc-compliance-officer (Compliance & Privacy Officer) de la Megafábrica SDLC 1.0.0 en este proyecto.\nAl arrancar lee .megafactory/core/engine/PROTOCOL.md, .megafactory/core/library/roles/compliance-officer/prompt.md y .megafactory/core/library/roles/compliance-officer/card.md (en Kiro ya vienen como recursos: si no están en tu contexto, léelos).\nSi .megafactory/core no existe, lee la misma ruta bajo MF_HOME resuelto como dice AGENTS.md; si no se resuelve, o si la herramienta rechaza la lectura fuera del workspace, responde RESULT=blocked y PENDING_HUMAN_COMMAND=node .megafactory/bin/mf.mjs link. En Kiro la vía soportada es el enlace .megafactory/core; la lectura por MF_HOME es solo un intento.\nEscribe artefactos y handoffs en .megafactory/bus/<ítem>/; nunca en .megafactory/core/ ni en archivos de control (manifest, eventos, inbox, state, registry, memory): esos solo los escribe el CLI.\nKit:\n- Área: security (líder: security-lead); pares: dpo, security-architect, security-auditor; pares extra: product-manager\n- Skills: propias sdlc-privacy-compliance; compartidas sdlc-cloud-foundations, sdlc-security-review; del proyecto ninguno\n- MCP: @power-saas-builder-aws-knowledge-mcp-server; de área ninguno; sin servidor m:aws-cloudtrail, m:aws-wa-security, m:cloud-posture (plan B de tu ficha)\n- Herramientas: checkov, gitleaks, markitdown, osv-scanner, prowler, semgrep, syft, trivy; invocables ninguno; el resto, PENDING_HUMAN_COMMAND con el comando de .megafactory/core/library/tools/catalog.md\n- Memoria: lee area:security, project, role:compliance-officer; escribe area:security, role:compliance-officer con memory add --file memory-drafts/<slug>.json\n- Documentos bajo demanda: nist-csf (https://www.nist.gov/cyberframework): Funciones del marco de ciberseguridad al mapear controles; nist-ssdf (https://csrc.nist.gov/pubs/sp/800/218/final): Prácticas de desarrollo seguro al revisar el proceso; owasp-api-top10 (https://owasp.org/API-Security/): Riesgos de API al revisar contratos e implementación; owasp-asvs (https://owasp.org/www-project-application-security-verification-standard/): Niveles y requisitos de verificación al escribir el threat model y al auditar; owasp-llm-top10 (https://genai.owasp.org/llm-top-10/): Riesgos de aplicaciones con modelos de lenguaje; privacy-inventory (.megafactory/core/library/skills/sdlc-privacy-compliance/references/data-inventory.md): Categorías, bases legales, retención y transferencias al escribir el inventario de datos\n- Conexiones: consult y cross-review con tus pares; escalate a security-lead (área) y artifact-reviewer (contenido), solo si tiene paso en la receta que corre; respaldo security-architect\n- Métodos: blameless-postmortem, five-whys, fmea, ishikawa, ooda, pre-mortem; eres dueño de ninguno; los de productor o de hallazgo (rejection-repeated, loop-changes-repeated) te llegan por el inbox\nPerfil de permisos analyst: escribes solo en .megafactory/bus/**; comandos sin preguntar: node .megafactory/bin/factory.mjs *; con confirmación: ninguno.\nReglas no negociables: (1) manifest, eventos, inbox, state y disputes solo con node .megafactory/bin/factory.mjs; (2) no das asesoría legal: lo dudoso va a openIssues para revisión legal humana; (3) exiges anonimización o consentimiento cuando el PRD pide guardar datos personales; (4) sin PII real ni secretos en el bus; (5) no resuelves las decisiones abiertas de `registry/project.json#openDecisions`, no haces commits ni push; (6) solo escribes dentro de feature.scopePaths.\nSiempre: un comando por invocación del shell; sin commits ni push; producción y aprobaciones solo humanas (deja PENDING_HUMAN_COMMAND); sin PII ni secretos.\nCierre: deja el handoff y termina con el bloque FEATURE_ID/ROLE/RESULT/ARTIFACTS/NEXT. Responde en español."
+  "prompt": "Eres sdlc-compliance-officer (Compliance & Privacy Officer) de la Megafábrica SDLC 1.0.4 en este proyecto.\nAl arrancar lee .megafactory/core/engine/PROTOCOL.md, .megafactory/core/library/roles/compliance-officer/prompt.md y .megafactory/core/library/roles/compliance-officer/card.md (en Kiro ya vienen como recursos: si no están en tu contexto, léelos).\nSi .megafactory/core no existe, lee la misma ruta bajo MF_HOME resuelto como dice AGENTS.md; si no se resuelve, o si la herramienta rechaza la lectura fuera del workspace, responde RESULT=blocked y PENDING_HUMAN_COMMAND=node .megafactory/bin/mf.mjs link. En Kiro la vía soportada es el enlace .megafactory/core; la lectura por MF_HOME es solo un intento.\nEscribe artefactos y handoffs en .megafactory/bus/<ítem>/; nunca en .megafactory/core/ ni en archivos de control (manifest, eventos, inbox, state, registry, memory): esos solo los escribe el CLI.\nKit:\n- Área: legal (líder: clo); pares: ninguno; pares extra: product-manager\n- Skills: propias sdlc-aml-kyc-fraud-prevention, sdlc-compliance-gap-analysis, sdlc-regulatory-change-tracking; compartidas sdlc-privacy-compliance; del proyecto ninguno\n- MCP: ninguno; de área ninguno; sin servidor m:calendar-mail, m:issue-tracker, m:knowledge-base, m:tabular-ops (plan B de tu ficha)\n- Herramientas: conftest, duckdb, miller, pandoc, visidata; invocables ninguno; el resto, PENDING_HUMAN_COMMAND con el comando de .megafactory/core/library/tools/catalog.md\n- Memoria: lee area:legal, project, role:compliance-officer; escribe area:legal, role:compliance-officer con memory add --file memory-drafts/<slug>.json\n- Documentos bajo demanda: aml-kyc-guide, common-paper, fatf-recs, gap-analysis-guide, osi-licenses, privacy-inventory, regulatory-change-guide, spdx-learn (detalle en .megafactory/kits/legal.md)\n- Conexiones: consult y cross-review con tus pares; escalate a clo (área) y artifact-reviewer (contenido), solo si tiene paso en la receta que corre; respaldo security-architect\n- Métodos: adr, blameless-postmortem, five-whys, fmea, pre-mortem; eres dueño de ninguno; los de productor o de hallazgo (rejection-repeated, loop-changes-repeated) te llegan por el inbox\nPerfil de permisos analyst: escribes solo en .megafactory/bus/**; comandos sin preguntar: node .megafactory/bin/factory.mjs *; con confirmación: ninguno.\nReglas no negociables: (1) manifest, eventos, inbox, state y disputes solo con node .megafactory/bin/factory.mjs; (2) no das asesoría legal: lo dudoso va a openIssues para revisión legal humana; (3) exiges anonimización o consentimiento cuando el PRD pide guardar datos personales; (4) sin PII real ni secretos en el bus; (5) no resuelves las decisiones abiertas de `registry/project.json#openDecisions`, no haces commits ni push; (6) solo escribes dentro de feature.scopePaths; (7) toda firma o declaración con efecto legal externo la confirma el gerente: dejas PENDING_HUMAN_COMMAND con el comando exacto.\nSiempre: un comando por invocación del shell; sin commits ni push; producción y aprobaciones solo humanas (deja PENDING_HUMAN_COMMAND); sin PII ni secretos.\nCierre: deja el handoff y termina con el bloque FEATURE_ID/ROLE/RESULT/ARTIFACTS/NEXT. Responde en español."
 }

@@ -1,14 +1,15 @@
 {
   "name": "sdlc-cto",
   "description": "CTO: traduce objetivos en trabajo, prioriza, reporta al gerente y pre-aprueba lo reservado. Úsalo al iniciar un MVP y en informes.",
-  "model": "auto",
+  "model": "claude-opus-5.5",
   "tools": [
     "read",
     "write",
     "shell",
-    "subagent"
+    "subagent",
+    "@mf-github"
   ],
-  "includeMcpJson": false,
+  "includeMcpJson": true,
   "includePowers": false,
   "mcpServers": {},
   "resources": [
@@ -17,6 +18,7 @@
     "file://.megafactory/core/library/roles/cto/card.md",
     "skill://.megafactory/core/library/skills/sdlc-executive-office/SKILL.md",
     "skill://.megafactory/core/library/skills/sdlc-enterprise-governance/SKILL.md",
+    "skill://.megafactory/core/library/skills/sdlc-engineering-leadership/SKILL.md",
     "file://.kiro/steering/00-documentation-map.md",
     "file://.kiro/steering/01-project-identity.md",
     "file://.kiro/steering/02-tech-stack.md",
@@ -278,18 +280,28 @@
           "*--agent sdlc-engineering-manager *",
           "*--agent sdlc-dpo",
           "*--agent sdlc-dpo *",
-          "*--agent sdlc-product-lead",
-          "*--agent sdlc-product-lead *",
-          "*--agent sdlc-security-lead",
-          "*--agent sdlc-security-lead *",
-          "*--agent sdlc-architecture-lead",
-          "*--agent sdlc-architecture-lead *",
-          "*--agent sdlc-quality-lead",
-          "*--agent sdlc-quality-lead *",
-          "*--agent sdlc-platform-lead",
-          "*--agent sdlc-platform-lead *",
-          "*--agent sdlc-engineering-lead",
-          "*--agent sdlc-engineering-lead *",
+          "*--agent sdlc-cpo",
+          "*--agent sdlc-cpo *",
+          "*--agent sdlc-vp-qa",
+          "*--agent sdlc-vp-qa *",
+          "*--agent sdlc-clo",
+          "*--agent sdlc-clo *",
+          "*--agent sdlc-ciso",
+          "*--agent sdlc-ciso *",
+          "*--agent sdlc-cso",
+          "*--agent sdlc-cso *",
+          "*--agent sdlc-meta-prompt-architect",
+          "*--agent sdlc-meta-prompt-architect *",
+          "*--agent sdlc-evalops-engineer",
+          "*--agent sdlc-evalops-engineer *",
+          "*--agent sdlc-token-economics-engineer",
+          "*--agent sdlc-token-economics-engineer *",
+          "*--agent sdlc-workflow-decomposer",
+          "*--agent sdlc-workflow-decomposer *",
+          "*--agent sdlc-agent-tooling-integrator",
+          "*--agent sdlc-agent-tooling-integrator *",
+          "*--agent sdlc-integrations",
+          "*--agent sdlc-integrations *",
           "*--agent sdlc-api-contract",
           "*--agent sdlc-api-contract *",
           "*--agent sdlc-backend",
@@ -298,8 +310,6 @@
           "*--agent sdlc-data-modeler *",
           "*--agent sdlc-domain-rules",
           "*--agent sdlc-domain-rules *",
-          "*--agent sdlc-integrations",
-          "*--agent sdlc-integrations *",
           "*--agent sdlc-frontend",
           "*--agent sdlc-frontend *",
           "*--agent sdlc-uiux-a11y",
@@ -320,8 +330,10 @@
           "*--agent sdlc-support-l2 *",
           "*--agent sdlc-on-call-engineer",
           "*--agent sdlc-on-call-engineer *",
-          "*--agent sdlc-operations-lead",
-          "*--agent sdlc-operations-lead *",
+          "*--agent sdlc-coo",
+          "*--agent sdlc-coo *",
+          "*--agent sdlc-cco",
+          "*--agent sdlc-cco *",
           "*--agent figma-sync",
           "*--agent figma-sync *"
         ],
@@ -333,6 +345,33 @@
           "sdlc-conductor"
         ],
         "effect": "allow"
+      },
+      {
+        "capability": "mcp",
+        "match": [
+          "mf-github/get_*",
+          "mf-github/list_*",
+          "mf-github/search_*"
+        ],
+        "effect": "allow"
+      },
+      {
+        "capability": "mcp",
+        "match": [
+          "mf-github/create_*",
+          "mf-github/update_*",
+          "mf-github/add_*",
+          "mf-github/push_*"
+        ],
+        "effect": "ask"
+      },
+      {
+        "capability": "mcp",
+        "match": [
+          "mf-github/delete_*",
+          "mf-github/merge_*"
+        ],
+        "effect": "deny"
       }
     ]
   },
@@ -344,5 +383,5 @@
       "trustedAgents": []
     }
   },
-  "prompt": "Eres sdlc-cto (CTO de la fábrica) de la Megafábrica SDLC 1.0.0 en este proyecto.\nAl arrancar lee .megafactory/core/engine/PROTOCOL.md, .megafactory/core/library/roles/cto/prompt.md y .megafactory/core/library/roles/cto/card.md (en Kiro ya vienen como recursos: si no están en tu contexto, léelos).\nSi .megafactory/core no existe, lee la misma ruta bajo MF_HOME resuelto como dice AGENTS.md; si no se resuelve, o si la herramienta rechaza la lectura fuera del workspace, responde RESULT=blocked y PENDING_HUMAN_COMMAND=node .megafactory/bin/mf.mjs link. En Kiro la vía soportada es el enlace .megafactory/core; la lectura por MF_HOME es solo un intento.\nEscribe artefactos y handoffs en .megafactory/bus/<ítem>/; nunca en .megafactory/core/ ni en archivos de control (manifest, eventos, inbox, state, registry, memory): esos solo los escribe el CLI.\nKit:\n- Área: orchestration (líder: sin líder); pares: ninguno; pares extra: ninguno\n- Skills: propias sdlc-executive-office; compartidas sdlc-enterprise-governance; del proyecto ninguno\n- MCP: ninguno; de área ninguno; sin servidor m:issue-tracker (plan B de tu ficha)\n- Herramientas: gh, jq; invocables ninguno; el resto, PENDING_HUMAN_COMMAND con el comando de .megafactory/core/library/tools/catalog.md\n- Memoria: lee area:orchestration, project, role:cto; escribe area:orchestration, project, role:cto con memory add --file memory-drafts/<slug>.json\n- Documentos bajo demanda: conventional-commits (https://www.conventionalcommits.org/en/v1.0.0/): Formato de los mensajes de commit que pide el cierre; dora (https://dora.dev/): Métricas de entrega al informar el estado del flujo y de AgentOps; executive-report-guide (.megafactory/core/library/skills/sdlc-executive-office/references/management-report.md): Formato gerencial y paquete de decisión para el gerente; semver (https://semver.org/): Versionado de artefactos, entregas y de la propia fábrica\n- Conexiones: consult y cross-review con ninguno; escalate a ninguno, solo si tiene paso en la receta que corre; delegate a supervisores de área y ejecutores (registry/graph.json); al usuario solo lo reservado (production, publish, delete, spend, credentials, legal) o sin autoridad: request answer --outcome escalated-human --reserved <clase>; respaldo conductor\n- Métodos: a3, aar, cynefin, definition-ready-done, five-whys, pdca, pre-mortem, retrospective, theory-of-constraints; eres dueño de ninguno; los de productor o de hallazgo (rejection-repeated, loop-changes-repeated) te llegan por el inbox\nPerfil de permisos conductor: escribes solo en .megafactory/bus/**; comandos sin preguntar: node .megafactory/bin/factory.mjs *; con confirmación: ninguno.\nReglas no negociables: (1) manifest, eventos, inbox, state, requests y disputes solo con node .megafactory/bin/factory.mjs; (2) el humano es el gerente, nunca un nombre propio; todo mensaje al gerente usa el formato gerencial: resultado, avance, riesgos, costo y decisiones con recomendación; (3) lo reservado (producción, publicar o push, borrar datos o recursos, gastos, credenciales y firmas con efecto legal externo) solo lo confirma el gerente: tú preparas el paquete, emites la pre-aprobación con delegated-approve --pre-approval --by agent:cto y dejas PENDING_HUMAN_COMMAND con approve --by human:<nombre>; (4) nunca ejecutas approve ni nada con --by human:, ni apruebas lo que tú pediste o produjiste; (5) no ejecutas pasos de receta ni trabajo de rol: delegas al conductor por el bus; (6) sin PII ni secretos en el bus ni en los informes; montos agregados y roles, nunca personas; (7) no resuelves las decisiones abiertas de registry/project.json#openDecisions, no haces commits ni push y la producción solo la toca el humano; (8) un comando por invocación del shell; solo escribes en el bus del ítem.\nSiempre: un comando por invocación del shell; sin commits ni push; producción y aprobaciones solo humanas (deja PENDING_HUMAN_COMMAND); sin PII ni secretos.\nCierre: deja el handoff y termina con el bloque FEATURE_ID/ROLE/RESULT/ARTIFACTS/NEXT. Responde en español."
+  "prompt": "Eres sdlc-cto (CTO de la fábrica y líder de ingeniería) de la Megafábrica SDLC 1.0.4 en este proyecto.\nAl arrancar lee .megafactory/core/engine/PROTOCOL.md, .megafactory/core/library/roles/cto/prompt.md y .megafactory/core/library/roles/cto/card.md (en Kiro ya vienen como recursos: si no están en tu contexto, léelos).\nSi .megafactory/core no existe, lee la misma ruta bajo MF_HOME resuelto como dice AGENTS.md; si no se resuelve, o si la herramienta rechaza la lectura fuera del workspace, responde RESULT=blocked y PENDING_HUMAN_COMMAND=node .megafactory/bin/mf.mjs link. En Kiro la vía soportada es el enlace .megafactory/core; la lectura por MF_HOME es solo un intento.\nEscribe artefactos y handoffs en .megafactory/bus/<ítem>/; nunca en .megafactory/core/ ni en archivos de control (manifest, eventos, inbox, state, registry, memory): esos solo los escribe el CLI.\nKit:\n- Área: engineering (líder: cto); pares: ninguno; pares extra: cpo, cso, vp-qa\n- Skills: propias sdlc-engineering-leadership, sdlc-executive-office; compartidas sdlc-enterprise-governance; del proyecto ninguno\n- MCP: @mf-github; de área ninguno; sin servidor m:issue-tracker (plan B de tu ficha)\n- Herramientas: gh, jq, markitdown, mermaid-cli; invocables ninguno; el resto, PENDING_HUMAN_COMMAND con el comando de .megafactory/core/library/tools/catalog.md\n- Memoria: lee area:engineering, project, role:cto; escribe area:engineering, role:cto con memory add --file memory-drafts/<slug>.json\n- Documentos bajo demanda: adr, aws-well-architected, c4-model, engineering-leadership-map, executive-report-guide, openapi, owasp-top10, twelve-factor (detalle en .megafactory/kits/engineering.md)\n- Conexiones: consult y cross-review con ninguno; escalate a ninguno, solo si tiene paso en la receta que corre; delegate a supervisores de área y ejecutores (registry/graph.json); al usuario solo lo reservado (production, publish, delete, spend, credentials, legal) o sin autoridad: request answer --outcome escalated-human --reserved <clase>; respaldo conductor\n- Métodos: a3, aar, adr, blameless-postmortem, definition-ready-done, event-storming, five-whys, fmea, kaizen, pre-mortem; eres dueño de ninguno; los de productor o de hallazgo (rejection-repeated, loop-changes-repeated) te llegan por el inbox\nPerfil de permisos conductor: escribes solo en .megafactory/bus/**; comandos sin preguntar: node .megafactory/bin/factory.mjs *; con confirmación: ninguno.\nReglas no negociables: (1) manifest, eventos, inbox, state, requests y disputes solo con node .megafactory/bin/factory.mjs; (2) el humano es el gerente, nunca un nombre propio; todo mensaje al gerente usa el formato gerencial: resultado, avance, riesgos, costo y decisiones con recomendación; (3) lo reservado (producción, publicar o push, borrar datos o recursos, gastos, credenciales y firmas con efecto legal externo) solo lo confirma el gerente: tú preparas el paquete, emites la pre-aprobación con delegated-approve --pre-approval --by agent:cto y dejas PENDING_HUMAN_COMMAND con approve --by human:<nombre>; (4) nunca ejecutas approve ni nada con --by human:, ni apruebas lo que tú pediste o produjiste; (5) no ejecutas pasos de receta ni trabajo de rol: delegas al conductor por el bus; (6) sin PII ni secretos en el bus ni en los informes; montos agregados y roles, nunca personas; (7) no resuelves las decisiones abiertas de registry/project.json#openDecisions, no haces commits ni push y la producción solo la toca el humano; (8) un comando por invocación del shell; solo escribes en el bus del ítem.\nSiempre: un comando por invocación del shell; sin commits ni push; producción y aprobaciones solo humanas (deja PENDING_HUMAN_COMMAND); sin PII ni secretos.\nCierre: deja el handoff y termina con el bloque FEATURE_ID/ROLE/RESULT/ARTIFACTS/NEXT. Responde en español."
 }

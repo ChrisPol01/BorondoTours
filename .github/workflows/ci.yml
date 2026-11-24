@@ -1,5 +1,6 @@
-name: CI — Lint, Test & Build
+name: CI — Lint, Typecheck, Test & Build
 
+# Stack real: pnpm 9.15.0 + Turborepo, Node 22 (ver .kiro/steering/16-comandos-y-entorno.md).
 on:
   push:
     branches: [develop, staging, main]
@@ -14,134 +15,94 @@ on:
       - '**.md'
       - '.claude/**'
 
+permissions:
+  contents: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-jobs:
-  # ─── Check codebase ready ──────────────────────────────────
-  check-ready:
-    name: 🔎 Check codebase
-    runs-on: ubuntu-latest
-    outputs:
-      has-code: ${{ steps.check.outputs.has-code }}
-    steps:
-      - uses: actions/checkout@v4
-      - id: check
-        run: |
-          if [ -f "package.json" ]; then
-            echo "has-code=true" >> $GITHUB_OUTPUT
-          else
-            echo "has-code=false" >> $GITHUB_OUTPUT
-            echo "No package.json found — skipping lint/test/build (docs-only repo state)"
-          fi
+env:
+  TURBO_TELEMETRY_DISABLED: '1'
+  TURBO_UI: 'false'
 
-  # ─── Lint ──────────────────────────────────────────────────
+jobs:
   lint:
     name: 🔍 Lint
     runs-on: ubuntu-latest
-    needs: check-ready
-    if: needs.check-ready.outputs.has-code == 'true'
     steps:
       - uses: actions/checkout@v4
-
-      - uses: oven-sh/setup-bun@v2
+      - uses: pnpm/action-setup@v4
         with:
-          bun-version: latest
-
+          version: 9.15.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
       - name: Install dependencies
-        run: bun install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
+      - name: Lint
+        run: pnpm lint
 
-      - name: Run linter
-        run: bun run lint
+  typecheck:
+    name: 🧩 Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Typecheck
+        run: pnpm typecheck
 
-  # ─── Tests ─────────────────────────────────────────────────
   test:
     name: 🧪 Tests
     runs-on: ubuntu-latest
-    needs: [check-ready, lint]
-    if: needs.check-ready.outputs.has-code == 'true'
-
-    services:
-      postgres:
-        image: postgis/postgis:16-3.4
-        env:
-          POSTGRES_USER: borondo
-          POSTGRES_PASSWORD: borondo_test
-          POSTGRES_DB: borondo_test
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-      redis:
-        image: redis:7-alpine
-        ports:
-          - 6379:6379
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     env:
-      DATABASE_URL: postgresql://borondo:borondo_test@localhost:5432/borondo_test
-      REDIS_URL: redis://localhost:6379
-      JWT_SECRET: ci-test-secret
       NODE_ENV: test
-
     steps:
       - uses: actions/checkout@v4
-
-      - uses: oven-sh/setup-bun@v2
+      - uses: pnpm/action-setup@v4
         with:
-          bun-version: latest
-
+          version: 9.15.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
       - name: Install dependencies
-        run: bun install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
+      - name: Test
+        run: pnpm test
 
-      - name: Run migrations
-        run: bun run --cwd packages/api db:migrate
-
-      - name: Run tests
-        run: bun run test --coverage
-
-      - name: Upload coverage
-        uses: codecov/codecov-action@v4
-        if: always()
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-
-  # ─── Build ─────────────────────────────────────────────────
   build:
-    name: 🏗️ Build
+    name: 🏗️ Build (apps Astro)
     runs-on: ubuntu-latest
-    needs: [check-ready, test]
-    if: needs.check-ready.outputs.has-code == 'true'
-
+    needs: [lint, typecheck, test]
     steps:
       - uses: actions/checkout@v4
-
-      - uses: oven-sh/setup-bun@v2
+      - uses: pnpm/action-setup@v4
         with:
-          bun-version: latest
-
+          version: 9.15.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
       - name: Install dependencies
-        run: bun install --frozen-lockfile
-
-      - name: Build all packages
-        run: bun run build
-
-      - name: Upload build artifacts
+        run: pnpm install --frozen-lockfile
+      # Los servicios compilan con `bun build` y se empaquetan con SAM (#15); aquí solo las apps.
+      - name: Build apps (web, erp, b2b)
+        run: pnpm exec turbo run build --filter="./apps/*"
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
+      - name: Upload B2C build
         uses: actions/upload-artifact@v4
         with:
-          name: build-${{ github.sha }}
-          path: |
-            apps/web-b2c/dist/
-            apps/web-erp/dist/
-            apps/web-b2b/dist/
-            packages/api/dist/
+          name: web-dist-${{ github.sha }}
+          path: apps/web/dist/
           retention-days: 3

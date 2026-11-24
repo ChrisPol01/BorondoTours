@@ -1,7 +1,7 @@
 ---
 inclusion: always
 ---
-# Megafábrica SDLC 1.0.0
+# Megafábrica SDLC 1.0.4
 
 Packs: core, web-app, ops-day2. Contrato común: bloque Megafábrica SDLC de AGENTS.md (léelo si no está en tu contexto).
 - Solo node .megafactory/bin/factory.mjs escribe control (bus, memoria, hallazgos, actividades y estado).

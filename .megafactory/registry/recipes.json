@@ -905,6 +905,100 @@
       }
     },
     {
+      "recipe": "factory-upgrade",
+      "workflow": "factory-factory-upgrade.workflow.json",
+      "loops": [
+        {
+          "loop": "automejora.review",
+          "approvalThreshold": "high",
+          "allowedOwnerRoles": [
+            "meta-prompt-architect",
+            "evalops-engineer",
+            "token-economics-engineer",
+            "workflow-decomposer",
+            "agent-tooling-integrator"
+          ],
+          "ownerModes": {
+            "agent-tooling-integrator": [
+              "patch-catalog",
+              "propose-replacement",
+              "validate-catalog"
+            ],
+            "artifact-reviewer": [
+              "review"
+            ],
+            "evalops-engineer": [
+              "evaluate"
+            ],
+            "meta-prompt-architect": [
+              "optimize-prompts"
+            ],
+            "token-economics-engineer": [
+              "optimize-cost"
+            ],
+            "workflow-decomposer": [
+              "optimize-dag"
+            ]
+          }
+        }
+      ],
+      "requiresGate": null,
+      "producesGate": "act",
+      "lastNode": "gate-act",
+      "lastMode": "gate",
+      "exclusive": true,
+      "loopStateFiles": [
+        "automejora.review.json"
+      ],
+      "lane": "govern",
+      "entryTypes": [
+        "improvement"
+      ],
+      "coversTypes": [
+        "improvement-scope",
+        "specialist-review:agent-tooling-integrator",
+        "specialist-review:evalops-engineer",
+        "specialist-review:meta-prompt-architect",
+        "specialist-review:token-economics-engineer",
+        "specialist-review:workflow-decomposer"
+      ],
+      "stepRoles": [
+        "agent-tooling-integrator",
+        "artifact-reviewer",
+        "conductor",
+        "evalops-engineer",
+        "meta-prompt-architect",
+        "token-economics-engineer",
+        "workflow-decomposer"
+      ],
+      "stepRolesByPhase": {
+        "scope": [
+          "agent-tooling-integrator",
+          "artifact-reviewer",
+          "conductor",
+          "evalops-engineer",
+          "meta-prompt-architect",
+          "token-economics-engineer",
+          "workflow-decomposer"
+        ],
+        "assess": [
+          "agent-tooling-integrator",
+          "artifact-reviewer",
+          "conductor",
+          "evalops-engineer",
+          "meta-prompt-architect",
+          "token-economics-engineer",
+          "workflow-decomposer"
+        ],
+        "decide": [
+          "conductor"
+        ],
+        "act": [
+          "conductor"
+        ]
+      }
+    },
+    {
       "recipe": "feature-e2e",
       "workflow": "factory-feature-e2e.workflow.json",
       "loops": [

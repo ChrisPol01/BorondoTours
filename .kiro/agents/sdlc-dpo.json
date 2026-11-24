@@ -1,23 +1,21 @@
 {
   "name": "sdlc-dpo",
   "description": "DPO: opinión sobre evaluación de impacto, derechos de titulares y brechas. Úsalo cuando un cambio trata datos personales.",
-  "model": "auto",
+  "model": "claude-sonnet-5.5",
   "tools": [
     "read",
     "write",
     "shell",
-    "@power-saas-builder-aws-knowledge-mcp-server"
+    "@mf-github"
   ],
   "includeMcpJson": true,
-  "includePowers": true,
+  "includePowers": false,
   "mcpServers": {},
   "resources": [
     "file://.megafactory/core/engine/PROTOCOL.md",
     "file://.megafactory/core/library/roles/dpo/prompt.md",
     "file://.megafactory/core/library/roles/dpo/card.md",
     "skill://.megafactory/core/library/skills/sdlc-data-protection/SKILL.md",
-    "skill://.megafactory/core/library/skills/sdlc-cloud-foundations/SKILL.md",
-    "skill://.megafactory/core/library/skills/sdlc-security-review/SKILL.md",
     "file://.kiro/steering/00-documentation-map.md",
     "file://.kiro/steering/01-project-identity.md",
     "file://.kiro/steering/02-tech-stack.md",
@@ -281,18 +279,28 @@
           "*--agent sdlc-engineering-manager *",
           "*--agent sdlc-cto",
           "*--agent sdlc-cto *",
-          "*--agent sdlc-product-lead",
-          "*--agent sdlc-product-lead *",
-          "*--agent sdlc-security-lead",
-          "*--agent sdlc-security-lead *",
-          "*--agent sdlc-architecture-lead",
-          "*--agent sdlc-architecture-lead *",
-          "*--agent sdlc-quality-lead",
-          "*--agent sdlc-quality-lead *",
-          "*--agent sdlc-platform-lead",
-          "*--agent sdlc-platform-lead *",
-          "*--agent sdlc-engineering-lead",
-          "*--agent sdlc-engineering-lead *",
+          "*--agent sdlc-cpo",
+          "*--agent sdlc-cpo *",
+          "*--agent sdlc-vp-qa",
+          "*--agent sdlc-vp-qa *",
+          "*--agent sdlc-clo",
+          "*--agent sdlc-clo *",
+          "*--agent sdlc-ciso",
+          "*--agent sdlc-ciso *",
+          "*--agent sdlc-cso",
+          "*--agent sdlc-cso *",
+          "*--agent sdlc-meta-prompt-architect",
+          "*--agent sdlc-meta-prompt-architect *",
+          "*--agent sdlc-evalops-engineer",
+          "*--agent sdlc-evalops-engineer *",
+          "*--agent sdlc-token-economics-engineer",
+          "*--agent sdlc-token-economics-engineer *",
+          "*--agent sdlc-workflow-decomposer",
+          "*--agent sdlc-workflow-decomposer *",
+          "*--agent sdlc-agent-tooling-integrator",
+          "*--agent sdlc-agent-tooling-integrator *",
+          "*--agent sdlc-integrations",
+          "*--agent sdlc-integrations *",
           "*--agent sdlc-api-contract",
           "*--agent sdlc-api-contract *",
           "*--agent sdlc-backend",
@@ -301,8 +309,6 @@
           "*--agent sdlc-data-modeler *",
           "*--agent sdlc-domain-rules",
           "*--agent sdlc-domain-rules *",
-          "*--agent sdlc-integrations",
-          "*--agent sdlc-integrations *",
           "*--agent sdlc-frontend",
           "*--agent sdlc-frontend *",
           "*--agent sdlc-uiux-a11y",
@@ -323,8 +329,10 @@
           "*--agent sdlc-support-l2 *",
           "*--agent sdlc-on-call-engineer",
           "*--agent sdlc-on-call-engineer *",
-          "*--agent sdlc-operations-lead",
-          "*--agent sdlc-operations-lead *",
+          "*--agent sdlc-coo",
+          "*--agent sdlc-coo *",
+          "*--agent sdlc-cco",
+          "*--agent sdlc-cco *",
           "*--agent figma-sync",
           "*--agent figma-sync *"
         ],
@@ -333,37 +341,31 @@
       {
         "capability": "mcp",
         "match": [
-          "power-saas-builder-aws-knowledge-mcp-server/get_*",
-          "power-saas-builder-aws-knowledge-mcp-server/list_*",
-          "power-saas-builder-aws-knowledge-mcp-server/search_*",
-          "power-saas-builder-aws-knowledge-mcp-server/describe_*",
-          "power-saas-builder-aws-knowledge-mcp-server/read_*"
+          "mf-github/get_*",
+          "mf-github/list_*",
+          "mf-github/search_*"
         ],
         "effect": "allow"
       },
       {
         "capability": "mcp",
         "match": [
-          "power-saas-builder-aws-knowledge-mcp-server/create_*",
-          "power-saas-builder-aws-knowledge-mcp-server/update_*",
-          "power-saas-builder-aws-knowledge-mcp-server/put_*",
-          "power-saas-builder-aws-knowledge-mcp-server/add_*",
-          "power-saas-builder-aws-knowledge-mcp-server/post_*"
+          "mf-github/create_*",
+          "mf-github/update_*",
+          "mf-github/add_*",
+          "mf-github/push_*"
         ],
         "effect": "ask"
       },
       {
         "capability": "mcp",
         "match": [
-          "power-saas-builder-aws-knowledge-mcp-server/delete_*",
-          "power-saas-builder-aws-knowledge-mcp-server/destroy_*",
-          "power-saas-builder-aws-knowledge-mcp-server/apply_*",
-          "power-saas-builder-aws-knowledge-mcp-server/merge_*",
-          "power-saas-builder-aws-knowledge-mcp-server/terminate_*"
+          "mf-github/delete_*",
+          "mf-github/merge_*"
         ],
         "effect": "deny"
       }
     ]
   },
-  "prompt": "Eres sdlc-dpo (Delegado de protección de datos) de la Megafábrica SDLC 1.0.0 en este proyecto.\nAl arrancar lee .megafactory/core/engine/PROTOCOL.md, .megafactory/core/library/roles/dpo/prompt.md y .megafactory/core/library/roles/dpo/card.md (en Kiro ya vienen como recursos: si no están en tu contexto, léelos).\nSi .megafactory/core no existe, lee la misma ruta bajo MF_HOME resuelto como dice AGENTS.md; si no se resuelve, o si la herramienta rechaza la lectura fuera del workspace, responde RESULT=blocked y PENDING_HUMAN_COMMAND=node .megafactory/bin/mf.mjs link. En Kiro la vía soportada es el enlace .megafactory/core; la lectura por MF_HOME es solo un intento.\nEscribe artefactos y handoffs en .megafactory/bus/<ítem>/; nunca en .megafactory/core/ ni en archivos de control (manifest, eventos, inbox, state, registry, memory): esos solo los escribe el CLI.\nKit:\n- Área: security (líder: security-lead); pares: compliance-officer, security-architect, security-auditor; pares extra: ninguno\n- Skills: propias sdlc-data-protection; compartidas sdlc-cloud-foundations, sdlc-security-review; del proyecto ninguno\n- MCP: ninguno; de área @power-saas-builder-aws-knowledge-mcp-server; sin servidor m:aws-wa-security, m:cloud-posture, m:grc-tool, m:issue-tracker, m:knowledge-base (plan B de tu ficha)\n- Herramientas: checkov, gitleaks, jq, markitdown, osv-scanner, semgrep, syft, trivy; invocables ninguno; el resto, PENDING_HUMAN_COMMAND con el comando de .megafactory/core/library/tools/catalog.md\n- Memoria: lee area:data-ai, area:security, project, role:dpo; escribe area:security, role:dpo con memory add --file memory-drafts/<slug>.json\n- Documentos bajo demanda: edpb-guidelines, gdpr-art-35, iso-27701, nist-csf, nist-ssdf, owasp-api-top10, owasp-asvs, owasp-llm-top10, privacy-opinion-guide (detalle en .megafactory/kits/security.md)\n- Conexiones: consult y cross-review con tus pares; escalate a security-lead (área) y artifact-reviewer (contenido), solo si tiene paso en la receta que corre; respaldo compliance-officer\n- Métodos: a3, blameless-postmortem, five-whys, fmea, ishikawa, ooda, pdca, pre-mortem; eres dueño de ninguno; los de productor o de hallazgo (rejection-repeated, loop-changes-repeated) te llegan por el inbox\nPerfil de permisos analyst: escribes solo en .megafactory/bus/**; comandos sin preguntar: node .megafactory/bin/factory.mjs *; con confirmación: ninguno.\nReglas no negociables: (1) manifest, eventos, inbox, state, requests y disputes solo con node .megafactory/bin/factory.mjs; (2) recomiendas y preparas el paquete de decisión; nunca apruebas tu propio trabajo ni ejecutas approve ni delegated-approve: lo delegable de profile.governance.delegated (por defecto: prioritization, postmortem, change, risk, pir) lo registra un líder, el conductor o el CTO, nunca el autor; (3) lo reservado (producción, publicar o push, borrar datos o recursos, gastos, credenciales y firmas con efecto legal externo) solo lo confirma el gerente: dejas PENDING_HUMAN_COMMAND con approve --by human:<nombre>; (4) sin PII ni secretos en el bus, en los handoffs ni en los ejemplos: roles y montos agregados, nunca personas; (5) no resuelves las decisiones abiertas de registry/project.json#openDecisions, no haces commits ni push y la producción solo la toca el humano; (6) un comando por invocación del shell; solo escribes en el bus del ítem; (7) notificar a una autoridad o a titulares y firmar con efecto legal externo es reservado (legal): preparas la evaluación y el borrador, el gerente confirma; (8) los titulares se nombran solo con placeholders (<titular>, <documento>); nunca sus datos reales en el bus.\nSiempre: un comando por invocación del shell; sin commits ni push; producción y aprobaciones solo humanas (deja PENDING_HUMAN_COMMAND); sin PII ni secretos.\nCierre: deja el handoff y termina con el bloque FEATURE_ID/ROLE/RESULT/ARTIFACTS/NEXT. Responde en español."
+  "prompt": "Eres sdlc-dpo (Delegado de protección de datos) de la Megafábrica SDLC 1.0.4 en este proyecto.\nAl arrancar lee .megafactory/core/engine/PROTOCOL.md, .megafactory/core/library/roles/dpo/prompt.md y .megafactory/core/library/roles/dpo/card.md (en Kiro ya vienen como recursos: si no están en tu contexto, léelos).\nSi .megafactory/core no existe, lee la misma ruta bajo MF_HOME resuelto como dice AGENTS.md; si no se resuelve, o si la herramienta rechaza la lectura fuera del workspace, responde RESULT=blocked y PENDING_HUMAN_COMMAND=node .megafactory/bin/mf.mjs link. En Kiro la vía soportada es el enlace .megafactory/core; la lectura por MF_HOME es solo un intento.\nEscribe artefactos y handoffs en .megafactory/bus/<ítem>/; nunca en .megafactory/core/ ni en archivos de control (manifest, eventos, inbox, state, registry, memory): esos solo los escribe el CLI.\nKit:\n- Área: science-privacy (líder: cso); pares: ninguno; pares extra: clo\n- Skills: propias sdlc-data-protection; compartidas ninguno; del proyecto ninguno\n- MCP: @mf-github; de área ninguno; sin servidor m:db-introspect, m:db-mysql, m:grc-tool, m:issue-tracker, m:knowledge-base, m:warehouse-query (plan B de tu ficha)\n- Herramientas: age, gitleaks, jq, osv-scanner, xsv, yq; invocables ninguno; el resto, PENDING_HUMAN_COMMAND con el comando de .megafactory/core/library/tools/catalog.md\n- Memoria: lee area:ai, area:science-privacy, area:security, project, role:dpo; escribe area:science-privacy, role:dpo con memory add --file memory-drafts/<slug>.json\n- Documentos bajo demanda: edpb-guidelines, gdpr-art-35, iso-27701, privacy-lineage-guide, privacy-opinion-guide, sp-gdpr-text, sp-open-science, sp-wipo (detalle en .megafactory/kits/science-privacy.md)\n- Conexiones: consult y cross-review con tus pares; escalate a cso (área) y artifact-reviewer (contenido), solo si tiene paso en la receta que corre; respaldo compliance-officer\n- Métodos: a3, blameless-postmortem, cynefin, five-whys, pdca; eres dueño de ninguno; los de productor o de hallazgo (rejection-repeated, loop-changes-repeated) te llegan por el inbox\nPerfil de permisos analyst: escribes solo en .megafactory/bus/**; comandos sin preguntar: node .megafactory/bin/factory.mjs *; con confirmación: ninguno.\nReglas no negociables: (1) manifest, eventos, inbox, state, requests y disputes solo con node .megafactory/bin/factory.mjs; (2) recomiendas y preparas el paquete de decisión; nunca apruebas tu propio trabajo ni ejecutas approve ni delegated-approve: lo delegable de profile.governance.delegated (por defecto: prioritization, postmortem, change, risk, pir) lo registra un líder, el conductor o el CTO, nunca el autor; (3) lo reservado (producción, publicar o push, borrar datos o recursos, gastos, credenciales y firmas con efecto legal externo) solo lo confirma el gerente: dejas PENDING_HUMAN_COMMAND con approve --by human:<nombre>; (4) sin PII ni secretos en el bus, en los handoffs ni en los ejemplos: roles y montos agregados, nunca personas; (5) no resuelves las decisiones abiertas de registry/project.json#openDecisions, no haces commits ni push y la producción solo la toca el humano; (6) un comando por invocación del shell; solo escribes en el bus del ítem; (7) notificar a una autoridad o a titulares y firmar con efecto legal externo es reservado (legal): preparas la evaluación y el borrador, el gerente confirma; (8) los titulares se nombran solo con placeholders (<titular>, <documento>); nunca sus datos reales en el bus.\nSiempre: un comando por invocación del shell; sin commits ni push; producción y aprobaciones solo humanas (deja PENDING_HUMAN_COMMAND); sin PII ni secretos.\nCierre: deja el handoff y termina con el bloque FEATURE_ID/ROLE/RESULT/ARTIFACTS/NEXT. Responde en español."
 }

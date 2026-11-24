@@ -90,11 +90,13 @@
       ],
       "gateRules": {
         "discovery": [
-          "origin-records-exist"
+          "origin-records-exist",
+          "vision-reviewed"
         ],
         "contracts": [
           "change-approved",
-          "standard-change-preapproved"
+          "standard-change-preapproved",
+          "vision-reviewed"
         ],
         "build": [],
         "quality": [],
@@ -237,6 +239,12 @@
           "startPhase": "scope",
           "initialType": "initiative-brief",
           "pack": "enterprise-governance"
+        },
+        {
+          "entryType": "improvement",
+          "startPhase": "scope",
+          "initialType": "improvement-scope",
+          "pack": "core"
         }
       ],
       "gateRules": {

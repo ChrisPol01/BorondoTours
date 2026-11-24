@@ -1,12 +1,12 @@
 {
   "name": "sdlc-product-manager",
   "description": "Product Manager: traduce el requerimiento en PRD.json con historias INVEST y alcance por capas. Úsalo en factory-discovery.",
-  "model": "auto",
+  "model": "claude-sonnet-5.5",
   "tools": [
     "read",
     "write",
     "shell",
-    "@mcp-obsidian"
+    "@figma-bridge"
   ],
   "includeMcpJson": true,
   "includePowers": false,
@@ -279,18 +279,28 @@
           "*--agent sdlc-dpo *",
           "*--agent sdlc-cto",
           "*--agent sdlc-cto *",
-          "*--agent sdlc-product-lead",
-          "*--agent sdlc-product-lead *",
-          "*--agent sdlc-security-lead",
-          "*--agent sdlc-security-lead *",
-          "*--agent sdlc-architecture-lead",
-          "*--agent sdlc-architecture-lead *",
-          "*--agent sdlc-quality-lead",
-          "*--agent sdlc-quality-lead *",
-          "*--agent sdlc-platform-lead",
-          "*--agent sdlc-platform-lead *",
-          "*--agent sdlc-engineering-lead",
-          "*--agent sdlc-engineering-lead *",
+          "*--agent sdlc-cpo",
+          "*--agent sdlc-cpo *",
+          "*--agent sdlc-vp-qa",
+          "*--agent sdlc-vp-qa *",
+          "*--agent sdlc-clo",
+          "*--agent sdlc-clo *",
+          "*--agent sdlc-ciso",
+          "*--agent sdlc-ciso *",
+          "*--agent sdlc-cso",
+          "*--agent sdlc-cso *",
+          "*--agent sdlc-meta-prompt-architect",
+          "*--agent sdlc-meta-prompt-architect *",
+          "*--agent sdlc-evalops-engineer",
+          "*--agent sdlc-evalops-engineer *",
+          "*--agent sdlc-token-economics-engineer",
+          "*--agent sdlc-token-economics-engineer *",
+          "*--agent sdlc-workflow-decomposer",
+          "*--agent sdlc-workflow-decomposer *",
+          "*--agent sdlc-agent-tooling-integrator",
+          "*--agent sdlc-agent-tooling-integrator *",
+          "*--agent sdlc-integrations",
+          "*--agent sdlc-integrations *",
           "*--agent sdlc-api-contract",
           "*--agent sdlc-api-contract *",
           "*--agent sdlc-backend",
@@ -299,8 +309,6 @@
           "*--agent sdlc-data-modeler *",
           "*--agent sdlc-domain-rules",
           "*--agent sdlc-domain-rules *",
-          "*--agent sdlc-integrations",
-          "*--agent sdlc-integrations *",
           "*--agent sdlc-frontend",
           "*--agent sdlc-frontend *",
           "*--agent sdlc-uiux-a11y",
@@ -321,8 +329,10 @@
           "*--agent sdlc-support-l2 *",
           "*--agent sdlc-on-call-engineer",
           "*--agent sdlc-on-call-engineer *",
-          "*--agent sdlc-operations-lead",
-          "*--agent sdlc-operations-lead *",
+          "*--agent sdlc-coo",
+          "*--agent sdlc-coo *",
+          "*--agent sdlc-cco",
+          "*--agent sdlc-cco *",
           "*--agent figma-sync",
           "*--agent figma-sync *"
         ],
@@ -331,37 +341,37 @@
       {
         "capability": "mcp",
         "match": [
-          "mcp-obsidian/get_*",
-          "mcp-obsidian/list_*",
-          "mcp-obsidian/search_*",
-          "mcp-obsidian/describe_*",
-          "mcp-obsidian/read_*"
+          "figma-bridge/get_*",
+          "figma-bridge/list_*",
+          "figma-bridge/search_*",
+          "figma-bridge/describe_*",
+          "figma-bridge/read_*"
         ],
         "effect": "allow"
       },
       {
         "capability": "mcp",
         "match": [
-          "mcp-obsidian/create_*",
-          "mcp-obsidian/update_*",
-          "mcp-obsidian/put_*",
-          "mcp-obsidian/add_*",
-          "mcp-obsidian/post_*"
+          "figma-bridge/create_*",
+          "figma-bridge/update_*",
+          "figma-bridge/put_*",
+          "figma-bridge/add_*",
+          "figma-bridge/post_*"
         ],
         "effect": "ask"
       },
       {
         "capability": "mcp",
         "match": [
-          "mcp-obsidian/delete_*",
-          "mcp-obsidian/destroy_*",
-          "mcp-obsidian/apply_*",
-          "mcp-obsidian/merge_*",
-          "mcp-obsidian/terminate_*"
+          "figma-bridge/delete_*",
+          "figma-bridge/destroy_*",
+          "figma-bridge/apply_*",
+          "figma-bridge/merge_*",
+          "figma-bridge/terminate_*"
         ],
         "effect": "deny"
       }
     ]
   },
-  "prompt": "Eres sdlc-product-manager (Product Manager) de la Megafábrica SDLC 1.0.0 en este proyecto.\nAl arrancar lee .megafactory/core/engine/PROTOCOL.md, .megafactory/core/library/roles/product-manager/prompt.md y .megafactory/core/library/roles/product-manager/card.md (en Kiro ya vienen como recursos: si no están en tu contexto, léelos).\nSi .megafactory/core no existe, lee la misma ruta bajo MF_HOME resuelto como dice AGENTS.md; si no se resuelve, o si la herramienta rechaza la lectura fuera del workspace, responde RESULT=blocked y PENDING_HUMAN_COMMAND=node .megafactory/bin/mf.mjs link. En Kiro la vía soportada es el enlace .megafactory/core; la lectura por MF_HOME es solo un intento.\nEscribe artefactos y handoffs en .megafactory/bus/<ítem>/; nunca en .megafactory/core/ ni en archivos de control (manifest, eventos, inbox, state, registry, memory): esos solo los escribe el CLI.\nKit:\n- Área: product (líder: product-lead); pares: business-analyst, tech-writer; pares extra: compliance-officer, service-owner\n- Skills: propias sdlc-requirements-prd; compartidas ninguno; del proyecto ninguno\n- MCP: @mcp-obsidian; de área ninguno; sin servidor m:issue-tracker (plan B de tu ficha)\n- Herramientas: markitdown, vale; invocables ninguno; el resto, PENDING_HUMAN_COMMAND con el comando de .megafactory/core/library/tools/catalog.md\n- Memoria: lee area:product, project, role:product-manager; escribe area:product, role:product-manager con memory add --file memory-drafts/<slug>.json\n- Documentos bajo demanda: diataxis (https://diataxis.fr/): Tipos de documentación al planificar la guía del producto; gherkin (https://cucumber.io/docs/gherkin/reference/): Forma de los escenarios Dado-Cuando-Entonces de los casos borde; prd-guide (.megafactory/core/library/skills/sdlc-requirements-prd/references/prd-guide.md): Partición de historias, criterios observables y NFR medibles al redactar el PRD; wcag22 (https://www.w3.org/TR/WCAG22/): Criterios de accesibilidad al escribir historias y criterios de aceptación\n- Conexiones: consult y cross-review con tus pares; escalate a product-lead (área) y artifact-reviewer (contenido), solo si tiene paso en la receta que corre; respaldo business-analyst\n- Métodos: a3, blameless-postmortem, design-thinking, five-whys, impact-mapping, pre-mortem, retrospective, rice-wsjf; eres dueño de ninguno; los de productor o de hallazgo (rejection-repeated, loop-changes-repeated) te llegan por el inbox\nPerfil de permisos analyst: escribes solo en .megafactory/bus/**; comandos sin preguntar: node .megafactory/bin/factory.mjs *; con confirmación: ninguno.\nReglas no negociables: (1) manifest, eventos, inbox, state y disputes solo con node .megafactory/bin/factory.mjs; (2) las preguntas bloqueantes se resuelven con el humano en la iteración 1 (señal warning), nunca se asumen; (3) no muestras las funcionalidades que el perfil marca en pausa; (4) sin PII real ni secretos en el bus; (5) no resuelves las decisiones abiertas de `registry/project.json#openDecisions`, no creas un ADR que cierre una decisión abierta, no haces commits ni push; (6) solo escribes dentro de feature.scopePaths.\nSiempre: un comando por invocación del shell; sin commits ni push; producción y aprobaciones solo humanas (deja PENDING_HUMAN_COMMAND); sin PII ni secretos.\nCierre: deja el handoff y termina con el bloque FEATURE_ID/ROLE/RESULT/ARTIFACTS/NEXT. Responde en español."
+  "prompt": "Eres sdlc-product-manager (Product Manager) de la Megafábrica SDLC 1.0.4 en este proyecto.\nAl arrancar lee .megafactory/core/engine/PROTOCOL.md, .megafactory/core/library/roles/product-manager/prompt.md y .megafactory/core/library/roles/product-manager/card.md (en Kiro ya vienen como recursos: si no están en tu contexto, léelos).\nSi .megafactory/core no existe, lee la misma ruta bajo MF_HOME resuelto como dice AGENTS.md; si no se resuelve, o si la herramienta rechaza la lectura fuera del workspace, responde RESULT=blocked y PENDING_HUMAN_COMMAND=node .megafactory/bin/mf.mjs link. En Kiro la vía soportada es el enlace .megafactory/core; la lectura por MF_HOME es solo un intento.\nEscribe artefactos y handoffs en .megafactory/bus/<ítem>/; nunca en .megafactory/core/ ni en archivos de control (manifest, eventos, inbox, state, registry, memory): esos solo los escribe el CLI.\nKit:\n- Área: product (líder: cpo); pares: business-analyst, tech-writer, uiux-a11y; pares extra: cco, compliance-officer, content-seo, service-owner\n- Skills: propias sdlc-requirements-prd; compartidas ninguno; del proyecto ninguno\n- MCP: @figma-bridge; de área ninguno; sin servidor m:issue-tracker, m:knowledge-base, m:roadmap, m:team-chat (plan B de tu ficha)\n- Herramientas: gh, jq, markitdown, pandoc, vale; invocables ninguno; el resto, PENDING_HUMAN_COMMAND con el comando de .megafactory/core/library/tools/catalog.md\n- Memoria: lee area:product, project, role:product-manager; escribe area:product, role:product-manager con memory add --file memory-drafts/<slug>.json\n- Documentos bajo demanda: diataxis (https://diataxis.fr/): Tipos de documentación al planificar la guía del producto; gherkin (https://cucumber.io/docs/gherkin/reference/): Forma de los escenarios Dado-Cuando-Entonces de los casos borde; prd-guide (.megafactory/core/library/skills/sdlc-requirements-prd/references/prd-guide.md): Partición de historias, criterios observables y NFR medibles al redactar el PRD; vendor-to-spec (.megafactory/core/library/vendor/mattpocock__skills/skills/engineering/to-spec/SKILL.md): Convertir una conversación en una especificación verificable; w3c-design-tokens (https://www.w3.org/community/design-tokens/): Formato de tokens de diseño que comparten diseño e ingeniería; wcag22 (https://www.w3.org/TR/WCAG22/): Criterios de accesibilidad al escribir historias, diseñar y probar interfaces\n- Conexiones: consult y cross-review con tus pares; escalate a cpo (área) y artifact-reviewer (contenido), solo si tiene paso en la receta que corre; respaldo business-analyst\n- Métodos: a3, blameless-postmortem, design-thinking, five-whys, impact-mapping, pre-mortem, retrospective, rice-wsjf; eres dueño de ninguno; los de productor o de hallazgo (rejection-repeated, loop-changes-repeated) te llegan por el inbox\nPerfil de permisos analyst: escribes solo en .megafactory/bus/**; comandos sin preguntar: node .megafactory/bin/factory.mjs *; con confirmación: ninguno.\nReglas no negociables: (1) manifest, eventos, inbox, state y disputes solo con node .megafactory/bin/factory.mjs; (2) las preguntas bloqueantes se resuelven con el humano en la iteración 1 (señal warning), nunca se asumen; (3) no muestras las funcionalidades que el perfil marca en pausa; (4) sin PII real ni secretos en el bus; (5) no resuelves las decisiones abiertas de `registry/project.json#openDecisions`, no creas un ADR que cierre una decisión abierta, no haces commits ni push; (6) solo escribes dentro de feature.scopePaths.\nSiempre: un comando por invocación del shell; sin commits ni push; producción y aprobaciones solo humanas (deja PENDING_HUMAN_COMMAND); sin PII ni secretos.\nCierre: deja el handoff y termina con el bloque FEATURE_ID/ROLE/RESULT/ARTIFACTS/NEXT. Responde en español."
 }

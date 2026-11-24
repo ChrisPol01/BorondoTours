@@ -17,7 +17,7 @@
       "type": "step",
       "id": "continuity-plan",
       "agent": "sdlc-resilience-engineer",
-      "prompt": "Contexto:\n{{init.output}}\nRol: resilience-engineer. Modo: continuity-plan.\nProduce o corrige ContinuityPlan.json con el análisis de impacto, RTO y RPO por servicio y la estrategia."
+      "prompt": "Contexto:\n{{init.output}}\nRol: resilience-engineer. Modo: continuity-plan.\nAntes de redactar, ejecuta node .megafactory/bin/factory.mjs iac-drift --json (solo lectura) y lleva cada FINDING iac-unmanaged al plan como riesgo de recuperación con su acción (plantilla IaC). Produce o corrige ContinuityPlan.json con el análisis de impacto, RTO y RPO por servicio y la estrategia; el simulacro debe dejar RTO y RPO medidos con un despliegue desde cero en una cuenta vacía, no estimados."
     },
     {
       "type": "parallel",
@@ -101,13 +101,13 @@
       "id": "execute-human",
       "agent": "sdlc-conductor",
       "completion": true,
-      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: human-step.\nUna persona ejecuta los experimentos aprobados y pega los resultados en el handoff; tú no ejecutas nada."
+      "prompt": "Contexto:\n{{init.output}}\nRol: conductor. Modo: human-step.\nUna persona ejecuta los experimentos aprobados, incluido un despliegue desde cero en una cuenta vacía con las plantillas IaC, y pega en el handoff los resultados con RTO y RPO medidos (inicio, fin y datos recuperados); tú no ejecutas nada."
     },
     {
       "type": "step",
       "id": "chaos-results",
       "agent": "sdlc-resilience-engineer",
-      "prompt": "Contexto:\n{{init.output}}\nRol: resilience-engineer. Modo: chaos-results.\nRepublica cada chaos-experiment con results (recordedAt, observaciones y acciones)."
+      "prompt": "Contexto:\n{{init.output}}\nRol: resilience-engineer. Modo: chaos-results.\nRepublica cada chaos-experiment con results (recordedAt, observaciones y acciones), con RTO y RPO medidos en el despliegue desde cero en una cuenta vacía frente a los objetivos del plan; lo que no se pudo recrear desde IaC es una acción."
     },
     {
       "type": "step",

@@ -1,200 +1,225 @@
 {
   "schemaVersion": 1,
   "files": {
+    ".kiro/agents/sdlc-agent-tooling-integrator.json": {
+      "class": "adapter",
+      "versioned": true,
+      "hash": "sha256:9614f87fbe87d413daf38a40ecbff1dec765db6976a03ca7b2edfb98e9622a92"
+    },
     ".kiro/agents/sdlc-api-contract.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:61b947b09e7094d14f9e23162394f26bc1f99ee05840e0bad30a9730f63c8c9d"
-    },
-    ".kiro/agents/sdlc-architecture-lead.json": {
-      "class": "adapter",
-      "versioned": true,
-      "hash": "sha256:1067bdf3bb36d8b3c8d452a540da1cf343c39e3bd13388d9c8e0784cf42ba684"
+      "hash": "sha256:c72cdb701d0f4e1bd632252bc2a52ddaf50584ed66e98e2d766a93500500b389"
     },
     ".kiro/agents/sdlc-artifact-reviewer.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:56c298a5fd4dd94ce575b23dfd3f7d139f13dd0ec34143c6edfffd740ba68bca"
+      "hash": "sha256:3baee34745ab3b2e954beb1291dab1d342179d39235cf27a398865deaa42b897"
     },
     ".kiro/agents/sdlc-backend.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:c8e04cf1e7c4714e588a19697aeb83fba5461df164726fe88777e922911fddf5"
+      "hash": "sha256:26dbfe4bbf090889a6820887d8b16c84755bab097fb3a4c5c101417c2e882c37"
     },
     ".kiro/agents/sdlc-business-analyst.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:36428d04c8ee7f601173dabf3221847294dd68a80513060321339134d9850ec1"
+      "hash": "sha256:e41e6f42b65fbe7c5645fb37cd820d89efc4ebb6be662962c5b17d05f2c9ef31"
+    },
+    ".kiro/agents/sdlc-cco.json": {
+      "class": "adapter",
+      "versioned": true,
+      "hash": "sha256:ead0bf7dd06156e3c8d48030f9456ff9a05750b9b15ce972cf93b83a23b73e21"
+    },
+    ".kiro/agents/sdlc-ciso.json": {
+      "class": "adapter",
+      "versioned": true,
+      "hash": "sha256:054fdd945c5058751391f39fb04ad9e2b87b15155b83ad967164cf1e939f27e8"
+    },
+    ".kiro/agents/sdlc-clo.json": {
+      "class": "adapter",
+      "versioned": true,
+      "hash": "sha256:1ce3c0e635577d5c4c424ba00157647baf9fc0a837be27443e074f75a91e5fed"
     },
     ".kiro/agents/sdlc-compliance-officer.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:74bd8103c25f6118376ab0637574013a17b2a51fc9057f3ddf123c03a1e426f5"
+      "hash": "sha256:ecfea4235b5906ab72c989509c9971337463346276862fd4f16b052ccd435d85"
     },
     ".kiro/agents/sdlc-conductor.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:3232817fdf41d64561481ed898aae2cf22305a07cbe4e93fb6502ddb0cf0dc0b"
+      "hash": "sha256:71532bb2a74ac9ab7f19f48aef83778a18a79959a29d626a87b8861d93736caa"
     },
     ".kiro/agents/sdlc-content-seo.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:7f30206692d01c415a23742ea8fe01f688c5686f04754eeb718142f40199cea0"
+      "hash": "sha256:e6d794b92b77702d3e74eb5b06a0870693ffab58590b1b1be30e69c4a9d0bf17"
+    },
+    ".kiro/agents/sdlc-coo.json": {
+      "class": "adapter",
+      "versioned": true,
+      "hash": "sha256:64c24255574e4bef72b0c6133f644216b54820904968ec73fa6e18c37791a864"
+    },
+    ".kiro/agents/sdlc-cpo.json": {
+      "class": "adapter",
+      "versioned": true,
+      "hash": "sha256:2632478cd0176d1fa61b9193e17ab39aee7633bcb65aa84545529cb5574818fc"
+    },
+    ".kiro/agents/sdlc-cso.json": {
+      "class": "adapter",
+      "versioned": true,
+      "hash": "sha256:d831f4645cbed6ec68bd70ceff32f023bca4ef30dbc24e3f58404a974af34445"
     },
     ".kiro/agents/sdlc-cto.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:100e975682042a5b48592d1a1e0fd20de20f3a8b2403979f88b3f72a415ef1c8"
+      "hash": "sha256:3151d056c8e6e0f3ca1f3778feb6394005630949688382ee9b2183cf99bd9b82"
     },
     ".kiro/agents/sdlc-data-modeler.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:dc8301287ed10b9308dfdf0b97a01d3bb9b91abd906ebbaf5e2b8cbc87979818"
+      "hash": "sha256:0699a3ed4005512e2b7947a7d4dbade438572b8b1cc23eeb53d3d0cc2c1b70f8"
     },
     ".kiro/agents/sdlc-dba-prod.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:c4cad407da4cf88dee13742d6ddc72fcad04d5d9ba510bfb2006be46ca1f1d80"
+      "hash": "sha256:c1590c175b49c8acf60147b7b2041b9fa929742ccbbeaa1067b2c9ba81c692d1"
     },
     ".kiro/agents/sdlc-devops-sre.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:043b38191bd7c4482de36e92f393462d7b8ee21f14d46dff1cea3db5a06917db"
+      "hash": "sha256:26758d51ef5cfe10380165efa443f3f47c6aa761ab0a18e9e80b664bb4684e82"
     },
     ".kiro/agents/sdlc-domain-rules.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:15b1cf5c66022251f577be43ca393d96ce09c7f22f5765b599f041caa250eacf"
+      "hash": "sha256:62816895e640491f7392777a77f8aad623cf2fda90f28c98acf5910e8bfb1a72"
     },
     ".kiro/agents/sdlc-dpo.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:4ac8e31a1e135db6bb7e05ea720b61b6c284f92daf795c4143e011f2be57c942"
-    },
-    ".kiro/agents/sdlc-engineering-lead.json": {
-      "class": "adapter",
-      "versioned": true,
-      "hash": "sha256:cf318b79650bdbcbc495ab8bbf61a62f8f78d0f5fc1405ab9fc9ca1ba1b04162"
+      "hash": "sha256:e7b8ac499d8b644dbe4ed3a0bb1921c5268df2be32582b03bb30fb71e0de8a5d"
     },
     ".kiro/agents/sdlc-engineering-manager.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:9a097fb5419bf21a48336f95d24eccc9e1e56c96cf63ee7035ee7af9078f528f"
+      "hash": "sha256:d9935aca1611ae56a9b1a786fe42ad885e32f06bdec23513a0fce96e3282b04f"
+    },
+    ".kiro/agents/sdlc-evalops-engineer.json": {
+      "class": "adapter",
+      "versioned": true,
+      "hash": "sha256:27acbd221ddbf0232c31fe2df70192eaa3d9e49b18e3adbbb808d54520df9382"
     },
     ".kiro/agents/sdlc-finops.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:adb97c217fe0d2143a72a6ace980f10b6cfa45e116d2860dda27cb86bce7d5ff"
+      "hash": "sha256:69f451bdd7ad90a45cb96b06986b146a25dad29b90fbed0dcd7f5eeb7f30fb82"
     },
     ".kiro/agents/sdlc-frontend.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:46ea7df1448da8d9f671b0d1e05b86d5d30e0765c1ce58c7b0b70d8ea912c3ae"
+      "hash": "sha256:feefe320e1cf6b4e2fb435ab75e0b4f4762a34a273215638911ec692db7c73ef"
     },
     ".kiro/agents/sdlc-integrations.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:45318a9af6f0599c1254ecd87d588662509ab38b4245eac2fa5b1b8c9fc546a9"
+      "hash": "sha256:3b8cb3a33525cb1856756e045f84a3dd7a402e3c49426a3f99d94c3653ecba74"
+    },
+    ".kiro/agents/sdlc-meta-prompt-architect.json": {
+      "class": "adapter",
+      "versioned": true,
+      "hash": "sha256:c713ee75d6747eecc9824aad644f0666c3cea69bdd73b723cbc02d85a598804c"
     },
     ".kiro/agents/sdlc-on-call-engineer.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:22272d58503b2b7d97c6464a6d49090721e8631b58dd626543e3fa7b7f018186"
-    },
-    ".kiro/agents/sdlc-operations-lead.json": {
-      "class": "adapter",
-      "versioned": true,
-      "hash": "sha256:38c19b37692eba5ec2505669533e8691bc55b05c3a4e094ba73a62be049996d5"
+      "hash": "sha256:597beaa00c7a866fd743da8f18c296487acb1aa7b267708270acd4c4ef19fdf8"
     },
     ".kiro/agents/sdlc-peer-reviewer.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:d8716e87466e0ab6d81f052e3a7d283da9a6ee07df1b06fd136656dfda0b61c7"
-    },
-    ".kiro/agents/sdlc-platform-lead.json": {
-      "class": "adapter",
-      "versioned": true,
-      "hash": "sha256:d9be91184646bb48d5c45cd19d142f761cfe0875b89f85f166946eeb8339f35c"
-    },
-    ".kiro/agents/sdlc-product-lead.json": {
-      "class": "adapter",
-      "versioned": true,
-      "hash": "sha256:bf2251534cbc8a4315fc1326ab62f362846e1dc61689f98e46a2f894a95b44e1"
+      "hash": "sha256:15808e77a049b191f13c46051d6c8d56a08a7114a91c7c41a69be1daeafb4400"
     },
     ".kiro/agents/sdlc-product-manager.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:fbd73cd73ce71faffd1bbb8c1d9494db238d202f67cc6e1a253d159f3b2c685b"
+      "hash": "sha256:c95ef5eeadddeefe03a904d17dc3eb131f6a25727e3a77f948c8d1dd79d87c95"
     },
     ".kiro/agents/sdlc-qa-e2e.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:ae22cb59b647871d6ac66682b44ed1f5d317852c1ca344aaa3bd10476757c680"
-    },
-    ".kiro/agents/sdlc-quality-lead.json": {
-      "class": "adapter",
-      "versioned": true,
-      "hash": "sha256:e3ea2d62c8aa6b18660e184575f1ac4d50e580326dd006d93fbcfad1ea0bbaea"
+      "hash": "sha256:ca24d758cf8deed15eba22d1fefdbdf64cee002ca9c6ad4b48d4c8478e5ce640"
     },
     ".kiro/agents/sdlc-release-manager.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:bbdcaf9fe4440167397f6f86235251af7c71059d8a40184be8d45ae36077a1b6"
+      "hash": "sha256:1bb13f1a1c932d21754bcdb2cfdd14852b64dcb61487d8fbf8cbfaef368f7fb4"
     },
     ".kiro/agents/sdlc-resilience-engineer.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:dedb71ef3a62136fdf5a1a9225b1ca8a4fb300d0e062268a97058dd949c6e539"
+      "hash": "sha256:4a7c307f720c1a2acd4044e7c3fa9edd2c22f9b3deeed8085483f6f9e6d70ff9"
     },
     ".kiro/agents/sdlc-security-architect.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:ec4cde896d2877d8e1d9f99e7797ae2b8fddb3b0a1c4b1d58a28f5d89a5d7a2d"
+      "hash": "sha256:a1e6ec3bfe45d268099a40b2ca5291be935895fb77fb0bab2ec490c62600a99d"
     },
     ".kiro/agents/sdlc-security-auditor.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:679c79f5a29a0175e7960db2cf54e9a2dc37faeb878a41dd76682bd161621eaf"
-    },
-    ".kiro/agents/sdlc-security-lead.json": {
-      "class": "adapter",
-      "versioned": true,
-      "hash": "sha256:36777183c188e47502c44a8bad10f79e58b4cb05001db579aa29ab264e64f450"
+      "hash": "sha256:5e514f5ea4ca27de3703a433038dbbde01ff7679402ffa0b9318aa0d5f2e5b7c"
     },
     ".kiro/agents/sdlc-service-desk-l1.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:4b50abbfe194e7696832b4cd9a3c4b8f7dd19332f561c3da8def64492f8fd320"
+      "hash": "sha256:1c0a7b116070bb8fb0c5976b1a1a7625e0bc13bb3fcc2508e1490a8871225063"
     },
     ".kiro/agents/sdlc-service-owner.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:3034beb108896636522aa18503c8535cb84ba92890e8fb9e32eeb6db9d92a1fe"
+      "hash": "sha256:64dec8f1ff7c771b7c4bb9e25f203fe2d1a7fb0223d475fa6e80eccb0e6be7ae"
     },
     ".kiro/agents/sdlc-solutions-architect.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:9f039159f6c1c47f27e3314722da4a15a4fa434318f499ab46da8da09853e2be"
+      "hash": "sha256:f86b2295bebb97794c1dcc288d88bad9e6d113f95010c9d65abb3229b2ba2011"
     },
     ".kiro/agents/sdlc-sre.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:895bb482a47241f77e7a1987d543c6f99e5a1e685cf629f42592959bfc4b44f2"
+      "hash": "sha256:d2d5e3c534fc0a5ced89febdbb56de2f685829d4242dfd29ae59bae869103d1d"
     },
     ".kiro/agents/sdlc-support-l2.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:d33d7816351bcd213b183e2042fcc50c99f9d43e432eb561cb60573a7953cd47"
+      "hash": "sha256:bb3e6b79bdb17674a6656a58901e3d1dc97d2eba4bbb8ecfb23fdb971102d08e"
     },
     ".kiro/agents/sdlc-tech-writer.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:2c01fa7adcbd06357fb3e2edcd7493e0137ac8b6c104b5b2b420ac0269ea00b8"
+      "hash": "sha256:add1f2e5fa31dd2ad66e700398a6a607c55851399b414066ee8fb2b5ee15d97c"
+    },
+    ".kiro/agents/sdlc-token-economics-engineer.json": {
+      "class": "adapter",
+      "versioned": true,
+      "hash": "sha256:29418cd3760a7b5d78e1f37f7ebcbba8355acfbfbaf79a787f5ce2350a595b85"
     },
     ".kiro/agents/sdlc-uiux-a11y.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:21b01d61c0f4047e467a0101efdb031eba2e42f4678076ed789494873f65f1e3"
+      "hash": "sha256:175de6061e6612ce636922cd6e34bcdba3d517b0a9babe88ceae0b029faf4760"
+    },
+    ".kiro/agents/sdlc-vp-qa.json": {
+      "class": "adapter",
+      "versioned": true,
+      "hash": "sha256:a5f50cbb95beb3010f4a2288b9090c5b07dc605ac8b1a9d5f997114279ee0372"
+    },
+    ".kiro/agents/sdlc-workflow-decomposer.json": {
+      "class": "adapter",
+      "versioned": true,
+      "hash": "sha256:13d15287be8da310f5579b8f1b2e8c2e3155df292af9cfca3aaabeaebd9ad0a3"
     },
     ".kiro/hooks/factory-bus-guard.json": {
       "class": "adapter",
@@ -209,7 +234,7 @@
     ".kiro/hooks/factory-test-observer.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:355ea5378081ae2e0684ccbb91696bbafe890f2fdf0061fce113e9aed8d4a856"
+      "hash": "sha256:cadb1022f90b79d7055613dbb428063542a00529a12b6b6917ca8c9892bcaf83"
     },
     ".kiro/settings/mcp.json": {
       "class": "seed",
@@ -219,12 +244,12 @@
     ".kiro/steering/factory-agents.md": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:9df0b5975facb1d4f3ea5f061584748c0a9a8b2b514ed6a63a6a8330d2130910"
+      "hash": "sha256:64c77f2c227b9b6f84e9d65fb481d8a5e6ebaa3c30c6b6d0819cc320a7d368d9"
     },
     ".kiro/steering/factory-context.md": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:e38762117fc918f5d911f24cfee93452981c3525942b20c69e094ae380490cbf"
+      "hash": "sha256:5a4d6c31a1638eec000eb4159260d21b46aaaad92badde25055c89ca011b8090"
     },
     ".kiro/workflows/factory-adopt-brownfield.workflow.json": {
       "class": "adapter",
@@ -260,6 +285,11 @@
       "class": "adapter",
       "versioned": true,
       "hash": "sha256:f30db0e68999e7c9643a61edd9c30affa2c89a68d8284b33a5672853e0610ae2"
+    },
+    ".kiro/workflows/factory-factory-upgrade.workflow.json": {
+      "class": "adapter",
+      "versioned": true,
+      "hash": "sha256:c45331eed6e264a8c227ccdf54d96df0c1a244c4ff7e3a5cd5e9530d0d52fbef"
     },
     ".kiro/workflows/factory-feature-e2e.workflow.json": {
       "class": "adapter",
@@ -299,7 +329,7 @@
     ".kiro/workflows/factory-resilience-drill.workflow.json": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:4021c485d1974cfa100a9cb941d238946582611d67004521468b1be353754e17"
+      "hash": "sha256:6b803c4f0ebaf41d8fe0c2801a5cd0e35522067521a1602108eaece3aa4aae61"
     },
     ".kiro/workflows/factory-vulnerability-close.workflow.json": {
       "class": "adapter",
@@ -314,7 +344,7 @@
     ".megafactory/README.md": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:efdefd385ae15960124804145bceb1bad8439771058c0192ccdcfdbe1e6b0520"
+      "hash": "sha256:667d1eb10961db8d87946318a78863bbbeb7cfcc5e504bc9b9fbf88fbd4ac3c0"
     },
     ".megafactory/adapters/kiro.mcp.suggested.json": {
       "class": "render",
@@ -333,12 +363,12 @@
     ".megafactory/bin/factory.mjs": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:1ba93208dff8fe54b624e6e34799f31b1a11aecd1652d3ad889bcfc81e0cdd47"
+      "hash": "sha256:caf2a662ce8f50f5e534fad4d3a146b50a4f8c576f5ba0bd8731ed2d9085756c"
     },
     ".megafactory/bin/mf.mjs": {
       "class": "adapter",
       "versioned": true,
-      "hash": "sha256:b966c8b15b750a0d559b579c6ab70bd46a60f37162e179066da50a7e412bb864"
+      "hash": "sha256:1a63c9c1c3a0044b7e4802d70187bcde0b8ca458067b9fc673cf82d3563ee10e"
     },
     ".megafactory/profile.json": {
       "class": "seed",
@@ -348,27 +378,27 @@
     ".megafactory/registry/agents.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:e35f3bb276e53a29abaf24719c0320b34abe3b445fbc0db56315ff423a05893d"
+      "hash": "sha256:9dba8149ead95e0f37c18c0ff047033e9ab3e5c9ef259b132c14fa038fb685aa"
     },
     ".megafactory/registry/artifact-types.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:d14ec3233e187d8fc21dcd482d4b986d8015b48fe1f051c0e46482cb71fb82ce"
+      "hash": "sha256:2fbc7074521c12cabb1fe73bddd7a337100c42f723b44a02fa3fe85c8096be8b"
     },
     ".megafactory/registry/graph.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:98a02780c707569abc00dc11d736397733ce01b8514855095eac88517d570136"
+      "hash": "sha256:cc58ca4123bbc30827b96f86dfb81f83b48ae19220f207e7eecb4d627e9d71c9"
     },
     ".megafactory/registry/kits.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:618c8d17bd3971ec49a2dc67430f3be084c2b851121a4728e0e8f7fcb325ce09"
+      "hash": "sha256:7aaafd69b78c4c83ebf2cc0a5519295da2b00ebbc4624b11f09b6f54beab5946"
     },
     ".megafactory/registry/lanes.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:bc1741524140e996facabd8a450fb3a86fa8cb3a1b2e08b80fcbd7f84c84f220"
+      "hash": "sha256:4bdb6bc47eda437378c54c63b12dbb6a5e1cc9c79d6ce30d1b70bdabb2f880cc"
     },
     ".megafactory/registry/layers.json": {
       "class": "render",
@@ -378,7 +408,7 @@
     ".megafactory/registry/mcp.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:9408e768436554051c552c1d9d61e95ee98f5b9b42fe0297b2c1da4b1723323d"
+      "hash": "sha256:25927b02b2b98c70568e3c8516307003430aab16742d812e3a05bdee1b34203b"
     },
     ".megafactory/registry/methods.json": {
       "class": "render",
@@ -388,7 +418,7 @@
     ".megafactory/registry/packs.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:6a4b5ea50869e15a0e8633669022c9823f5f163e3a747b27aefebb8756e79568"
+      "hash": "sha256:5cac56bcca824e9fac0d25214e053549c236a31f5d42c5cc64c7f4c7be5078af"
     },
     ".megafactory/registry/profiles.json": {
       "class": "render",
@@ -398,12 +428,12 @@
     ".megafactory/registry/project.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:2afef3506bb6b389bcbc4d502ee4091d9afd6c25884b268b085b5f3b5d779a07"
+      "hash": "sha256:36a18efe87e2e63cd6897b4a9f270d7f9e1a3fd7e5cf90274eed3a3fc251c0c7"
     },
     ".megafactory/registry/recipes.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:e44c73734bd4634b55a8d0950d1d722e67bed94a7f94352fbdf9b4057ff1c3a5"
+      "hash": "sha256:0520896f4ec9908a021c2b6cb1db99cfaf6a158e3dc741baf56d369349452b0c"
     },
     ".megafactory/registry/schemas/agentops-report.schema.json": {
       "class": "render",
@@ -453,7 +483,7 @@
     ".megafactory/registry/schemas/cost-estimate.schema.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:b228b1535373108fb60afb7905e99cef47942905b689cb8fff52cd79b0649386"
+      "hash": "sha256:e5b3a2415a7cb7648b7ab58288422504d5f1775442c3f55b89c0915a6a2ace85"
     },
     ".megafactory/registry/schemas/cost-review.schema.json": {
       "class": "render",
@@ -480,6 +510,16 @@
       "versioned": true,
       "hash": "sha256:cb88234d7d9ab3bd98705cead33f8145a8ab10075419c10476fd8885384cf4a5"
     },
+    ".megafactory/registry/schemas/governance-review.schema.json": {
+      "class": "render",
+      "versioned": true,
+      "hash": "sha256:79a1177ad42587e0a578152d7b423f8712b0e89983a44a5afecf0740b98d680d"
+    },
+    ".megafactory/registry/schemas/improvement-scope.schema.json": {
+      "class": "render",
+      "versioned": true,
+      "hash": "sha256:20b76e2d7ece11dba831b7d39afb1e9c081bff4fe6365515ca370edafc69e5bf"
+    },
     ".megafactory/registry/schemas/incident-record.schema.json": {
       "class": "render",
       "versioned": true,
@@ -503,7 +543,7 @@
     ".megafactory/registry/schemas/prd.schema.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:27f77c133b0c25ec90b36ce165f2e11d19f64b8648c673b80653c2dee3fa6ff7"
+      "hash": "sha256:330200b5b33de06e536a7b6e23dca8701f33277d2a208a2cd7f82b9f27333489"
     },
     ".megafactory/registry/schemas/privacy-opinion.schema.json": {
       "class": "render",
@@ -549,6 +589,11 @@
       "class": "render",
       "versioned": true,
       "hash": "sha256:85dc1de94c613ab0715e7122c6bde0e3e8a30704bf03eee2f14409af07522bb2"
+    },
+    ".megafactory/registry/schemas/specialist-review.schema.json": {
+      "class": "render",
+      "versioned": true,
+      "hash": "sha256:c7d7fa0f6cd06c975d649022ef361f6185b5c16db0eaba7d1d534e562a991cf4"
     },
     ".megafactory/registry/schemas/support-diagnosis.schema.json": {
       "class": "render",
@@ -628,7 +673,7 @@
     ".megafactory/registry/templates/area-report.example.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:3c7e6675b4c92c7bbd55bef77078662369070a2227b6b4eb762a9c6efd19d383"
+      "hash": "sha256:f24c4f05d8540b180e5ee61e5a04150ed84b534f3f5e3a0ba337dc11d94f707a"
     },
     ".megafactory/registry/templates/asyncapi.example.yaml": {
       "class": "render",
@@ -688,12 +733,22 @@
     ".megafactory/registry/templates/executive-report.example.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:d3f726f537e09e045c0b485fb9e90a04d7cd2da316f725936bde6a3cefb95242"
+      "hash": "sha256:392f8e5140c81b95e6b78328df2fc1607dcd437cc0c2b8867f788f57a9c09690"
+    },
+    ".megafactory/registry/templates/governance-review.example.json": {
+      "class": "render",
+      "versioned": true,
+      "hash": "sha256:b0d2eb500af0dea5bd3012a7b26351cd0a2dc86cbda6b5038865c90a261fde58"
     },
     ".megafactory/registry/templates/handoff.md": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:87cb53bab1dac4ca5da45088bcc228d1ba988e11ee9c89dc601ef6dcde76e2b9"
+      "hash": "sha256:f92f0050a6cc626c02893210d44e3820a6bae05f0a8710b2ae31284c365348cb"
+    },
+    ".megafactory/registry/templates/improvement-scope.example.json": {
+      "class": "render",
+      "versioned": true,
+      "hash": "sha256:1f9366b5e96fdf4a5b9ee84657c0d41cc133d52240db52283d12b117ff363170"
     },
     ".megafactory/registry/templates/incident-record.example.json": {
       "class": "render",
@@ -723,7 +778,7 @@
     ".megafactory/registry/templates/privacy-opinion.example.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:d056d111d256ae5b8e586af27328d7c40e203a89753debfb2f28a4c648354d93"
+      "hash": "sha256:460418b011c19f07f57a14eb6c9586151419daf9dc3a503c5af012aa9e114cd6"
     },
     ".megafactory/registry/templates/problem-record.example.json": {
       "class": "render",
@@ -758,17 +813,22 @@
     ".megafactory/registry/templates/service-review.example.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:911c6fbb3f0e43dab5156307518ba54995c8f8e3944990fb25221481205b80ad"
+      "hash": "sha256:617e2e1f40c9b6cbd44bfb80ec239b709728b0742650e4986f04303a1decd203"
     },
     ".megafactory/registry/templates/slo-spec.example.json": {
       "class": "render",
       "versioned": true,
       "hash": "sha256:674923959e97f11bab92a4d9295674da9335118b0aa90616c359089caa87261a"
     },
+    ".megafactory/registry/templates/specialist-review.example.json": {
+      "class": "render",
+      "versioned": true,
+      "hash": "sha256:252e40b32124a2f98e700a1711068d87f7efc5df6b03574d84c7a2e0549cd5d5"
+    },
     ".megafactory/registry/templates/support-diagnosis.example.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:f00b6c8f05b7181b150ce70ff0fc69eedad68d575302b9c9a0770ad878ac3087"
+      "hash": "sha256:9591f64a7af9d9d891131663b9a7ceb44840c2555ffab8028c93b8e0e96d634e"
     },
     ".megafactory/registry/templates/system-context.example.md": {
       "class": "render",
@@ -778,7 +838,7 @@
     ".megafactory/registry/templates/team-capacity-plan.example.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:204a01759d730cde9bcc7239e91df4f4d03c629a2f617b817fd998add8057323"
+      "hash": "sha256:468aa235c89e0b56862b5d928f01235d1f23b953e04763786fee1c38693e04f5"
     },
     ".megafactory/registry/templates/tech-debt-record.example.json": {
       "class": "render",
@@ -788,18 +848,34 @@
     ".megafactory/registry/templates/ticket-triage.example.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:80bb1166a40fb27577ce5628ba5fd34345be9bb2aa46f6fee79ee4192bab1dd0"
+      "hash": "sha256:c2b96db06630b0021f8ddb4081334af358cb7ea19a0762fc36ea6a1c587a377b"
     },
     ".megafactory/registry/tools.json": {
       "class": "render",
       "versioned": true,
-      "hash": "sha256:c0dfe7c9113943d03b8a3ad5caf1d2b9063a1a9f7df42b37de8ccc9fbfbfd8e6"
+      "hash": "sha256:9819b0c6440c4e7f086d4a4453890b0c38ba91c6ea5d3262ef97f5a6ebe307f8"
     },
-    ".megafactory/views/kits/architecture.md": {
+    ".megafactory/views/kits/customer.md": {
       "class": "render",
       "versioned": false
     },
     ".megafactory/views/kits/engineering.md": {
+      "class": "render",
+      "versioned": false
+    },
+    ".megafactory/views/kits/finance.md": {
+      "class": "render",
+      "versioned": false
+    },
+    ".megafactory/views/kits/growth.md": {
+      "class": "render",
+      "versioned": false
+    },
+    ".megafactory/views/kits/legal.md": {
+      "class": "render",
+      "versioned": false
+    },
+    ".megafactory/views/kits/meta-factory.md": {
       "class": "render",
       "versioned": false
     },
@@ -811,15 +887,15 @@
       "class": "render",
       "versioned": false
     },
-    ".megafactory/views/kits/platform.md": {
-      "class": "render",
-      "versioned": false
-    },
     ".megafactory/views/kits/product.md": {
       "class": "render",
       "versioned": false
     },
     ".megafactory/views/kits/quality.md": {
+      "class": "render",
+      "versioned": false
+    },
+    ".megafactory/views/kits/science-privacy.md": {
       "class": "render",
       "versioned": false
     },
@@ -856,7 +932,7 @@
       "hash": "sha256:e5ec0a295775e73c609494b98e0ff3cab6911097ee755a7bcb8e9f465edb6b49"
     },
     "AGENTS.md": {
-      "hash": "sha256:af3351837f7d2d6188d1143993d5f57311f88d3b0af4daff2b8080fb65f52d42"
+      "hash": "sha256:244f39e5280ba00c593d4880ded0bddecd470b8f7523384bab33870c41751fc1"
     }
   },
   "link": {

@@ -42,6 +42,7 @@ function reasonOf(dir, project, platform) {
   return inside(real, proj, platform) || inside(proj, real, platform) ? 'overlaps-project' : null;
 }
 
+const stopsOnMissingLocal = (/** @type {string} */ mf) => { const f = pick(json(join(mf, 'registry', 'project.json')), 'factory'); const m = /^(\d+)\.(\d+)(?:\.(\d+))?$/.exec(String(pick(f, 'compat') ?? '')); const opt = pick(f, 'compatOptIn'); return (Array.isArray(opt) && opt.includes('local-home-missing-stops')) || (m !== null && [Number(m[1]), Number(m[2]), Number(m[3] ?? 0)].reduce((c, n, i) => c || Math.sign(n - [1, 0, 2][i]), 0) >= 0); }; // MF-10 desde el nivel 1.0.2 (factory.compat, compat.mjs); sin campo salta a la fuente siguiente
 /**
  * Resolución mínima de la central (fuentes 1-6: --mf-home, MF_HOME, local.json, perfil, hermano y usuario).
  * @param {{projectRoot:string, flag?:string|null, env?:Record<string, string|undefined>, platform?:string, userHome?:string, cwd?:string}} i
@@ -72,7 +73,7 @@ export function resolveHomeMinimal(i) {
     const dir = resolve(i.projectRoot, value);
     const reason = reasonOf(dir, i.projectRoot, platform);
     if (!reason) return { home: realpathSync(dir), source, skips, error: null };
-    if (reason === 'missing' && source === 'local') return { home: null, source, skips, error: 'invalid:local:missing' }; // MF-10
+    if (reason === 'missing' && source === 'local' && stopsOnMissingLocal(mf)) return { home: null, source, skips, error: 'invalid:local:missing' }; // MF-10
     skips.push(`${source}:${reason}`);
   }
   return { home: null, source: null, skips, error: 'not-found' };

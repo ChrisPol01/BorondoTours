@@ -3,14 +3,14 @@
   "packs": [
     {
       "id": "core",
-      "version": "1.0.0",
+      "version": "1.0.4",
       "title": "Núcleo de la fábrica",
       "status": "stable",
       "dependsOn": []
     },
     {
       "id": "web-app",
-      "version": "1.0.0",
+      "version": "1.0.4",
       "title": "Aplicación web",
       "status": "stable",
       "dependsOn": [
@@ -19,7 +19,7 @@
     },
     {
       "id": "ops-day2",
-      "version": "1.0.0",
+      "version": "1.0.4",
       "title": "Operación día 2",
       "status": "stable",
       "dependsOn": [

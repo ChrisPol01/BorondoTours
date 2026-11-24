@@ -2,8 +2,8 @@
 role: business-analyst
 agent: sdlc-business-analyst
 feature: b2c-funcional-con-datos-simulados-y
-updatedAt: 2026-10-24T13:20:00.000Z
-lastEventId: (ver events.jsonl, publicacion edge-cases@v3)
+updatedAt: 2026-11-19T22:12:49.314Z
+lastEventId: evt_91a23391-2dbe-44f0-9a00-3915e6a64fd6
 ---
 
 ## Estado

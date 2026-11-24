@@ -6,18 +6,15 @@
     ],
     "artifact-reviewer": [],
     "product-manager": [
-      "mcp-obsidian"
+      "figma-bridge"
     ],
-    "business-analyst": [
-      "mcp-obsidian"
-    ],
-    "compliance-officer": [
-      "power-saas-builder-aws-knowledge-mcp-server"
-    ],
+    "business-analyst": [],
+    "compliance-officer": [],
     "solutions-architect": [
       "power-saas-builder-aws-knowledge-mcp-server",
       "power-cloud-architect-context7",
-      "power-cloud-architect-awspricing"
+      "power-cloud-architect-awspricing",
+      "mf-github"
     ],
     "security-architect": [
       "power-saas-builder-aws-knowledge-mcp-server"
@@ -27,9 +24,7 @@
       "mf-github"
     ],
     "peer-reviewer": [
-      "mf-github",
-      "power-saas-builder-playwright",
-      "mf-chrome-devtools"
+      "mf-github"
     ],
     "tech-writer": [
       "mcp-obsidian",
@@ -41,48 +36,52 @@
     "release-manager": [
       "power-saas-builder-aws-knowledge-mcp-server",
       "power-saas-builder-awslabs.aws-serverless-mcp",
-      "mf-github",
-      "power-cloud-architect-awspricing"
+      "mf-github"
     ],
     "engineering-manager": [
       "mf-github",
-      "mf-pagerduty",
-      "power-cloud-architect-context7"
+      "mf-pagerduty"
     ],
     "dpo": [
-      "power-saas-builder-aws-knowledge-mcp-server"
+      "mf-github"
     ],
-    "cto": [],
-    "product-lead": [
-      "mcp-obsidian"
+    "cto": [
+      "mf-github"
     ],
-    "security-lead": [
-      "power-saas-builder-aws-knowledge-mcp-server"
+    "cpo": [],
+    "vp-qa": [
+      "mf-github"
     ],
-    "architecture-lead": [
-      "power-cloud-architect-context7",
-      "power-saas-builder-aws-knowledge-mcp-server"
+    "clo": [],
+    "ciso": [],
+    "cso": [],
+    "meta-prompt-architect": [
+      "mf-github"
     ],
-    "quality-lead": [
-      "power-saas-builder-playwright",
-      "mf-chrome-devtools"
+    "evalops-engineer": [
+      "mf-github"
     ],
-    "platform-lead": [
-      "power-cloud-architect-awspricing"
+    "token-economics-engineer": [
+      "mf-github"
     ],
-    "engineering-lead": [
-      "power-cloud-architect-context7"
+    "workflow-decomposer": [
+      "mf-github"
+    ],
+    "agent-tooling-integrator": [
+      "mf-github"
     ],
     "api-contract": [
       "power-cloud-architect-context7",
       "power-postman-postman",
-      "power-saas-builder-aws-knowledge-mcp-server"
+      "mf-github"
     ],
     "data-modeler": [
       "power-cloud-architect-context7",
-      "power-saas-builder-aws-knowledge-mcp-server"
+      "mf-github"
     ],
-    "domain-rules": [],
+    "domain-rules": [
+      "mf-github"
+    ],
     "integrations": [
       "power-cloud-architect-context7",
       "power-saas-builder-aws-knowledge-mcp-server",
@@ -90,39 +89,34 @@
     ],
     "backend": [
       "power-cloud-architect-context7",
-      "power-saas-builder-awslabs.aws-serverless-mcp"
+      "power-saas-builder-awslabs.aws-serverless-mcp",
+      "mf-github"
     ],
     "frontend": [
       "power-cloud-architect-context7",
-      "power-saas-builder-playwright",
-      "figma-bridge",
-      "mf-chrome-devtools"
+      "mf-chrome-devtools",
+      "mf-github",
+      "figma-bridge"
     ],
     "uiux-a11y": [
-      "figma-bridge",
       "power-saas-builder-playwright",
       "mf-chrome-devtools",
-      "power-cloud-architect-context7"
+      "mf-github",
+      "figma-bridge"
     ],
-    "content-seo": [
-      "power-saas-builder-playwright",
-      "mf-chrome-devtools",
-      "power-cloud-architect-context7"
-    ],
+    "content-seo": [],
     "qa-e2e": [
-      "power-saas-builder-playwright",
-      "mf-chrome-devtools"
+      "mf-chrome-devtools",
+      "mf-github"
     ],
     "devops-sre": [
       "power-saas-builder-awslabs.aws-serverless-mcp",
       "power-cloud-architect-awsapi",
       "mf-kubernetes",
       "mf-aws-appsignals",
-      "power-cloud-architect-awspricing"
+      "mf-github"
     ],
-    "dba-prod": [
-      "power-cloud-architect-awspricing"
-    ],
+    "dba-prod": [],
     "sre": [
       "mf-pagerduty",
       "mf-aws-appsignals"
@@ -134,19 +128,16 @@
     "service-owner": [
       "mf-aws-appsignals"
     ],
-    "service-desk-l1": [
-      "mf-aws-appsignals"
-    ],
+    "service-desk-l1": [],
     "support-l2": [
-      "mf-aws-appsignals"
+      "mf-github"
     ],
     "on-call-engineer": [
       "mf-pagerduty",
       "mf-aws-appsignals"
     ],
-    "operations-lead": [
-      "mf-aws-appsignals"
-    ]
+    "coo": [],
+    "cco": []
   },
   "capabilities": {
     "conductor": {
@@ -156,20 +147,12 @@
     },
     "artifact-reviewer": {},
     "product-manager": {
-      "m:obsidian": [
-        "mcp-obsidian"
+      "m:figma": [
+        "figma-bridge"
       ]
     },
-    "business-analyst": {
-      "m:obsidian": [
-        "mcp-obsidian"
-      ]
-    },
-    "compliance-officer": {
-      "m:aws-docs": [
-        "power-saas-builder-aws-knowledge-mcp-server"
-      ]
-    },
+    "business-analyst": {},
+    "compliance-officer": {},
     "solutions-architect": {
       "m:aws-docs": [
         "power-saas-builder-aws-knowledge-mcp-server"
@@ -179,6 +162,9 @@
       ],
       "m:aws-billing-pricing": [
         "power-cloud-architect-awspricing"
+      ],
+      "m:repo": [
+        "mf-github"
       ]
     },
     "security-architect": {
@@ -195,14 +181,11 @@
       ]
     },
     "peer-reviewer": {
-      "m:github": [
+      "m:repo": [
         "mf-github"
       ],
-      "m:playwright": [
-        "power-saas-builder-playwright"
-      ],
-      "m:browser-devtools": [
-        "mf-chrome-devtools"
+      "m:pr-review": [
+        "mf-github"
       ]
     },
     "tech-writer": {
@@ -227,9 +210,6 @@
       ],
       "m:github": [
         "mf-github"
-      ],
-      "m:aws-billing-pricing": [
-        "power-cloud-architect-awspricing"
       ]
     },
     "engineering-manager": {
@@ -238,51 +218,53 @@
       ],
       "m:pagerduty": [
         "mf-pagerduty"
-      ],
-      "m:library-docs": [
-        "power-cloud-architect-context7"
       ]
     },
     "dpo": {
-      "m:aws-docs": [
-        "power-saas-builder-aws-knowledge-mcp-server"
+      "m:repo": [
+        "mf-github"
       ]
     },
-    "cto": {},
-    "product-lead": {
-      "m:obsidian": [
-        "mcp-obsidian"
+    "cto": {
+      "m:repo": [
+        "mf-github"
       ]
     },
-    "security-lead": {
-      "m:aws-docs": [
-        "power-saas-builder-aws-knowledge-mcp-server"
+    "cpo": {},
+    "vp-qa": {
+      "m:repo": [
+        "mf-github"
       ]
     },
-    "architecture-lead": {
-      "m:library-docs": [
-        "power-cloud-architect-context7"
+    "clo": {},
+    "ciso": {},
+    "cso": {},
+    "meta-prompt-architect": {
+      "m:repo": [
+        "mf-github"
+      ]
+    },
+    "evalops-engineer": {
+      "m:repo": [
+        "mf-github"
+      ]
+    },
+    "token-economics-engineer": {
+      "m:repo": [
+        "mf-github"
+      ]
+    },
+    "workflow-decomposer": {
+      "m:repo": [
+        "mf-github"
+      ]
+    },
+    "agent-tooling-integrator": {
+      "m:repo": [
+        "mf-github"
       ],
-      "m:aws-docs": [
-        "power-saas-builder-aws-knowledge-mcp-server"
-      ]
-    },
-    "quality-lead": {
-      "m:playwright": [
-        "power-saas-builder-playwright"
-      ],
-      "m:browser-devtools": [
-        "mf-chrome-devtools"
-      ]
-    },
-    "platform-lead": {
-      "m:aws-billing-pricing": [
-        "power-cloud-architect-awspricing"
-      ]
-    },
-    "engineering-lead": {
-      "m:library-docs": [
-        "power-cloud-architect-context7"
+      "m:pr-review": [
+        "mf-github"
       ]
     },
     "api-contract": {
@@ -292,19 +274,23 @@
       "m:postman": [
         "power-postman-postman"
       ],
-      "m:aws-docs": [
-        "power-saas-builder-aws-knowledge-mcp-server"
+      "m:repo": [
+        "mf-github"
       ]
     },
     "data-modeler": {
       "m:library-docs": [
         "power-cloud-architect-context7"
       ],
-      "m:aws-docs": [
-        "power-saas-builder-aws-knowledge-mcp-server"
+      "m:repo": [
+        "mf-github"
       ]
     },
-    "domain-rules": {},
+    "domain-rules": {
+      "m:repo": [
+        "mf-github"
+      ]
+    },
     "integrations": {
       "m:library-docs": [
         "power-cloud-architect-context7"
@@ -322,53 +308,46 @@
       ],
       "m:aws-serverless": [
         "power-saas-builder-awslabs.aws-serverless-mcp"
+      ],
+      "m:repo": [
+        "mf-github"
       ]
     },
     "frontend": {
       "m:library-docs": [
         "power-cloud-architect-context7"
       ],
-      "m:playwright": [
-        "power-saas-builder-playwright"
+      "m:browser-devtools": [
+        "mf-chrome-devtools"
+      ],
+      "m:repo": [
+        "mf-github"
       ],
       "m:figma": [
         "figma-bridge"
-      ],
-      "m:browser-devtools": [
-        "mf-chrome-devtools"
       ]
     },
     "uiux-a11y": {
+      "m:playwright": [
+        "power-saas-builder-playwright"
+      ],
+      "m:browser-devtools": [
+        "mf-chrome-devtools"
+      ],
+      "m:repo": [
+        "mf-github"
+      ],
       "m:figma": [
         "figma-bridge"
-      ],
-      "m:playwright": [
-        "power-saas-builder-playwright"
-      ],
-      "m:browser-devtools": [
-        "mf-chrome-devtools"
-      ],
-      "m:library-docs": [
-        "power-cloud-architect-context7"
       ]
     },
-    "content-seo": {
-      "m:playwright": [
-        "power-saas-builder-playwright"
-      ],
-      "m:browser-devtools": [
-        "mf-chrome-devtools"
-      ],
-      "m:library-docs": [
-        "power-cloud-architect-context7"
-      ]
-    },
+    "content-seo": {},
     "qa-e2e": {
-      "m:playwright": [
-        "power-saas-builder-playwright"
-      ],
       "m:browser-devtools": [
         "mf-chrome-devtools"
+      ],
+      "m:repo": [
+        "mf-github"
       ]
     },
     "devops-sre": {
@@ -378,21 +357,17 @@
       "m:aws-api": [
         "power-cloud-architect-awsapi"
       ],
-      "m:kubernetes": [
+      "m:k8s-cluster": [
         "mf-kubernetes"
       ],
       "m:aws-appsignals": [
         "mf-aws-appsignals"
       ],
-      "m:aws-billing-pricing": [
-        "power-cloud-architect-awspricing"
+      "m:repo": [
+        "mf-github"
       ]
     },
-    "dba-prod": {
-      "m:aws-billing-pricing": [
-        "power-cloud-architect-awspricing"
-      ]
-    },
+    "dba-prod": {},
     "sre": {
       "m:pagerduty": [
         "mf-pagerduty"
@@ -414,14 +389,10 @@
         "mf-aws-appsignals"
       ]
     },
-    "service-desk-l1": {
-      "m:aws-appsignals": [
-        "mf-aws-appsignals"
-      ]
-    },
+    "service-desk-l1": {},
     "support-l2": {
-      "m:aws-appsignals": [
-        "mf-aws-appsignals"
+      "m:repo": [
+        "mf-github"
       ]
     },
     "on-call-engineer": {
@@ -432,11 +403,8 @@
         "mf-aws-appsignals"
       ]
     },
-    "operations-lead": {
-      "m:aws-appsignals": [
-        "mf-aws-appsignals"
-      ]
-    }
+    "coo": {},
+    "cco": {}
   },
   "policies": {
     "figma-bridge": {
@@ -748,206 +716,33 @@
       "MF_PAGERDUTY_USER_API_KEY"
     ]
   },
-  "inherited": {
-    "peer-reviewer": [
-      "power-saas-builder-playwright",
-      "mf-chrome-devtools"
-    ],
-    "release-manager": [
-      "power-cloud-architect-awspricing"
-    ],
-    "engineering-manager": [
-      "power-cloud-architect-context7"
-    ],
-    "dpo": [
-      "power-saas-builder-aws-knowledge-mcp-server"
-    ],
-    "product-lead": [
-      "mcp-obsidian"
-    ],
-    "security-lead": [
-      "power-saas-builder-aws-knowledge-mcp-server"
-    ],
-    "architecture-lead": [
-      "power-cloud-architect-context7",
-      "power-saas-builder-aws-knowledge-mcp-server"
-    ],
-    "quality-lead": [
-      "power-saas-builder-playwright",
-      "mf-chrome-devtools"
-    ],
-    "platform-lead": [
-      "power-cloud-architect-awspricing"
-    ],
-    "engineering-lead": [
-      "power-cloud-architect-context7"
-    ],
-    "api-contract": [
-      "power-saas-builder-aws-knowledge-mcp-server"
-    ],
-    "data-modeler": [
-      "power-saas-builder-aws-knowledge-mcp-server"
-    ],
-    "uiux-a11y": [
-      "power-cloud-architect-context7"
-    ],
-    "content-seo": [
-      "power-cloud-architect-context7"
-    ],
-    "devops-sre": [
-      "power-cloud-architect-awspricing"
-    ],
-    "dba-prod": [
-      "power-cloud-architect-awspricing"
-    ],
-    "service-owner": [
-      "mf-aws-appsignals"
-    ],
-    "service-desk-l1": [
-      "mf-aws-appsignals"
-    ],
-    "support-l2": [
-      "mf-aws-appsignals"
-    ],
-    "on-call-engineer": [
-      "mf-aws-appsignals"
-    ],
-    "operations-lead": [
-      "mf-aws-appsignals"
-    ]
-  },
+  "inherited": {},
   "areas": {
-    "architecture": {
+    "meta-factory": {
       "capabilities": [
-        "m:library-docs",
-        "m:aws-docs"
+        "m:repo",
+        "m:issue-tracker",
+        "m:team-chat",
+        "m:metrics",
+        "m:bi-analytics",
+        "m:tabular-ops"
       ],
       "selectors": [
-        "power-cloud-architect-context7",
-        "power-saas-builder-aws-knowledge-mcp-server"
-      ],
-      "servers": [],
-      "env": {},
-      "roles": [
-        "api-contract",
-        "data-modeler",
-        "integrations",
-        "solutions-architect"
-      ]
-    },
-    "engineering": {
-      "capabilities": [
-        "m:library-docs"
-      ],
-      "selectors": [
-        "power-cloud-architect-context7"
-      ],
-      "servers": [],
-      "env": {},
-      "roles": [
-        "backend",
-        "content-seo",
-        "engineering-manager",
-        "frontend",
-        "uiux-a11y"
-      ]
-    },
-    "operations": {
-      "capabilities": [
-        "m:cloudwatch",
-        "m:aws-appsignals"
-      ],
-      "selectors": [
-        "mf-aws-appsignals"
+        "mf-github"
       ],
       "servers": [
-        "mf-aws-appsignals"
+        "mf-github"
       ],
       "env": {
-        "mf-aws-appsignals": [
-          "MF_AWS_PROFILE_READONLY",
-          "MF_AWS_REGION"
+        "mf-github": [
+          "MF_GITHUB_TOKEN"
         ]
       },
       "roles": [
-        "on-call-engineer",
-        "resilience-engineer",
-        "service-desk-l1",
-        "service-owner",
-        "sre",
-        "support-l2"
-      ]
-    },
-    "platform": {
-      "capabilities": [
-        "m:aws-iac",
-        "m:cloudwatch",
-        "m:aws-billing-pricing"
-      ],
-      "selectors": [
-        "power-cloud-architect-awspricing"
-      ],
-      "servers": [],
-      "env": {},
-      "roles": [
-        "dba-prod",
-        "devops-sre",
-        "finops",
-        "release-manager"
-      ]
-    },
-    "product": {
-      "capabilities": [
-        "m:obsidian",
-        "m:issue-tracker"
-      ],
-      "selectors": [
-        "mcp-obsidian"
-      ],
-      "servers": [],
-      "env": {},
-      "roles": [
-        "business-analyst",
-        "product-manager",
-        "tech-writer"
-      ]
-    },
-    "quality": {
-      "capabilities": [
-        "m:playwright",
-        "m:browser-devtools"
-      ],
-      "selectors": [
-        "power-saas-builder-playwright",
-        "mf-chrome-devtools"
-      ],
-      "servers": [
-        "mf-chrome-devtools"
-      ],
-      "env": {
-        "mf-chrome-devtools": []
-      },
-      "roles": [
-        "peer-reviewer",
-        "qa-e2e"
-      ]
-    },
-    "security": {
-      "capabilities": [
-        "m:aws-docs",
-        "m:cloud-posture",
-        "m:aws-wa-security"
-      ],
-      "selectors": [
-        "power-saas-builder-aws-knowledge-mcp-server"
-      ],
-      "servers": [],
-      "env": {},
-      "roles": [
-        "compliance-officer",
-        "dpo",
-        "security-architect",
-        "security-auditor"
+        "agent-tooling-integrator",
+        "evalops-engineer",
+        "token-economics-engineer",
+        "workflow-decomposer"
       ]
     }
   }

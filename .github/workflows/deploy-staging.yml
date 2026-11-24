@@ -1,8 +1,13 @@
-name: Deploy — Staging
+name: Deploy — Staging (obsoleto)
 
+# NOTA: este workflow está obsoleto. Usa bun y Railway/Render, descartados por ADR-011.
+# Por ahora el despliegue real del B2C es manual a S3 + CloudFront (ver docs/06-Operaciones/).
+# Se conserva solo con disparo manual hasta definir el pipeline de despliegue (#13, #15).
 on:
-  push:
-    branches: [staging]
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   deploy-staging:
@@ -32,15 +37,3 @@ jobs:
         # run: railway up --service api
         # env:
         #   RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-
-      - name: Notify deploy
-        uses: actions/github-script@v7
-        if: always()
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '🚀 Deploy a **staging** completado. Commit: `${{ github.sha }}`'
-            }).catch(() => {})

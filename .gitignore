@@ -155,3 +155,5 @@ tmp-*.json
 /.megafactory/bus/**/.lock
 /.megafactory/**/*.tmp-*
 # <<< megafactory
+# Astro: tipos generados por astro sync/check/build
+.astro/

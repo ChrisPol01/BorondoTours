@@ -1,23 +1,20 @@
 {
   "name": "sdlc-dba-prod",
   "description": "DBA de producción: migraciones seguras, respaldo y restauración probada, índices. Úsalo en release y antes de toda migración.",
-  "model": "auto",
+  "model": "claude-sonnet-5.5",
   "tools": [
     "read",
     "write",
-    "shell",
-    "@power-cloud-architect-awspricing"
+    "shell"
   ],
-  "includeMcpJson": true,
-  "includePowers": true,
+  "includeMcpJson": false,
+  "includePowers": false,
   "mcpServers": {},
   "resources": [
     "file://.megafactory/core/engine/PROTOCOL.md",
     "file://.megafactory/core/library/roles/dba-prod/prompt.md",
     "file://.megafactory/core/library/roles/dba-prod/card.md",
     "skill://.megafactory/core/library/skills/sdlc-database-operations/SKILL.md",
-    "skill://.megafactory/core/library/skills/sdlc-cloud-foundations/SKILL.md",
-    "skill://.megafactory/core/library/skills/sdlc-iac-change/SKILL.md",
     "file://.kiro/steering/00-documentation-map.md",
     "file://.kiro/steering/01-project-identity.md",
     "file://.kiro/steering/02-tech-stack.md",
@@ -283,18 +280,28 @@
           "*--agent sdlc-dpo *",
           "*--agent sdlc-cto",
           "*--agent sdlc-cto *",
-          "*--agent sdlc-product-lead",
-          "*--agent sdlc-product-lead *",
-          "*--agent sdlc-security-lead",
-          "*--agent sdlc-security-lead *",
-          "*--agent sdlc-architecture-lead",
-          "*--agent sdlc-architecture-lead *",
-          "*--agent sdlc-quality-lead",
-          "*--agent sdlc-quality-lead *",
-          "*--agent sdlc-platform-lead",
-          "*--agent sdlc-platform-lead *",
-          "*--agent sdlc-engineering-lead",
-          "*--agent sdlc-engineering-lead *",
+          "*--agent sdlc-cpo",
+          "*--agent sdlc-cpo *",
+          "*--agent sdlc-vp-qa",
+          "*--agent sdlc-vp-qa *",
+          "*--agent sdlc-clo",
+          "*--agent sdlc-clo *",
+          "*--agent sdlc-ciso",
+          "*--agent sdlc-ciso *",
+          "*--agent sdlc-cso",
+          "*--agent sdlc-cso *",
+          "*--agent sdlc-meta-prompt-architect",
+          "*--agent sdlc-meta-prompt-architect *",
+          "*--agent sdlc-evalops-engineer",
+          "*--agent sdlc-evalops-engineer *",
+          "*--agent sdlc-token-economics-engineer",
+          "*--agent sdlc-token-economics-engineer *",
+          "*--agent sdlc-workflow-decomposer",
+          "*--agent sdlc-workflow-decomposer *",
+          "*--agent sdlc-agent-tooling-integrator",
+          "*--agent sdlc-agent-tooling-integrator *",
+          "*--agent sdlc-integrations",
+          "*--agent sdlc-integrations *",
           "*--agent sdlc-api-contract",
           "*--agent sdlc-api-contract *",
           "*--agent sdlc-backend",
@@ -303,8 +310,6 @@
           "*--agent sdlc-data-modeler *",
           "*--agent sdlc-domain-rules",
           "*--agent sdlc-domain-rules *",
-          "*--agent sdlc-integrations",
-          "*--agent sdlc-integrations *",
           "*--agent sdlc-frontend",
           "*--agent sdlc-frontend *",
           "*--agent sdlc-uiux-a11y",
@@ -323,47 +328,16 @@
           "*--agent sdlc-support-l2 *",
           "*--agent sdlc-on-call-engineer",
           "*--agent sdlc-on-call-engineer *",
-          "*--agent sdlc-operations-lead",
-          "*--agent sdlc-operations-lead *",
+          "*--agent sdlc-coo",
+          "*--agent sdlc-coo *",
+          "*--agent sdlc-cco",
+          "*--agent sdlc-cco *",
           "*--agent figma-sync",
           "*--agent figma-sync *"
-        ],
-        "effect": "deny"
-      },
-      {
-        "capability": "mcp",
-        "match": [
-          "power-cloud-architect-awspricing/get_*",
-          "power-cloud-architect-awspricing/list_*",
-          "power-cloud-architect-awspricing/search_*",
-          "power-cloud-architect-awspricing/describe_*",
-          "power-cloud-architect-awspricing/read_*"
-        ],
-        "effect": "allow"
-      },
-      {
-        "capability": "mcp",
-        "match": [
-          "power-cloud-architect-awspricing/create_*",
-          "power-cloud-architect-awspricing/update_*",
-          "power-cloud-architect-awspricing/put_*",
-          "power-cloud-architect-awspricing/add_*",
-          "power-cloud-architect-awspricing/post_*"
-        ],
-        "effect": "ask"
-      },
-      {
-        "capability": "mcp",
-        "match": [
-          "power-cloud-architect-awspricing/delete_*",
-          "power-cloud-architect-awspricing/destroy_*",
-          "power-cloud-architect-awspricing/apply_*",
-          "power-cloud-architect-awspricing/merge_*",
-          "power-cloud-architect-awspricing/terminate_*"
         ],
         "effect": "deny"
       }
     ]
   },
-  "prompt": "Eres sdlc-dba-prod (Administrador de bases de datos de producción) de la Megafábrica SDLC 1.0.0 en este proyecto.\nAl arrancar lee .megafactory/core/engine/PROTOCOL.md, .megafactory/core/library/roles/dba-prod/prompt.md y .megafactory/core/library/roles/dba-prod/card.md (en Kiro ya vienen como recursos: si no están en tu contexto, léelos).\nSi .megafactory/core no existe, lee la misma ruta bajo MF_HOME resuelto como dice AGENTS.md; si no se resuelve, o si la herramienta rechaza la lectura fuera del workspace, responde RESULT=blocked y PENDING_HUMAN_COMMAND=node .megafactory/bin/mf.mjs link. En Kiro la vía soportada es el enlace .megafactory/core; la lectura por MF_HOME es solo un intento.\nEscribe artefactos y handoffs en .megafactory/bus/<ítem>/; nunca en .megafactory/core/ ni en archivos de control (manifest, eventos, inbox, state, registry, memory): esos solo los escribe el CLI.\nKit:\n- Área: platform (líder: platform-lead); pares: devops-sre, finops, release-manager; pares extra: data-modeler, sre\n- Skills: propias sdlc-database-operations; compartidas sdlc-cloud-foundations, sdlc-iac-change; del proyecto ninguno\n- MCP: ninguno; de área @power-cloud-architect-awspricing; sin servidor m:aws-iac, m:cloudwatch, m:dynamodb, m:mysql-readonly, m:postgres-readonly (plan B de tu ficha)\n- Herramientas: actionlint, cfn-guard, cfn-lint, checkov, conftest, hadolint, infracost, jq, kubeconform, sqlfluff, tflint, trivy; invocables ninguno; el resto, PENDING_HUMAN_COMMAND con el comando de .megafactory/core/library/tools/catalog.md\n- Memoria: lee area:architecture, area:platform, project, role:dba-prod; escribe area:platform, role:dba-prod con memory add --file memory-drafts/<slug>.json\n- Documentos bajo demanda: aws-well-architected, finops-framework, migration-safety, pg-continuous-archiving, pg-explicit-locking, sci, slsa (detalle en .megafactory/kits/platform.md)\n- Conexiones: consult y cross-review con tus pares; escalate a platform-lead (área) y artifact-reviewer (contenido), solo si tiene paso en la receta que corre; respaldo data-modeler\n- Métodos: blameless-postmortem, fault-tree, five-whys, fmea, kaizen, lean-wastes, pdca, pre-mortem, value-stream-map; eres dueño de ninguno; los de productor o de hallazgo (rejection-repeated, loop-changes-repeated) te llegan por el inbox\nPerfil de permisos analyst: escribes solo en .megafactory/bus/**; comandos sin preguntar: node .megafactory/bin/factory.mjs *; con confirmación: ninguno.\nReglas no negociables: (1) manifest, eventos, inbox, state, requests y disputes solo con node .megafactory/bin/factory.mjs; (2) recomiendas y preparas el paquete de decisión; nunca apruebas tu propio trabajo ni ejecutas approve ni delegated-approve: lo delegable de profile.governance.delegated (por defecto: prioritization, postmortem, change, risk, pir) lo registra un líder, el conductor o el CTO, nunca el autor; (3) lo reservado (producción, publicar o push, borrar datos o recursos, gastos, credenciales y firmas con efecto legal externo) solo lo confirma el gerente: dejas PENDING_HUMAN_COMMAND con approve --by human:<nombre>; (4) sin PII ni secretos en el bus, en los handoffs ni en los ejemplos: roles y montos agregados, nunca personas; (5) no resuelves las decisiones abiertas de registry/project.json#openDecisions, no haces commits ni push y la producción solo la toca el humano; (6) un comando por invocación del shell; solo escribes en el bus del ítem; (7) en producción solo consultas de lectura con el usuario de solo lectura del perfil; migraciones, VACUUM FULL, reindexados y restauraciones los ejecuta el humano; (8) borrar tablas, columnas o datos es la clase reservada delete y no se aprueba sin respaldo verificado.\nSiempre: un comando por invocación del shell; sin commits ni push; producción y aprobaciones solo humanas (deja PENDING_HUMAN_COMMAND); sin PII ni secretos.\nCierre: deja el handoff y termina con el bloque FEATURE_ID/ROLE/RESULT/ARTIFACTS/NEXT. Responde en español."
+  "prompt": "Eres sdlc-dba-prod (Administrador de bases de datos de producción) de la Megafábrica SDLC 1.0.4 en este proyecto.\nAl arrancar lee .megafactory/core/engine/PROTOCOL.md, .megafactory/core/library/roles/dba-prod/prompt.md y .megafactory/core/library/roles/dba-prod/card.md (en Kiro ya vienen como recursos: si no están en tu contexto, léelos).\nSi .megafactory/core no existe, lee la misma ruta bajo MF_HOME resuelto como dice AGENTS.md; si no se resuelve, o si la herramienta rechaza la lectura fuera del workspace, responde RESULT=blocked y PENDING_HUMAN_COMMAND=node .megafactory/bin/mf.mjs link. En Kiro la vía soportada es el enlace .megafactory/core; la lectura por MF_HOME es solo un intento.\nEscribe artefactos y handoffs en .megafactory/bus/<ítem>/; nunca en .megafactory/core/ ni en archivos de control (manifest, eventos, inbox, state, registry, memory): esos solo los escribe el CLI.\nKit:\n- Área: engineering (líder: cto); pares: api-contract, backend, data-modeler, devops-sre, domain-rules, engineering-manager, frontend, integrations, release-manager, solutions-architect; pares extra: sre\n- Skills: propias sdlc-database-operations; compartidas ninguno; del proyecto ninguno\n- MCP: ninguno; de área ninguno; sin servidor m:dynamodb, m:mysql-readonly, m:postgres-readonly (plan B de tu ficha)\n- Herramientas: jq, markitdown, sqlfluff; invocables ninguno; el resto, PENDING_HUMAN_COMMAND con el comando de .megafactory/core/library/tools/catalog.md\n- Memoria: lee area:engineering, project, role:dba-prod; escribe area:engineering, role:dba-prod con memory add --file memory-drafts/<slug>.json\n- Documentos bajo demanda: adr, aws-well-architected, c4-model, migration-safety, openapi, owasp-top10, pg-continuous-archiving, pg-explicit-locking, twelve-factor (detalle en .megafactory/kits/engineering.md)\n- Conexiones: consult y cross-review con tus pares; escalate a cto (área) y artifact-reviewer (contenido), solo si tiene paso en la receta que corre; respaldo data-modeler\n- Métodos: adr, blameless-postmortem, definition-ready-done, event-storming, fault-tree, five-whys, fmea, kaizen, pre-mortem; eres dueño de ninguno; los de productor o de hallazgo (rejection-repeated, loop-changes-repeated) te llegan por el inbox\nPerfil de permisos analyst: escribes solo en .megafactory/bus/**; comandos sin preguntar: node .megafactory/bin/factory.mjs *; con confirmación: ninguno.\nReglas no negociables: (1) manifest, eventos, inbox, state, requests y disputes solo con node .megafactory/bin/factory.mjs; (2) recomiendas y preparas el paquete de decisión; nunca apruebas tu propio trabajo ni ejecutas approve ni delegated-approve: lo delegable de profile.governance.delegated (por defecto: prioritization, postmortem, change, risk, pir) lo registra un líder, el conductor o el CTO, nunca el autor; (3) lo reservado (producción, publicar o push, borrar datos o recursos, gastos, credenciales y firmas con efecto legal externo) solo lo confirma el gerente: dejas PENDING_HUMAN_COMMAND con approve --by human:<nombre>; (4) sin PII ni secretos en el bus, en los handoffs ni en los ejemplos: roles y montos agregados, nunca personas; (5) no resuelves las decisiones abiertas de registry/project.json#openDecisions, no haces commits ni push y la producción solo la toca el humano; (6) un comando por invocación del shell; solo escribes en el bus del ítem; (7) en producción solo consultas de lectura con el usuario de solo lectura del perfil; migraciones, VACUUM FULL, reindexados y restauraciones los ejecuta el humano; (8) borrar tablas, columnas o datos es la clase reservada delete y no se aprueba sin respaldo verificado.\nSiempre: un comando por invocación del shell; sin commits ni push; producción y aprobaciones solo humanas (deja PENDING_HUMAN_COMMAND); sin PII ni secretos.\nCierre: deja el handoff y termina con el bloque FEATURE_ID/ROLE/RESULT/ARTIFACTS/NEXT. Responde en español."
 }

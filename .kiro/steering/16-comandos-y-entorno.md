@@ -13,5 +13,6 @@ Si difieren, manda el `package.json`. Mapa completo: `docs/04-Tech-Design/Mapa-R
 - Paquetes: `contracts` (lint, test, typecheck); `domain` (test, typecheck); `ui` (typecheck, test); `db` (generate, migrate, seed, typecheck).
 - Sin lint/typecheck/test: `erp` y `b2b` (puertos 3001/3002); `domain` sin lint; `db` sin test.
 - Variables: solo nombres en `.env.example`; nunca valores en docs ni logs; `.env` fuera de git.
-- CI: `ci.yml` usa bun y `packages/api` (no existe); docs y `*.md` en paths-ignore (#13).
+- CI: `ci.yml` con pnpm 9.15.0 y Node 22: `pnpm lint`, `pnpm typecheck`, `pnpm test` y build de `apps/*` (sin servicios, que usan `bun build`); docs y `*.md` en paths-ignore. `deploy-staging.yml` obsoleto (solo manual); despliegue B2C manual a S3/CloudFront.
+- Node 25+ local: los tests web con `localStorage` fallan por el Web Storage nativo; usar `NODE_OPTIONS=--no-experimental-webstorage` o Node 22.
 - Antes de terminar: `pnpm lint && pnpm typecheck && pnpm test`; en web, `test:e2e` cuando aplique.

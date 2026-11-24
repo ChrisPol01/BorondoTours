@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Revisión de gobierno de un agente de rol (GovernanceReview.<slug>.json; brief §14-§15, rama E4)",
+  "description": "Artefacto de decisión verificable de los agentes de gobierno: pregunta, criterios, hallazgos, opciones, recomendación y ruta de aprobación. authority=delegated solo para clases de profile.governance.delegated (la aprobación la registra otro agente con delegated-approve); authority=reserved para la lista fija del motor (producción, publicar, borrar, gasto, credenciales, legal): el agente solo prepara el paquete y la aprobación es humana. La coherencia clase-autoridad y que el productor no sea el aprobador se comprueban en código.",
+  "type": "object",
+  "required": ["feature", "role", "mode", "decisionClass", "authority", "question", "findings", "options", "recommendation", "route", "actions"],
+  "additionalProperties": false,
+  "properties": {
+    "feature": { "type": "string", "maxLength": 80 },
+    "role": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,40}$" },
+    "mode": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,40}$" },
+    "decisionClass": {
+      "enum": ["advice", "prioritization", "postmortem", "change", "risk", "pir", "production", "publish", "delete", "spend", "credentials", "legal"]
+    },
+    "authority": { "enum": ["advice", "delegated", "reserved"] },
+    "question": { "type": "string", "minLength": 10, "maxLength": 600 },
+    "scope": { "type": "string", "maxLength": 1000 },
+    "criteria": { "type": "array", "maxItems": 20, "items": { "type": "string", "maxLength": 300 } },
+    "findings": {
+      "type": "array",
+      "maxItems": 40,
+      "items": {
+        "type": "object",
+        "required": ["id", "statement", "severity"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Za-z0-9._-]{1,40}$" },
+          "statement": { "type": "string", "minLength": 5, "maxLength": 1500 },
+          "severity": { "enum": ["critical", "high", "medium", "low", "info"] },
+          "evidence": { "type": "string", "maxLength": 300 }
+        }
+      }
+    },
+    "options": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "required": ["id", "summary"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Za-z0-9._-]{1,20}$" },
+          "summary": { "type": "string", "minLength": 5, "maxLength": 600 },
+          "pros": { "type": "array", "maxItems": 8, "items": { "type": "string", "maxLength": 300 } },
+          "cons": { "type": "array", "maxItems": 8, "items": { "type": "string", "maxLength": 300 } },
+          "costNote": { "type": "string", "maxLength": 300 }
+        }
+      }
+    },
+    "recommendation": {
+      "type": "object",
+      "required": ["option", "rationale"],
+      "additionalProperties": false,
+      "properties": {
+        "option": { "type": "string", "pattern": "^[A-Za-z0-9._-]{1,20}$" },
+        "rationale": { "type": "string", "minLength": 10, "maxLength": 1500 },
+        "confidence": { "enum": ["low", "medium", "high"] }
+      }
+    },
+    "risks": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "required": ["id", "description", "likelihood", "impact", "treatment"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Za-z0-9._-]{1,40}$" },
+          "description": { "type": "string", "minLength": 5, "maxLength": 800 },
+          "likelihood": { "type": "integer", "minimum": 1, "maximum": 5 },
+          "impact": { "type": "integer", "minimum": 1, "maximum": 5 },
+          "treatment": { "enum": ["avoid", "mitigate", "transfer", "accept"] }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "required": ["path"],
+        "additionalProperties": false,
+        "properties": {
+          "path": { "type": "string", "maxLength": 200 },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+        }
+      }
+    },
+    "route": {
+      "type": "object",
+      "required": ["approver", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "approver": { "type": "string", "pattern": "^(agent|human):[a-z][a-z0-9-]{0,40}$" },
+        "status": { "enum": ["draft", "pending", "approved", "rejected", "escalated"] },
+        "requestId": { "type": "string", "maxLength": 60 }
+      }
+    },
+    "actions": {
+      "type": "array",
+      "maxItems": 20,
+      "items": { "$ref": "#/$defs/action" }
+    }
+  },
+  "$defs": {
+    "action": {
+      "title": "Acción que abre un ítem enlazado (§9.6)",
+      "description": "Mismo esquema de acción que los tipos fuente del carril govern; el dueño es siempre un rol agente.",
+      "type": "object",
+      "required": ["id", "title", "entryType", "owner", "due"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Za-z0-9._-]{1,40}$" },
+        "title": { "type": "string", "minLength": 3, "maxLength": 120, "pattern": "^[\\p{L}\\p{N} .,:()/_-]+$" },
+        "entryType": { "enum": ["feature", "change", "defect", "standard", "debt", "migration-wave", "audit-remediation", "decommission", "experiment", "problem"] },
+        "owner": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,40}$" },
+        "due": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+        "changeClassHint": { "enum": ["standard", "normal", "emergency"] }
+      }
+    }
+  }
+}

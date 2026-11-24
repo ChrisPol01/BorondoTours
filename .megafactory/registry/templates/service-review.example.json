@@ -60,8 +60,8 @@
     "A2 alerta temprana de latencia"
   ],
   "approvalPath": {
-    "approver": "agent:operations-lead",
-    "command": "node .megafactory/bin/factory.mjs delegated-approve --feature ejemplo-servicio --what postmortem:pagos --by agent:operations-lead --role operations-lead --agent sdlc-operations-lead"
+    "approver": "agent:coo",
+    "command": "node .megafactory/bin/factory.mjs delegated-approve --feature ejemplo-servicio --what postmortem:pagos --by agent:coo --role coo --agent sdlc-coo"
   },
   "actions": [
     {

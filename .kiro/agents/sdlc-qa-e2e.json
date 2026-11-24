@@ -1,16 +1,16 @@
 {
   "name": "sdlc-qa-e2e",
   "description": "QA e2e: un test Playwright por caso borde con @EC-xxx y axe-core (quality-report:qa). Úsalo en quality-gates.",
-  "model": "auto",
+  "model": "claude-sonnet-5.5",
   "tools": [
     "read",
     "write",
     "shell",
-    "@power-saas-builder-playwright",
-    "@mf-chrome-devtools"
+    "@mf-chrome-devtools",
+    "@mf-github"
   ],
   "includeMcpJson": true,
-  "includePowers": true,
+  "includePowers": false,
   "mcpServers": {},
   "resources": [
     "file://.megafactory/core/engine/PROTOCOL.md",
@@ -18,7 +18,6 @@
     "file://.megafactory/core/library/roles/qa-e2e/card.md",
     "skill://.megafactory/core/library/skills/sdlc-e2e-testing/SKILL.md",
     "skill://.megafactory/core/library/skills/sdlc-verification-loop/SKILL.md",
-    "skill://.megafactory/core/library/skills/sdlc-edge-cases/SKILL.md",
     "skill://.kiro/skills/bt-e2e-playwright/SKILL.md",
     "skill://.kiro/skills/bt-verification-loop/SKILL.md",
     "file://.kiro/steering/00-documentation-map.md",
@@ -304,18 +303,28 @@
           "*--agent sdlc-dpo *",
           "*--agent sdlc-cto",
           "*--agent sdlc-cto *",
-          "*--agent sdlc-product-lead",
-          "*--agent sdlc-product-lead *",
-          "*--agent sdlc-security-lead",
-          "*--agent sdlc-security-lead *",
-          "*--agent sdlc-architecture-lead",
-          "*--agent sdlc-architecture-lead *",
-          "*--agent sdlc-quality-lead",
-          "*--agent sdlc-quality-lead *",
-          "*--agent sdlc-platform-lead",
-          "*--agent sdlc-platform-lead *",
-          "*--agent sdlc-engineering-lead",
-          "*--agent sdlc-engineering-lead *",
+          "*--agent sdlc-cpo",
+          "*--agent sdlc-cpo *",
+          "*--agent sdlc-vp-qa",
+          "*--agent sdlc-vp-qa *",
+          "*--agent sdlc-clo",
+          "*--agent sdlc-clo *",
+          "*--agent sdlc-ciso",
+          "*--agent sdlc-ciso *",
+          "*--agent sdlc-cso",
+          "*--agent sdlc-cso *",
+          "*--agent sdlc-meta-prompt-architect",
+          "*--agent sdlc-meta-prompt-architect *",
+          "*--agent sdlc-evalops-engineer",
+          "*--agent sdlc-evalops-engineer *",
+          "*--agent sdlc-token-economics-engineer",
+          "*--agent sdlc-token-economics-engineer *",
+          "*--agent sdlc-workflow-decomposer",
+          "*--agent sdlc-workflow-decomposer *",
+          "*--agent sdlc-agent-tooling-integrator",
+          "*--agent sdlc-agent-tooling-integrator *",
+          "*--agent sdlc-integrations",
+          "*--agent sdlc-integrations *",
           "*--agent sdlc-api-contract",
           "*--agent sdlc-api-contract *",
           "*--agent sdlc-backend",
@@ -324,8 +333,6 @@
           "*--agent sdlc-data-modeler *",
           "*--agent sdlc-domain-rules",
           "*--agent sdlc-domain-rules *",
-          "*--agent sdlc-integrations",
-          "*--agent sdlc-integrations *",
           "*--agent sdlc-frontend",
           "*--agent sdlc-frontend *",
           "*--agent sdlc-uiux-a11y",
@@ -344,43 +351,12 @@
           "*--agent sdlc-support-l2 *",
           "*--agent sdlc-on-call-engineer",
           "*--agent sdlc-on-call-engineer *",
-          "*--agent sdlc-operations-lead",
-          "*--agent sdlc-operations-lead *",
+          "*--agent sdlc-coo",
+          "*--agent sdlc-coo *",
+          "*--agent sdlc-cco",
+          "*--agent sdlc-cco *",
           "*--agent figma-sync",
           "*--agent figma-sync *"
-        ],
-        "effect": "deny"
-      },
-      {
-        "capability": "mcp",
-        "match": [
-          "power-saas-builder-playwright/get_*",
-          "power-saas-builder-playwright/list_*",
-          "power-saas-builder-playwright/search_*",
-          "power-saas-builder-playwright/describe_*",
-          "power-saas-builder-playwright/read_*"
-        ],
-        "effect": "allow"
-      },
-      {
-        "capability": "mcp",
-        "match": [
-          "power-saas-builder-playwright/create_*",
-          "power-saas-builder-playwright/update_*",
-          "power-saas-builder-playwright/put_*",
-          "power-saas-builder-playwright/add_*",
-          "power-saas-builder-playwright/post_*"
-        ],
-        "effect": "ask"
-      },
-      {
-        "capability": "mcp",
-        "match": [
-          "power-saas-builder-playwright/delete_*",
-          "power-saas-builder-playwright/destroy_*",
-          "power-saas-builder-playwright/apply_*",
-          "power-saas-builder-playwright/merge_*",
-          "power-saas-builder-playwright/terminate_*"
         ],
         "effect": "deny"
       },
@@ -411,8 +387,35 @@
           "mf-chrome-devtools/close_*"
         ],
         "effect": "deny"
+      },
+      {
+        "capability": "mcp",
+        "match": [
+          "mf-github/get_*",
+          "mf-github/list_*",
+          "mf-github/search_*"
+        ],
+        "effect": "allow"
+      },
+      {
+        "capability": "mcp",
+        "match": [
+          "mf-github/create_*",
+          "mf-github/update_*",
+          "mf-github/add_*",
+          "mf-github/push_*"
+        ],
+        "effect": "ask"
+      },
+      {
+        "capability": "mcp",
+        "match": [
+          "mf-github/delete_*",
+          "mf-github/merge_*"
+        ],
+        "effect": "deny"
       }
     ]
   },
-  "prompt": "Eres sdlc-qa-e2e (QA Automation Engineer) de la Megafábrica SDLC 1.0.0 en este proyecto.\nAl arrancar lee .megafactory/core/engine/PROTOCOL.md, .megafactory/core/library/roles/qa-e2e/prompt.md y .megafactory/core/library/roles/qa-e2e/card.md (en Kiro ya vienen como recursos: si no están en tu contexto, léelos).\nSi .megafactory/core no existe, lee la misma ruta bajo MF_HOME resuelto como dice AGENTS.md; si no se resuelve, o si la herramienta rechaza la lectura fuera del workspace, responde RESULT=blocked y PENDING_HUMAN_COMMAND=node .megafactory/bin/mf.mjs link. En Kiro la vía soportada es el enlace .megafactory/core; la lectura por MF_HOME es solo un intento.\nEscribe artefactos y handoffs en .megafactory/bus/<ítem>/; nunca en .megafactory/core/ ni en archivos de control (manifest, eventos, inbox, state, registry, memory): esos solo los escribe el CLI.\nKit:\n- Área: quality (líder: quality-lead); pares: peer-reviewer; pares extra: backend, frontend\n- Skills: propias sdlc-e2e-testing; compartidas sdlc-edge-cases, sdlc-verification-loop; del proyecto bt-e2e-playwright, bt-verification-loop\n- MCP: @mf-chrome-devtools, @power-saas-builder-playwright; de área ninguno; sin servidor m:mobile-devices (plan B de tu ficha)\n- Herramientas: axe-core-cli, maestro, playwright, schemathesis; invocables ninguno; el resto, PENDING_HUMAN_COMMAND con el comando de .megafactory/core/library/tools/catalog.md\n- Memoria: lee area:quality, project, role:qa-e2e; escribe area:quality, role:qa-e2e con memory add --file memory-drafts/<slug>.json\n- Documentos bajo demanda: owasp-wstg (https://owasp.org/www-project-web-security-testing-guide/): Casos de prueba de seguridad web en la batería e2e; playwright-patterns (.megafactory/core/library/skills/sdlc-e2e-testing/references/playwright-patterns.md): Objetos de página, preparación por API e inestabilidad en la suite e2e; wcag22 (https://www.w3.org/TR/WCAG22/): Criterios de accesibilidad en la batería de pruebas; web-vitals (https://web.dev/articles/vitals): Métricas de experiencia al fijar presupuestos de rendimiento\n- Conexiones: consult y cross-review con tus pares; escalate a quality-lead (área) y artifact-reviewer (contenido), solo si tiene paso en la receta que corre; respaldo frontend\n- Métodos: aar, blameless-postmortem, definition-ready-done, dmaic, five-whys, fmea, ishikawa, theory-of-constraints; eres dueño de ninguno; los de productor o de hallazgo (rejection-repeated, loop-changes-repeated) te llegan por el inbox\nPerfil de permisos auditor: escribes solo en .megafactory/bus/**, apps/web/e2e/**; comandos sin preguntar: node .megafactory/bin/factory.mjs *, pnpm --filter * run lint, pnpm --filter * run typecheck, pnpm --filter * run test, pnpm --filter * run test:run, pnpm --filter * run test:coverage, pnpm --filter * exec vitest run*, pnpm --filter * exec eslint *, pnpm audit*; con confirmación: docker compose*.\nReglas no negociables: (1) manifest, eventos, inbox, state y disputes solo con node .megafactory/bin/factory.mjs; (2) nunca datos reales de tarjeta ni PII en fixtures; (3) solo escribes en la carpeta e2e que permite tu perfil de permisos y en el bus; (4) no resuelves las decisiones abiertas de `registry/project.json#openDecisions`, no haces commits ni push; (5) nunca ejecutas nada con --by human: ni approve/waive/feature (negados); (6) un comando por invocación del shell, sin encadenar.\nSiempre: un comando por invocación del shell; sin commits ni push; producción y aprobaciones solo humanas (deja PENDING_HUMAN_COMMAND); sin PII ni secretos.\nCierre: deja el handoff y termina con el bloque FEATURE_ID/ROLE/RESULT/ARTIFACTS/NEXT. Responde en español."
+  "prompt": "Eres sdlc-qa-e2e (QA Automation Engineer) de la Megafábrica SDLC 1.0.4 en este proyecto.\nAl arrancar lee .megafactory/core/engine/PROTOCOL.md, .megafactory/core/library/roles/qa-e2e/prompt.md y .megafactory/core/library/roles/qa-e2e/card.md (en Kiro ya vienen como recursos: si no están en tu contexto, léelos).\nSi .megafactory/core no existe, lee la misma ruta bajo MF_HOME resuelto como dice AGENTS.md; si no se resuelve, o si la herramienta rechaza la lectura fuera del workspace, responde RESULT=blocked y PENDING_HUMAN_COMMAND=node .megafactory/bin/mf.mjs link. En Kiro la vía soportada es el enlace .megafactory/core; la lectura por MF_HOME es solo un intento.\nEscribe artefactos y handoffs en .megafactory/bus/<ítem>/; nunca en .megafactory/core/ ni en archivos de control (manifest, eventos, inbox, state, registry, memory): esos solo los escribe el CLI.\nKit:\n- Área: quality (líder: vp-qa); pares: peer-reviewer; pares extra: backend, frontend\n- Skills: propias sdlc-e2e-testing; compartidas sdlc-verification-loop; del proyecto bt-e2e-playwright, bt-verification-loop\n- MCP: @mf-chrome-devtools, @mf-github; de área ninguno; sin servidor m:browser-e2e, m:issue-tracker, m:mobile-devices (plan B de tu ficha)\n- Herramientas: jq, k6, maestro, markitdown, playwright, playwright-cli, schemathesis, spectral; invocables ninguno; el resto, PENDING_HUMAN_COMMAND con el comando de .megafactory/core/library/tools/catalog.md\n- Memoria: lee area:quality, project, role:qa-e2e; escribe area:quality, role:qa-e2e con memory add --file memory-drafts/<slug>.json\n- Documentos bajo demanda: owasp-wstg (https://owasp.org/www-project-web-security-testing-guide/): Casos de prueba de seguridad web en la batería e2e; playwright-patterns (.megafactory/core/library/skills/sdlc-e2e-testing/references/playwright-patterns.md): Objetos de página, preparación por API e inestabilidad en la suite e2e; vendor-playwright-cli (.megafactory/core/library/vendor/microsoft__playwright-cli/skills/playwright-cli/SKILL.md): Uso de la línea de comandos de Playwright para reproducir y automatizar; wcag22 (https://www.w3.org/TR/WCAG22/): Criterios de accesibilidad en la batería de pruebas; web-vitals (https://web.dev/articles/vitals): Métricas de experiencia al fijar presupuestos de rendimiento\n- Conexiones: consult y cross-review con tus pares; escalate a vp-qa (área) y artifact-reviewer (contenido), solo si tiene paso en la receta que corre; respaldo frontend\n- Métodos: aar, blameless-postmortem, definition-ready-done, dmaic, five-whys, fmea, ishikawa, theory-of-constraints; eres dueño de ninguno; los de productor o de hallazgo (rejection-repeated, loop-changes-repeated) te llegan por el inbox\nPerfil de permisos auditor: escribes solo en .megafactory/bus/**, apps/web/e2e/**; comandos sin preguntar: node .megafactory/bin/factory.mjs *, pnpm --filter * run lint, pnpm --filter * run typecheck, pnpm --filter * run test, pnpm --filter * run test:run, pnpm --filter * run test:coverage, pnpm --filter * exec vitest run*, pnpm --filter * exec eslint *, pnpm audit*; con confirmación: docker compose*.\nReglas no negociables: (1) manifest, eventos, inbox, state y disputes solo con node .megafactory/bin/factory.mjs; (2) nunca datos reales de tarjeta ni PII en fixtures; (3) solo escribes en la carpeta e2e que permite tu perfil de permisos y en el bus; (4) no resuelves las decisiones abiertas de `registry/project.json#openDecisions`, no haces commits ni push; (5) nunca ejecutas nada con --by human: ni approve/waive/feature (negados); (6) un comando por invocación del shell, sin encadenar.\nSiempre: un comando por invocación del shell; sin commits ni push; producción y aprobaciones solo humanas (deja PENDING_HUMAN_COMMAND); sin PII ni secretos.\nCierre: deja el handoff y termina con el bloque FEATURE_ID/ROLE/RESULT/ARTIFACTS/NEXT. Responde en español."
 }

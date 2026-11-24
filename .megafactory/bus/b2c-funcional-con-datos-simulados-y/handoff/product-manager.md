@@ -2,8 +2,8 @@
 role: product-manager
 agent: sdlc-product-manager
 feature: b2c-funcional-con-datos-simulados-y
-updatedAt: 2026-10-24T13:00:00.000Z
-lastEventId: (ver events.jsonl, publicación prd@v3)
+updatedAt: 2026-11-19T22:13:29.199Z
+lastEventId: evt_e5a95311-704f-4603-bf36-2f88329e6f40
 ---
 
 ## Estado
